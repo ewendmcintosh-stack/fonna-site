@@ -6,10 +6,9 @@
   <title>Fonna — Finish Better Records</title>
   <style>
     :root {
-      --bg: #080808; --bg-2: #101010; --panel: rgba(255,255,255,0.04);
-      --panel-strong: rgba(255,255,255,0.07); --border: rgba(255,255,255,0.09);
-      --text: #f4f4f2; --muted: #a4a4a0; --soft: #d8d8d2; --accent: #ffffff;
-      --shadow: 0 18px 50px rgba(0,0,0,0.38); --max: 1240px; --radius: 22px;
+      --bg: #080808; --border: rgba(255,255,255,0.09); --text: #f4f4f2;
+      --muted: #a4a4a0; --soft: #d8d8d2; --shadow: 0 18px 50px rgba(0,0,0,0.38);
+      --max: 1240px;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -23,7 +22,6 @@
       min-height: 100vh;
     }
     a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
     .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
     .nav-shell { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(8,8,8,0.74); border-bottom: 1px solid rgba(255,255,255,0.05); }
     .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
@@ -42,30 +40,27 @@
     .hero-copy { padding: 42px; }
     .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--soft); font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 22px; }
     .hero h1 { font-size: clamp(3rem,6vw,5.8rem); line-height: 0.95; letter-spacing: -0.05em; margin: 0 0 18px; max-width: 9ch; }
-    .hero p.lead { margin: 0; color: var(--soft); font-size: 1.14rem; line-height: 1.7; max-width: 58ch; }
+    .differentiator { margin: 0 0 14px; font-size: 1.08rem; font-weight: 600; color: var(--text); line-height: 1.5; max-width: 52ch; }
+    .hero p.lead { margin: 0; color: var(--soft); font-size: 1.05rem; line-height: 1.7; max-width: 58ch; }
     .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
     .micro { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; color: var(--muted); font-size: 0.92rem; }
     .micro span { padding: 9px 12px; border-radius: 999px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.06); }
-    .hero-card { padding: 24px; display: flex; flex-direction: column; gap: 18px; }
-    .report-window { flex: 1; border-radius: 22px; border: 1px solid rgba(255,255,255,0.08); background: linear-gradient(180deg,rgba(0,0,0,0.32),rgba(255,255,255,0.03)); padding: 18px; }
-    .window-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.84rem; margin-bottom: 14px; }
+    .hero-card { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+    .report-window { flex: 1; border-radius: 22px; border: 1px solid rgba(255,255,255,0.08); background: linear-gradient(180deg,rgba(0,0,0,0.32),rgba(255,255,255,0.03)); padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+    .window-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.84rem; }
     .dots { display: flex; gap: 7px; }
     .dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.18); display: block; }
-    .report-section { border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); border-radius: 18px; padding: 14px; }
-    .report-section + .report-section { margin-top: 12px; }
-    .report-label { font-size: 0.77rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
-    .report-title { font-weight: 700; margin-bottom: 8px; }
-    .report-list { margin: 0; padding-left: 18px; color: var(--soft); line-height: 1.62; font-size: 0.95rem; }
-    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
-    .stat { padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); }
-    .stat-k { display: block; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-    .stat-v { font-size: 1.18rem; font-weight: 700; }
+    .report-section { border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); border-radius: 16px; padding: 13px; }
+    .report-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 7px; }
+    .report-title { font-weight: 700; margin-bottom: 7px; font-size: 0.95rem; }
+    .report-body { color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
+    .report-list { margin: 0; padding-left: 16px; color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
+    .best-next { border: 1px solid rgba(95,139,255,0.2); background: rgba(95,139,255,0.06); border-radius: 16px; padding: 13px; }
     .section { padding: 34px 0; }
     .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
     .section-head h2 { margin: 0 0 8px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; }
     .section-head p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 58ch; }
     .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
     .card { border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.025)); box-shadow: var(--shadow); padding: 24px; }
     .card h3 { margin: 0 0 10px; font-size: 1.22rem; letter-spacing: -0.02em; }
     .card p { margin: 0; color: var(--soft); line-height: 1.7; }
@@ -77,8 +72,14 @@
     .feature-list { margin: 0; padding-left: 18px; color: var(--soft); line-height: 1.7; }
     .pricing-card .btn { margin-top: auto; }
     .highlight { outline: 1px solid rgba(255,255,255,0.12); background: linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.035)); }
-    .about-layout { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; }
-    .quote { font-size: clamp(1.35rem,2.2vw,2rem); line-height: 1.45; letter-spacing: -0.03em; color: var(--text); }
+    .about-card { border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.025)); box-shadow: var(--shadow); padding: 36px; }
+    .about-card h2 { margin: 0 0 16px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; }
+    .about-card .belief { font-size: clamp(1.1rem,2vw,1.45rem); line-height: 1.6; color: var(--soft); margin: 0 0 20px; max-width: 72ch; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 24px; }
+    .about-point h4 { margin: 0 0 6px; font-size: 1rem; font-weight: 700; }
+    .about-point p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
+    .philosophy-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 20px; color: var(--soft); font-size: 0.95rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 2px; transition: color 0.15s, border-color 0.15s; }
+    .philosophy-link:hover { color: var(--text); border-color: rgba(255,255,255,0.4); }
     .footer { padding: 28px 0 60px; color: var(--muted); }
     .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
     .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
@@ -94,11 +95,11 @@
     .auth-userbox .row { padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
     .auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
     .hidden { display: none !important; }
-    @media (max-width: 1080px) { .hero-grid, .about-layout, .grid-4 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 1080px) { .hero-grid { grid-template-columns: 1fr 1fr; } .about-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 860px) {
       .nav { flex-wrap: wrap; padding: 14px 0; }
       .nav-links { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 14px 18px; padding-bottom: 4px; }
-      .hero-grid, .grid-3, .grid-4, .about-layout, .stats { grid-template-columns: 1fr; }
+      .hero-grid, .grid-3, .about-grid { grid-template-columns: 1fr; }
       .hero-copy, .hero-card, .card { padding: 22px; }
       .section-head { flex-direction: column; align-items: start; }
       .auth-shell { grid-template-columns: 1fr; }
@@ -108,7 +109,7 @@
 <body>
   <div class="nav-shell">
     <div class="wrap nav">
-      <a href="#top" class="brand" aria-label="Fonna home">
+      <a href="#top" class="brand">
         <span class="brand-mark">F</span>
         <span>Fonna</span>
       </a>
@@ -117,7 +118,6 @@
         <a href="#how">How It Works</a>
         <a href="#pricing">Pricing</a>
         <a href="#about">About</a>
-        <a href="#careers">Careers</a>
       </nav>
       <div class="nav-actions">
         <a class="btn" href="#login">Login</a>
@@ -132,13 +132,14 @@
         <div class="hero-copy">
           <div class="eyebrow">AI producer feedback for songs in progress</div>
           <h1>Finish better records.</h1>
-          <p class="lead">Upload your track and get focused producer feedback on arrangement, production, and mix. Fonna is built for creators who want clearer next moves, not vague compliments.</p>
+          <p class="differentiator">Built for creators who want clearer next moves, not vague compliments.</p>
+          <p class="lead">Upload your track and get focused producer feedback on arrangement, production, and mix.</p>
           <div class="hero-cta">
-            <a class="btn primary" href="/app.html">Try Fonna free</a>
+            <a class="btn primary" href="#login">Try Fonna free</a>
             <a class="btn" href="#pricing">See pricing</a>
           </div>
           <div class="micro">
-            <span>3 free credits</span>
+            <span>1 free credit on signup</span>
             <span>Practical producer notes</span>
             <span>Built for real works-in-progress</span>
           </div>
@@ -152,25 +153,33 @@
             <div class="report-section">
               <div class="report-label">Snapshot</div>
               <div class="report-title">The track establishes a clear center quickly.</div>
-              <div style="color:var(--soft);line-height:1.65;">The strongest opportunity is creating more lift into the larger sections so the payoff lands harder.</div>
+              <div class="report-body">The strongest opportunity is creating more lift into the larger sections so the payoff lands harder.</div>
             </div>
             <div class="report-section">
               <div class="report-label">Arrangement</div>
               <ul class="report-list">
-                <li>The opening gets to the point quickly.</li>
                 <li>Several sections sit at a similar intensity.</li>
                 <li>Drop one supporting layer before the next lift.</li>
               </ul>
             </div>
             <div class="report-section">
-              <div class="report-label">Best Next Move</div>
-              <div style="color:var(--soft);line-height:1.65;">Thin the arrangement just before the biggest section so the return feels wider, louder, and more intentional.</div>
+              <div class="report-label">Production</div>
+              <ul class="report-list">
+                <li>Layering in the chorus is dense without cluttering.</li>
+                <li>Add contrast in the bridge to break the pattern.</li>
+              </ul>
             </div>
-          </div>
-          <div class="stats">
-            <div class="stat"><span class="stat-k">Focus</span><span class="stat-v">Arrangement</span></div>
-            <div class="stat"><span class="stat-k">Focus</span><span class="stat-v">Production</span></div>
-            <div class="stat"><span class="stat-k">Focus</span><span class="stat-v">Mix</span></div>
+            <div class="report-section">
+              <div class="report-label">Mix</div>
+              <ul class="report-list">
+                <li>Vocal cuts through cleanly in the upper mids.</li>
+                <li>Pull low mids from the bass to give the kick more room.</li>
+              </ul>
+            </div>
+            <div class="best-next">
+              <div class="report-label">Best Next Move</div>
+              <div class="report-body">Thin the arrangement just before the biggest section so the return feels wider and more intentional.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -204,20 +213,20 @@
     </section>
 
     <section id="pricing" class="section wrap">
-      <div class="section-head"><div><h2>Pricing</h2><p>Simple credit-based access for launch.</p></div></div>
+      <div class="section-head"><div><h2>Pricing</h2><p>Simple credit-based access. One free analysis on signup.</p></div></div>
       <div class="grid-3">
         <div class="card pricing-card">
           <div>
             <div class="tier">Free</div>
             <p class="price">$0</p>
-            <div class="price-sub">3 credits on signup</div>
+            <div class="price-sub">1 credit on signup</div>
           </div>
           <ul class="feature-list">
             <li>Try the full Fonna experience</li>
-            <li>Perfect for first impressions</li>
+            <li>One complete producer report</li>
             <li>Signup required</li>
           </ul>
-          <a class="btn" href="/app.html">Start free</a>
+          <a class="btn" href="#login">Start free</a>
         </div>
         <div class="card pricing-card highlight">
           <div>
@@ -230,7 +239,7 @@
             <li>Useful for active revision weeks</li>
             <li>Simple one-time purchase</li>
           </ul>
-          <a class="btn primary" href="/app.html">Buy Starter</a>
+          <a class="btn primary" href="#login">Buy Starter</a>
         </div>
         <div class="card pricing-card">
           <div>
@@ -243,29 +252,30 @@
             <li>Ideal for producers and serious artists</li>
             <li>Best value at launch</li>
           </ul>
-          <a class="btn" href="/app.html">Buy Creator</a>
+          <a class="btn" href="#login">Buy Creator</a>
         </div>
       </div>
     </section>
 
     <section id="about" class="section wrap">
-      <div class="about-layout">
-        <div class="card">
-          <div class="section-head" style="margin-bottom:12px;"><div><h2>About Fonna</h2></div></div>
-          <p class="quote">Built by musicians and music educators, Fonna gives creators a serious set of ears before they print the next version.</p>
+      <div class="about-card">
+        <h2>What we believe</h2>
+        <p class="belief">Better records usually come from better decisions, not more plugins, more layers, or more noise. Fonna exists at the intersection of music production and music education — built for artists who want to hear their own work more clearly and make more intentional choices.</p>
+        <div class="about-grid">
+          <div class="about-point">
+            <h4>Helps you grow</h4>
+            <p>Every report is a chance to internalize a new way of hearing. Use it enough and the framework becomes your own.</p>
+          </div>
+          <div class="about-point">
+            <h4>Helps you refine</h4>
+            <p>Fonna is for the stage where the record is real enough to evaluate but still malleable enough to change.</p>
+          </div>
+          <div class="about-point">
+            <h4>Expands your perspective</h4>
+            <p>Outside ears break the loop. Fonna hears the track as it actually is, not as you remember it sounding.</p>
+          </div>
         </div>
-        <div class="card">
-          <h3>What we believe</h3>
-          <p>Better records usually come from better decisions, not more plugins, more layers, or more noise. Fonna exists to help artists focus, simplify, and move the track toward its strongest form.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="careers" class="section wrap">
-      <div class="section-head"><div><h2>Careers</h2><p>As Fonna grows, this is where future roles and collaborations would live.</p></div></div>
-      <div class="card">
-        <h3>Early-stage by design</h3>
-        <p>Fonna is in launch mode. Right now the focus is product quality, trust, and proving that artists want producer-grade feedback in a fast, repeatable format.</p>
+        <a href="/philosophy.html" class="philosophy-link">Read the full philosophy →</a>
       </div>
     </section>
 
@@ -273,8 +283,7 @@
       <div class="auth-shell">
         <div class="auth-card">
           <h3 style="margin-top:0;margin-bottom:8px;">Get started with Fonna</h3>
-          <p style="margin-top:0;color:var(--muted);line-height:1.7;">Create an account to receive 3 free credits. Each analysis uses 1 credit.</p>
-
+          <p style="margin-top:0;color:var(--muted);line-height:1.7;">Create an account to receive 1 free credit. Each analysis uses 1 credit.</p>
           <div id="authLoggedOut">
             <div class="auth-form">
               <input id="authEmail" type="email" placeholder="Email address" autocomplete="email" />
@@ -285,7 +294,6 @@
               </div>
             </div>
           </div>
-
           <div id="authLoggedIn" class="hidden">
             <div class="auth-userbox">
               <div class="row"><span class="k">Logged in as</span><strong id="userEmailText">—</strong></div>
@@ -296,15 +304,13 @@
               </div>
             </div>
           </div>
-
           <div id="authStatus" class="auth-status">Ready.</div>
         </div>
-
         <div class="auth-card">
           <h3 style="margin-top:0;margin-bottom:8px;">How access works</h3>
-          <p style="color:var(--soft);line-height:1.7;margin-top:0;">New accounts receive 3 free credits automatically. When you use Fonna to analyze a track, 1 credit is deducted after a successful report.</p>
+          <p style="color:var(--soft);line-height:1.7;margin-top:0;">New accounts receive 1 free credit automatically. When you use Fonna to analyze a track, 1 credit is deducted after a successful report.</p>
           <ul class="feature-list">
-            <li>Free account: 3 credits</li>
+            <li>Free account: 1 credit</li>
             <li>Starter: 10 credits for $9.99</li>
             <li>Creator: 30 credits for $19.99</li>
           </ul>
@@ -317,6 +323,7 @@
     <div class="footer-shell">
       <span>© 2026 Fonna</span>
       <div class="footer-links">
+        <a href="/philosophy.html">Philosophy</a>
         <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
       </div>
     </div>
@@ -324,19 +331,18 @@
 
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
     const SUPABASE_URL = "https://kukqwyakchsaqquudqiu.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const authStatus    = document.getElementById("authStatus");
-    const authLoggedOut = document.getElementById("authLoggedOut");
-    const authLoggedIn  = document.getElementById("authLoggedIn");
-    const authEmail     = document.getElementById("authEmail");
-    const authPassword  = document.getElementById("authPassword");
-    const signUpBtn     = document.getElementById("signUpBtn");
-    const loginBtn      = document.getElementById("loginBtn");
-    const logoutBtn     = document.getElementById("logoutBtn");
+    const authStatus     = document.getElementById("authStatus");
+    const authLoggedOut  = document.getElementById("authLoggedOut");
+    const authLoggedIn   = document.getElementById("authLoggedIn");
+    const authEmail      = document.getElementById("authEmail");
+    const authPassword   = document.getElementById("authPassword");
+    const signUpBtn      = document.getElementById("signUpBtn");
+    const loginBtn       = document.getElementById("loginBtn");
+    const logoutBtn      = document.getElementById("logoutBtn");
     const userEmailText  = document.getElementById("userEmailText");
     const userCreditsText = document.getElementById("userCreditsText");
 
@@ -344,13 +350,9 @@
 
     async function loadProfile(user) {
       const { data, error } = await supabase.from("users").select("email, credits").eq("id", user.id).single();
-      if (error) {
-        userEmailText.textContent = user.email || "Unknown";
-        userCreditsText.textContent = "Unavailable";
-        return;
-      }
+      if (error) { userEmailText.textContent = user.email || "Unknown"; userCreditsText.textContent = "Unavailable"; return; }
       userEmailText.textContent = data.email || user.email || "Unknown";
-      userCreditsText.textContent = `${data.credits ?? 0}`;
+      userCreditsText.textContent = String(data.credits ?? 0);
     }
 
     async function refreshAuthUI() {
@@ -373,7 +375,7 @@
       if (!email || !password) { setStatus("Enter an email and password."); return; }
       setStatus("Creating account...");
       const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) { setStatus(`Signup failed: ${error.message}`); return; }
+      if (error) { setStatus("Signup failed: " + error.message); return; }
       if (data.user) {
         setStatus("Account created! Redirecting to app...");
         setTimeout(() => { window.location.href = "/app.html"; }, 1000);
@@ -388,7 +390,7 @@
       if (!email || !password) { setStatus("Enter an email and password."); return; }
       setStatus("Logging in...");
       const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) { setStatus(`Login failed: ${error.message}`); return; }
+      if (error) { setStatus("Login failed: " + error.message); return; }
       setStatus("Logged in! Redirecting to app...");
       setTimeout(() => { window.location.href = "/app.html"; }, 800);
     });
