@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ - Fonna</title>
+  <style>
+    :root { --border: rgba(255,255,255,0.09); --text: #f4f4f2; --muted: #a4a4a0; --soft: #d8d8d2; --max: 780px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; color: var(--text); background: linear-gradient(180deg,#050505,#0b0b0b 48%,#050505); min-height: 100vh; font-size: 16px; line-height: 1.75; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .nav-shell { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(8,8,8,0.74); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(180deg,#fff,#c8c8c8); color: #080808; display: grid; place-items: center; font-weight: 800; }
+    .btn { display: inline-flex; align-items: center; min-height: 42px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text); font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: inherit; }
+    .btn.primary { background: linear-gradient(180deg,#f0f0ec,#cfcfc9); color: #0a0a0a; border-color: transparent; }
+    .hero { padding: 64px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
+    .eyebrow { display: inline-block; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--soft); font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 20px; }
+    h1 { font-size: clamp(2rem,5vw,3.2rem); line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 12px; }
+    .lead { color: var(--muted); font-size: 1rem; margin: 0; }
+    .faq-list { padding-bottom: 80px; }
+    .faq-group { margin-bottom: 52px; }
+    .faq-group-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .faq-item { margin-bottom: 32px; }
+    .faq-q { font-size: 1.05rem; font-weight: 700; margin: 0 0 10px; color: var(--text); }
+    .faq-a { color: var(--soft); margin: 0; }
+    .faq-a a { border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1px; }
+    .faq-a a:hover { border-color: rgba(255,255,255,0.5); }
+    .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 22px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <div class="nav-shell">
+    <div class="wrap nav">
+      <a href="/" class="brand"><span class="brand-mark">F</span><span>Fonna</span></a>
+      <a href="/#login" class="btn primary">Try Fonna free</a>
+    </div>
+  </div>
+  <main>
+    <div class="wrap">
+      <div class="hero">
+        <div class="eyebrow">Support</div>
+        <h1>Frequently Asked Questions</h1>
+        <p class="lead">Can't find what you're looking for? Email us at <a href="mailto:hello@fonna.ai" style="border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:1px;">hello@fonna.ai</a>.</p>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-group">
+          <div class="faq-group-label">The basics</div>
+
+          <div class="faq-item">
+            <p class="faq-q">What is Fonna?</p>
+            <p class="faq-a">Fonna is an AI-powered music feedback tool. You upload a track and receive a focused producer report covering arrangement, production, and mix. It is built for independent musicians and producers who want honest, directional feedback on works in progress.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">Who built Fonna?</p>
+            <p class="faq-a">Fonna was built by Ewen McIntosh &mdash; a lifelong gigging musician, independent recording artist, and former high school music teacher, special educator, vice principal, and principal in Ontario. Fonna is the intersection of those two careers. Read more on the <a href="/philosophy.html">philosophy page</a>.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">What does a Fonna report include?</p>
+            <p class="faq-a">Each report includes a snapshot of the track's overall impression, notes on arrangement, production, and mix, timestamped observations tied to specific moments in the track, a best next move, priority actions, and a listening reference &mdash; a released record with a lesson relevant to your track.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">What does Fonna not do?</p>
+            <p class="faq-a">Fonna does not critique songwriting, lyrics, or genre. It does not tell you how to use specific tools or plugins. It does not remember previous versions of your track. Each upload is a fresh listen. It is not a substitute for human collaboration &mdash; it is a starting point for your next session.</p>
+          </div>
+        </div>
+
+        <div class="faq-group">
+          <div class="faq-group-label">Uploading</div>
+
+          <div class="faq-item">
+            <p class="faq-q">What file formats does Fonna accept?</p>
+            <p class="faq-a">Fonna accepts WAV, MP3, M4A, AAC, FLAC, AIFF, and AIF files. For best results, upload a full-resolution mix &mdash; WAV or AIFF at your session sample rate.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">Is there a file size or length limit?</p>
+            <p class="faq-a">The maximum file size is 60MB. The maximum track duration is currently 6 minutes. These limits may change as the service evolves.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">Is my audio stored after the analysis?</p>
+            <p class="faq-a">No. Uploaded audio is deleted from our systems once your report has been generated. We do not store, use, or retain your audio files beyond the time required to run the analysis.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">How long does an analysis take?</p>
+            <p class="faq-a">Most analyses complete within 2 to 5 minutes, depending on track length and current demand. Keep the tab open while it processes &mdash; the report will appear when it is ready.</p>
+          </div>
+        </div>
+
+        <div class="faq-group">
+          <div class="faq-group-label">Credits and billing</div>
+
+          <div class="faq-item">
+            <p class="faq-q">How do credits work?</p>
+            <p class="faq-a">Each analysis uses 1 credit. New accounts receive 1 free credit on signup. Additional credits are purchased in packs: Starter (10 credits for $9.99) or Creator (30 credits for $19.99).</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">Do credits expire?</p>
+            <p class="faq-a">No. Purchased credits do not expire as long as Fonna is operational. If Fonna were to close, we would make reasonable efforts to notify users in advance.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">Can I get a refund?</p>
+            <p class="faq-a">All credit purchases are final and non-refundable. If you experience a technical error that results in a failed or clearly broken report, contact us at <a href="mailto:hello@fonna.ai">hello@fonna.ai</a> and we will review the situation. Where appropriate, we may issue replacement credits at our discretion.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">Will prices change?</p>
+            <p class="faq-a">Fonna may adjust its pricing and credit packs at any time. Any changes apply to future purchases only &mdash; credits you have already bought are never affected.</p>
+          </div>
+        </div>
+
+        <div class="faq-group">
+          <div class="faq-group-label">Your account</div>
+
+          <div class="faq-item">
+            <p class="faq-q">Can I share my account with someone else?</p>
+            <p class="faq-a">No. Accounts are for individual use only. Each person should create their own account.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">How do I delete my account?</p>
+            <p class="faq-a">Email us at <a href="mailto:hello@fonna.ai">hello@fonna.ai</a> and we will delete your account and any associated data. Note that unused credits are forfeited on account deletion.</p>
+          </div>
+        </div>
+
+        <div class="faq-group">
+          <div class="faq-group-label">Getting the most out of Fonna</div>
+
+          <div class="faq-item">
+            <p class="faq-q">What stage of a track should I upload?</p>
+            <p class="faq-a">Fonna works best on tracks that have a clear shape &mdash; demos, rough mixes, near-finishes, and pre-masters all work well. Very early sketches with placeholder elements may not give Fonna enough to work with. The ideal upload is a mix that is real enough to evaluate but still open to change.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">Should I use the Intent field?</p>
+            <p class="faq-a">Yes, if you have something specific you want Fonna to focus on. The default prompt covers arrangement, production, and mix broadly. If you know the mix is rough and you want feedback primarily on arrangement, say so. Fonna will weight its analysis accordingly.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">Does Fonna remember my previous uploads?</p>
+            <p class="faq-a">No. Each upload is analysed fresh, without reference to previous versions. This is intentional &mdash; you get honest ears every time, unaffected by what the track used to sound like. Think of it as inviting a new listener into the room after each revision.</p>
+          </div>
+
+          <div class="faq-item">
+            <p class="faq-q">The report mentioned something I disagree with. What should I do?</p>
+            <p class="faq-a">Trust your ears. Fonna is a tool, not a verdict. If a note does not resonate, set it aside. If it keeps coming up across multiple analyses, it may be worth a closer listen. The report is a starting point for your next session, not a final word on your music.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-shell">
+        <span>&copy; 2026 Fonna, a division of 170681639 Ontario</span>
+        <div class="footer-links">
+          <a href="/philosophy.html">Philosophy</a>
+          <a href="/terms.html">Terms of Use</a>
+          <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
