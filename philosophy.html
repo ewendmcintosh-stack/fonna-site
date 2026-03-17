@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Philosophy - Fonna</title>
+  <style>
+    :root { --border: rgba(255,255,255,0.09); --text: #f4f4f2; --muted: #a4a4a0; --soft: #d8d8d2; --max: 780px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; color: var(--text); background: linear-gradient(180deg,#050505,#0b0b0b 48%,#050505); min-height: 100vh; font-size: 17px; line-height: 1.8; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .nav-shell { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(8,8,8,0.74); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(180deg,#fff,#c8c8c8); color: #080808; display: grid; place-items: center; font-weight: 800; }
+    .btn { display: inline-flex; align-items: center; min-height: 42px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text); font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: inherit; }
+    .btn.primary { background: linear-gradient(180deg,#f0f0ec,#cfcfc9); color: #0a0a0a; border-color: transparent; }
+    .hero { padding: 72px 0 48px; border-bottom: 1px solid var(--border); margin-bottom: 64px; }
+    .eyebrow { display: inline-block; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--soft); font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 24px; }
+    h1 { font-size: clamp(2.2rem,5vw,3.8rem); line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 20px; }
+    .lead { font-size: 1.18rem; color: var(--soft); margin: 0; max-width: 60ch; line-height: 1.7; }
+    .body-copy { padding-bottom: 80px; }
+    .body-copy h2 { font-size: clamp(1.4rem,3vw,2rem); letter-spacing: -0.03em; margin: 64px 0 20px; line-height: 1.15; }
+    .body-copy h2:first-child { margin-top: 0; }
+    .body-copy p { color: var(--soft); margin: 0 0 24px; }
+    .pull-quote { border-left: 2px solid rgba(255,255,255,0.15); padding: 4px 0 4px 28px; margin: 40px 0; font-size: 1.22rem; line-height: 1.55; letter-spacing: -0.02em; color: var(--text); }
+    .cta-block { border: 1px solid var(--border); border-radius: 24px; background: linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.02)); padding: 36px; text-align: center; margin: 64px 0 0; }
+    .cta-block h3 { margin: 0 0 10px; font-size: 1.5rem; letter-spacing: -0.03em; }
+    .cta-block p { color: var(--muted); margin: 0 0 24px; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 22px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <div class="nav-shell">
+    <div class="wrap nav">
+      <a href="/" class="brand"><span class="brand-mark">F</span><span>Fonna</span></a>
+      <a href="/#login" class="btn primary">Try Fonna free</a>
+    </div>
+  </div>
+  <main>
+    <div class="wrap">
+      <div class="hero">
+        <div class="eyebrow">The philosophy behind Fonna</div>
+        <h1>Better records come from better decisions.</h1>
+        <p class="lead">Fonna was built at the intersection of two lifelong pursuits &mdash; music making and education &mdash; by someone who has lived both deeply.</p>
+      </div>
+      <div class="body-copy">
+
+        <h2>Where this started</h2>
+        <p>My name is Ewen McIntosh. I am a lifelong gigging musician and independent recording artist. I am also a former high school music teacher, special educator, vice principal of curriculum and instruction, and have been high school principal for the last 12 years. I have been making records for myself, my students and artists in my community since before most people had a computer in their house.</p>
+
+        <p>My first serious recording setup was a Fostex X-55 &mdash; a four-track cassette recorder. From there I moved to a Fostex VF160 digital workstation, then to an RME Fireface, Cubase, and a UAD-1 card. Today, like most independent artists, I work inside a myriad of AI-powered creation tools that would have seemed impossible to the version of me who was bouncing tracks to cassette.</p>
+        <p>Each step forward brought more capability and more noise. More plugins, more tutorials, more rabbit holes. More time spent chasing a sound instead of finishing a record. I know what it feels like to lose a full weekend to a compressor setting. I also know what it feels like to finally get something right and have no one around to hear whether it actually worked.</p>
+
+        <div class="pull-quote">
+          I have lost countless hours chasing sounds through plugins and tutorials, room treatments and monitoring upgrades &mdash; and untold patience from friends and family who felt compelled to listen to semi-finished tracks and give me something useful back. Fonna solves this entirely.
+        </div>
+
+        <h2>The problem Fonna is built to solve</h2>
+        <p>Independent artists have no reliable feedback loop. You finish a rough mix at midnight. Your producer friends are asleep. Your partner has heard this song eleven times. You post it in a forum and get three responses, two of which are people promoting their own work. You wait. You second-guess. You start changing things before you even know what needs to change.</p>
+        <p>This is not a technology problem. It is a structural problem. The feedback that serious artists need &mdash; focused, honest, directional, timely &mdash; simply does not exist at a price or pace that works for independent creators. A session with a professional producer costs hundreds of dollars and takes days to schedule. A trusted friend with good ears is a rare and finite resource.</p>
+        <p>Fonna is available at midnight. It does not need context. It does not need to be kind. It listens to what is actually there and tells you what it hears.</p>
+
+        <h2>The education lens</h2>
+        <p>Ontario's Arts curriculum is built on two interconnected processes: creative and critical. Students are not just asked to make art &mdash; they are asked to reflect on it, analyse it, and use that analysis to make better decisions in the next iteration. Feedback is not a reward at the end of the process. It is built into every stage of it.</p>
+        <p>This is the framework I taught from for years. It is also the framework that most independent musicians never have access to once they leave formal education. The feedback loop that is standard practice in any serious arts programme &mdash; make something, hear honest observations, revise with intention &mdash; simply disappears for most artists the moment they are working alone.</p>
+        <p>Fonna is an attempt to restore that loop. Not to replace human feedback, and not to tell you how to make music. But to provide the kind of structured, honest, directional observation that helps artists move from where the record is to where they want it to be.</p>
+
+        <div class="pull-quote">
+          Artists need to feel heard, but they also need provocation. Fonna aims to provide both &mdash; through feedback and direction. Not how. Just what.
+        </div>
+
+        <h2>Clarity over abundance</h2>
+        <p>One of the things I have learned across thirty years of making music and a career in education is that abundance without direction is its own kind of paralysis. More tools do not make better records. More opinions do not make better decisions. What makes better records is knowing what to listen for, and having the discipline to act on it.</p>
+        <p>I am as much a lo-fi fan as anyone. I believe in the primacy of feel, of intention, of getting something captured before it disappears. Fonna is not here to sand the edges off your music or push you toward a radio sound. It is here to help you hear what is actually happening in the record &mdash; so that whatever you do next, you do it on purpose.</p>
+        <p>The cost of abundance is real. I have chased it. Fonna exists because I wished, many times, that someone would just tell me what to fix first.</p>
+
+        <h2>What Fonna will and will not do</h2>
+        <p>Fonna analyses arrangement, production, and mix. It does not critique songwriting, lyrics, or genre. That boundary is deliberate. Whether a chord change is right for a song is a question only you can answer. Whether the low mids are masking the vocal is something any experienced listener can identify and describe clearly.</p>
+        <p>Fonna stays in its lane. Every report is built around the same discipline: here is what is working, here is what is getting in the way, here is where to focus first. The goal is not to overwhelm. The goal is to give you the one or two things most worth your attention in the next session.</p>
+        <p>It does not remember your previous version. Each upload is a fresh listen, without bias or attachment. That is not a limitation &mdash; it is the point. You get the same honest ears every time, regardless of how many times you have uploaded, how long you have been working on the track, or how attached you are to a particular decision.</p>
+
+        <div class="cta-block">
+          <h3>Hear your track differently.</h3>
+          <p>One free analysis on signup. No commitment.</p>
+          <div class="cta-actions">
+            <a href="/#login" class="btn primary">Try Fonna free</a>
+            <a href="/" class="btn">Back to home</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-shell">
+        <span>&copy; 2026 Fonna, a division of 170681639 Ontario</span>
+        <div class="footer-links">
+          <a href="/terms.html">Terms of Use</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
