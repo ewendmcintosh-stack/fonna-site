@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,684 +6,105 @@
   <title>Fonna — Finish Better Records</title>
   <style>
     :root {
-      --bg: #080808;
-      --bg-2: #101010;
-      --panel: rgba(255,255,255,0.04);
-      --panel-strong: rgba(255,255,255,0.07);
-      --border: rgba(255,255,255,0.09);
-      --text: #f4f4f2;
-      --muted: #a4a4a0;
-      --soft: #d8d8d2;
-      --accent: #ffffff;
-      --shadow: 0 18px 50px rgba(0,0,0,0.38);
-      --max: 1240px;
-      --radius: 22px;
+      --bg: #080808; --bg-2: #101010; --panel: rgba(255,255,255,0.04);
+      --panel-strong: rgba(255,255,255,0.07); --border: rgba(255,255,255,0.09);
+      --text: #f4f4f2; --muted: #a4a4a0; --soft: #d8d8d2; --accent: #ffffff;
+      --shadow: 0 18px 50px rgba(0,0,0,0.38); --max: 1240px; --radius: 22px;
     }
-
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 28%),
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 28%),
         radial-gradient(circle at 80% 20%, rgba(255,255,255,0.04), transparent 24%),
         linear-gradient(180deg, #050505 0%, #0b0b0b 48%, #050505 100%);
       min-height: 100vh;
     }
-
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
-
-    .wrap {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .nav-shell {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(8,8,8,0.74);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      min-height: 76px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-    }
-
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(180deg, #fff, #c8c8c8);
-      color: #080808;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      box-shadow: 0 10px 24px rgba(255,255,255,0.12);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      color: var(--muted);
-      font-size: 0.96rem;
-    }
-
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .nav-shell { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(8,8,8,0.74); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.01em; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(180deg,#fff,#c8c8c8); color: #080808; display: grid; place-items: center; font-weight: 800; box-shadow: 0 10px 24px rgba(255,255,255,0.12); }
+    .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 0.96rem; }
     .nav-links a:hover { color: var(--text); }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 46px;
-      padding: 0 18px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      font-weight: 600;
-      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.18);
-    }
-
-    .btn.primary {
-      background: linear-gradient(180deg, #f0f0ec, #cfcfc9);
-      color: #0a0a0a;
-      border-color: transparent;
-      box-shadow: 0 14px 30px rgba(255,255,255,0.12);
-    }
-
-    .btn.primary:hover {
-      background: linear-gradient(180deg, #ffffff, #d8d8d2);
-    }
-
-    .hero {
-      padding: 78px 0 46px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-copy,
-    .hero-card {
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
-      border-radius: 30px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-copy {
-      padding: 42px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
-      color: var(--soft);
-      font-size: 0.84rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 22px;
-    }
-
-    .hero h1 {
-      font-size: clamp(3rem, 6vw, 5.8rem);
-      line-height: 0.95;
-      letter-spacing: -0.05em;
-      margin: 0 0 18px;
-      max-width: 9ch;
-    }
-
-    .hero p.lead {
-      margin: 0;
-      color: var(--soft);
-      font-size: 1.14rem;
-      line-height: 1.7;
-      max-width: 58ch;
-    }
-
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-
-    .micro {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .micro span {
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .hero-card {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .report-window {
-      flex: 1;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(180deg, rgba(0,0,0,0.32), rgba(255,255,255,0.03));
-      padding: 18px;
-    }
-
-    .window-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--muted);
-      font-size: 0.84rem;
-      margin-bottom: 14px;
-    }
-
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text); font-weight: 600; transition: transform 0.18s ease, background 0.18s ease; cursor: pointer; font-family: inherit; font-size: inherit; }
+    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.08); }
+    .btn.primary { background: linear-gradient(180deg,#f0f0ec,#cfcfc9); color: #0a0a0a; border-color: transparent; box-shadow: 0 14px 30px rgba(255,255,255,0.12); }
+    .btn.primary:hover { background: linear-gradient(180deg,#ffffff,#d8d8d2); }
+    .hero { padding: 78px 0 46px; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: stretch; }
+    .hero-copy, .hero-card { border: 1px solid var(--border); background: linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.025)); border-radius: 30px; box-shadow: var(--shadow); }
+    .hero-copy { padding: 42px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--soft); font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 22px; }
+    .hero h1 { font-size: clamp(3rem,6vw,5.8rem); line-height: 0.95; letter-spacing: -0.05em; margin: 0 0 18px; max-width: 9ch; }
+    .hero p.lead { margin: 0; color: var(--soft); font-size: 1.14rem; line-height: 1.7; max-width: 58ch; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+    .micro { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; color: var(--muted); font-size: 0.92rem; }
+    .micro span { padding: 9px 12px; border-radius: 999px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.06); }
+    .hero-card { padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+    .report-window { flex: 1; border-radius: 22px; border: 1px solid rgba(255,255,255,0.08); background: linear-gradient(180deg,rgba(0,0,0,0.32),rgba(255,255,255,0.03)); padding: 18px; }
+    .window-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.84rem; margin-bottom: 14px; }
     .dots { display: flex; gap: 7px; }
-    .dots span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.18);
-      display: block;
-    }
-
-    .report-section {
-      border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(255,255,255,0.03);
-      border-radius: 18px;
-      padding: 14px;
-    }
-
+    .dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.18); display: block; }
+    .report-section { border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); border-radius: 18px; padding: 14px; }
     .report-section + .report-section { margin-top: 12px; }
-
-    .report-label {
-      font-size: 0.77rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .report-title {
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .report-list {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--soft);
-      line-height: 1.62;
-      font-size: 0.95rem;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .stat {
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .stat-k {
-      display: block;
-      font-size: 0.78rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 6px;
-    }
-
-    .stat-v {
-      font-size: 1.18rem;
-      font-weight: 700;
-    }
-
-    .section {
-      padding: 34px 0;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      align-items: end;
-      margin-bottom: 22px;
-    }
-
-    .section-head h2 {
-      margin: 0 0 8px;
-      font-size: clamp(1.9rem, 3vw, 3rem);
-      letter-spacing: -0.04em;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 58ch;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .card {
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.025));
-      box-shadow: var(--shadow);
-      padding: 24px;
-    }
-
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 1.22rem;
-      letter-spacing: -0.02em;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--soft);
-      line-height: 1.7;
-    }
-
-    .step-no {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 16px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--text);
-      font-weight: 700;
-    }
-
-    .pricing-card {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      min-height: 100%;
-    }
-
-    .pricing-card .tier {
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-
-    .price {
-      font-size: 2.35rem;
-      letter-spacing: -0.05em;
-      font-weight: 800;
-      margin: 0;
-    }
-
-    .price-sub {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-top: -10px;
-    }
-
-    .feature-list {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--soft);
-      line-height: 1.7;
-    }
-
+    .report-label { font-size: 0.77rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+    .report-title { font-weight: 700; margin-bottom: 8px; }
+    .report-list { margin: 0; padding-left: 18px; color: var(--soft); line-height: 1.62; font-size: 0.95rem; }
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .stat { padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); }
+    .stat-k { display: block; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .stat-v { font-size: 1.18rem; font-weight: 700; }
+    .section { padding: 34px 0; }
+    .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
+    .section-head h2 { margin: 0 0 8px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; }
+    .section-head p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 58ch; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+    .card { border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.025)); box-shadow: var(--shadow); padding: 24px; }
+    .card h3 { margin: 0 0 10px; font-size: 1.22rem; letter-spacing: -0.02em; }
+    .card p { margin: 0; color: var(--soft); line-height: 1.7; }
+    .step-no { width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; margin-bottom: 16px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: var(--text); font-weight: 700; }
+    .pricing-card { display: flex; flex-direction: column; gap: 18px; min-height: 100%; }
+    .pricing-card .tier { font-size: 1.1rem; font-weight: 700; }
+    .price { font-size: 2.35rem; letter-spacing: -0.05em; font-weight: 800; margin: 0; }
+    .price-sub { color: var(--muted); font-size: 0.95rem; margin-top: -10px; }
+    .feature-list { margin: 0; padding-left: 18px; color: var(--soft); line-height: 1.7; }
     .pricing-card .btn { margin-top: auto; }
-
-    .highlight {
-      outline: 1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
-    }
-
-    .about-layout {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 18px;
-    }
-
-    .quote {
-      font-size: clamp(1.35rem, 2.2vw, 2rem);
-      line-height: 1.45;
-      letter-spacing: -0.03em;
-      color: var(--text);
-    }
-
-    .footer {
-      padding: 28px 0 60px;
-      color: var(--muted);
-    }
-
-    .footer-shell {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 22px;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
+    .highlight { outline: 1px solid rgba(255,255,255,0.12); background: linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.035)); }
+    .about-layout { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; }
+    .quote { font-size: clamp(1.35rem,2.2vw,2rem); line-height: 1.45; letter-spacing: -0.03em; color: var(--text); }
+    .footer { padding: 28px 0 60px; color: var(--muted); }
+    .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
     .footer-links a:hover { color: var(--text); }
-
-    @media (max-width: 1080px) {
-      .hero-grid,
-      .about-layout,
-      .grid-4 {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
+    .auth-shell { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; align-items: start; }
+    .auth-card { border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.025)); box-shadow: var(--shadow); padding: 24px; }
+    .auth-form { display: grid; gap: 14px; }
+    .auth-form input { width: 100%; border: 1px solid var(--border); border-radius: 14px; padding: 12px; background: rgba(255,255,255,0.04); color: var(--text); font-size: 14px; font-family: inherit; }
+    .auth-form input::placeholder { color: var(--muted); }
+    .auth-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .auth-status { margin-top: 14px; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: var(--soft); line-height: 1.6; min-height: 48px; font-size: 14px; }
+    .auth-userbox { display: grid; gap: 10px; }
+    .auth-userbox .row { padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
+    .auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+    .hidden { display: none !important; }
+    @media (max-width: 1080px) { .hero-grid, .about-layout, .grid-4 { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 860px) {
-      .nav {
-        flex-wrap: wrap;
-        padding: 14px 0;
-      }
-
-      .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 14px 18px;
-        padding-bottom: 4px;
-      }
-
-      .hero-grid,
-      .grid-3,
-      .grid-4,
-      .about-layout,
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-copy,
-      .hero-card,
-      .card {
-        padding: 22px;
-      }
-
-      .section-head {
-        flex-direction: column;
-        align-items: start;
-      }
-    }.auth-shell {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 18px;
-  align-items: start;
-}
-
-.auth-card {
-  border-radius: 24px;
-  border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.025));
-  box-shadow: var(--shadow);
-  padding: 24px;
-}
-
-.auth-form {
-  display: grid;
-  gap: 14px;
-}
-
-.auth-form input {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px;
-  background: rgba(255,255,255,0.04);
-  color: var(--text);
-  font-size: 14px;
-}
-
-.auth-form input::placeholder {
-  color: var(--muted);
-}
-
-.auth-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.auth-status {
-  margin-top: 14px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
-  color: var(--soft);
-  line-height: 1.6;
-  min-height: 48px;
-}
-
-.auth-userbox {
-  display: grid;
-  gap: 10px;
-}
-
-.auth-userbox .row {
-  padding: 12px 14px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
-}
-
-.auth-userbox .k {
-  display: block;
-  color: var(--muted);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  margin-bottom: 4px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-@media (max-width: 860px) {
-  .auth-shell {
-    grid-template-columns: 1fr;
-  }
-}
+      .nav { flex-wrap: wrap; padding: 14px 0; }
+      .nav-links { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 14px 18px; padding-bottom: 4px; }
+      .hero-grid, .grid-3, .grid-4, .about-layout, .stats { grid-template-columns: 1fr; }
+      .hero-copy, .hero-card, .card { padding: 22px; }
+      .section-head { flex-direction: column; align-items: start; }
+      .auth-shell { grid-template-columns: 1fr; }
+    }
   </style>
-</head><script type="module">
-  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-  const SUPABASE_URL = "https://kukqwyakchsaqquudqiu.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  const authStatus = document.getElementById("authStatus");
-  const authLoggedOut = document.getElementById("authLoggedOut");
-  const authLoggedIn = document.getElementById("authLoggedIn");
-  const authEmail = document.getElementById("authEmail");
-  const authPassword = document.getElementById("authPassword");
-  const signUpBtn = document.getElementById("signUpBtn");
-  const loginBtn = document.getElementById("loginBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const userEmailText = document.getElementById("userEmailText");
-  const userCreditsText = document.getElementById("userCreditsText");
-
-  function setStatus(message) {
-    authStatus.textContent = message;
-  }
-
-  async function loadProfile(user) {
-    const { data, error } = await supabase
-      .from("users")
-      .select("email, credits")
-      .eq("id", user.id)
-      .single();
-
-    if (error) {
-      setStatus(`Logged in, but could not load credits: ${error.message}`);
-      userEmailText.textContent = user.email || "Unknown";
-      userCreditsText.textContent = "Unavailable";
-      return;
-    }
-
-    userEmailText.textContent = data.email || user.email || "Unknown";
-    userCreditsText.textContent = `${data.credits ?? 0}`;
-    setStatus("Logged in successfully.");
-  }
-
-  async function refreshAuthUI() {
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session?.user) {
-      authLoggedOut.classList.remove("hidden");
-      authLoggedIn.classList.add("hidden");
-      setStatus("Ready.");
-      return;
-    }
-
-    authLoggedOut.classList.add("hidden");
-    authLoggedIn.classList.remove("hidden");
-    await loadProfile(session.user);
-  }
-
-  signUpBtn.addEventListener("click", async () => {
-    const email = authEmail.value.trim();
-    const password = authPassword.value;
-
-    if (!email || !password) {
-      setStatus("Enter an email and password.");
-      return;
-    }
-
-    setStatus("Creating account...");
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password
-    });
-
-    if (error) {
-      setStatus(`Signup failed: ${error.message}`);
-      return;
-    }
-
-    if (data.user) {
-      setStatus("Account created. You can now use Fonna.");
-      await refreshAuthUI();
-    } else {
-      setStatus("Signup submitted. Check your email if confirmation is enabled.");
-    }
-  });
-
-  loginBtn.addEventListener("click", async () => {
-    const email = authEmail.value.trim();
-    const password = authPassword.value;
-
-    if (!email || !password) {
-      setStatus("Enter an email and password.");
-      return;
-    }
-
-    setStatus("Logging in...");
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      setStatus(`Login failed: ${error.message}`);
-      return;
-    }
-
-    await refreshAuthUI();
-  });
-
-  logoutBtn.addEventListener("click", async () => {
-    await supabase.auth.signOut();
-    await refreshAuthUI();
-  });
-
-  supabase.auth.onAuthStateChange(async () => {
-    await refreshAuthUI();
-  });
-
-  await refreshAuthUI();
-</script>
+</head>
 <body>
   <div class="nav-shell">
     <div class="wrap nav">
@@ -692,7 +112,6 @@
         <span class="brand-mark">F</span>
         <span>Fonna</span>
       </a>
-
       <nav class="nav-links">
         <a href="#product">Product</a>
         <a href="#how">How It Works</a>
@@ -700,7 +119,6 @@
         <a href="#about">About</a>
         <a href="#careers">Careers</a>
       </nav>
-
       <div class="nav-actions">
         <a class="btn" href="#login">Login</a>
         <a class="btn primary" href="#login">Try Fonna</a>
@@ -714,9 +132,7 @@
         <div class="hero-copy">
           <div class="eyebrow">AI producer feedback for songs in progress</div>
           <h1>Finish better records.</h1>
-          <p class="lead">
-            Upload your track and get focused producer feedback on arrangement, production, and mix. Fonna is built for creators who want clearer next moves, not vague compliments.
-          </p>
+          <p class="lead">Upload your track and get focused producer feedback on arrangement, production, and mix. Fonna is built for creators who want clearer next moves, not vague compliments.</p>
           <div class="hero-cta">
             <a class="btn primary" href="/app.html">Try Fonna free</a>
             <a class="btn" href="#pricing">See pricing</a>
@@ -727,20 +143,17 @@
             <span>Built for real works-in-progress</span>
           </div>
         </div>
-
         <div class="hero-card">
           <div class="report-window">
             <div class="window-top">
               <div class="dots"><span></span><span></span><span></span></div>
               <div>Producer Report</div>
             </div>
-
             <div class="report-section">
               <div class="report-label">Snapshot</div>
               <div class="report-title">The track establishes a clear center quickly.</div>
-              <div style="color: var(--soft); line-height: 1.65;">The strongest opportunity is creating more lift into the larger sections so the payoff lands harder.</div>
+              <div style="color:var(--soft);line-height:1.65;">The strongest opportunity is creating more lift into the larger sections so the payoff lands harder.</div>
             </div>
-
             <div class="report-section">
               <div class="report-label">Arrangement</div>
               <ul class="report-list">
@@ -749,120 +162,55 @@
                 <li>Drop one supporting layer before the next lift.</li>
               </ul>
             </div>
-
             <div class="report-section">
               <div class="report-label">Best Next Move</div>
-              <div style="color: var(--soft); line-height: 1.65;">Thin the arrangement just before the biggest section so the return feels wider, louder, and more intentional.</div>
+              <div style="color:var(--soft);line-height:1.65;">Thin the arrangement just before the biggest section so the return feels wider, louder, and more intentional.</div>
             </div>
           </div>
-
           <div class="stats">
-            <div class="stat">
-              <span class="stat-k">Focus</span>
-              <span class="stat-v">Arrangement</span>
-            </div>
-            <div class="stat">
-              <span class="stat-k">Focus</span>
-              <span class="stat-v">Production</span>
-            </div>
-            <div class="stat">
-              <span class="stat-k">Focus</span>
-              <span class="stat-v">Mix</span>
-            </div>
+            <div class="stat"><span class="stat-k">Focus</span><span class="stat-v">Arrangement</span></div>
+            <div class="stat"><span class="stat-k">Focus</span><span class="stat-v">Production</span></div>
+            <div class="stat"><span class="stat-k">Focus</span><span class="stat-v">Mix</span></div>
           </div>
         </div>
       </div>
     </section>
 
     <section id="product" class="section wrap">
-      <div class="section-head">
-        <div>
-          <h2>Built to listen like a producer.</h2>
-          <p>Most music AI products chase generation. Fonna is about decision-making. It helps artists hear what is working, what is holding things back, and what to change first.</p>
-        </div>
-      </div>
-
+      <div class="section-head"><div><h2>Built to listen like a producer.</h2><p>Most music AI products chase generation. Fonna is about decision-making.</p></div></div>
       <div class="grid-3">
-        <div class="card">
-          <h3>Focused critique</h3>
-          <p>Fonna stays on the parts of the record that shape the listening experience most directly: arrangement, production, and mix.</p>
-        </div>
-        <div class="card">
-          <h3>Clear next actions</h3>
-          <p>No padded language. No abstract theory. Every report is meant to help you move the track forward in the next session.</p>
-        </div>
-        <div class="card">
-          <h3>Designed for works in progress</h3>
-          <p>Use it on demos, near-finishes, or release candidates. Fonna is for the stage where choices still matter.</p>
-        </div>
+        <div class="card"><h3>Focused critique</h3><p>Fonna stays on arrangement, production, and mix — the parts of the record that shape the listening experience most directly.</p></div>
+        <div class="card"><h3>Clear next actions</h3><p>No padded language. No abstract theory. Every report is meant to help you move the track forward in the next session.</p></div>
+        <div class="card"><h3>Designed for works in progress</h3><p>Use it on demos, near-finishes, or release candidates. Fonna is for the stage where choices still matter.</p></div>
       </div>
     </section>
 
     <section id="how" class="section wrap">
-      <div class="section-head">
-        <div>
-          <h2>How it works</h2>
-          <p>Simple on the surface. Serious under the hood.</p>
-        </div>
-      </div>
-
+      <div class="section-head"><div><h2>How it works</h2><p>Simple on the surface. Serious under the hood.</p></div></div>
       <div class="grid-3">
-        <div class="card">
-          <div class="step-no">1</div>
-          <h3>Upload your track</h3>
-          <p>Send Fonna the song you are working on and add a short note if you want to steer the feedback.</p>
-        </div>
-        <div class="card">
-          <div class="step-no">2</div>
-          <h3>Fonna listens in producer passes</h3>
-          <p>It listens for momentum, section contrast, texture choices, vocal placement, low-end clarity, and mix hierarchy.</p>
-        </div>
-        <div class="card">
-          <div class="step-no">3</div>
-          <h3>Get the report</h3>
-          <p>Receive a concise producer report with a snapshot, domain notes, best next move, and priority actions.</p>
-        </div>
+        <div class="card"><div class="step-no">1</div><h3>Upload your track</h3><p>Send Fonna the song you are working on and add a short note if you want to steer the feedback.</p></div>
+        <div class="card"><div class="step-no">2</div><h3>Fonna listens in producer passes</h3><p>It listens for momentum, section contrast, texture choices, vocal placement, low-end clarity, and mix hierarchy.</p></div>
+        <div class="card"><div class="step-no">3</div><h3>Get the report</h3><p>Receive a concise producer report with a snapshot, domain notes, best next move, and priority actions.</p></div>
       </div>
     </section>
 
     <section class="section wrap">
-      <div class="section-head">
-        <div>
-          <h2>What makes it different</h2>
-          <p>Fonna is not trying to replace taste. It is trying to sharpen decisions.</p>
-        </div>
-      </div>
-
+      <div class="section-head"><div><h2>What makes it different</h2><p>Fonna is not trying to replace taste. It is trying to sharpen decisions.</p></div></div>
       <div class="grid-3">
-        <div class="card">
-          <h3>No generic praise</h3>
-          <p>The goal is not to flatter the track. The goal is to help you understand how the record is landing and what is getting in its way.</p>
-        </div>
-        <div class="card">
-          <h3>No songwriting detours</h3>
-          <p>Fonna stays disciplined. It does not drift into lyric critique or vague genre commentary when the real issue is production or mix.</p>
-        </div>
-        <div class="card">
-          <h3>Built for repeat use</h3>
-          <p>Come back after every revision. The strongest use case is hearing whether your latest decisions actually improved the record.</p>
-        </div>
+        <div class="card"><h3>No generic praise</h3><p>The goal is not to flatter the track. The goal is to help you understand how the record is landing and what is getting in its way.</p></div>
+        <div class="card"><h3>No songwriting detours</h3><p>Fonna stays disciplined. It does not drift into lyric critique or vague genre commentary when the real issue is production or mix.</p></div>
+        <div class="card"><h3>Built for repeat use</h3><p>Come back after every revision. The strongest use case is hearing whether your latest decisions actually improved the record.</p></div>
       </div>
     </section>
 
     <section id="pricing" class="section wrap">
-      <div class="section-head">
-        <div>
-          <h2>Pricing</h2>
-          <p>Simple credit-based access for launch. Subscription comparison tools can come in the next generation.</p>
-        </div>
-      </div>
-
+      <div class="section-head"><div><h2>Pricing</h2><p>Simple credit-based access for launch.</p></div></div>
       <div class="grid-3">
         <div class="card pricing-card">
           <div>
             <div class="tier">Free</div>
             <p class="price">$0</p>
-            <div class="price-sub">3 credits</div>
+            <div class="price-sub">3 credits on signup</div>
           </div>
           <ul class="feature-list">
             <li>Try the full Fonna experience</li>
@@ -871,33 +219,31 @@
           </ul>
           <a class="btn" href="/app.html">Start free</a>
         </div>
-
         <div class="card pricing-card highlight">
           <div>
             <div class="tier">Starter</div>
-            <p class="price">$10</p>
-            <div class="price-sub">25 credits</div>
+            <p class="price">$9.99</p>
+            <div class="price-sub">10 credits</div>
           </div>
           <ul class="feature-list">
-            <li>Enough for multiple revisions</li>
-            <li>Useful for active songwriting weeks</li>
+            <li>10 full analyses</li>
+            <li>Useful for active revision weeks</li>
             <li>Simple one-time purchase</li>
           </ul>
-          <a class="btn primary" href="#login">Choose Starter</a>
+          <a class="btn primary" href="/app.html">Buy Starter</a>
         </div>
-
         <div class="card pricing-card">
           <div>
             <div class="tier">Creator</div>
-            <p class="price">$30</p>
-            <div class="price-sub">100 credits</div>
+            <p class="price">$19.99</p>
+            <div class="price-sub">30 credits</div>
           </div>
           <ul class="feature-list">
-            <li>Built for heavier iteration</li>
+            <li>30 full analyses</li>
             <li>Ideal for producers and serious artists</li>
             <li>Best value at launch</li>
           </ul>
-          <a class="btn" href="#login">Choose Creator</a>
+          <a class="btn" href="/app.html">Buy Creator</a>
         </div>
       </div>
     </section>
@@ -905,30 +251,18 @@
     <section id="about" class="section wrap">
       <div class="about-layout">
         <div class="card">
-          <div class="section-head" style="margin-bottom: 12px;">
-            <div>
-              <h2>About Fonna</h2>
-            </div>
-          </div>
-          <p class="quote"> Built by musicians and music educators, Fonna gives creators a serious set of ears before they print the next version.</p>
+          <div class="section-head" style="margin-bottom:12px;"><div><h2>About Fonna</h2></div></div>
+          <p class="quote">Built by musicians and music educators, Fonna gives creators a serious set of ears before they print the next version.</p>
         </div>
-
         <div class="card">
           <h3>What we believe</h3>
-          <p>
-            Better records usually come from better decisions, not more plugins, more layers, or more noise. Fonna exists to help artists focus, simplify, and move the track toward its strongest form.
-          </p>
+          <p>Better records usually come from better decisions, not more plugins, more layers, or more noise. Fonna exists to help artists focus, simplify, and move the track toward its strongest form.</p>
         </div>
       </div>
     </section>
 
     <section id="careers" class="section wrap">
-      <div class="section-head">
-        <div>
-          <h2>Careers</h2>
-          <p> As Fonna grows, this is where future roles and collaborations would live.</p>
-        </div>
-      </div>
+      <div class="section-head"><div><h2>Careers</h2><p>As Fonna grows, this is where future roles and collaborations would live.</p></div></div>
       <div class="card">
         <h3>Early-stage by design</h3>
         <p>Fonna is in launch mode. Right now the focus is product quality, trust, and proving that artists want producer-grade feedback in a fast, repeatable format.</p>
@@ -936,59 +270,135 @@
     </section>
 
     <section id="login" class="section wrap">
-  <div class="auth-shell">
-    <div class="auth-card">
-      <h3 style="margin-top:0; margin-bottom:8px;">Get started with Fonna</h3>
-      <p style="margin-top:0; color: var(--muted); line-height:1.7;">
-        Create an account to receive 3 free credits. Each analysis uses 1 credit.
-      </p>
+      <div class="auth-shell">
+        <div class="auth-card">
+          <h3 style="margin-top:0;margin-bottom:8px;">Get started with Fonna</h3>
+          <p style="margin-top:0;color:var(--muted);line-height:1.7;">Create an account to receive 3 free credits. Each analysis uses 1 credit.</p>
 
-      <div id="authLoggedOut">
-        <div class="auth-form">
-          <input id="authEmail" type="email" placeholder="Email address" autocomplete="email" />
-          <input id="authPassword" type="password" placeholder="Password" autocomplete="current-password" />
-
-          <div class="auth-actions">
-            <button class="btn primary" id="signUpBtn" type="button">Sign up</button>
-            <button class="btn" id="loginBtn" type="button">Log in</button>
+          <div id="authLoggedOut">
+            <div class="auth-form">
+              <input id="authEmail" type="email" placeholder="Email address" autocomplete="email" />
+              <input id="authPassword" type="password" placeholder="Password" autocomplete="current-password" />
+              <div class="auth-actions">
+                <button class="btn primary" id="signUpBtn" type="button">Sign up</button>
+                <button class="btn" id="loginBtn" type="button">Log in</button>
+              </div>
+            </div>
           </div>
+
+          <div id="authLoggedIn" class="hidden">
+            <div class="auth-userbox">
+              <div class="row"><span class="k">Logged in as</span><strong id="userEmailText">—</strong></div>
+              <div class="row"><span class="k">Credits</span><strong id="userCreditsText">—</strong></div>
+              <div class="auth-actions">
+                <a class="btn primary" href="/app.html">Go to app</a>
+                <button class="btn" id="logoutBtn" type="button">Log out</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="authStatus" class="auth-status">Ready.</div>
+        </div>
+
+        <div class="auth-card">
+          <h3 style="margin-top:0;margin-bottom:8px;">How access works</h3>
+          <p style="color:var(--soft);line-height:1.7;margin-top:0;">New accounts receive 3 free credits automatically. When you use Fonna to analyze a track, 1 credit is deducted after a successful report.</p>
+          <ul class="feature-list">
+            <li>Free account: 3 credits</li>
+            <li>Starter: 10 credits for $9.99</li>
+            <li>Creator: 30 credits for $19.99</li>
+          </ul>
         </div>
       </div>
+    </section>
+  </main>
 
-      <div id="authLoggedIn" class="hidden">
-        <div class="auth-userbox">
-          <div class="row">
-            <span class="k">Logged in as</span>
-            <strong id="userEmailText">—</strong>
-          </div>
-          <div class="row">
-            <span class="k">Credits</span>
-            <strong id="userCreditsText">—</strong>
-          </div>
-          <div class="auth-actions">
-            <a class="btn primary" href="/app.html">Go to app</a>
-            <button class="btn" id="logoutBtn" type="button">Log out</button>
-          </div>
-        </div>
+  <footer class="footer wrap">
+    <div class="footer-shell">
+      <span>© 2026 Fonna</span>
+      <div class="footer-links">
+        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
       </div>
-
-      <div id="authStatus" class="auth-status">Ready.</div>
     </div>
-
-    <div class="auth-card">
-      <h3 style="margin-top:0; margin-bottom:8px;">How access works</h3>
-      <p style="color: var(--soft); line-height:1.7; margin-top:0;">
-        New accounts receive 3 free credits automatically. When you use Fonna to analyze a track,
-        1 credit is deducted after a successful report.
-      </p>
-      <ul class="feature-list">
-        <li>Free account: 3 credits</li>
-        <li>Starter: 25 credits for $10</li>
-        <li>Creator: 100 credits for $30</li>
-      </ul>
-    </div>
-  </div>
-</section>
   </footer>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const SUPABASE_URL = "https://kukqwyakchsaqquudqiu.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const authStatus    = document.getElementById("authStatus");
+    const authLoggedOut = document.getElementById("authLoggedOut");
+    const authLoggedIn  = document.getElementById("authLoggedIn");
+    const authEmail     = document.getElementById("authEmail");
+    const authPassword  = document.getElementById("authPassword");
+    const signUpBtn     = document.getElementById("signUpBtn");
+    const loginBtn      = document.getElementById("loginBtn");
+    const logoutBtn     = document.getElementById("logoutBtn");
+    const userEmailText  = document.getElementById("userEmailText");
+    const userCreditsText = document.getElementById("userCreditsText");
+
+    function setStatus(msg) { authStatus.textContent = msg; }
+
+    async function loadProfile(user) {
+      const { data, error } = await supabase.from("users").select("email, credits").eq("id", user.id).single();
+      if (error) {
+        userEmailText.textContent = user.email || "Unknown";
+        userCreditsText.textContent = "Unavailable";
+        return;
+      }
+      userEmailText.textContent = data.email || user.email || "Unknown";
+      userCreditsText.textContent = `${data.credits ?? 0}`;
+    }
+
+    async function refreshAuthUI() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) {
+        authLoggedOut.classList.remove("hidden");
+        authLoggedIn.classList.add("hidden");
+        setStatus("Ready.");
+        return;
+      }
+      authLoggedOut.classList.add("hidden");
+      authLoggedIn.classList.remove("hidden");
+      await loadProfile(session.user);
+      setStatus("Logged in successfully.");
+    }
+
+    signUpBtn.addEventListener("click", async () => {
+      const email = authEmail.value.trim();
+      const password = authPassword.value;
+      if (!email || !password) { setStatus("Enter an email and password."); return; }
+      setStatus("Creating account...");
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) { setStatus(`Signup failed: ${error.message}`); return; }
+      if (data.user) {
+        setStatus("Account created! Redirecting to app...");
+        setTimeout(() => { window.location.href = "/app.html"; }, 1000);
+      } else {
+        setStatus("Signup submitted. Check your email if confirmation is required.");
+      }
+    });
+
+    loginBtn.addEventListener("click", async () => {
+      const email = authEmail.value.trim();
+      const password = authPassword.value;
+      if (!email || !password) { setStatus("Enter an email and password."); return; }
+      setStatus("Logging in...");
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) { setStatus(`Login failed: ${error.message}`); return; }
+      setStatus("Logged in! Redirecting to app...");
+      setTimeout(() => { window.location.href = "/app.html"; }, 800);
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      await refreshAuthUI();
+    });
+
+    await refreshAuthUI();
+  </script>
 </body>
 </html>
