@@ -202,6 +202,7 @@ textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
   const SUPABASE_URL = "https://kukqwyakchsaqquudqiu.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
+  const BACKEND_URL = "https://listener-service-1esi.onrender.com";
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const authWall = document.getElementById("authWall");
@@ -283,7 +284,7 @@ textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
     const buttons = document.querySelectorAll(".buy-btn");
     buttons.forEach(b => { b.disabled = true; b.textContent = "Redirecting…"; });
     try {
-      const res = await fetch("/create-checkout-session", {
+      const res = await fetch(`${BACKEND_URL}/create-checkout-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${currentSession.access_token}` },
         body: JSON.stringify({ pack })
@@ -313,7 +314,7 @@ textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
     try {
       const response = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/critique-upload");
+        xhr.open("POST", `${BACKEND_URL}/critique-upload`);
         xhr.responseType = "json";
         xhr.setRequestHeader("Authorization", `Bearer ${fresh.access_token}`);
         xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
