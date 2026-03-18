@@ -593,7 +593,7 @@
     </div>
   </footer>
 
-  <!-- FIX: Script moved to end of body so all DOM elements exist when it runs -->
+  <!-- Script at end of body so all DOM elements exist when it runs -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
@@ -614,47 +614,62 @@
 
     function setStatus(msg) { authStatus.textContent = msg; }
 
+    // Loads credits from the users table — fails gracefully so it never hangs
     async function loadProfile(user) {
-      const { data, error } = await supabase
-        .from("users")
-        .select("email, credits")
-        .eq("id", user.id)
-        .single();
-      if (error) {
+      try {
+        const { data, error } = await supabase
+          .from("users")
+          .select("email, credits")
+          .eq("id", user.id)
+          .maybeSingle();          // maybeSingle() won't throw if row is missing
+        if (error) throw error;
+        userEmailText.textContent   = (data && data.email) ? data.email : (user.email || "Unknown");
+        userCreditsText.textContent = data ? String(data.credits ?? 0) : "0";
+      } catch (err) {
+        // Profile table error must never block the logged-in UI from showing
+        console.warn("loadProfile error:", err.message);
         userEmailText.textContent   = user.email || "Unknown";
-        userCreditsText.textContent = "Unavailable";
-        return;
+        userCreditsText.textContent = "—";
       }
-      userEmailText.textContent   = data.email || user.email || "Unknown";
-      userCreditsText.textContent = String(data.credits ?? 0);
     }
 
     async function refreshAuthUI() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.user) {
-        authLoggedOut.classList.remove("hidden");
-        authLoggedIn.classList.add("hidden");
-        setStatus("Ready.");
-        return;
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.user) {
+          authLoggedOut.classList.remove("hidden");
+          authLoggedIn.classList.add("hidden");
+          setStatus("Ready.");
+          return;
+        }
+        // Show logged-in state immediately, then populate profile in background
+        authLoggedOut.classList.add("hidden");
+        authLoggedIn.classList.remove("hidden");
+        setStatus("Logged in successfully.");
+        await loadProfile(session.user);
+      } catch (err) {
+        console.error("refreshAuthUI error:", err.message);
+        setStatus("Something went wrong. Please refresh.");
       }
-      authLoggedOut.classList.add("hidden");
-      authLoggedIn.classList.remove("hidden");
-      await loadProfile(session.user);
-      setStatus("Logged in successfully.");
     }
 
     signUpBtn.addEventListener("click", async () => {
       const email    = authEmail.value.trim();
       const password = authPassword.value;
       if (!email || !password) { setStatus("Enter an email and password."); return; }
+      signUpBtn.disabled = true;
       setStatus("Creating account...");
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) { setStatus("Signup failed: " + error.message); return; }
-      if (data.user) {
-        setStatus("Account created! You can now log in.");
-        await refreshAuthUI();
-      } else {
-        setStatus("Signup submitted. Check your email if confirmation is enabled.");
+      try {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) { setStatus("Signup failed: " + error.message); return; }
+        if (data.user) {
+          setStatus("Account created! You can now log in.");
+          await refreshAuthUI();
+        } else {
+          setStatus("Signup submitted. Check your email if confirmation is enabled.");
+        }
+      } finally {
+        signUpBtn.disabled = false;
       }
     });
 
@@ -662,10 +677,17 @@
       const email    = authEmail.value.trim();
       const password = authPassword.value;
       if (!email || !password) { setStatus("Enter an email and password."); return; }
+      loginBtn.disabled = true;
       setStatus("Logging in...");
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) { setStatus("Login failed: " + error.message); return; }
-      await refreshAuthUI();
+      try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) { setStatus("Login failed: " + error.message); return; }
+        await refreshAuthUI();
+      } catch (err) {
+        setStatus("Login error: " + err.message);
+      } finally {
+        loginBtn.disabled = false;
+      }
     });
 
     logoutBtn.addEventListener("click", async () => {
@@ -673,8 +695,13 @@
       await refreshAuthUI();
     });
 
-    supabase.auth.onAuthStateChange(async () => {
-      await refreshAuthUI();
+    // onAuthStateChange can fire during redirects — guard against double-runs
+    let authChangeBusy = false;
+    supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (authChangeBusy) return;
+      authChangeBusy = true;
+      try { await refreshAuthUI(); }
+      finally { authChangeBusy = false; }
     });
 
     await refreshAuthUI();
