@@ -67,7 +67,7 @@
     .drop-sub{font-size:0.82rem;color:var(--muted);margin-bottom:10px;}
     .drop-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;}
     #fileInput{display:block;}
-    .file-chosen{display:none;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.2);font-size:0.88rem;margin-bottom:20px;}
+    .file-chosen{display:none;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.2);font-size:0.88rem;margin-bottom:20px;position:relative;}
     .file-chosen.show{display:flex;}
     .file-name{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
     .file-sz{font-size:0.78rem;color:var(--muted);flex-shrink:0;}
@@ -75,7 +75,7 @@
     .file-clear:hover{color:var(--text);}
 
     /* FIELDS */
-    .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;position:relative;}
     .field{display:flex;flex-direction:column;gap:6px;}
     .field.full{grid-column:1/-1;}
     .field label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
@@ -109,29 +109,29 @@
     .rpt-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
     .rpt-track{font-size:1.3rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:3px;}
     .rpt-meta{font-size:0.82rem;color:var(--muted);}
-    .snapshot{background:rgba(15,52,96,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 20px;margin-bottom:20px;}
+    .snapshot{background:rgba(15,52,96,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 20px;margin-bottom:20px;position:relative;}
     .snapshot-text{color:var(--soft);line-height:1.7;font-size:0.95rem;font-style:italic;}
-    .best-next{background:rgba(233,69,96,0.07);border:1px solid rgba(233,69,96,0.2);border-radius:14px;padding:18px 20px;margin-bottom:20px;}
+    .best-next{background:rgba(233,69,96,0.07);border:1px solid rgba(233,69,96,0.2);border-radius:14px;padding:18px 20px;margin-bottom:20px;position:relative;}
     .best-next-text{font-size:0.97rem;font-weight:600;color:var(--text);line-height:1.6;}
-    .domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+    .domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;position:relative;}
     .domain{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;position:relative;overflow:hidden;}
     .domain::after{content:'';position:absolute;bottom:-16px;right:-16px;width:60px;height:60px;border-radius:50%;background:var(--coral);opacity:0.05;pointer-events:none;}
     .domain-name{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--coral);font-weight:600;margin-bottom:12px;}
     .domain-sub{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;margin-top:10px;}
     .dlist{margin:0;padding-left:14px;}
     .dlist li{font-size:0.83rem;color:var(--soft);line-height:1.55;margin-bottom:3px;}
-    .prio-items{margin-bottom:20px;}
+    .prio-items{margin-bottom:20px;position:relative;}
     .prio-row{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
     .prio-row:last-child{border-bottom:none;}
     .p-badge{flex-shrink:0;width:26px;height:26px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);color:var(--coral);}
     .p-text{font-size:0.88rem;color:var(--soft);line-height:1.55;padding-top:3px;}
-    .tl-items{margin-bottom:20px;}
+    .tl-items{margin-bottom:20px;position:relative;}
     .tl-row{display:flex;gap:14px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
     .tl-row:last-child{border-bottom:none;}
     .tl-stamp{flex-shrink:0;font-size:0.76rem;font-weight:700;color:var(--coral);font-family:monospace;min-width:90px;padding-top:2px;}
     .tl-domain{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;}
     .tl-note{font-size:0.86rem;color:var(--soft);line-height:1.5;}
-    .ref-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:20px;}
+    .ref-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:20px;position:relative;}
     .ref-track{font-size:0.97rem;font-weight:700;margin-bottom:3px;}
     .ref-why{font-size:0.85rem;color:var(--soft);line-height:1.6;}
     .limitations{font-size:0.78rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;}
@@ -207,17 +207,22 @@
         <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
 
         <div class="drop-zone" id="dropZone">
-          <div class="drop-icon">♪</div>
-          <div class="drop-title">Drop your track here</div>
-          <div class="drop-sub">or click to browse</div>
-          <div class="drop-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF · AIF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
-          <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;" />
+          <div id="dropEmpty">
+            <div class="drop-icon">♪</div>
+            <div class="drop-title">Drop your track here</div>
+            <div class="drop-sub">or click to browse</div>
+            <div class="drop-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF · AIF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
+          </div>
+          <div id="dropChosen" style="display:none;">
+            <div class="drop-icon" style="background:rgba(233,69,96,0.18);border-color:rgba(233,69,96,0.4);">✓</div>
+            <div class="drop-title" id="fileName" style="color:var(--text);"></div>
+            <div class="drop-sub" id="fileSz" style="color:var(--coral);"></div>
+            <div class="drop-formats">Click to choose a different file</div>
+          </div>
+          <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2;" />
         </div>
-
-        <div class="file-chosen" id="fileChosen">
-          <span class="file-name" id="fileName"></span>
-          <span class="file-sz" id="fileSz"></span>
-          <button class="file-clear" id="fileClear">✕</button>
+        <div style="display:flex;justify-content:flex-end;margin-top:-12px;margin-bottom:8px;min-height:20px;">
+          <button class="file-clear" id="fileClear" style="display:none;font-size:0.78rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 4px;position:relative;z-index:3;">✕ Remove file</button>
         </div>
 
         <div class="fields">
@@ -248,9 +253,10 @@
     <div class="card progress-card" id="progressCard">
       <div class="card-inner" style="text-align:center;">
         <div class="spinner"></div>
-        <div class="p-title">Listening to your track…</div>
-        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
+        <div class="p-title" id="progressTitle">Uploading your track…</div>
+        <div class="p-sub" id="progressMsg">Preparing your file for analysis.</div>
         <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
+        <div id="progressFile" style="margin-top:14px;font-size:0.8rem;color:var(--muted);display:none;"></div>
       </div>
     </div>
 
@@ -358,7 +364,6 @@ const reportCard  = $("reportCard");
 const creditsCard = $("creditsCard");
 const dropZone    = $("dropZone");
 const fileInput   = $("fileInput");
-const fileChosen  = $("fileChosen");
 const fileName    = $("fileName");
 const fileSz      = $("fileSz");
 const fileClear   = $("fileClear");
@@ -436,9 +441,11 @@ fileClear.addEventListener("click", clearFile);
 
 function pick(f) {
   file = f;
-  fileName.textContent = f.name;
-  fileSz.textContent = fmtBytes(f.size);
-  fileChosen.classList.add("show");
+  document.getElementById("fileName").textContent = f.name;
+  document.getElementById("fileSz").textContent = fmtBytes(f.size);
+  document.getElementById("dropEmpty").style.display = "none";
+  document.getElementById("dropChosen").style.display = "block";
+  fileClear.style.display = "inline";
   analyseBtn.disabled = false;
   clearMsg(uploadMsg);
   if (!trackTitle.value) trackTitle.value = f.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g," ");
@@ -446,7 +453,9 @@ function pick(f) {
 
 function clearFile() {
   file = null; fileInput.value = "";
-  fileChosen.classList.remove("show");
+  document.getElementById("dropEmpty").style.display = "block";
+  document.getElementById("dropChosen").style.display = "none";
+  fileClear.style.display = "none";
   analyseBtn.disabled = true;
 }
 
@@ -471,71 +480,101 @@ async function analyse() {
   uploadCard.style.display = "none";
   progressCard.classList.add("show");
   reportCard.classList.remove("show");
-  startProg();
+  startUploadProg(file.name, file.size);
 
   try {
     const buf = await file.arrayBuffer();
-    const res = await fetch(`${API_BASE}/critique-upload`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${session.access_token}`,
-        "Content-Type":  file.type || "application/octet-stream",
-        "X-Filename":    file.name,
-        "X-Track-Title": title,
-        "X-Artist-Name": artist,
-        "X-Intent":      intent,
-      },
-      body: buf,
+    const result = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `${API_BASE}/critique-upload`);
+      xhr.setRequestHeader("Authorization", `Bearer ${session.access_token}`);
+      xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
+      xhr.setRequestHeader("X-Filename",    file.name);
+      xhr.setRequestHeader("X-Track-Title", title);
+      xhr.setRequestHeader("X-Artist-Name", artist);
+      xhr.setRequestHeader("X-Intent",      intent);
+      xhr.timeout = 20 * 60 * 1000;
+
+      xhr.upload.addEventListener("progress", e => {
+        if (e.lengthComputable) {
+          const pct = Math.round((e.loaded / e.total) * 28);
+          pBar.style.width = pct + "%";
+          pMsg.textContent = `Uploading… ${Math.round((e.loaded / e.total) * 100)}%`;
+        }
+      });
+      xhr.upload.addEventListener("load", () => { switchToAnalyseProg(); });
+
+      xhr.addEventListener("load", () => {
+        try { resolve({ ok: xhr.status >= 200 && xhr.status < 300, status: xhr.status, data: JSON.parse(xhr.responseText) }); }
+        catch { resolve({ ok: false, status: xhr.status, data: {} }); }
+      });
+      xhr.addEventListener("error",   () => reject(new Error("Network error — check your connection and try again.")));
+      xhr.addEventListener("timeout", () => reject(new Error("The request timed out. Your track may be too long or the server is busy.")));
+      xhr.send(buf);
     });
 
     stopProg();
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      let msg = err?.error?.message || `Server error (${res.status})`;
-      if (res.status === 402) msg = "No credits remaining. Purchase a pack below to continue.";
-      else if (res.status === 401) msg = "Session expired — please log in again.";
+    if (!result.ok) {
+      const err = result.data;
+      let msg = err?.error?.message || `Server error (${result.status})`;
+      if (result.status === 402) msg = "No credits remaining. Purchase a pack below to continue.";
+      else if (result.status === 401) msg = "Session expired — please log in again.";
       uploadCard.style.display = "block";
       progressCard.classList.remove("show");
       setMsg(uploadMsg, "err", msg);
-      if (res.status === 401) setTimeout(() => { window.location.href = "/#login"; }, 2000);
+      if (result.status === 401) setTimeout(() => { window.location.href = "/#login"; }, 2000);
       return;
     }
 
-    const rpt = await res.json();
     await refreshCredits();
-    renderReport(rpt);
+    renderReport(result.data);
 
   } catch (e) {
     stopProg();
     uploadCard.style.display = "block";
     progressCard.classList.remove("show");
-    setMsg(uploadMsg, "err", "Connection error — please check your network and try again.");
+    setMsg(uploadMsg, "err", e.message || "Connection error — please check your network and try again.");
   }
 }
 
 // ── PROGRESS ──────────────────────────────────────────────────────────────────
-const progMsgs = [
-  "Analysing arrangement…",
+const analyseMsgs = [
+  "Listening to your arrangement…",
   "Checking production choices…",
   "Reviewing the mix…",
   "Pulling the report together…",
+  "Almost there…",
 ];
 
-function startProg() {
-  let pct = 5, mi = 0;
-  pBar.style.width = "5%";
-  pMsg.innerHTML = "Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.";
+function startUploadProg(filename, filesize) {
+  pBar.style.width = "0%";
+  document.getElementById("progressTitle").textContent = "Uploading your track…";
+  pMsg.textContent = "Sending " + filename + " to Fonna.";
+  const fileInfo = document.getElementById("progressFile");
+  fileInfo.textContent = fmtBytes(filesize);
+  fileInfo.style.display = "block";
+}
+
+function switchToAnalyseProg() {
+  clearInterval(progTmr);
+  let pct = 30, mi = 0;
+  pBar.style.width = "30%";
+  document.getElementById("progressTitle").textContent = "Analysing your track…";
+  pMsg.textContent = analyseMsgs[mi++];
+  document.getElementById("progressFile").style.display = "none";
   progTmr = setInterval(() => {
-    pct = Math.min(pct + Math.random()*5 + 1, 88);
+    pct = Math.min(pct + Math.random() * 4 + 1, 90);
     pBar.style.width = pct + "%";
-    if (mi < progMsgs.length) { pMsg.textContent = progMsgs[mi++]; }
-  }, 7000);
+    if (mi < analyseMsgs.length) { pMsg.textContent = analyseMsgs[mi++]; }
+  }, 8000);
 }
 
 function stopProg() {
   clearInterval(progTmr);
   pBar.style.width = "100%";
+  document.getElementById("progressTitle").textContent = "Report ready!";
+  pMsg.textContent = "Your producer report is below.";
 }
 
 // ── RENDER REPORT ─────────────────────────────────────────────────────────────
@@ -638,3 +677,9 @@ function setMsg(el,type,txt) { el.className=`msg ${type} show`; el.textContent=t
 function clearMsg(el)        { el.className="msg"; el.textContent=""; }
 
 // ── GO ───────
+// ── GO ──────────────────────────────────────────────────────────────────────
+boot();
+
+</script>
+</body>
+</html>
