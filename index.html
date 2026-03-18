@@ -707,4 +707,19 @@
 
     // onAuthStateChange can fire during redirects — guard against double-runs
     let authChangeBusy = false;
-    supabase.auth.onAuthStateChange(asy
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (authChangeBusy) return;
+      authChangeBusy = true;
+      try {
+        await refreshAuthUI();
+      } finally {
+        authChangeBusy = false;
+      }
+    });
+
+    // Initial check on page load
+    refreshAuthUI();
+
+  </script>
+</body>
+</html>
