@@ -329,17 +329,17 @@
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        <a href="/cdn-cgi/l/email-protection#38505d545457785e57565659165951"><span class="__cf_email__" data-cfemail="19717c757576597f76777778377870">[email&#160;protected]</span></a>
       </div>
     </div>
   </div>
 </footer>
 
-<script type="module">
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
 const API_BASE          = "https://listener-service-1esi.onrender.com";
 
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -637,8 +637,4 @@ buyCreator.addEventListener("click", () => buy("creator"));
 function setMsg(el,type,txt) { el.className=`msg ${type} show`; el.textContent=txt; }
 function clearMsg(el)        { el.className="msg"; el.textContent=""; }
 
-// ── GO ────────────────────────────────────────────────────────────────────────
-boot();
-</script>
-</body>
-</html>
+// ── GO ───────
