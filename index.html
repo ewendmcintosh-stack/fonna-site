@@ -312,6 +312,13 @@
     }
     .auth-form input:focus { outline: none; border-color: var(--coral); }
     .auth-form input::placeholder { color: var(--muted); }
+    .auth-form input:-webkit-autofill,
+    .auth-form input:-webkit-autofill:hover,
+    .auth-form input:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 1000px #16213E inset !important;
+      -webkit-text-fill-color: #f4f4f2 !important;
+      caret-color: #f4f4f2;
+    }
     .auth-actions { display: flex; gap: 12px; flex-wrap: wrap; }
     .auth-status {
       margin-top: 14px; padding: 12px 14px;
@@ -546,14 +553,14 @@
           <h3 style="margin-top:0;margin-bottom:8px;">Get started with Fonna</h3>
           <p style="margin-top:0;color:var(--muted);line-height:1.7;">Create an account to receive 1 free credit. Each analysis uses 1 credit.</p>
           <div id="authLoggedOut">
-            <div class="auth-form">
+            <form class="auth-form" onsubmit="return false;">
               <input id="authEmail" type="email" placeholder="Email address" autocomplete="email" />
               <input id="authPassword" type="password" placeholder="Password" autocomplete="current-password" />
               <div class="auth-actions">
-                <button class="btn primary" id="signUpBtn" type="button">Sign up</button>
+                <button class="btn primary" id="signUpBtn" type="submit">Sign up</button>
                 <button class="btn" id="loginBtn" type="button">Log in</button>
               </div>
-            </div>
+            </form>
           </div>
           <div id="authLoggedIn" class="hidden">
             <div class="auth-userbox">
@@ -673,7 +680,10 @@
       }
     });
 
-    loginBtn.addEventListener("click", async () => {
+    loginBtn.addEventListener("click", doLogin);
+    document.querySelector(".auth-form").addEventListener("submit", (e) => { e.preventDefault(); doLogin(); });
+
+    async function doLogin() {
       const email    = authEmail.value.trim();
       const password = authPassword.value;
       if (!email || !password) { setStatus("Enter an email and password."); return; }
@@ -688,7 +698,7 @@
       } finally {
         loginBtn.disabled = false;
       }
-    });
+    }
 
     logoutBtn.addEventListener("click", async () => {
       await supabase.auth.signOut();
