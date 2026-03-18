@@ -5,31 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Philosophy - Fonna</title>
   <style>
-    :root { --border: rgba(255,255,255,0.09); --text: #f4f4f2; --muted: #a4a4a0; --soft: #d8d8d2; --max: 780px; }
+    :root {
+      --navy: #1A1A2E;
+      --navy-mid: #16213E;
+      --coral: #E94560;
+      --coral-dark: #C73652;
+      --border: rgba(255,255,255,0.09);
+      --text: #f4f4f2;
+      --muted: #a4a4a0;
+      --soft: #d8d8d2;
+      --max: 780px;
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; color: var(--text); background: linear-gradient(180deg,#050505,#0b0b0b 48%,#050505); min-height: 100vh; font-size: 17px; line-height: 1.8; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--navy);
+      min-height: 100vh;
+      font-size: 16px;
+      line-height: 1.75;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Decorative circles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -100px; right: -100px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 5%; left: -80px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: var(--navy-mid);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+    }
     a { color: inherit; text-decoration: none; }
-    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
-    .nav-shell { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(8,8,8,0.74); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; }
+    .nav-shell {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(26,26,46,0.88);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
     .nav { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
     .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; }
-    .brand-mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(180deg,#fff,#c8c8c8); color: #080808; display: grid; place-items: center; font-weight: 800; }
-    .btn { display: inline-flex; align-items: center; min-height: 42px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text); font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: inherit; }
-    .btn.primary { background: linear-gradient(180deg,#f0f0ec,#cfcfc9); color: #0a0a0a; border-color: transparent; }
-    .hero { padding: 72px 0 48px; border-bottom: 1px solid var(--border); margin-bottom: 64px; }
-    .eyebrow { display: inline-block; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--soft); font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 24px; }
-    h1 { font-size: clamp(2.2rem,5vw,3.8rem); line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 20px; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: var(--coral); color: #fff;
+      display: grid; place-items: center; font-weight: 800;
+      box-shadow: 0 8px 20px rgba(233,69,96,0.4);
+    }
+    .btn {
+      display: inline-flex; align-items: center;
+      min-height: 42px; padding: 0 18px; border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text); font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: rgba(255,255,255,0.1); }
+    .btn.primary {
+      background: var(--coral); color: #fff; border-color: transparent;
+      box-shadow: 0 8px 22px rgba(233,69,96,0.35);
+    }
+    .btn.primary:hover { background: var(--coral-dark); }
+    .hero { padding: 64px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
+    .eyebrow {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      border: 1px solid rgba(233,69,96,0.3);
+      background: rgba(233,69,96,0.1);
+      color: var(--coral); font-size: 0.84rem;
+      letter-spacing: 0.02em; margin-bottom: 20px;
+    }
+    h1 { font-size: clamp(2rem,5vw,3.2rem); line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 12px; }
+  </style>
+
+  <style>
     .lead { font-size: 1.18rem; color: var(--soft); margin: 0; max-width: 60ch; line-height: 1.7; }
     .body-copy { padding-bottom: 80px; }
     .body-copy h2 { font-size: clamp(1.4rem,3vw,2rem); letter-spacing: -0.03em; margin: 64px 0 20px; line-height: 1.15; }
     .body-copy h2:first-child { margin-top: 0; }
     .body-copy p { color: var(--soft); margin: 0 0 24px; }
-    .pull-quote { border-left: 2px solid rgba(255,255,255,0.15); padding: 4px 0 4px 28px; margin: 40px 0; font-size: 1.22rem; line-height: 1.55; letter-spacing: -0.02em; color: var(--text); }
-    .cta-block { border: 1px solid var(--border); border-radius: 24px; background: linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.02)); padding: 36px; text-align: center; margin: 64px 0 0; }
-    .cta-block h3 { margin: 0 0 10px; font-size: 1.5rem; letter-spacing: -0.03em; }
-    .cta-block p { color: var(--muted); margin: 0 0 24px; }
-    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .pull-quote { border-radius: 0; padding: 4px 0 4px 28px; margin: 40px 0; font-size: 1.22rem; line-height: 1.55; letter-spacing: -0.02em; color: var(--text); }
+    .cta-block { border: 1px solid rgba(233,69,96,0.2); border-radius: 24px; background: rgba(22,33,62,0.7); padding: 36px; text-align: center; margin: 64px 0 0; position: relative; overflow: hidden; }
+    .cta-block::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; background: var(--coral); opacity: 0.08; pointer-events: none; }
+    .cta-block h3 { margin: 0 0 10px; font-size: 1.5rem; letter-spacing: -0.03em; position: relative; z-index: 1; }
+    .cta-block p { color: var(--muted); margin: 0 0 24px; position: relative; z-index: 1; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+    .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1; }
     .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 22px; }
     .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
   </style>
@@ -103,10 +180,4 @@
         <div class="footer-links">
           <a href="/terms.html">Terms of Use</a>
           <a href="/faq.html">FAQ</a>
-          <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
+          <a href="/cdn-cgi/l/email-protection#b5ddd0d9d9daf5d3dadbdbd49bd4dc"><span class="__cf_email__" data-cfemail="335b565f5f5c735
