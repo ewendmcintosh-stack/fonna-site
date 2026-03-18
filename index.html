@@ -69,9 +69,9 @@
     .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.01em; }
     .brand-mark {
       width: 34px; height: 34px; border-radius: 10px;
-      background: var(--coral);
-      color: #fff; display: grid; place-items: center; font-weight: 800;
-      box-shadow: 0 8px 20px rgba(233,69,96,0.4);
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 20px rgba(233,69,96,0.35);
+      flex-shrink: 0;
     }
     .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 0.96rem; }
     .nav-links a:hover { color: var(--text); }
@@ -367,7 +367,17 @@
   <div class="nav-shell">
     <div class="wrap nav">
       <a href="#top" class="brand">
-        <span class="brand-mark">F</span>
+        <span class="brand-mark"><svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
+  <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
+  <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
+  <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
+  <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
+  <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
+  <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
+  <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
+  <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
+  <circle cx="272" cy="318" r="18" fill="#E94560"/>
+</svg></span>
         <span>Fonna</span>
       </a>
       <nav class="nav-links">
@@ -629,19 +639,4 @@
       const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) { setStatus("Signup failed: " + error.message); return; }
       if (data.user) {
-        setStatus("Account created! Redirecting to app...");
-        setTimeout(() => { window.location.href = "/app.html"; }, 1000);
-      } else {
-        setStatus("Signup submitted. Check your email if confirmation is required.");
-      }
-    });
-
-    loginBtn.addEventListener("click", async () => {
-      const email = authEmail.value.trim();
-      const password = authPassword.value;
-      if (!email || !password) { setStatus("Enter an email and password."); return; }
-      setStatus("Logging in...");
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) { setStatus("Login failed: " + error.message); return; }
-      setStatus("Logged in! Redirecting to app...");
-      setTimeout(() => { window.location.h
+        setStatus("Account created! Redirecting
