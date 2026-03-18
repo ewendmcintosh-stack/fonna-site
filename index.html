@@ -29,8 +29,6 @@
       position: relative;
       overflow-x: hidden;
     }
-
-    /* ── DECORATIVE CIRCLES ── */
     body::before {
       content: '';
       position: fixed;
@@ -54,11 +52,10 @@
       z-index: 0;
     }
     .wrap, .nav-shell, main, footer { position: relative; z-index: 1; }
-
     a { color: inherit; text-decoration: none; }
     .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
 
-    /* ── NAV ── */
+    /* NAV */
     .nav-shell {
       position: sticky; top: 0; z-index: 50;
       backdrop-filter: blur(14px);
@@ -77,7 +74,7 @@
     .nav-links a:hover { color: var(--text); }
     .nav-actions { display: flex; align-items: center; gap: 12px; }
 
-    /* ── BUTTONS ── */
+    /* BUTTONS */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
       min-height: 46px; padding: 0 20px; border-radius: 999px;
@@ -95,7 +92,7 @@
     }
     .btn.primary:hover { background: var(--coral-dark); }
 
-    /* ── HERO ── */
+    /* HERO */
     .hero { padding: 78px 0 46px; }
     .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: stretch; }
     .hero-copy, .hero-card {
@@ -153,7 +150,7 @@
       border: 1px solid rgba(233,69,96,0.18);
     }
 
-    /* ── REPORT WINDOW ── */
+    /* REPORT WINDOW */
     .report-window {
       flex: 1; border-radius: 22px;
       border: 1px solid rgba(255,255,255,0.08);
@@ -175,7 +172,6 @@
       letter-spacing: 0.08em; color: var(--coral);
       margin-bottom: 7px; opacity: 0.85;
     }
-    .report-title { font-weight: 700; margin-bottom: 7px; font-size: 0.95rem; }
     .report-body { color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
     .report-list { margin: 0; padding-left: 16px; color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
     .best-next {
@@ -184,13 +180,13 @@
       border-radius: 16px; padding: 13px;
     }
 
-    /* ── SECTIONS ── */
+    /* SECTIONS */
     .section { padding: 34px 0; }
     .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
     .section-head h2 { margin: 0 0 8px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; }
     .section-head p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 58ch; }
 
-    /* ── CARDS ── */
+    /* CARDS */
     .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
     .card {
       border-radius: 24px;
@@ -220,7 +216,7 @@
       color: var(--coral); font-weight: 700;
     }
 
-    /* ── PRICING ── */
+    /* PRICING */
     .pricing-card { display: flex; flex-direction: column; gap: 18px; min-height: 100%; }
     .pricing-card .tier { font-size: 1.1rem; font-weight: 700; }
     .price { font-size: 2.35rem; letter-spacing: -0.05em; font-weight: 800; margin: 0; }
@@ -233,7 +229,7 @@
     }
     .highlight::after { opacity: 0.1; }
 
-    /* ── ABOUT ── */
+    /* ABOUT */
     .about-card {
       border-radius: 24px;
       border: 1px solid rgba(255,255,255,0.08);
@@ -281,7 +277,7 @@
     }
     .philosophy-link:hover { color: var(--coral); border-color: var(--coral); }
 
-    /* ── AUTH ── */
+    /* AUTH */
     .auth-shell { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; align-items: start; }
     .auth-card {
       border-radius: 24px;
@@ -335,16 +331,14 @@
     }
     .auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
 
-    /* ── FOOTER ── */
+    /* FOOTER */
     .footer { padding: 28px 0 60px; color: var(--muted); }
     .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
     .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
     .footer-links a:hover { color: var(--text); }
 
-    /* ── UTILS ── */
     .hidden { display: none !important; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 1080px) {
       .hero-grid { grid-template-columns: 1fr 1fr; }
       .about-grid { grid-template-columns: 1fr 1fr; }
@@ -432,8 +426,8 @@
             <div class="report-section">
               <div class="report-label">Mix</div>
               <ul class="report-list">
-                <li>Tighten the low-end relationship by carving space between kick and bass (EQ separation and/or sidechain compression).</li>
-                <li>Bring the vocal forward in choruses with a presence boost and subtle compression to improve clarity and focus.</li>
+                <li>Tighten the low-end relationship by carving space between kick and bass.</li>
+                <li>Bring the vocal forward in choruses with a presence boost and subtle compression.</li>
               </ul>
             </div>
             <div class="report-section">
@@ -441,12 +435,11 @@
               <ul class="report-list">
                 <li><strong>0:00&ndash;0:14</strong> &mdash; Strong opening tone, but the intro gives away too much energy too early.</li>
                 <li><strong>0:46&ndash;0:58</strong> &mdash; Transition feels flat; a brief drop in texture would create more pull.</li>
-                <li><strong>1:18&ndash;1:32</strong> &mdash; Vocal and instrumental density start competing for the center.</li>
               </ul>
             </div>
             <div class="best-next">
-              <div class="report-label">Reference Track</div>
-              <div class="report-body"><strong>&ldquo;Dreams&rdquo; &mdash; Fleetwood Mac</strong><br>Listen for how restraint in the arrangement makes each added element feel important.</div>
+              <div class="report-label">Best Next Move</div>
+              <div class="report-body">Strip back the pre-chorus to a single texture layer and rebuild the drop into the chorus with one new element.</div>
             </div>
           </div>
         </div>
@@ -590,7 +583,7 @@
 
   <footer class="footer wrap">
     <div class="footer-shell">
-      <span>© 2026 Fonna</span>
+      <span>&copy; 2026 Fonna, a division of 170681639 Ontario</span>
       <div class="footer-links">
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
@@ -600,7 +593,6 @@
     </div>
   </footer>
 
-  <!-- Script at end of body so all DOM elements exist when it runs -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -621,7 +613,6 @@
 
     function setStatus(msg) { authStatus.textContent = msg; }
 
-    // Loads credits from the users table — fails gracefully so it never hangs
     async function loadProfile(user) {
       const timeout = new Promise((_, reject) =>
         setTimeout(() => reject(new Error("Profile fetch timed out")), 5000)
@@ -637,7 +628,6 @@
         userEmailText.textContent   = (data && data.email) ? data.email : (user.email || "Unknown");
         userCreditsText.textContent = data ? String(data.credits ?? 0) : "0";
       } catch (err) {
-        // Profile table error must never block the logged-in UI from showing
         console.warn("loadProfile error:", err.message);
         userEmailText.textContent   = user.email || "Unknown";
         userCreditsText.textContent = "—";
@@ -653,7 +643,6 @@
           setStatus("Ready.");
           return;
         }
-        // Show logged-in state immediately, then populate profile in background
         authLoggedOut.classList.add("hidden");
         authLoggedIn.classList.remove("hidden");
         setStatus("Logged in successfully.");
@@ -674,10 +663,11 @@
         const { data, error } = await supabase.auth.signUp({ email, password });
         if (error) { setStatus("Signup failed: " + error.message); return; }
         if (data.user) {
-          setStatus("Account created! You can now log in.");
+          setStatus("Account created! Redirecting to app...");
           await refreshAuthUI();
+          setTimeout(() => { window.location.href = "/app.html"; }, 1000);
         } else {
-          setStatus("Signup submitted. Check your email if confirmation is enabled.");
+          setStatus("Signup submitted. Check your email if confirmation is required.");
         }
       } finally {
         signUpBtn.disabled = false;
@@ -696,7 +686,9 @@
       try {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) { setStatus("Login failed: " + error.message); return; }
+        setStatus("Logged in! Redirecting to app...");
         await refreshAuthUI();
+        setTimeout(() => { window.location.href = "/app.html"; }, 800);
       } catch (err) {
         setStatus("Login error: " + err.message);
       } finally {
@@ -709,21 +701,27 @@
       await refreshAuthUI();
     });
 
-    // onAuthStateChange can fire during redirects — guard against double-runs
     let authChangeBusy = false;
     supabase.auth.onAuthStateChange(async (event, session) => {
       if (authChangeBusy) return;
       authChangeBusy = true;
       try {
-        await refreshAuthUI();
+        if (session?.user) {
+          authLoggedOut.classList.add("hidden");
+          authLoggedIn.classList.remove("hidden");
+          await loadProfile(session.user);
+        } else {
+          authLoggedOut.classList.remove("hidden");
+          authLoggedIn.classList.add("hidden");
+          setStatus("Ready.");
+        }
       } finally {
         authChangeBusy = false;
       }
     });
 
-    // Initial check on page load
+    // Run on load
     refreshAuthUI();
-
   </script>
 </body>
 </html>
