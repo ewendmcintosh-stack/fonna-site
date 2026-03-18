@@ -1,414 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fonna — Analyze Track</title>
-<style>
-:root {
-  --bg: #080808; --panel: rgba(255,255,255,0.04); --panel-2: #111111;
-  --border: rgba(255,255,255,0.09); --text: #f4f4f2; --muted: #a4a4a0;
-  --soft: #d8d8d2; --shadow: 0 18px 50px rgba(0,0,0,0.38); --max: 1240px;
-  --error-bg: rgba(220,60,60,0.08); --error-border: rgba(220,60,60,0.25);
-}
-* { box-sizing: border-box; }
-body { margin: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--text); background: linear-gradient(180deg,#050505,#0b0b0b 48%,#050505); min-height: 100vh; font-size: 15px; line-height: 1.6; }
-.wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
-.nav-shell { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(8,8,8,0.82); border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 100; }
-.nav { display: flex; align-items: center; justify-content: space-between; min-height: 68px; gap: 16px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; text-decoration: none; color: var(--text); }
-.brand-mark { width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(180deg,#fff,#c8c8c8); color: #080808; display: grid; place-items: center; font-weight: 800; font-size: 15px; }
-.nav-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.credit-badge { display: flex; align-items: center; gap: 7px; padding: 6px 13px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); font-size: 13px; color: var(--soft); }
-.credit-badge strong { color: var(--text); }
-.btn { min-height: 38px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; font-family: inherit; }
-.btn:hover { background: rgba(255,255,255,0.08); }
-.btn.primary { background: linear-gradient(180deg,#f0f0ec,#cfcfc9); color: #0a0a0a; border-color: transparent; }
-.btn.primary:hover { opacity: 0.9; }
-.btn.sm { min-height: 32px; padding: 0 12px; font-size: 12px; }
-#authWall { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; gap: 12px; padding: 48px 0; }
-#authWall h2 { margin: 0 0 4px; font-size: 1.6rem; }
-#authWall p { color: var(--muted); margin: 0 0 20px; }
-#appShell { display: none; }
-.hero { padding: 40px 0 20px; }
-.hero h1 { font-size: clamp(1.8rem,4vw,3rem); margin: 0 0 8px; }
-.hero p { color: var(--muted); margin: 0; }
-.section { padding: 16px 0; }
-.grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 18px; align-items: start; }
-.card { border-radius: 22px; border: 1px solid var(--border); background: linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.02)); box-shadow: var(--shadow); padding: 24px; }
-label { display: block; margin-bottom: 7px; color: var(--soft); font-size: 13px; }
-.intent-help { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; line-height: 1.5; }
-input[type="file"], input[type="text"], textarea { width: 100%; border: 1px solid var(--border); border-radius: 14px; padding: 11px 14px; background: rgba(255,255,255,0.04); color: var(--text); font: inherit; font-size: 14px; }
-textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
-.stack > * + * { margin-top: 14px; }
-.analyze-btn { width: 100%; min-height: 46px; border-radius: 14px; border: none; background: linear-gradient(180deg,#f0f0ec,#d4d4ce); color: #0a0a0a; font-size: 15px; font-weight: 700; cursor: pointer; transition: opacity 0.15s; font-family: inherit; }
-.analyze-btn:hover { opacity: 0.88; }
-.analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.status { padding: 11px 14px; border-radius: 13px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: var(--soft); font-size: 14px; white-space: pre-wrap; line-height: 1.5; }
-.progress-shell { border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; background: rgba(255,255,255,0.03); }
-.progress-track { height: 8px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
-.progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg,#5f8bff,#69d1ff); border-radius: 999px; transition: width 0.2s ease; }
-.progress-meta { margin-top: 7px; color: var(--muted); font-size: 12px; text-align: right; }
-.hidden { display: none !important; }
-.banner { border-radius: 14px; padding: 14px 18px; font-size: 14px; color: var(--soft); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
-.banner.warning { background: rgba(220,100,60,0.08); border: 1px solid rgba(220,100,60,0.25); }
-.banner.success { background: rgba(60,180,100,0.08); border: 1px solid rgba(60,180,100,0.25); }
-.credit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
-.credit-card { border-radius: 18px; border: 1px solid var(--border); background: linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.02)); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-.credit-card.featured { outline: 1px solid rgba(255,255,255,0.14); }
-.credit-card .tier { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
-.credit-card .price-big { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; margin: 0; }
-.credit-card .credit-count { color: var(--muted); font-size: 13px; margin-top: -4px; }
-.credit-card ul { margin: 0; padding-left: 16px; color: var(--soft); font-size: 13px; line-height: 1.7; }
-.buy-btn { width: 100%; min-height: 42px; border-radius: 12px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: opacity 0.15s; }
-.buy-btn:hover { opacity: 0.85; }
-.buy-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.buy-btn.primary { background: linear-gradient(180deg,#f0f0ec,#d4d4ce); color: #0a0a0a; }
-.buy-btn.secondary { background: rgba(255,255,255,0.07); color: var(--text); border: 1px solid var(--border); }
-.result-shell { min-height: 500px; }
-.empty-state { color: var(--muted); padding: 18px 6px; line-height: 1.7; font-size: 14px; }
-.report-section { border: 1px solid var(--border); border-radius: 16px; padding: 16px; background: var(--panel-2); margin-bottom: 12px; }
-.report-section h3 { margin: 0 0 12px; font-size: 11px; font-weight: 700; color: var(--soft); text-transform: uppercase; letter-spacing: 0.04em; }
-.report-section p { margin: 0; line-height: 1.75; font-size: 14px; }
-.meta-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
-.pill { background: #171717; border: 1px solid var(--border); border-radius: 12px; padding: 10px 13px; }
-.pill .k { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
-.pill .v { font-size: 14px; font-weight: 700; }
-.footer-meta { font-size: 12px; color: var(--muted); margin-top: 10px; }
-.sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.notes-box { background: #171717; border: 1px solid var(--border); border-radius: 13px; padding: 12px 14px; }
-.notes-box h4 { margin: 0 0 10px; font-size: 13px; color: var(--soft); }
-.subhead { display: block; margin: 10px 0 6px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
-.report-list { margin: 0; padding-left: 18px; }
-.report-list li { font-size: 14px; line-height: 1.65; }
-.report-list li + li { margin-top: 7px; }
-.action-item { background: #171717; border: 1px solid var(--border); border-radius: 13px; padding: 12px 14px; font-size: 14px; line-height: 1.65; }
-.action-item + .action-item { margin-top: 8px; }
-.priority-tag { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 10px; font-weight: 700; margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.04em; background: rgba(255,255,255,0.07); color: var(--soft); }
-.track-card { background: #171717; border: 1px solid var(--border); border-radius: 13px; padding: 13px 15px; font-size: 14px; line-height: 1.65; }
-.track-title-text { font-weight: 700; margin-bottom: 2px; }
-.track-artist-text { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-.best-next { background: rgba(95,139,255,0.07); border: 1px solid rgba(95,139,255,0.2); border-radius: 13px; padding: 13px 16px; font-size: 14px; line-height: 1.7; }
-.muted-note { color: var(--muted); font-size: 13px; font-style: italic; }
-.error-box { background: var(--error-bg); border: 1px solid var(--error-border); color: var(--text); border-radius: 14px; padding: 14px; white-space: pre-wrap; font-size: 13px; line-height: 1.55; overflow-x: auto; }
-.site-footer { margin: 28px 0 48px; color: var(--muted); font-size: 12px; text-align: center; }
-@media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } .meta-grid { grid-template-columns: repeat(2,1fr); } .sub-grid { grid-template-columns: 1fr; } .credit-grid { grid-template-columns: 1fr; } }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Philosophy - Fonna</title>
+  <style>
+    :root {
+      --navy: #1A1A2E;
+      --navy-mid: #16213E;
+      --coral: #E94560;
+      --coral-dark: #C73652;
+      --border: rgba(255,255,255,0.09);
+      --text: #f4f4f2;
+      --muted: #a4a4a0;
+      --soft: #d8d8d2;
+      --max: 780px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--navy);
+      min-height: 100vh;
+      font-size: 16px;
+      line-height: 1.75;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Decorative circles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -100px; right: -100px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 5%; left: -80px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: var(--navy-mid);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; }
+    .nav-shell {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(26,26,46,0.88);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 20px rgba(233,69,96,0.35);
+      flex-shrink: 0;
+    }
+    .btn {
+      display: inline-flex; align-items: center;
+      min-height: 42px; padding: 0 18px; border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text); font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: rgba(255,255,255,0.1); }
+    .btn.primary {
+      background: var(--coral); color: #fff; border-color: transparent;
+      box-shadow: 0 8px 22px rgba(233,69,96,0.35);
+    }
+    .btn.primary:hover { background: var(--coral-dark); }
+    .hero { padding: 64px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
+    .eyebrow {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      border: 1px solid rgba(233,69,96,0.3);
+      background: rgba(233,69,96,0.1);
+      color: var(--coral); font-size: 0.84rem;
+      letter-spacing: 0.02em; margin-bottom: 20px;
+    }
+    h1 { font-size: clamp(2rem,5vw,3.2rem); line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 12px; }
+  </style>
+
+  <style>
+    .lead { font-size: 1.18rem; color: var(--soft); margin: 0; max-width: 60ch; line-height: 1.7; }
+    .body-copy { padding-bottom: 80px; }
+    .body-copy h2 { font-size: clamp(1.4rem,3vw,2rem); letter-spacing: -0.03em; margin: 64px 0 20px; line-height: 1.15; }
+    .body-copy h2:first-child { margin-top: 0; }
+    .body-copy p { color: var(--soft); margin: 0 0 24px; }
+    .pull-quote { border-radius: 0; padding: 4px 0 4px 28px; margin: 40px 0; font-size: 1.22rem; line-height: 1.55; letter-spacing: -0.02em; color: var(--text); }
+    .cta-block { border: 1px solid rgba(233,69,96,0.2); border-radius: 24px; background: rgba(22,33,62,0.7); padding: 36px; text-align: center; margin: 64px 0 0; position: relative; overflow: hidden; }
+    .cta-block::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; background: var(--coral); opacity: 0.08; pointer-events: none; }
+    .cta-block h3 { margin: 0 0 10px; font-size: 1.5rem; letter-spacing: -0.03em; position: relative; z-index: 1; }
+    .cta-block p { color: var(--muted); margin: 0 0 24px; position: relative; z-index: 1; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+    .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1; }
+    .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 22px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  </style>
 </head>
 <body>
-
-<div class="nav-shell">
-  <div class="wrap nav">
-    <a href="/" class="brand"><span class="brand-mark">F</span><span>Fonna</span></a>
-    <div class="nav-right" id="navRight"></div>
+  <div class="nav-shell">
+    <div class="wrap nav">
+      <a href="/" class="brand"><span class="brand-mark"><svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
+  <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
+  <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
+  <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
+  <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
+  <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
+  <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
+  <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
+  <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
+  <circle cx="272" cy="318" r="18" fill="#E94560"/>
+</svg></span><span>Fonna</span></a>
+      <a href="/#login" class="btn primary">Try Fonna free</a>
+    </div>
   </div>
-</div>
-
-<main class="wrap">
-  <div id="authWall">
-    <h2>Sign in to analyze your track</h2>
-    <p>You need a Fonna account to use the analyzer. New accounts get 3 free credits.</p>
-    <a href="/#login" class="btn primary">Sign in or create account</a>
-  </div>
-
-  <div id="appShell">
-    <section class="hero">
-      <h1>Analyze your track.</h1>
-      <p>Upload a file and get producer-level notes on arrangement, production, and mix.</p>
-    </section>
-
-    <section class="section" id="purchaseBannerSection" style="display:none;">
-      <div id="purchaseBanner" class="banner"></div>
-    </section>
-
-    <section class="section" id="noCreditsSection" style="display:none;">
-      <div class="banner warning"><span>You have no credits remaining. Purchase a pack to keep analyzing.</span></div>
-      <div class="credit-grid" style="margin-top:14px;">
-        <div class="credit-card">
-          <div class="tier">Starter</div>
-          <p class="price-big">$9.99</p>
-          <div class="credit-count">10 credits</div>
-          <ul><li>10 full analyses</li><li>One-time purchase</li></ul>
-          <button class="buy-btn secondary" onclick="startCheckout('starter')">Buy Starter</button>
-        </div>
-        <div class="credit-card featured">
-          <div class="tier">Creator</div>
-          <p class="price-big">$19.99</p>
-          <div class="credit-count">30 credits</div>
-          <ul><li>30 full analyses</li><li>Best value</li><li>One-time purchase</li></ul>
-          <button class="buy-btn primary" onclick="startCheckout('creator')">Buy Creator</button>
-        </div>
+  <main>
+    <div class="wrap">
+      <div class="hero">
+        <div class="eyebrow">The philosophy behind Fonna</div>
+        <h1>Better records come from better decisions.</h1>
+        <p class="lead">Fonna was built at the intersection of two lifelong pursuits &mdash; music making and education &mdash; by someone who has lived both deeply.</p>
       </div>
-    </section>
+      <div class="body-copy">
 
-    <section class="section">
-      <div class="grid">
-        <div class="card">
-          <h2 style="margin:0 0 18px;font-size:18px;">Analyze Track</h2>
-          <div class="stack">
-            <div>
-              <label for="fileInput">Audio File</label>
-              <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
-            </div>
-            <div>
-              <label for="trackTitle">Track Title <span style="color:var(--muted);font-weight:400">(optional)</span></label>
-              <input type="text" id="trackTitle" placeholder="Untitled" />
-            </div>
-            <div>
-              <label for="intent">Intent</label>
-              <span class="intent-help">Keep the default or describe how you want Fonna to focus.</span>
-              <textarea id="intent">Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.</textarea>
-            </div>
-            <button class="analyze-btn" id="analyzeBtn">Analyze Track</button>
-            <div id="uploadProgress" class="progress-shell hidden">
-              <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
-              <div id="progressText" class="progress-meta">Upload: 0%</div>
-            </div>
-            <div id="status" class="status">Ready.</div>
-            <div id="buySection" style="display:none;">
-              <div style="font-size:12px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;">Top up credits</div>
-              <div class="credit-grid">
-                <div class="credit-card">
-                  <div class="tier">Starter</div>
-                  <p class="price-big" style="font-size:1.4rem;">$9.99</p>
-                  <div class="credit-count">10 credits</div>
-                  <button class="buy-btn secondary" onclick="startCheckout('starter')">Buy</button>
-                </div>
-                <div class="credit-card featured">
-                  <div class="tier">Creator</div>
-                  <p class="price-big" style="font-size:1.4rem;">$19.99</p>
-                  <div class="credit-count">30 credits</div>
-                  <button class="buy-btn primary" onclick="startCheckout('creator')">Buy</button>
-                </div>
-              </div>
-            </div>
+        <h2>Where this started</h2>
+        <p>My name is Ewen McIntosh. I am a lifelong gigging musician and independent recording artist. I am also a former high school music teacher, special educator, vice principal of curriculum and instruction, and have been high school principal for the last 12 years. I have been making records for myself, my students and artists in my community since before most people had a computer in their house.</p>
+
+        <p>My first serious recording setup was a Fostex X-55 &mdash; a four-track cassette recorder. From there I moved to a Fostex VF160 digital workstation, then to an RME Fireface, Cubase, and a UAD-1 card. Today, like most independent artists, I work inside a myriad of AI-powered creation tools that would have seemed impossible to the version of me who was bouncing tracks to cassette.</p>
+        <p>Each step forward brought more capability and more noise. More plugins, more tutorials, more rabbit holes. More time spent chasing a sound instead of finishing a record. I know what it feels like to lose a full weekend to a compressor setting. I also know what it feels like to finally get something right and have no one around to hear whether it actually worked.</p>
+
+        <div class="pull-quote">
+          I have lost countless hours chasing sounds through plugins and tutorials, room treatments and monitoring upgrades &mdash; and untold patience from friends and family who felt compelled to listen to semi-finished tracks and give me something useful back. Fonna solves this entirely.
+        </div>
+
+        <h2>The problem Fonna is built to solve</h2>
+        <p>Independent artists have no reliable feedback loop. You finish a rough mix at midnight. Your producer friends are asleep. Your partner has heard this song eleven times. You post it in a forum and get three responses, two of which are people promoting their own work. You wait. You second-guess. You start changing things before you even know what needs to change.</p>
+        <p>This is not a technology problem. It is a structural problem. The feedback that serious artists need &mdash; focused, honest, directional, timely &mdash; simply does not exist at a price or pace that works for independent creators. A session with a professional producer costs hundreds of dollars and takes days to schedule. A trusted friend with good ears is a rare and finite resource.</p>
+        <p>Fonna is available at midnight. It does not need context. It does not need to be kind. It listens to what is actually there and tells you what it hears.</p>
+
+        <h2>The education lens</h2>
+        <p>Robust Arts curriculum is built on two interconnected processes: creative and critical. Students are not just asked to make art &mdash; they are asked to reflect on it, analyse it, and use that analysis to make better decisions in the next iteration. Feedback is not a reward at the end of the process. It is built into every stage of it.</p>
+        <p>This is the framework I taught from for years. It is also the framework that most independent musicians never have access to once they leave formal education. The feedback loop that is standard practice in any serious arts programme &mdash; make something, hear honest observations, revise with intention &mdash; simply disappears for most artists the moment they are working alone.</p>
+        <p>Fonna is an attempt to restore that loop. Not to replace human feedback, and not to tell you how to make music. But to provide the kind of structured, honest, directional observation that helps artists move from where the record is to where they want it to be.</p>
+
+        <div class="pull-quote">
+          Artists need to feel heard, but they also need provocation. Fonna aims to provide both &mdash; through feedback and direction. Not how. Just what.
+        </div>
+
+        <h2>Clarity over abundance</h2>
+        <p>One of the things I have learned across thirty years of making music and a career in education is that abundance without direction is its own kind of paralysis. More tools do not make better records. More opinions do not make better decisions. What makes better records is knowing what to listen for, and having the discipline to act on it.</p>
+        <p>Fonna is not here to sand the edges off your music or push you toward a radio sound. It is here to help you hear what is actually happening in the record &mdash; so that whatever you do next, you do it on purpose.</p>
+        <p>The cost of abundance is real. I have chased it. Fonna exists because I wished, many times, that someone would just tell me what to fix first.</p>
+
+        <h2>What Fonna will and will not do</h2>
+        <p>Fonna analyses arrangement, production, and mix. It does not critique songwriting, lyrics, or genre. That boundary is deliberate. Whether a chord change is right for a song is a question only you can answer.</p>
+        <p>Fonna stays in its lane. Every report is built around the same discipline: here is what is working, here is what is getting in the way, here is where to focus first. The goal is not to overwhelm. The goal is to give you the one or two things most worth your attention in the next session.</p>
+        <p>It does not remember your previous version. Each upload is a fresh listen, without bias or attachment. That is not a limitation &mdash; it is the point. You get the same honest ears every time, regardless of how many times you have uploaded, how long you have been working on the track, or how attached you are to a particular decision.</p>
+
+        <div class="cta-block">
+          <h3>Hear your track differently.</h3>
+          <p>One free analysis on signup. No commitment.</p>
+          <div class="cta-actions">
+            <a href="/#login" class="btn primary">Try Fonna free</a>
+            <a href="/" class="btn">Back to home</a>
           </div>
         </div>
 
-        <div class="card result-shell">
-          <h2 style="margin:0 0 18px;font-size:18px;">Producer Report</h2>
-          <div id="result">
-            <div class="empty-state">Upload a track and click <strong>Analyze Track</strong>. Fonna will return a focused report on arrangement, production, and mix.</div>
-          </div>
-        </div>
       </div>
-    </section>
-
-    <footer class="site-footer">© 2026 Fonna. All rights reserved.</footer>
-  </div>
-</main>
-
-<script type="module">
-  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-  const SUPABASE_URL = "https://kukqwyakchsaqquudqiu.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
-  const BACKEND_URL = "https://listener-service-1esi.onrender.com";
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  const authWall = document.getElementById("authWall");
-  const appShell = document.getElementById("appShell");
-  const navRight = document.getElementById("navRight");
-  const analyzeBtn = document.getElementById("analyzeBtn");
-  const fileInput = document.getElementById("fileInput");
-  const trackTitleInput = document.getElementById("trackTitle");
-  const intentInput = document.getElementById("intent");
-  const statusEl = document.getElementById("status");
-  const resultEl = document.getElementById("result");
-  const progressShell = document.getElementById("uploadProgress");
-  const progressFill = document.getElementById("progressFill");
-  const progressText = document.getElementById("progressText");
-  const noCreditsSection = document.getElementById("noCreditsSection");
-  const buySection = document.getElementById("buySection");
-  const purchaseBannerSec = document.getElementById("purchaseBannerSection");
-  const purchaseBanner = document.getElementById("purchaseBanner");
-
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("purchase") === "success") {
-    purchaseBannerSec.style.display = "block";
-    purchaseBanner.className = "banner success";
-    purchaseBanner.textContent = "Payment successful! Your credits have been added. It may take a few seconds to reflect.";
-    window.history.replaceState({}, "", "/app.html");
-  } else if (urlParams.get("purchase") === "cancelled") {
-    purchaseBannerSec.style.display = "block";
-    purchaseBanner.className = "banner warning";
-    purchaseBanner.textContent = "Purchase cancelled — no charge was made.";
-    window.history.replaceState({}, "", "/app.html");
-  }
-
-  let currentSession = null;
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) { authWall.style.display = "flex"; }
-  else { currentSession = session; showApp(session); }
-
-  supabase.auth.onAuthStateChange((_event, session) => {
-    currentSession = session;
-    if (session) { showApp(session); }
-    else { appShell.style.display = "none"; authWall.style.display = "flex"; navRight.innerHTML = ""; }
-  });
-
-  async function showApp(session) {
-    authWall.style.display = "none";
-    appShell.style.display = "block";
-    await refreshCredits(session);
-  }
-
-  async function refreshCredits(session) {
-    let credits = 0;
-    try {
-      const { data } = await supabase.from("users").select("credits").eq("id", session.user.id).single();
-      credits = data?.credits ?? 0;
-    } catch (_) {}
-    navRight.innerHTML = `
-      <div class="credit-badge">Credits: <strong id="creditCount">${credits}</strong></div>
-      <span style="color:var(--muted);font-size:13px;">${session.user.email}</span>
-      <button id="logoutBtn" class="btn sm">Log out</button>
-    `;
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      window.location.href = "/";
-    });
-    if (credits < 1) {
-      noCreditsSection.style.display = "block";
-      buySection.style.display = "none";
-      analyzeBtn.disabled = true;
-    } else {
-      noCreditsSection.style.display = "none";
-      buySection.style.display = "block";
-      analyzeBtn.disabled = false;
-    }
-    return credits;
-  }
-
-  window.startCheckout = async function(pack) {
-    if (!currentSession) { alert("Please sign in first."); return; }
-    const buttons = document.querySelectorAll(".buy-btn");
-    buttons.forEach(b => { b.disabled = true; b.textContent = "Redirecting…"; });
-    try {
-      const res = await fetch(`${BACKEND_URL}/create-checkout-session`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${currentSession.access_token}` },
-        body: JSON.stringify({ pack })
-      });
-      const data = await res.json();
-      if (data.url) { window.location.href = data.url; }
-      else { alert("Could not start checkout. Please try again."); buttons.forEach(b => { b.disabled = false; b.textContent = "Buy"; }); }
-    } catch (err) {
-      alert("Checkout failed. Please try again.");
-      buttons.forEach(b => { b.disabled = false; b.textContent = "Buy"; });
-    }
-  };
-
-  analyzeBtn.addEventListener("click", upload);
-
-  async function upload() {
-    const file = fileInput.files[0];
-    if (!file) { alert("Select an audio file first."); return; }
-    const { data: { session: fresh } } = await supabase.auth.getSession();
-    if (!fresh) { alert("Your session expired. Please sign in again."); window.location.href = "/#login"; return; }
-    currentSession = fresh;
-    setStatus("Uploading and preparing analysis…");
-    setProgress(0);
-    resultEl.innerHTML = `<div class="empty-state">Working on it. This can take a few minutes depending on track length.</div>`;
-    analyzeBtn.disabled = true;
-    const trackTitle = trackTitleInput.value.trim() || file.name.replace(/\.[^.]+$/, "");
-    try {
-      const response = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", `${BACKEND_URL}/critique-upload`);
-        xhr.responseType = "json";
-        xhr.setRequestHeader("Authorization", `Bearer ${fresh.access_token}`);
-        xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
-        xhr.setRequestHeader("X-Intent", intentInput.value.trim() || "Give me a balanced critique of arrangement, production, and mix.");
-        xhr.setRequestHeader("X-Filename", file.name);
-        xhr.setRequestHeader("X-Track-Title", trackTitle);
-        xhr.upload.onprogress = e => {
-          if (!e.lengthComputable) { setProgress(100, "Upload: processing…"); return; }
-          setProgress((e.loaded / e.total) * 100);
-        };
-        xhr.onload = () => {
-          const ct = xhr.getResponseHeader("content-type") || "";
-          if (!ct.includes("application/json")) { reject(new Error(`Server returned non-JSON (${xhr.status}).\n${(xhr.responseText||"").slice(0,300)}`)); return; }
-          let payload = xhr.response;
-          if (payload == null) { try { payload = JSON.parse(xhr.responseText); } catch (_) { payload = {}; } }
-          resolve({ ok: xhr.status >= 200 && xhr.status < 300, json: payload });
-        };
-        xhr.onerror = () => reject(new Error("Upload failed before the server responded."));
-        xhr.send(file);
-      });
-      setProgress(100, "Upload: 100% — analysis complete.");
-      if (!response.ok || response.json?.error) {
-        if (response.json?.error?.code === "NO_CREDITS") {
-          setStatus("No credits remaining.");
-          noCreditsSection.style.display = "block";
-          resultEl.innerHTML = `<div class="error-box">You have no credits left. Purchase a pack above to continue.</div>`;
-          return;
-        }
-        setStatus("The backend returned an error.");
-        resultEl.innerHTML = renderError(response.json);
-        return;
-      }
-      setStatus("Analysis complete.");
-      resultEl.innerHTML = renderReport(response.json);
-      await refreshCredits(fresh);
-    } catch (err) {
-      setStatus("Something went wrong.");
-      resultEl.innerHTML = `<div class="error-box">${escapeHtml(err.message || String(err))}</div>`;
-    } finally {
-      analyzeBtn.disabled = false;
-    }
-  }
-
-  function setProgress(percent, message) {
-    const c = Math.max(0, Math.min(100, Math.round(percent||0)));
-    progressShell.classList.remove("hidden");
-    progressFill.style.width = `${c}%`;
-    progressText.innerText = message || `Upload: ${c}%`;
-  }
-  function setStatus(msg) { statusEl.innerText = msg; }
-  function escapeHtml(v) { return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-  function formatSeconds(s) { const t=Math.max(0,Math.floor(Number(s)||0)); return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`; }
-  function formatDuration(s) { const t=Number(s); return Number.isFinite(t)?formatSeconds(t):"Unknown"; }
-  function formatRange(s,e) { return `${formatSeconds(s)}–${formatSeconds(e)}`; }
-  function renderList(items) { return Array.isArray(items)&&items.length?`<ul class="report-list">${items.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}</ul>`:`<span class="muted-note">Nothing returned.</span>`; }
-  function renderNotesBlock(block) {
-    if (!block) return `<span class="muted-note">No notes returned.</span>`;
-    return `<div class="sub-grid"><div class="notes-box"><h4>What works</h4>${renderList(block.what_works||[])}</div><div class="notes-box"><h4>What holds it back</h4>${renderList(block.what_holds_it_back||[])}</div></div><div class="notes-box" style="margin-top:10px;"><span class="subhead">Recommendations</span>${renderList(block.recommendations||[])}</div>`;
-  }
-  function renderPriorityActions(actions) {
-    if (!Array.isArray(actions)||!actions.length) return `<span class="muted-note">No priority actions returned.</span>`;
-    return actions.map(a=>`<div class="action-item"><div class="priority-tag">${escapeHtml(a.priority||"p1")}</div><div>${escapeHtml(a.action||"")}</div></div>`).join("");
-  }
-  function renderListeningReference(ref) {
-    if (!ref?.title||!ref?.artist) return `<span class="muted-note">No listening reference returned.</span>`;
-    return `<div class="track-card"><div class="track-title-text">${escapeHtml(ref.title)}</div><div class="track-artist-text">${escapeHtml(ref.artist)}</div><div>${escapeHtml(ref.why||"")}</div></div>`;
-  }
-  function renderTimelineMoments(moments) {
-    if (!Array.isArray(moments)||!moments.length) return `<span class="muted-note">No timeline moments returned.</span>`;
-    return `<ul class="report-list">${moments.map(m=>`<li><strong>${escapeHtml(formatRange(m.t_start,m.t_end))}</strong> — ${escapeHtml(m.note||"")}</li>`).join("")}</ul>`;
-  }
-  function renderReport(data) {
-    const input=data.input||{},meta=data.meta||{},domains=data.domains||{};
-    return `
-      <div class="report-section"><h3>Track Overview</h3>
-        <div class="meta-grid">
-          <div class="pill"><span class="k">Title</span><span class="v">${escapeHtml(input.title||"Unknown")}</span></div>
-          <div class="pill"><span class="k">Artist</span><span class="v">${escapeHtml(input.artist||"Unknown")}</span></div>
-          <div class="pill"><span class="k">Duration</span><span class="v">${formatDuration(input.duration_seconds??meta.duration_sec)}</span></div>
-          <div class="pill"><span class="k">Windows</span><span class="v">${escapeHtml(String(meta.selected_windows??meta.chunks_used??"n/a"))}</span></div>
-        </div>
-        <div class="footer-meta">ID: ${escapeHtml(meta.request_id||"n/a")} · ${escapeHtml(String(meta.processing_ms??"n/a"))} ms</div>
-      </div>
-      <div class="report-section"><h3>Snapshot</h3><p>${escapeHtml(data.snapshot||"No snapshot returned.")}</p></div>
-      <div class="report-section"><h3>Best Next Move</h3><div class="best-next">${escapeHtml(data.best_next_move||"")}</div></div>
-      <div class="report-section"><h3>Arrangement</h3>${renderNotesBlock(domains.arrangement)}</div>
-      <div class="report-section"><h3>Production</h3>${renderNotesBlock(domains.production)}</div>
-      <div class="report-section"><h3>Mix</h3>${renderNotesBlock(domains.mix)}</div>
-      <div class="report-section"><h3>Priority Actions</h3>${renderPriorityActions(data.priority_actions)}</div>
-      <div class="report-section"><h3>Timeline Moments</h3>${renderTimelineMoments(data.timeline_moments)}</div>
-      <div class="report-section"><h3>Listening Reference</h3>${renderListeningReference(data.listening_reference)}</div>
-      <div class="report-section"><h3>Limitations</h3><p>${escapeHtml(data.limitations||"")}</p></div>`;
-  }
-  function renderError(json) { return `<div class="error-box">${escapeHtml(JSON.stringify(json,null,2))}</div>`; }
-</script>
-</body>
-</html>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-shell">
+        <span>&copy; 2026 Fonna, a division of 170681639 Ontario</span>
+        <div class="footer-links">
+          <a href="/terms.html">Terms of Use</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/cdn-cgi/l/email-protection#b5ddd0d9d9daf5d3dadbdbd49bd4dc"><span class="__cf_email__" data-cfemail="335b565f5f5c735
