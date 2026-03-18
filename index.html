@@ -623,12 +623,16 @@
 
     // Loads credits from the users table — fails gracefully so it never hangs
     async function loadProfile(user) {
+      const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Profile fetch timed out")), 5000)
+      );
       try {
-        const { data, error } = await supabase
+        const query = supabase
           .from("users")
           .select("email, credits")
           .eq("id", user.id)
-          .maybeSingle();          // maybeSingle() won't throw if row is missing
+          .maybeSingle();
+        const { data, error } = await Promise.race([query, timeout]);
         if (error) throw error;
         userEmailText.textContent   = (data && data.email) ? data.email : (user.email || "Unknown");
         userCreditsText.textContent = data ? String(data.credits ?? 0) : "0";
@@ -642,7 +646,9 @@
 
     async function refreshAuthUI() {
       try {
+        console.log("refreshAuthUI: calling getSession...");
         const { data: { session } } = await supabase.auth.getSession();
+        console.log("refreshAuthUI: session =", session ? "found" : "none");
         if (!session?.user) {
           authLoggedOut.classList.remove("hidden");
           authLoggedIn.classList.add("hidden");
@@ -653,7 +659,9 @@
         authLoggedOut.classList.add("hidden");
         authLoggedIn.classList.remove("hidden");
         setStatus("Logged in successfully.");
+        console.log("refreshAuthUI: calling loadProfile...");
         await loadProfile(session.user);
+        console.log("refreshAuthUI: loadProfile done");
       } catch (err) {
         console.error("refreshAuthUI error:", err.message);
         setStatus("Something went wrong. Please refresh.");
@@ -690,7 +698,9 @@
       loginBtn.disabled = true;
       setStatus("Logging in...");
       try {
+        console.log("doLogin: calling signInWithPassword...");
         const { error } = await supabase.auth.signInWithPassword({ email, password });
+        console.log("doLogin: signInWithPassword returned, error =", error?.message || "none");
         if (error) { setStatus("Login failed: " + error.message); return; }
         await refreshAuthUI();
       } catch (err) {
