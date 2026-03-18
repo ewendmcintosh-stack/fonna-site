@@ -5,20 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Terms of Use - Fonna</title>
   <style>
-    :root { --border: rgba(255,255,255,0.09); --text: #f4f4f2; --muted: #a4a4a0; --soft: #d8d8d2; --max: 780px; }
+    :root {
+      --navy: #1A1A2E;
+      --navy-mid: #16213E;
+      --coral: #E94560;
+      --coral-dark: #C73652;
+      --border: rgba(255,255,255,0.09);
+      --text: #f4f4f2;
+      --muted: #a4a4a0;
+      --soft: #d8d8d2;
+      --max: 780px;
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; color: var(--text); background: linear-gradient(180deg,#050505,#0b0b0b 48%,#050505); min-height: 100vh; font-size: 16px; line-height: 1.75; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--navy);
+      min-height: 100vh;
+      font-size: 16px;
+      line-height: 1.75;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Decorative circles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -100px; right: -100px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 5%; left: -80px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: var(--navy-mid);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+    }
     a { color: inherit; text-decoration: none; }
-    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
-    .nav-shell { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(8,8,8,0.74); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; }
+    .nav-shell {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(26,26,46,0.88);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
     .nav { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
     .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; }
-    .brand-mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(180deg,#fff,#c8c8c8); color: #080808; display: grid; place-items: center; font-weight: 800; }
-    .btn { display: inline-flex; align-items: center; min-height: 42px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text); font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: inherit; }
-    .btn.primary { background: linear-gradient(180deg,#f0f0ec,#cfcfc9); color: #0a0a0a; border-color: transparent; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 20px rgba(233,69,96,0.35);
+      flex-shrink: 0;
+    }
+    .btn {
+      display: inline-flex; align-items: center;
+      min-height: 42px; padding: 0 18px; border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text); font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: rgba(255,255,255,0.1); }
+    .btn.primary {
+      background: var(--coral); color: #fff; border-color: transparent;
+      box-shadow: 0 8px 22px rgba(233,69,96,0.35);
+    }
+    .btn.primary:hover { background: var(--coral-dark); }
     .hero { padding: 64px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
-    .eyebrow { display: inline-block; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--soft); font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 20px; }
+    .eyebrow {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      border: 1px solid rgba(233,69,96,0.3);
+      background: rgba(233,69,96,0.1);
+      color: var(--coral); font-size: 0.84rem;
+      letter-spacing: 0.02em; margin-bottom: 20px;
+    }
     h1 { font-size: clamp(2rem,5vw,3.2rem); line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 12px; }
+  </style>
+
+  <style>
     .last-updated { color: var(--muted); font-size: 0.9rem; margin: 0; }
     .body-copy { padding-bottom: 80px; }
     .body-copy h2 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; margin: 44px 0 12px; border-top: 1px solid var(--border); padding-top: 28px; }
@@ -26,7 +102,8 @@
     .body-copy p { color: var(--soft); margin: 0 0 16px; }
     .body-copy ul { color: var(--soft); padding-left: 20px; margin: 0 0 16px; }
     .body-copy ul li { margin-bottom: 8px; }
-    .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .body-copy a { border-bottom: 1px solid rgba(233,69,96,0.3); padding-bottom: 1px; color: var(--coral); }
+    .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1; }
     .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 22px; }
     .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
   </style>
@@ -34,7 +111,17 @@
 <body>
   <div class="nav-shell">
     <div class="wrap nav">
-      <a href="/" class="brand"><span class="brand-mark">F</span><span>Fonna</span></a>
+      <a href="/" class="brand"><span class="brand-mark"><svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
+  <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
+  <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
+  <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
+  <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
+  <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
+  <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
+  <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
+  <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
+  <circle cx="272" cy="318" r="18" fill="#E94560"/>
+</svg></span><span>Fonna</span></a>
       <a href="/#login" class="btn primary">Try Fonna free</a>
     </div>
   </div>
@@ -107,7 +194,7 @@
         <p>We may update these terms from time to time. Continued use of Fonna after changes are posted constitutes acceptance of the revised terms. We will update the "Last updated" date at the top of this page when changes are made.</p>
 
         <h2>12. Contact</h2>
-        <p>Questions about these terms can be directed to <a href="mailto:hello@fonna.ai" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1px;">hello@fonna.ai</a>.</p>
+        <p>Questions about these terms can be directed to <a href="/cdn-cgi/l/email-protection#ed8588818182ad8b8283838cc38c84" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1px;"><span class="__cf_email__" data-cfemail="d8b0bdb4b4b798beb7b6b6b9f6b9b1">[email&#160;protected]</span></a>.</p>
 
       </div>
     </div>
@@ -119,10 +206,4 @@
         <div class="footer-links">
           <a href="/philosophy.html">Philosophy</a>
           <a href="/faq.html">FAQ</a>
-          <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
+          
