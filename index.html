@@ -588,14 +588,14 @@
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        <a href="/cdn-cgi/l/email-protection#83ebe6efefecc3e5ecedede2ade2ea"><span class="__cf_email__" data-cfemail="d8b0bdb4b4b798beb7b6b6b9f6b9b1">[email&#160;protected]</span></a>
       </div>
     </div>
   </footer>
 
   <!-- Script at end of body so all DOM elements exist when it runs -->
-  <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
     const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
@@ -697,15 +697,4 @@
 
     // onAuthStateChange can fire during redirects — guard against double-runs
     let authChangeBusy = false;
-    supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (authChangeBusy) return;
-      authChangeBusy = true;
-      try { await refreshAuthUI(); }
-      finally { authChangeBusy = false; }
-    });
-
-    await refreshAuthUI();
-  </script>
-
-</body>
-</html>
+    supabase.auth.onAuthStateChange(asy
