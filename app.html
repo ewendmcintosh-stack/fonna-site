@@ -60,13 +60,13 @@
     .lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;opacity:0.9;}
 
     /* DROP ZONE */
-    .drop-zone{border:1.5px dashed rgba(233,69,96,0.3);border-radius:18px;background:rgba(233,69,96,0.04);padding:36px 24px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:20px;}
+    .drop-zone{border:1.5px dashed rgba(233,69,96,0.3);border-radius:18px;background:rgba(233,69,96,0.04);padding:36px 24px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:20px;position:relative;}
     .drop-zone:hover,.drop-zone.drag-over{border-color:var(--coral);background:rgba(233,69,96,0.08);}
     .drop-icon{width:46px;height:46px;border-radius:50%;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px;}
     .drop-title{font-size:0.97rem;font-weight:600;margin-bottom:5px;}
     .drop-sub{font-size:0.82rem;color:var(--muted);margin-bottom:10px;}
     .drop-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;}
-    #fileInput{display:none;}
+    #fileInput{display:block;}
     .file-chosen{display:none;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.2);font-size:0.88rem;margin-bottom:20px;}
     .file-chosen.show{display:flex;}
     .file-name{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -211,8 +211,8 @@
           <div class="drop-title">Drop your track here</div>
           <div class="drop-sub">or click to browse</div>
           <div class="drop-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF · AIF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
+          <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;" />
         </div>
-        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
 
         <div class="file-chosen" id="fileChosen">
           <span class="file-name" id="fileName"></span>
@@ -231,7 +231,7 @@
           </div>
           <div class="field full">
             <label for="intentField">Intent <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional — steer the feedback)</span></label>
-            <textarea id="intentField" rows="2" maxlength="1500" placeholder="e.g. The mix is rough — focus on arrangement and production for now."></textarea>
+            <textarea id="intentField" rows="2" maxlength="1500" placeholder="e.g. Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first."></textarea>
           </div>
         </div>
 
@@ -329,13 +329,13 @@
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="/cdn-cgi/l/email-protection#38505d545457785e57565659165951"><span class="__cf_email__" data-cfemail="19717c757576597f76777778377870">[email&#160;protected]</span></a>
+        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
       </div>
     </div>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+<script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
