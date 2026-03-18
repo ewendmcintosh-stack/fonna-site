@@ -3,191 +3,642 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Philosophy - Fonna</title>
+  <title>Fonna — App</title>
   <style>
     :root {
-      --navy: #1A1A2E;
-      --navy-mid: #16213E;
-      --coral: #E94560;
-      --coral-dark: #C73652;
-      --border: rgba(255,255,255,0.09);
-      --text: #f4f4f2;
-      --muted: #a4a4a0;
-      --soft: #d8d8d2;
-      --max: 780px;
+      --navy:#1A1A2E; --navy-mid:#16213E; --navy-deep:#0F3460;
+      --coral:#E94560; --coral-dark:#C73652;
+      --border:rgba(255,255,255,0.09); --text:#f4f4f2;
+      --muted:#a4a4a0; --soft:#d8d8d2;
+      --shadow:0 18px 50px rgba(0,0,0,0.38); --max:900px;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      color: var(--text);
-      background: var(--navy);
-      min-height: 100vh;
-      font-size: 16px;
-      line-height: 1.75;
-      position: relative;
-      overflow-x: hidden;
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+      color:var(--text);background:var(--navy);min-height:100vh;
+      position:relative;overflow-x:hidden;
     }
-    /* Decorative circles */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -100px; right: -100px;
-      width: 380px; height: 380px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.06;
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: 5%; left: -80px;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: var(--navy-mid);
-      opacity: 0.7;
-      pointer-events: none;
-      z-index: 0;
-    }
-    a { color: inherit; text-decoration: none; }
-    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; }
-    .nav-shell {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(26,26,46,0.88);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
-    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; }
-    .brand-mark {
-      width: 34px; height: 34px; border-radius: 10px;
-      display: inline-flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 20px rgba(233,69,96,0.35);
-      flex-shrink: 0;
-    }
-    .btn {
-      display: inline-flex; align-items: center;
-      min-height: 42px; padding: 0 18px; border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--text); font-weight: 600; font-size: 0.9rem;
-      cursor: pointer; font-family: inherit;
-      transition: background 0.15s;
-    }
-    .btn:hover { background: rgba(255,255,255,0.1); }
-    .btn.primary {
-      background: var(--coral); color: #fff; border-color: transparent;
-      box-shadow: 0 8px 22px rgba(233,69,96,0.35);
-    }
-    .btn.primary:hover { background: var(--coral-dark); }
-    .hero { padding: 64px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
-    .eyebrow {
-      display: inline-block; padding: 6px 14px; border-radius: 999px;
-      border: 1px solid rgba(233,69,96,0.3);
-      background: rgba(233,69,96,0.1);
-      color: var(--coral); font-size: 0.84rem;
-      letter-spacing: 0.02em; margin-bottom: 20px;
-    }
-    h1 { font-size: clamp(2rem,5vw,3.2rem); line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 12px; }
-  </style>
+    body::before{content:'';position:fixed;top:-120px;right:-120px;width:480px;height:480px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;z-index:0;}
+    body::after{content:'';position:fixed;bottom:10%;left:-100px;width:340px;height:340px;border-radius:50%;background:var(--navy-deep);opacity:0.6;pointer-events:none;z-index:0;}
+    a{color:inherit;text-decoration:none;}
+    .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto;position:relative;z-index:1;}
 
-  <style>
-    .lead { font-size: 1.18rem; color: var(--soft); margin: 0; max-width: 60ch; line-height: 1.7; }
-    .body-copy { padding-bottom: 80px; }
-    .body-copy h2 { font-size: clamp(1.4rem,3vw,2rem); letter-spacing: -0.03em; margin: 64px 0 20px; line-height: 1.15; }
-    .body-copy h2:first-child { margin-top: 0; }
-    .body-copy p { color: var(--soft); margin: 0 0 24px; }
-    .pull-quote { border-radius: 0; padding: 4px 0 4px 28px; margin: 40px 0; font-size: 1.22rem; line-height: 1.55; letter-spacing: -0.02em; color: var(--text); }
-    .cta-block { border: 1px solid rgba(233,69,96,0.2); border-radius: 24px; background: rgba(22,33,62,0.7); padding: 36px; text-align: center; margin: 64px 0 0; position: relative; overflow: hidden; }
-    .cta-block::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; background: var(--coral); opacity: 0.08; pointer-events: none; }
-    .cta-block h3 { margin: 0 0 10px; font-size: 1.5rem; letter-spacing: -0.03em; position: relative; z-index: 1; }
-    .cta-block p { color: var(--muted); margin: 0 0 24px; position: relative; z-index: 1; }
-    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
-    .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1; }
-    .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 22px; }
-    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    /* NAV */
+    .nav-shell{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(26,26,46,0.88);border-bottom:1px solid rgba(255,255,255,0.07);}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px;}
+    .brand{display:flex;align-items:center;gap:12px;font-size:1.05rem;font-weight:700;}
+    .brand-mark{width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(233,69,96,0.35);flex-shrink:0;}
+    .nav-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+    .credit-pill{display:none;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;border:1px solid rgba(233,69,96,0.25);background:rgba(233,69,96,0.08);font-size:0.86rem;color:var(--soft);white-space:nowrap;}
+    .credit-pill.show{display:inline-flex;}
+    .credit-pill strong{color:var(--coral);font-weight:700;}
+    .user-pill{font-size:0.82rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-weight:600;font-size:0.9rem;transition:transform 0.15s,background 0.15s;cursor:pointer;font-family:inherit;}
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.1);}
+    .btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
+    .btn.primary{background:var(--coral);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(233,69,96,0.35);position:relative;overflow:hidden;}
+    .btn.primary::before{content:'';position:absolute;top:-18px;right:-18px;width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,0.18);pointer-events:none;}
+    .btn.primary::after{content:'';position:absolute;bottom:-14px;left:-10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.13);pointer-events:none;}
+    .btn.primary:hover{background:var(--coral-dark);}
+    .btn.sm{min-height:36px;padding:0 14px;font-size:0.84rem;}
+    .btn.ghost{background:transparent;border-color:rgba(255,255,255,0.15);color:var(--muted);}
+    .btn.ghost:hover{background:rgba(255,255,255,0.06);color:var(--text);}
+
+    /* CARDS */
+    .card{border-radius:24px;border:1px solid rgba(255,255,255,0.08);background:var(--navy-mid);box-shadow:var(--shadow);padding:32px 36px;margin-bottom:22px;position:relative;overflow:hidden;}
+    .card::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
+    .card::after{content:'';position:absolute;bottom:-30px;left:-30px;width:130px;height:130px;border-radius:50%;background:var(--navy-deep);opacity:0.7;pointer-events:none;}
+    .card-inner{position:relative;z-index:1;}
+    .card-title{font-size:1.2rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 6px;}
+    .card-sub{font-size:0.9rem;color:var(--muted);margin:0 0 24px;line-height:1.6;}
+
+    /* SECTION LABEL */
+    .lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;opacity:0.9;}
+
+    /* DROP ZONE */
+    .drop-zone{border:1.5px dashed rgba(233,69,96,0.3);border-radius:18px;background:rgba(233,69,96,0.04);padding:36px 24px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:20px;}
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--coral);background:rgba(233,69,96,0.08);}
+    .drop-icon{width:46px;height:46px;border-radius:50%;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px;}
+    .drop-title{font-size:0.97rem;font-weight:600;margin-bottom:5px;}
+    .drop-sub{font-size:0.82rem;color:var(--muted);margin-bottom:10px;}
+    .drop-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;}
+    #fileInput{display:none;}
+    .file-chosen{display:none;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.2);font-size:0.88rem;margin-bottom:20px;}
+    .file-chosen.show{display:flex;}
+    .file-name{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .file-sz{font-size:0.78rem;color:var(--muted);flex-shrink:0;}
+    .file-clear{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:0;flex-shrink:0;}
+    .file-clear:hover{color:var(--text);}
+
+    /* FIELDS */
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+    .field{display:flex;flex-direction:column;gap:6px;}
+    .field.full{grid-column:1/-1;}
+    .field label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
+    .field input,.field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;resize:none;}
+    .field input:focus,.field textarea:focus{outline:none;border-color:var(--coral);}
+    .field input::placeholder,.field textarea::placeholder{color:var(--muted);}
+    .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+    .submit-note{font-size:0.8rem;color:var(--muted);}
+    .submit-note strong{color:var(--coral);}
+
+    /* STATUS */
+    .msg{display:none;padding:13px 18px;border-radius:14px;font-size:0.88rem;line-height:1.55;margin-bottom:18px;}
+    .msg.show{display:block;}
+    .msg.err{background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
+    .msg.ok{background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
+    .msg.info{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--soft);}
+
+    /* PROGRESS */
+    .progress-card{display:none;text-align:center;}
+    .progress-card.show{display:block;}
+    .spinner{width:46px;height:46px;border-radius:50%;border:3px solid rgba(233,69,96,0.2);border-top-color:var(--coral);animation:spin 0.85s linear infinite;margin:0 auto 16px;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .p-title{font-size:1.05rem;font-weight:700;margin-bottom:7px;}
+    .p-sub{font-size:0.88rem;color:var(--muted);line-height:1.6;}
+    .p-bar-wrap{background:rgba(255,255,255,0.06);border-radius:999px;height:3px;margin-top:20px;overflow:hidden;}
+    .p-bar{height:100%;background:var(--coral);border-radius:999px;width:5%;transition:width 0.6s ease;}
+
+    /* REPORT */
+    .report-card{display:none;}
+    .report-card.show{display:block;}
+    .rpt-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+    .rpt-track{font-size:1.3rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:3px;}
+    .rpt-meta{font-size:0.82rem;color:var(--muted);}
+    .snapshot{background:rgba(15,52,96,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 20px;margin-bottom:20px;}
+    .snapshot-text{color:var(--soft);line-height:1.7;font-size:0.95rem;font-style:italic;}
+    .best-next{background:rgba(233,69,96,0.07);border:1px solid rgba(233,69,96,0.2);border-radius:14px;padding:18px 20px;margin-bottom:20px;}
+    .best-next-text{font-size:0.97rem;font-weight:600;color:var(--text);line-height:1.6;}
+    .domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+    .domain{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;position:relative;overflow:hidden;}
+    .domain::after{content:'';position:absolute;bottom:-16px;right:-16px;width:60px;height:60px;border-radius:50%;background:var(--coral);opacity:0.05;pointer-events:none;}
+    .domain-name{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--coral);font-weight:600;margin-bottom:12px;}
+    .domain-sub{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;margin-top:10px;}
+    .dlist{margin:0;padding-left:14px;}
+    .dlist li{font-size:0.83rem;color:var(--soft);line-height:1.55;margin-bottom:3px;}
+    .prio-items{margin-bottom:20px;}
+    .prio-row{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .prio-row:last-child{border-bottom:none;}
+    .p-badge{flex-shrink:0;width:26px;height:26px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);color:var(--coral);}
+    .p-text{font-size:0.88rem;color:var(--soft);line-height:1.55;padding-top:3px;}
+    .tl-items{margin-bottom:20px;}
+    .tl-row{display:flex;gap:14px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+    .tl-row:last-child{border-bottom:none;}
+    .tl-stamp{flex-shrink:0;font-size:0.76rem;font-weight:700;color:var(--coral);font-family:monospace;min-width:90px;padding-top:2px;}
+    .tl-domain{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;}
+    .tl-note{font-size:0.86rem;color:var(--soft);line-height:1.5;}
+    .ref-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:20px;}
+    .ref-track{font-size:0.97rem;font-weight:700;margin-bottom:3px;}
+    .ref-why{font-size:0.85rem;color:var(--soft);line-height:1.6;}
+    .limitations{font-size:0.78rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;}
+
+    /* BUY */
+    .credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
+    .pack{border-radius:18px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);padding:20px;cursor:pointer;transition:border-color 0.15s,background 0.15s;position:relative;overflow:hidden;}
+    .pack:hover{border-color:var(--coral);background:rgba(233,69,96,0.06);}
+    .pack::after{content:'';position:absolute;bottom:-16px;right:-16px;width:70px;height:70px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
+    .pack.featured{border-color:rgba(233,69,96,0.35);}
+    .pack-badge{display:inline-block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--coral);background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);padding:2px 9px;border-radius:999px;margin-bottom:8px;}
+    .pack-name{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
+    .pack-price{font-size:1.7rem;font-weight:800;letter-spacing:-0.04em;}
+    .pack-credits{font-size:0.82rem;color:var(--muted);margin-top:2px;}
+
+    /* FOOTER */
+    .footer{padding:24px 0 48px;color:var(--muted);}
+    .footer-shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;}
+    .footer-links{display:flex;gap:18px;flex-wrap:wrap;}
+    .footer-links a:hover{color:var(--text);}
+    .hidden{display:none!important;}
+
+    @media(max-width:720px){
+      .nav{flex-wrap:wrap;padding:12px 0;}
+      .domains{grid-template-columns:1fr;}
+      .credits-grid{grid-template-columns:1fr;}
+      .fields{grid-template-columns:1fr;}
+      .card{padding:22px 20px;}
+      .user-pill{display:none;}
+    }
+    @media(max-width:480px){
+      .rpt-header{flex-direction:column;}
+    }
   </style>
 </head>
 <body>
-  <div class="nav-shell">
-    <div class="wrap nav">
-      <a href="/" class="brand"><span class="brand-mark"><svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
-  <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
-  <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
-  <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
-  <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
-  <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
-  <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
-  <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
-  <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
-  <circle cx="272" cy="318" r="18" fill="#E94560"/>
-</svg></span><span>Fonna</span></a>
-      <a href="/#login" class="btn primary">Try Fonna free</a>
+
+<div class="nav-shell">
+  <div class="wrap nav">
+    <a href="/" class="brand">
+      <span class="brand-mark">
+        <svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
+          <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
+          <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
+          <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
+          <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
+          <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
+          <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
+          <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
+          <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
+          <circle cx="272" cy="318" r="18" fill="#E94560"/>
+        </svg>
+      </span>
+      <span>Fonna</span>
+    </a>
+    <div class="nav-right">
+      <span class="user-pill" id="navEmail"></span>
+      <span class="credit-pill" id="navCredits"><strong id="navCreditCount">—</strong> credits</span>
+      <button class="btn sm ghost" id="logoutBtn">Log out</button>
     </div>
   </div>
-  <main>
-    <div class="wrap">
-      <div class="hero">
-        <div class="eyebrow">The philosophy behind Fonna</div>
-        <h1>Better records come from better decisions.</h1>
-        <p class="lead">Fonna was built at the intersection of two lifelong pursuits &mdash; music making and education &mdash; by someone who has lived both deeply.</p>
-      </div>
-      <div class="body-copy">
+</div>
 
-        <h2>Where this started</h2>
-        <p>My name is Ewen McIntosh. I am a lifelong gigging musician and independent recording artist. I am also a former high school music teacher, special educator, vice principal of curriculum and instruction, and have been high school principal for the last 12 years. I have been making records for myself, my students and artists in my community since before most people had a computer in their house.</p>
+<main style="padding:36px 0 60px;">
+  <div class="wrap">
 
-        <p>My first serious recording setup was a Fostex X-55 &mdash; a four-track cassette recorder. From there I moved to a Fostex VF160 digital workstation, then to an RME Fireface, Cubase, and a UAD-1 card. Today, like most independent artists, I work inside a myriad of AI-powered creation tools that would have seemed impossible to the version of me who was bouncing tracks to cassette.</p>
-        <p>Each step forward brought more capability and more noise. More plugins, more tutorials, more rabbit holes. More time spent chasing a sound instead of finishing a record. I know what it feels like to lose a full weekend to a compressor setting. I also know what it feels like to finally get something right and have no one around to hear whether it actually worked.</p>
+    <div class="msg ok" id="purchaseBanner"></div>
 
-        <div class="pull-quote">
-          I have lost countless hours chasing sounds through plugins and tutorials, room treatments and monitoring upgrades &mdash; and untold patience from friends and family who felt compelled to listen to semi-finished tracks and give me something useful back. Fonna solves this entirely.
+    <!-- UPLOAD -->
+    <div class="card" id="uploadCard">
+      <div class="card-inner">
+        <p class="card-title">Analyse a track</p>
+        <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
+
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-icon">♪</div>
+          <div class="drop-title">Drop your track here</div>
+          <div class="drop-sub">or click to browse</div>
+          <div class="drop-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF · AIF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
+        </div>
+        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
+
+        <div class="file-chosen" id="fileChosen">
+          <span class="file-name" id="fileName"></span>
+          <span class="file-sz" id="fileSz"></span>
+          <button class="file-clear" id="fileClear">✕</button>
         </div>
 
-        <h2>The problem Fonna is built to solve</h2>
-        <p>Independent artists have no reliable feedback loop. You finish a rough mix at midnight. Your producer friends are asleep. Your partner has heard this song eleven times. You post it in a forum and get three responses, two of which are people promoting their own work. You wait. You second-guess. You start changing things before you even know what needs to change.</p>
-        <p>This is not a technology problem. It is a structural problem. The feedback that serious artists need &mdash; focused, honest, directional, timely &mdash; simply does not exist at a price or pace that works for independent creators. A session with a professional producer costs hundreds of dollars and takes days to schedule. A trusted friend with good ears is a rare and finite resource.</p>
-        <p>Fonna is available at midnight. It does not need context. It does not need to be kind. It listens to what is actually there and tells you what it hears.</p>
-
-        <h2>The education lens</h2>
-        <p>Robust Arts curriculum is built on two interconnected processes: creative and critical. Students are not just asked to make art &mdash; they are asked to reflect on it, analyse it, and use that analysis to make better decisions in the next iteration. Feedback is not a reward at the end of the process. It is built into every stage of it.</p>
-        <p>This is the framework I taught from for years. It is also the framework that most independent musicians never have access to once they leave formal education. The feedback loop that is standard practice in any serious arts programme &mdash; make something, hear honest observations, revise with intention &mdash; simply disappears for most artists the moment they are working alone.</p>
-        <p>Fonna is an attempt to restore that loop. Not to replace human feedback, and not to tell you how to make music. But to provide the kind of structured, honest, directional observation that helps artists move from where the record is to where they want it to be.</p>
-
-        <div class="pull-quote">
-          Artists need to feel heard, but they also need provocation. Fonna aims to provide both &mdash; through feedback and direction. Not how. Just what.
-        </div>
-
-        <h2>Clarity over abundance</h2>
-        <p>One of the things I have learned across thirty years of making music and a career in education is that abundance without direction is its own kind of paralysis. More tools do not make better records. More opinions do not make better decisions. What makes better records is knowing what to listen for, and having the discipline to act on it.</p>
-        <p>Fonna is not here to sand the edges off your music or push you toward a radio sound. It is here to help you hear what is actually happening in the record &mdash; so that whatever you do next, you do it on purpose.</p>
-        <p>The cost of abundance is real. I have chased it. Fonna exists because I wished, many times, that someone would just tell me what to fix first.</p>
-
-        <h2>What Fonna will and will not do</h2>
-        <p>Fonna analyses arrangement, production, and mix. It does not critique songwriting, lyrics, or genre. That boundary is deliberate. Whether a chord change is right for a song is a question only you can answer.</p>
-        <p>Fonna stays in its lane. Every report is built around the same discipline: here is what is working, here is what is getting in the way, here is where to focus first. The goal is not to overwhelm. The goal is to give you the one or two things most worth your attention in the next session.</p>
-        <p>It does not remember your previous version. Each upload is a fresh listen, without bias or attachment. That is not a limitation &mdash; it is the point. You get the same honest ears every time, regardless of how many times you have uploaded, how long you have been working on the track, or how attached you are to a particular decision.</p>
-
-        <div class="cta-block">
-          <h3>Hear your track differently.</h3>
-          <p>One free analysis on signup. No commitment.</p>
-          <div class="cta-actions">
-            <a href="/#login" class="btn primary">Try Fonna free</a>
-            <a href="/" class="btn">Back to home</a>
+        <div class="fields">
+          <div class="field">
+            <label for="trackTitle">Track title</label>
+            <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="artistName">Artist name</label>
+            <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
+          </div>
+          <div class="field full">
+            <label for="intentField">Intent <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional — steer the feedback)</span></label>
+            <textarea id="intentField" rows="2" maxlength="1500" placeholder="e.g. The mix is rough — focus on arrangement and production for now."></textarea>
           </div>
         </div>
 
+        <div class="msg" id="uploadMsg"></div>
+
+        <div class="submit-row">
+          <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
+          <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
+        </div>
       </div>
     </div>
-  </main>
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-shell">
-        <span>&copy; 2026 Fonna, a division of 170681639 Ontario</span>
-        <div class="footer-links">
-          <a href="/terms.html">Terms of Use</a>
-          <a href="/faq.html">FAQ</a>
-          <a href="/cdn-cgi/l/email-protection#b5ddd0d9d9daf5d3dadbdbd49bd4dc"><span class="__cf_email__" data-cfemail="335b565f5f5c735
+
+    <!-- PROGRESS -->
+    <div class="card progress-card" id="progressCard">
+      <div class="card-inner" style="text-align:center;">
+        <div class="spinner"></div>
+        <div class="p-title">Listening to your track…</div>
+        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
+        <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
+      </div>
+    </div>
+
+    <!-- REPORT -->
+    <div class="card report-card" id="reportCard">
+      <div class="card-inner">
+        <div class="rpt-header">
+          <div>
+            <div class="lbl">Producer Report</div>
+            <div class="rpt-track" id="rTrack"></div>
+            <div class="rpt-meta" id="rMeta"></div>
+          </div>
+          <div>
+            <button class="btn sm ghost" id="newBtn">New analysis</button>
+          </div>
+        </div>
+
+        <div class="snapshot">
+          <div class="lbl">Snapshot</div>
+          <div class="snapshot-text" id="rSnapshot"></div>
+        </div>
+
+        <div class="best-next">
+          <div class="lbl">Best next move</div>
+          <div class="best-next-text" id="rBestNext"></div>
+        </div>
+
+        <div class="lbl">Arrangement · Production · Mix</div>
+        <div class="domains" id="rDomains"></div>
+
+        <div class="lbl">Priority actions</div>
+        <div class="prio-items" id="rPrio"></div>
+
+        <div id="rTlWrap">
+          <div class="lbl">Timestamped notes</div>
+          <div class="tl-items" id="rTl"></div>
+        </div>
+
+        <div class="lbl">Listening reference</div>
+        <div class="ref-block" id="rRef"></div>
+
+        <div class="limitations" id="rLim"></div>
+      </div>
+    </div>
+
+    <!-- BUY CREDITS -->
+    <div class="card" id="creditsCard" style="display:none;">
+      <div class="card-inner">
+        <p class="card-title">Get more credits</p>
+        <p class="card-sub">Each analysis uses 1 credit. Credits never expire.</p>
+        <div class="msg" id="buyMsg"></div>
+        <div class="credits-grid">
+          <div class="pack" id="buyStarter">
+            <div class="pack-name">Starter</div>
+            <div class="pack-price">$9.99</div>
+            <div class="pack-credits">10 credits</div>
+          </div>
+          <div class="pack featured" id="buyCreator">
+            <div class="pack-badge">Best value</div>
+            <div class="pack-name">Creator</div>
+            <div class="pack-price">$19.99</div>
+            <div class="pack-credits">30 credits</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-shell">
+      <span>© 2026 Fonna</span>
+      <div class="footer-links">
+        <a href="/philosophy.html">Philosophy</a>
+        <a href="/terms.html">Terms of Use</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
+const API_BASE          = "https://listener-service-1esi.onrender.com";
+
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// elements
+const $ = id => document.getElementById(id);
+const navEmail    = $("navEmail");
+const navCredits  = $("navCredits");
+const navCreditN  = $("navCreditCount");
+const logoutBtn   = $("logoutBtn");
+const uploadCard  = $("uploadCard");
+const progressCard= $("progressCard");
+const pBar        = $("progressBar");
+const pMsg        = $("progressMsg");
+const reportCard  = $("reportCard");
+const creditsCard = $("creditsCard");
+const dropZone    = $("dropZone");
+const fileInput   = $("fileInput");
+const fileChosen  = $("fileChosen");
+const fileName    = $("fileName");
+const fileSz      = $("fileSz");
+const fileClear   = $("fileClear");
+const trackTitle  = $("trackTitle");
+const artistName  = $("artistName");
+const intentField = $("intentField");
+const analyseBtn  = $("analyseBtn");
+const uploadMsg   = $("uploadMsg");
+const newBtn      = $("newBtn");
+const purchaseBnr = $("purchaseBanner");
+const buyStarter  = $("buyStarter");
+const buyCreator  = $("buyCreator");
+const buyMsg      = $("buyMsg");
+
+let session = null;
+let file    = null;
+let progTmr = null;
+
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+async function boot() {
+  const { data: { session: s } } = await sb.auth.getSession();
+  if (!s) { window.location.href = "/#login"; return; }
+  session = s;
+  navEmail.textContent = s.user.email || "";
+  await refreshCredits();
+  creditsCard.style.display = "block";
+  checkBanner();
+}
+
+async function refreshCredits() {
+  try {
+    const r = await fetch(`${API_BASE}/me`, { headers: ah() });
+    const d = await r.json();
+    if (d?.user?.credits !== undefined) {
+      const c = Number(d.user.credits);
+      navCreditN.textContent = c;
+      navCredits.classList.add("show");
+      if (c < 1) { setMsg(uploadMsg,"err","You have no credits remaining. Purchase a pack below to continue."); analyseBtn.disabled = true; }
+    }
+  } catch {}
+}
+
+function ah() {
+  return { "Authorization": `Bearer ${session.access_token}`, "Content-Type": "application/json" };
+}
+
+function checkBanner() {
+  const p = new URLSearchParams(location.search);
+  if (p.get("purchase") === "success") {
+    purchaseBnr.textContent = "Purchase successful — your credits have been added.";
+    purchaseBnr.classList.add("show");
+    history.replaceState({}, "", "/app.html");
+    setTimeout(refreshCredits, 2500);
+  } else if (p.get("purchase") === "cancelled") {
+    purchaseBnr.textContent = "Purchase cancelled. No charge was made.";
+    purchaseBnr.classList.add("show");
+    purchaseBnr.style.cssText += "background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);color:var(--soft);";
+    history.replaceState({}, "", "/app.html");
+  }
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+logoutBtn.addEventListener("click", async () => {
+  await sb.auth.signOut();
+  window.location.href = "/";
+});
+
+// ── FILE ──────────────────────────────────────────────────────────────────────
+dropZone.addEventListener("click", () => fileInput.click());
+dropZone.addEventListener("dragover",  e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
+dropZone.addEventListener("drop", e => { e.preventDefault(); dropZone.classList.remove("drag-over"); if (e.dataTransfer.files[0]) pick(e.dataTransfer.files[0]); });
+fileInput.addEventListener("change", () => { if (fileInput.files[0]) pick(fileInput.files[0]); });
+fileClear.addEventListener("click", clearFile);
+
+function pick(f) {
+  file = f;
+  fileName.textContent = f.name;
+  fileSz.textContent = fmtBytes(f.size);
+  fileChosen.classList.add("show");
+  analyseBtn.disabled = false;
+  clearMsg(uploadMsg);
+  if (!trackTitle.value) trackTitle.value = f.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g," ");
+}
+
+function clearFile() {
+  file = null; fileInput.value = "";
+  fileChosen.classList.remove("show");
+  analyseBtn.disabled = true;
+}
+
+function fmtBytes(b) {
+  return b < 1048576 ? (b/1024).toFixed(1)+" KB" : (b/1048576).toFixed(1)+" MB";
+}
+
+// ── ANALYSE ───────────────────────────────────────────────────────────────────
+analyseBtn.addEventListener("click", analyse);
+
+async function analyse() {
+  if (!file) return;
+  const { data: { session: s } } = await sb.auth.getSession();
+  if (!s) { window.location.href = "/#login"; return; }
+  session = s;
+
+  const title  = trackTitle.value.trim() || file.name.replace(/\.[^/.]+$/,"");
+  const artist = artistName.value.trim() || "Unknown";
+  const intent = intentField.value.trim() ||
+    "Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.";
+
+  uploadCard.style.display = "none";
+  progressCard.classList.add("show");
+  reportCard.classList.remove("show");
+  startProg();
+
+  try {
+    const buf = await file.arrayBuffer();
+    const res = await fetch(`${API_BASE}/critique-upload`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${session.access_token}`,
+        "Content-Type":  file.type || "application/octet-stream",
+        "X-Filename":    file.name,
+        "X-Track-Title": title,
+        "X-Artist-Name": artist,
+        "X-Intent":      intent,
+      },
+      body: buf,
+    });
+
+    stopProg();
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      let msg = err?.error?.message || `Server error (${res.status})`;
+      if (res.status === 402) msg = "No credits remaining. Purchase a pack below to continue.";
+      else if (res.status === 401) msg = "Session expired — please log in again.";
+      uploadCard.style.display = "block";
+      progressCard.classList.remove("show");
+      setMsg(uploadMsg, "err", msg);
+      if (res.status === 401) setTimeout(() => { window.location.href = "/#login"; }, 2000);
+      return;
+    }
+
+    const rpt = await res.json();
+    await refreshCredits();
+    renderReport(rpt);
+
+  } catch (e) {
+    stopProg();
+    uploadCard.style.display = "block";
+    progressCard.classList.remove("show");
+    setMsg(uploadMsg, "err", "Connection error — please check your network and try again.");
+  }
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+const progMsgs = [
+  "Analysing arrangement…",
+  "Checking production choices…",
+  "Reviewing the mix…",
+  "Pulling the report together…",
+];
+
+function startProg() {
+  let pct = 5, mi = 0;
+  pBar.style.width = "5%";
+  pMsg.innerHTML = "Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.";
+  progTmr = setInterval(() => {
+    pct = Math.min(pct + Math.random()*5 + 1, 88);
+    pBar.style.width = pct + "%";
+    if (mi < progMsgs.length) { pMsg.textContent = progMsgs[mi++]; }
+  }, 7000);
+}
+
+function stopProg() {
+  clearInterval(progTmr);
+  pBar.style.width = "100%";
+}
+
+// ── RENDER REPORT ─────────────────────────────────────────────────────────────
+function renderReport(r) {
+  progressCard.classList.remove("show");
+  reportCard.classList.add("show");
+
+  $("rTrack").textContent = [r.input?.title, r.input?.artist].filter(Boolean).join(" — ") || "Untitled";
+  const dur = r.input?.duration_seconds
+    ? `${Math.floor(r.input.duration_seconds/60)}:${String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0")}`
+    : "";
+  $("rMeta").textContent = [dur ? dur+" min" : "", r.created_at ? new Date(r.created_at).toLocaleDateString() : ""].filter(Boolean).join(" · ");
+  $("rSnapshot").textContent  = r.snapshot || "";
+  $("rBestNext").textContent  = r.best_next_move || "";
+
+  // Domains
+  const dEl = $("rDomains"); dEl.innerHTML = "";
+  for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
+    const d = r.domains?.[key]; if (!d) continue;
+    const el = document.createElement("div"); el.className = "domain";
+    el.innerHTML = `<div class="domain-name">${label}</div>`
+      + sec("What's working", d.what_works)
+      + sec("What's holding it back", d.what_holds_it_back)
+      + sec("Recommendations", d.recommendations);
+    dEl.appendChild(el);
+  }
+
+  // Priority
+  const pEl = $("rPrio"); pEl.innerHTML = "";
+  (r.priority_actions||[]).forEach((a,i) => {
+    const row = document.createElement("div"); row.className = "prio-row";
+    row.innerHTML = `<div class="p-badge">P${i+1}</div><div class="p-text">${esc(a.action)}</div>`;
+    pEl.appendChild(row);
+  });
+
+  // Timeline
+  const tl = r.timeline_moments||[];
+  const tlW = $("rTlWrap"); const tlEl = $("rTl"); tlEl.innerHTML = "";
+  if (tl.length) {
+    tlW.style.display = "block";
+    tl.forEach(m => {
+      const row = document.createElement("div"); row.className = "tl-row";
+      row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain||"")}</div><div class="tl-note">${esc(m.note||"")}</div></div>`;
+      tlEl.appendChild(row);
+    });
+  } else { tlW.style.display = "none"; }
+
+  // Reference
+  const ref = r.listening_reference; const rRef = $("rRef");
+  if (ref?.title) {
+    rRef.style.display = "";
+    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist||"")}</div></div><div class="ref-why">${esc(ref.why||"")}</div>`;
+  } else { rRef.style.display = "none"; }
+
+  $("rLim").textContent = r.limitations || "";
+  reportCard.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function sec(label, arr) {
+  if (!arr?.length) return "";
+  return `<div class="domain-sub">${label}</div><ul class="dlist">${arr.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
+}
+
+function ts(s) {
+  const t = Math.max(0,Math.floor(Number(s)||0));
+  return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`;
+}
+
+function esc(s) {
+  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+// ── NEW ANALYSIS ──────────────────────────────────────────────────────────────
+newBtn.addEventListener("click", () => {
+  reportCard.classList.remove("show");
+  uploadCard.style.display = "block";
+  clearFile(); clearMsg(uploadMsg);
+  trackTitle.value = ""; artistName.value = ""; intentField.value = "";
+  window.scrollTo({ top:0, behavior:"smooth" });
+});
+
+// ── BUY CREDITS ───────────────────────────────────────────────────────────────
+async function buy(pack) {
+  clearMsg(buyMsg); setMsg(buyMsg,"info","Redirecting to checkout…");
+  try {
+    const r = await fetch(`${API_BASE}/create-checkout-session`, {
+      method:"POST", headers:ah(), body:JSON.stringify({ pack }),
+    });
+    const d = await r.json();
+    if (d?.url) { window.location.href = d.url; }
+    else { setMsg(buyMsg,"err", d?.error?.message || "Could not start checkout."); }
+  } catch { setMsg(buyMsg,"err","Connection error — please try again."); }
+}
+
+buyStarter.addEventListener("click", () => buy("starter"));
+buyCreator.addEventListener("click", () => buy("creator"));
+
+// ── MSG HELPERS ───────────────────────────────────────────────────────────────
+function setMsg(el,type,txt) { el.className=`msg ${type} show`; el.textContent=txt; }
+function clearMsg(el)        { el.className="msg"; el.textContent=""; }
+
+// ── GO ────────────────────────────────────────────────────────────────────────
+boot();
+</script>
+</body>
+</html>
