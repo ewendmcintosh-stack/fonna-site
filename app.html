@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fonna — App</title>
+  <title>Fonna — Analyze Track</title>
   <style>
     :root {
       --navy:#1A1A2E; --navy-mid:#16213E; --navy-deep:#0F3460;
@@ -66,13 +66,6 @@
     .drop-title{font-size:0.97rem;font-weight:600;margin-bottom:5px;}
     .drop-sub{font-size:0.82rem;color:var(--muted);margin-bottom:10px;}
     .drop-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;}
-    #fileInput{display:block;}
-    .file-chosen{display:none;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.2);font-size:0.88rem;margin-bottom:20px;position:relative;}
-    .file-chosen.show{display:flex;}
-    .file-name{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-    .file-sz{font-size:0.78rem;color:var(--muted);flex-shrink:0;}
-    .file-clear{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:0;flex-shrink:0;}
-    .file-clear:hover{color:var(--text);}
 
     /* FIELDS */
     .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;position:relative;}
@@ -222,7 +215,7 @@
           <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2;" />
         </div>
         <div style="display:flex;justify-content:flex-end;margin-top:-12px;margin-bottom:8px;min-height:20px;">
-          <button class="file-clear" id="fileClear" style="display:none;font-size:0.78rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 4px;position:relative;z-index:3;">✕ Remove file</button>
+          <button class="file-clear" id="fileClear" style="display:none;font-size:0.78rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 4px;position:relative;z-index:3;">&#10005; Remove file</button>
         </div>
 
         <div class="fields">
@@ -330,7 +323,7 @@
 <footer class="footer">
   <div class="wrap">
     <div class="footer-shell">
-      <span>© 2026 Fonna</span>
+      <span>&copy; 2026 Fonna, a division of 170681639 Ontario</span>
       <div class="footer-links">
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
@@ -350,7 +343,6 @@ const API_BASE          = "https://listener-service-1esi.onrender.com";
 
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// elements
 const $ = id => document.getElementById(id);
 const navEmail    = $("navEmail");
 const navCredits  = $("navCredits");
@@ -401,7 +393,10 @@ async function refreshCredits() {
       const c = Number(d.user.credits);
       navCreditN.textContent = c;
       navCredits.classList.add("show");
-      if (c < 1) { setMsg(uploadMsg,"err","You have no credits remaining. Purchase a pack below to continue."); analyseBtn.disabled = true; }
+      if (c < 1) {
+        setMsg(uploadMsg, "err", "You have no credits remaining. Purchase a pack below to continue.");
+        analyseBtn.disabled = true;
+      }
     }
   } catch {}
 }
@@ -432,35 +427,38 @@ logoutBtn.addEventListener("click", async () => {
 });
 
 // ── FILE ──────────────────────────────────────────────────────────────────────
-dropZone.addEventListener("click", () => fileInput.click());
+dropZone.addEventListener("click", (e) => {
+  if (e.target === fileClear) return;
+  fileInput.click();
+});
 dropZone.addEventListener("dragover",  e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
 dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
 dropZone.addEventListener("drop", e => { e.preventDefault(); dropZone.classList.remove("drag-over"); if (e.dataTransfer.files[0]) pick(e.dataTransfer.files[0]); });
 fileInput.addEventListener("change", () => { if (fileInput.files[0]) pick(fileInput.files[0]); });
-fileClear.addEventListener("click", clearFile);
+fileClear.addEventListener("click", (e) => { e.stopPropagation(); clearFile(); });
 
 function pick(f) {
   file = f;
-  document.getElementById("fileName").textContent = f.name;
-  document.getElementById("fileSz").textContent = fmtBytes(f.size);
-  document.getElementById("dropEmpty").style.display = "none";
-  document.getElementById("dropChosen").style.display = "block";
+  fileName.textContent = f.name;
+  fileSz.textContent = fmtBytes(f.size);
+  $("dropEmpty").style.display = "none";
+  $("dropChosen").style.display = "block";
   fileClear.style.display = "inline";
   analyseBtn.disabled = false;
   clearMsg(uploadMsg);
-  if (!trackTitle.value) trackTitle.value = f.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g," ");
+  if (!trackTitle.value) trackTitle.value = f.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
 }
 
 function clearFile() {
   file = null; fileInput.value = "";
-  document.getElementById("dropEmpty").style.display = "block";
-  document.getElementById("dropChosen").style.display = "none";
+  $("dropEmpty").style.display = "block";
+  $("dropChosen").style.display = "none";
   fileClear.style.display = "none";
   analyseBtn.disabled = true;
 }
 
 function fmtBytes(b) {
-  return b < 1048576 ? (b/1024).toFixed(1)+" KB" : (b/1048576).toFixed(1)+" MB";
+  return b < 1048576 ? (b / 1024).toFixed(1) + " KB" : (b / 1048576).toFixed(1) + " MB";
 }
 
 // ── ANALYSE ───────────────────────────────────────────────────────────────────
@@ -472,7 +470,7 @@ async function analyse() {
   if (!s) { window.location.href = "/#login"; return; }
   session = s;
 
-  const title  = trackTitle.value.trim() || file.name.replace(/\.[^/.]+$/,"");
+  const title  = trackTitle.value.trim() || file.name.replace(/\.[^/.]+$/, "");
   const artist = artistName.value.trim() || "Unknown";
   const intent = intentField.value.trim() ||
     "Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.";
@@ -549,9 +547,9 @@ const analyseMsgs = [
 
 function startUploadProg(filename, filesize) {
   pBar.style.width = "0%";
-  document.getElementById("progressTitle").textContent = "Uploading your track…";
+  $("progressTitle").textContent = "Uploading your track…";
   pMsg.textContent = "Sending " + filename + " to Fonna.";
-  const fileInfo = document.getElementById("progressFile");
+  const fileInfo = $("progressFile");
   fileInfo.textContent = fmtBytes(filesize);
   fileInfo.style.display = "block";
 }
@@ -560,9 +558,9 @@ function switchToAnalyseProg() {
   clearInterval(progTmr);
   let pct = 30, mi = 0;
   pBar.style.width = "30%";
-  document.getElementById("progressTitle").textContent = "Analysing your track…";
+  $("progressTitle").textContent = "Analysing your track…";
   pMsg.textContent = analyseMsgs[mi++];
-  document.getElementById("progressFile").style.display = "none";
+  $("progressFile").style.display = "none";
   progTmr = setInterval(() => {
     pct = Math.min(pct + Math.random() * 4 + 1, 90);
     pBar.style.width = pct + "%";
@@ -573,7 +571,7 @@ function switchToAnalyseProg() {
 function stopProg() {
   clearInterval(progTmr);
   pBar.style.width = "100%";
-  document.getElementById("progressTitle").textContent = "Report ready!";
+  $("progressTitle").textContent = "Report ready!";
   pMsg.textContent = "Your producer report is below.";
 }
 
@@ -584,15 +582,15 @@ function renderReport(r) {
 
   $("rTrack").textContent = [r.input?.title, r.input?.artist].filter(Boolean).join(" — ") || "Untitled";
   const dur = r.input?.duration_seconds
-    ? `${Math.floor(r.input.duration_seconds/60)}:${String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0")}`
+    ? `${Math.floor(r.input.duration_seconds / 60)}:${String(Math.floor(r.input.duration_seconds % 60)).padStart(2, "0")}`
     : "";
-  $("rMeta").textContent = [dur ? dur+" min" : "", r.created_at ? new Date(r.created_at).toLocaleDateString() : ""].filter(Boolean).join(" · ");
-  $("rSnapshot").textContent  = r.snapshot || "";
-  $("rBestNext").textContent  = r.best_next_move || "";
+  $("rMeta").textContent = [dur ? dur + " min" : "", r.created_at ? new Date(r.created_at).toLocaleDateString() : ""].filter(Boolean).join(" · ");
+  $("rSnapshot").textContent = r.snapshot || "";
+  $("rBestNext").textContent = r.best_next_move || "";
 
   // Domains
   const dEl = $("rDomains"); dEl.innerHTML = "";
-  for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
+  for (const [key, label] of [["arrangement", "Arrangement"], ["production", "Production"], ["mix", "Mix"]]) {
     const d = r.domains?.[key]; if (!d) continue;
     const el = document.createElement("div"); el.className = "domain";
     el.innerHTML = `<div class="domain-name">${label}</div>`
@@ -604,20 +602,20 @@ function renderReport(r) {
 
   // Priority
   const pEl = $("rPrio"); pEl.innerHTML = "";
-  (r.priority_actions||[]).forEach((a,i) => {
+  (r.priority_actions || []).forEach((a, i) => {
     const row = document.createElement("div"); row.className = "prio-row";
-    row.innerHTML = `<div class="p-badge">P${i+1}</div><div class="p-text">${esc(a.action)}</div>`;
+    row.innerHTML = `<div class="p-badge">P${i + 1}</div><div class="p-text">${esc(a.action)}</div>`;
     pEl.appendChild(row);
   });
 
   // Timeline
-  const tl = r.timeline_moments||[];
+  const tl = r.timeline_moments || [];
   const tlW = $("rTlWrap"); const tlEl = $("rTl"); tlEl.innerHTML = "";
   if (tl.length) {
     tlW.style.display = "block";
     tl.forEach(m => {
       const row = document.createElement("div"); row.className = "tl-row";
-      row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain||"")}</div><div class="tl-note">${esc(m.note||"")}</div></div>`;
+      row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain || "")}</div><div class="tl-note">${esc(m.note || "")}</div></div>`;
       tlEl.appendChild(row);
     });
   } else { tlW.style.display = "none"; }
@@ -626,25 +624,25 @@ function renderReport(r) {
   const ref = r.listening_reference; const rRef = $("rRef");
   if (ref?.title) {
     rRef.style.display = "";
-    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist||"")}</div></div><div class="ref-why">${esc(ref.why||"")}</div>`;
+    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist || "")}</div></div><div class="ref-why">${esc(ref.why || "")}</div>`;
   } else { rRef.style.display = "none"; }
 
   $("rLim").textContent = r.limitations || "";
-  reportCard.scrollIntoView({ behavior:"smooth", block:"start" });
+  reportCard.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function sec(label, arr) {
   if (!arr?.length) return "";
-  return `<div class="domain-sub">${label}</div><ul class="dlist">${arr.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
+  return `<div class="domain-sub">${label}</div><ul class="dlist">${arr.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
 }
 
 function ts(s) {
-  const t = Math.max(0,Math.floor(Number(s)||0));
-  return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`;
+  const t = Math.max(0, Math.floor(Number(s) || 0));
+  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
 }
 
 function esc(s) {
-  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
 // ── NEW ANALYSIS ──────────────────────────────────────────────────────────────
@@ -653,33 +651,31 @@ newBtn.addEventListener("click", () => {
   uploadCard.style.display = "block";
   clearFile(); clearMsg(uploadMsg);
   trackTitle.value = ""; artistName.value = ""; intentField.value = "";
-  window.scrollTo({ top:0, behavior:"smooth" });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 // ── BUY CREDITS ───────────────────────────────────────────────────────────────
 async function buy(pack) {
-  clearMsg(buyMsg); setMsg(buyMsg,"info","Redirecting to checkout…");
+  clearMsg(buyMsg); setMsg(buyMsg, "info", "Redirecting to checkout…");
   try {
     const r = await fetch(`${API_BASE}/create-checkout-session`, {
-      method:"POST", headers:ah(), body:JSON.stringify({ pack }),
+      method: "POST", headers: ah(), body: JSON.stringify({ pack }),
     });
     const d = await r.json();
     if (d?.url) { window.location.href = d.url; }
-    else { setMsg(buyMsg,"err", d?.error?.message || "Could not start checkout."); }
-  } catch { setMsg(buyMsg,"err","Connection error — please try again."); }
+    else { setMsg(buyMsg, "err", d?.error?.message || "Could not start checkout."); }
+  } catch { setMsg(buyMsg, "err", "Connection error — please try again."); }
 }
 
 buyStarter.addEventListener("click", () => buy("starter"));
 buyCreator.addEventListener("click", () => buy("creator"));
 
 // ── MSG HELPERS ───────────────────────────────────────────────────────────────
-function setMsg(el,type,txt) { el.className=`msg ${type} show`; el.textContent=txt; }
-function clearMsg(el)        { el.className="msg"; el.textContent=""; }
+function setMsg(el, type, txt) { el.className = `msg ${type} show`; el.textContent = txt; }
+function clearMsg(el)          { el.className = "msg"; el.textContent = ""; }
 
-// ── GO ───────
-// ── GO ──────────────────────────────────────────────────────────────────────
+// ── GO ────────────────────────────────────────────────────────────────────────
 boot();
-
 </script>
 </body>
 </html>
