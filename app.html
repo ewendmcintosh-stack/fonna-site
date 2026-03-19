@@ -199,6 +199,9 @@
         <p class="card-title">Analyse a track</p>
         <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
 
+        <!-- File input lives outside the drop zone so it never overlays the content -->
+        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="position:absolute;left:-9999px;opacity:0;width:1px;height:1px;" />
+
         <div class="drop-zone" id="dropZone">
           <div id="dropEmpty">
             <div class="drop-icon">♪</div>
@@ -211,11 +214,10 @@
             <div class="drop-sub" id="fileSz" style="color:var(--coral);"></div>
             <div style="font-size:0.75rem;color:var(--muted);opacity:0.6;margin-top:4px;">Click to choose a different file</div>
           </div>
-          <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2;" />
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;margin-bottom:16px;min-height:20px;">
           <span style="font-size:0.78rem;color:var(--muted);">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</span>
-          <button class="file-clear" id="fileClear" style="display:none;font-size:0.78rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 4px;position:relative;z-index:3;">&#10005; Remove file</button>
+          <button class="file-clear" id="fileClear" style="display:none;font-size:0.78rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 4px;">&#10005; Remove file</button>
         </div>
 
         <div class="fields">
