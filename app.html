@@ -171,14 +171,6 @@
         <div class="file-limits">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
 
         <div class="fields">
-          <div class="field">
-            <label for="trackTitle">Track title</label>
-            <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
-          </div>
-          <div class="field">
-            <label for="artistName">Artist name</label>
-            <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
-          </div>
           <div class="field full">
             <label for="intentField">Intent <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional — steer the feedback)</span></label>
             <textarea id="intentField" rows="2" maxlength="1500" placeholder="e.g. Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first."></textarea>
@@ -288,8 +280,6 @@ const creditsCard = get("creditsCard");
 const fileInput   = get("fileInput");
 const fileNameBox = get("fileNameBox");
 const pickBtn     = get("pickBtn");
-const trackTitle  = get("trackTitle");
-const artistName  = get("artistName");
 const intentField = get("intentField");
 const analyseBtn  = get("analyseBtn");
 const uploadMsg   = get("uploadMsg");
@@ -363,7 +353,6 @@ function pick(f) {
   pickBtn.textContent = "Change file";
   analyseBtn.disabled = false;
   clearMsg(uploadMsg);
-  if (!trackTitle.value) trackTitle.value = f.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
 }
 
 function clearFile() {
@@ -387,8 +376,8 @@ async function analyse() {
   if (!s) { window.location.href = "/#login"; return; }
   session = s;
 
-  const title  = trackTitle.value.trim() || file.name.replace(/\.[^/.]+$/, "");
-  const artist = artistName.value.trim() || "Unknown";
+  const title  = file.name.replace(/\.[^/.]+$/, "");
+  const artist = "Unknown";
   const intent = intentField.value.trim() ||
     "Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.";
 
@@ -538,8 +527,6 @@ newBtn.addEventListener("click", () => {
   uploadCard.style.display = "block";
   clearFile();
   clearMsg(uploadMsg);
-  trackTitle.value = "";
-  artistName.value = "";
   intentField.value = "";
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
