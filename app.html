@@ -14,18 +14,11 @@
     }
     *{box-sizing:border-box;}
     html{scroll-behavior:smooth;}
-    body{
-      margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-      color:var(--text);background:var(--navy);min-height:100vh;
-      position:relative;overflow-x:hidden;
-    }
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--text);background:var(--navy);min-height:100vh;position:relative;overflow-x:hidden;}
     body::before{content:'';position:fixed;top:-120px;right:-120px;width:480px;height:480px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;z-index:0;}
     body::after{content:'';position:fixed;bottom:10%;left:-100px;width:340px;height:340px;border-radius:50%;background:var(--navy-deep);opacity:0.6;pointer-events:none;z-index:0;}
     a{color:inherit;text-decoration:none;}
     .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto;position:relative;z-index:1;}
-
-    /* NAV */
     .nav-shell{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(26,26,46,0.88);border-bottom:1px solid rgba(255,255,255,0.07);}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px;}
     .brand{display:flex;align-items:center;gap:12px;font-size:1.05rem;font-weight:700;}
@@ -35,40 +28,28 @@
     .credit-pill.show{display:inline-flex;}
     .credit-pill strong{color:var(--coral);font-weight:700;}
     .user-pill{font-size:0.82rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-
-    /* BUTTONS */
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-weight:600;font-size:0.9rem;transition:transform 0.15s,background 0.15s;cursor:pointer;font-family:inherit;}
     .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.1);}
     .btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
-    .btn.primary{background:var(--coral);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(233,69,96,0.35);position:relative;overflow:hidden;}
-    .btn.primary::before{content:'';position:absolute;top:-18px;right:-18px;width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,0.18);pointer-events:none;}
-    .btn.primary::after{content:'';position:absolute;bottom:-14px;left:-10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.13);pointer-events:none;}
+    .btn.primary{background:var(--coral);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(233,69,96,0.35);}
     .btn.primary:hover{background:var(--coral-dark);}
     .btn.sm{min-height:36px;padding:0 14px;font-size:0.84rem;}
     .btn.ghost{background:transparent;border-color:rgba(255,255,255,0.15);color:var(--muted);}
     .btn.ghost:hover{background:rgba(255,255,255,0.06);color:var(--text);}
-
-    /* CARDS */
     .card{border-radius:24px;border:1px solid rgba(255,255,255,0.08);background:var(--navy-mid);box-shadow:var(--shadow);padding:32px 36px;margin-bottom:22px;position:relative;overflow:hidden;}
     .card::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
     .card::after{content:'';position:absolute;bottom:-30px;left:-30px;width:130px;height:130px;border-radius:50%;background:var(--navy-deep);opacity:0.7;pointer-events:none;}
     .card-inner{position:relative;z-index:1;}
     .card-title{font-size:1.2rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 6px;}
     .card-sub{font-size:0.9rem;color:var(--muted);margin:0 0 24px;line-height:1.6;}
-
-    /* SECTION LABEL */
     .lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;opacity:0.9;}
-
-    /* FILE PICKER */
     .file-row{display:flex;gap:10px;align-items:stretch;margin-bottom:6px;}
     .file-name-box{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;font-size:0.92rem;color:var(--muted);font-family:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;transition:border-color 0.15s;}
     .file-name-box.has-file{color:var(--text);border-color:rgba(233,69,96,0.35);}
     .file-pick-btn{flex-shrink:0;min-height:42px;padding:0 18px;border-radius:12px;border:1px solid rgba(233,69,96,0.4);background:rgba(233,69,96,0.1);color:var(--coral);font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s,border-color 0.15s;white-space:nowrap;}
     .file-pick-btn:hover{background:rgba(233,69,96,0.18);border-color:var(--coral);}
     .file-limits{font-size:0.75rem;color:var(--muted);opacity:0.7;margin-bottom:20px;}
-
-    /* FIELDS */
-    .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;position:relative;}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
     .field{display:flex;flex-direction:column;gap:6px;}
     .field.full{grid-column:1/-1;}
     .field label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
@@ -78,15 +59,11 @@
     .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
     .submit-note{font-size:0.8rem;color:var(--muted);}
     .submit-note strong{color:var(--coral);}
-
-    /* STATUS */
     .msg{display:none;padding:13px 18px;border-radius:14px;font-size:0.88rem;line-height:1.55;margin-bottom:18px;}
     .msg.show{display:block;}
     .msg.err{background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
     .msg.ok{background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
     .msg.info{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--soft);}
-
-    /* PROGRESS */
     .progress-card{display:none;text-align:center;}
     .progress-card.show{display:block;}
     .spinner{width:46px;height:46px;border-radius:50%;border:3px solid rgba(233,69,96,0.2);border-top-color:var(--coral);animation:spin 0.85s linear infinite;margin:0 auto 16px;}
@@ -95,41 +72,37 @@
     .p-sub{font-size:0.88rem;color:var(--muted);line-height:1.6;}
     .p-bar-wrap{background:rgba(255,255,255,0.06);border-radius:999px;height:3px;margin-top:20px;overflow:hidden;}
     .p-bar{height:100%;background:var(--coral);border-radius:999px;width:5%;transition:width 0.6s ease;}
-
-    /* REPORT */
     .report-card{display:none;}
     .report-card.show{display:block;}
     .rpt-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
     .rpt-track{font-size:1.3rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:3px;}
     .rpt-meta{font-size:0.82rem;color:var(--muted);}
-    .snapshot{background:rgba(15,52,96,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 20px;margin-bottom:20px;position:relative;}
+    .snapshot{background:rgba(15,52,96,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 20px;margin-bottom:20px;}
     .snapshot-text{color:var(--soft);line-height:1.7;font-size:0.95rem;font-style:italic;}
-    .best-next{background:rgba(233,69,96,0.07);border:1px solid rgba(233,69,96,0.2);border-radius:14px;padding:18px 20px;margin-bottom:20px;position:relative;}
+    .best-next{background:rgba(233,69,96,0.07);border:1px solid rgba(233,69,96,0.2);border-radius:14px;padding:18px 20px;margin-bottom:20px;}
     .best-next-text{font-size:0.97rem;font-weight:600;color:var(--text);line-height:1.6;}
-    .domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;position:relative;}
+    .domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
     .domain{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;position:relative;overflow:hidden;}
     .domain::after{content:'';position:absolute;bottom:-16px;right:-16px;width:60px;height:60px;border-radius:50%;background:var(--coral);opacity:0.05;pointer-events:none;}
     .domain-name{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--coral);font-weight:600;margin-bottom:12px;}
     .domain-sub{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;margin-top:10px;}
     .dlist{margin:0;padding-left:14px;}
     .dlist li{font-size:0.83rem;color:var(--soft);line-height:1.55;margin-bottom:3px;}
-    .prio-items{margin-bottom:20px;position:relative;}
+    .prio-items{margin-bottom:20px;}
     .prio-row{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
     .prio-row:last-child{border-bottom:none;}
     .p-badge{flex-shrink:0;width:26px;height:26px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);color:var(--coral);}
     .p-text{font-size:0.88rem;color:var(--soft);line-height:1.55;padding-top:3px;}
-    .tl-items{margin-bottom:20px;position:relative;}
+    .tl-items{margin-bottom:20px;}
     .tl-row{display:flex;gap:14px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
     .tl-row:last-child{border-bottom:none;}
     .tl-stamp{flex-shrink:0;font-size:0.76rem;font-weight:700;color:var(--coral);font-family:monospace;min-width:90px;padding-top:2px;}
     .tl-domain{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;}
     .tl-note{font-size:0.86rem;color:var(--soft);line-height:1.5;}
-    .ref-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:20px;position:relative;}
+    .ref-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:20px;}
     .ref-track{font-size:0.97rem;font-weight:700;margin-bottom:3px;}
     .ref-why{font-size:0.85rem;color:var(--soft);line-height:1.6;}
     .limitations{font-size:0.78rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;}
-
-    /* BUY */
     .credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
     .pack{border-radius:18px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);padding:20px;cursor:pointer;transition:border-color 0.15s,background 0.15s;position:relative;overflow:hidden;}
     .pack:hover{border-color:var(--coral);background:rgba(233,69,96,0.06);}
@@ -139,25 +112,13 @@
     .pack-name{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
     .pack-price{font-size:1.7rem;font-weight:800;letter-spacing:-0.04em;}
     .pack-credits{font-size:0.82rem;color:var(--muted);margin-top:2px;}
-
-    /* FOOTER */
     .footer{padding:24px 0 48px;color:var(--muted);}
     .footer-shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;}
     .footer-links{display:flex;gap:18px;flex-wrap:wrap;}
     .footer-links a:hover{color:var(--text);}
     .hidden{display:none!important;}
-
-    @media(max-width:720px){
-      .nav{flex-wrap:wrap;padding:12px 0;}
-      .domains{grid-template-columns:1fr;}
-      .credits-grid{grid-template-columns:1fr;}
-      .fields{grid-template-columns:1fr;}
-      .card{padding:22px 20px;}
-      .user-pill{display:none;}
-    }
-    @media(max-width:480px){
-      .rpt-header{flex-direction:column;}
-    }
+    @media(max-width:720px){.nav{flex-wrap:wrap;padding:12px 0;}.domains{grid-template-columns:1fr;}.credits-grid{grid-template-columns:1fr;}.fields{grid-template-columns:1fr;}.card{padding:22px 20px;}.user-pill{display:none;}}
+    @media(max-width:480px){.rpt-header{flex-direction:column;}}
   </style>
 </head>
 <body>
@@ -193,7 +154,6 @@
 
     <div class="msg ok" id="purchaseBanner"></div>
 
-    <!-- UPLOAD -->
     <div class="card" id="uploadCard">
       <div class="card-inner">
         <p class="card-title">Analyse a track</p>
@@ -234,7 +194,6 @@
       </div>
     </div>
 
-    <!-- PROGRESS -->
     <div class="card progress-card" id="progressCard">
       <div class="card-inner" style="text-align:center;">
         <div class="spinner"></div>
@@ -245,7 +204,6 @@
       </div>
     </div>
 
-    <!-- REPORT -->
     <div class="card report-card" id="reportCard">
       <div class="card-inner">
         <div class="rpt-header">
@@ -254,40 +212,21 @@
             <div class="rpt-track" id="rTrack"></div>
             <div class="rpt-meta" id="rMeta"></div>
           </div>
-          <div>
-            <button class="btn sm ghost" id="newBtn">New analysis</button>
-          </div>
+          <button class="btn sm ghost" id="newBtn">New analysis</button>
         </div>
-
-        <div class="snapshot">
-          <div class="lbl">Snapshot</div>
-          <div class="snapshot-text" id="rSnapshot"></div>
-        </div>
-
-        <div class="best-next">
-          <div class="lbl">Best next move</div>
-          <div class="best-next-text" id="rBestNext"></div>
-        </div>
-
+        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="rSnapshot"></div></div>
+        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="rBestNext"></div></div>
         <div class="lbl">Arrangement · Production · Mix</div>
         <div class="domains" id="rDomains"></div>
-
         <div class="lbl">Priority actions</div>
         <div class="prio-items" id="rPrio"></div>
-
-        <div id="rTlWrap">
-          <div class="lbl">Timestamped notes</div>
-          <div class="tl-items" id="rTl"></div>
-        </div>
-
+        <div id="rTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="rTl"></div></div>
         <div class="lbl">Listening reference</div>
         <div class="ref-block" id="rRef"></div>
-
         <div class="limitations" id="rLim"></div>
       </div>
     </div>
 
-    <!-- BUY CREDITS -->
     <div class="card" id="creditsCard" style="display:none;">
       <div class="card-inner">
         <p class="card-title">Get more credits</p>
@@ -320,7 +259,7 @@
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="/cdn-cgi/l/email-protection#f8909d949497b89e97969699d69991"><span class="__cf_email__" data-cfemail="1a727f7676755a7c7574747b347b73">[email&#160;protected]</span></a>
+        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
       </div>
     </div>
   </div>
@@ -333,38 +272,37 @@ const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
 const API_BASE          = "https://listener-service-1esi.onrender.com";
 
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const sb  = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const get = id => document.getElementById(id);
 
-const $ = id => document.getElementById(id);
-const navEmail    = $("navEmail");
-const navCredits  = $("navCredits");
-const navCreditN  = $("navCreditCount");
-const logoutBtn   = $("logoutBtn");
-const uploadCard  = $("uploadCard");
-const progressCard= $("progressCard");
-const pBar        = $("progressBar");
-const pMsg        = $("progressMsg");
-const reportCard  = $("reportCard");
-const creditsCard = $("creditsCard");
-const fileInput   = $("fileInput");
-const fileNameBox = $("fileNameBox");
-const pickBtn     = $("pickBtn");
-const trackTitle  = $("trackTitle");
-const artistName  = $("artistName");
-const intentField = $("intentField");
-const analyseBtn  = $("analyseBtn");
-const uploadMsg   = $("uploadMsg");
-const newBtn      = $("newBtn");
-const purchaseBnr = $("purchaseBanner");
-const buyStarter  = $("buyStarter");
-const buyCreator  = $("buyCreator");
-const buyMsg      = $("buyMsg");
+const navEmail    = get("navEmail");
+const navCredits  = get("navCredits");
+const navCreditN  = get("navCreditCount");
+const logoutBtn   = get("logoutBtn");
+const uploadCard  = get("uploadCard");
+const progressCard= get("progressCard");
+const pBar        = get("progressBar");
+const pMsg        = get("progressMsg");
+const reportCard  = get("reportCard");
+const creditsCard = get("creditsCard");
+const fileInput   = get("fileInput");
+const fileNameBox = get("fileNameBox");
+const pickBtn     = get("pickBtn");
+const trackTitle  = get("trackTitle");
+const artistName  = get("artistName");
+const intentField = get("intentField");
+const analyseBtn  = get("analyseBtn");
+const uploadMsg   = get("uploadMsg");
+const newBtn      = get("newBtn");
+const purchaseBnr = get("purchaseBanner");
+const buyStarter  = get("buyStarter");
+const buyCreator  = get("buyCreator");
+const buyMsg      = get("buyMsg");
 
 let session = null;
 let file    = null;
 let progTmr = null;
 
-// ── BOOT ──────────────────────────────────────────────────────────────────────
 async function boot() {
   const { data: { session: s } } = await sb.auth.getSession();
   if (!s) { window.location.href = "/#login"; return; }
@@ -410,13 +348,11 @@ function checkBanner() {
   }
 }
 
-// ── AUTH ──────────────────────────────────────────────────────────────────────
 logoutBtn.addEventListener("click", async () => {
   await sb.auth.signOut();
   window.location.href = "/";
 });
 
-// ── FILE ──────────────────────────────────────────────────────────────────────
 pickBtn.addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", () => { if (fileInput.files[0]) pick(fileInput.files[0]); });
 
@@ -431,7 +367,8 @@ function pick(f) {
 }
 
 function clearFile() {
-  file = null; fileInput.value = "";
+  file = null;
+  fileInput.value = "";
   fileNameBox.textContent = "No file selected";
   fileNameBox.classList.remove("has-file");
   pickBtn.textContent = "Choose file";
@@ -442,7 +379,6 @@ function fmtBytes(b) {
   return b < 1048576 ? (b / 1024).toFixed(1) + " KB" : (b / 1048576).toFixed(1) + " MB";
 }
 
-// ── ANALYSE ───────────────────────────────────────────────────────────────────
 analyseBtn.addEventListener("click", analyse);
 
 async function analyse() {
@@ -473,16 +409,13 @@ async function analyse() {
       xhr.setRequestHeader("X-Artist-Name", artist);
       xhr.setRequestHeader("X-Intent",      intent);
       xhr.timeout = 20 * 60 * 1000;
-
       xhr.upload.addEventListener("progress", e => {
         if (e.lengthComputable) {
-          const pct = Math.round((e.loaded / e.total) * 28);
-          pBar.style.width = pct + "%";
-          pMsg.textContent = `Uploading… ${Math.round((e.loaded / e.total) * 100)}%`;
+          pBar.style.width = Math.round((e.loaded / e.total) * 28) + "%";
+          pMsg.textContent = "Uploading… " + Math.round((e.loaded / e.total) * 100) + "%";
         }
       });
-      xhr.upload.addEventListener("load", () => { switchToAnalyseProg(); });
-
+      xhr.upload.addEventListener("load", () => switchToAnalyseProg());
       xhr.addEventListener("load", () => {
         try { resolve({ ok: xhr.status >= 200 && xhr.status < 300, status: xhr.status, data: JSON.parse(xhr.responseText) }); }
         catch { resolve({ ok: false, status: xhr.status, data: {} }); }
@@ -495,8 +428,7 @@ async function analyse() {
     stopProg();
 
     if (!result.ok) {
-      const err = result.data;
-      let msg = err?.error?.message || `Server error (${result.status})`;
+      let msg = result.data?.error?.message || "Server error (" + result.status + ")";
       if (result.status === 402) msg = "No credits remaining. Purchase a pack below to continue.";
       else if (result.status === 401) msg = "Session expired — please log in again.";
       uploadCard.style.display = "block";
@@ -517,131 +449,106 @@ async function analyse() {
   }
 }
 
-// ── PROGRESS ──────────────────────────────────────────────────────────────────
-const analyseMsgs = [
-  "Listening to your arrangement…",
-  "Checking production choices…",
-  "Reviewing the mix…",
-  "Pulling the report together…",
-  "Almost there…",
-];
+const analyseMsgs = ["Listening to your arrangement…","Checking production choices…","Reviewing the mix…","Pulling the report together…","Almost there…"];
 
 function startUploadProg(filename, filesize) {
   pBar.style.width = "0%";
-  $("progressTitle").textContent = "Uploading your track…";
+  get("progressTitle").textContent = "Uploading your track…";
   pMsg.textContent = "Sending " + filename + " to Fonna.";
-  const fileInfo = $("progressFile");
-  fileInfo.textContent = fmtBytes(filesize);
-  fileInfo.style.display = "block";
+  const fi = get("progressFile");
+  fi.textContent = fmtBytes(filesize);
+  fi.style.display = "block";
 }
 
 function switchToAnalyseProg() {
   clearInterval(progTmr);
   let pct = 30, mi = 0;
   pBar.style.width = "30%";
-  $("progressTitle").textContent = "Analysing your track…";
+  get("progressTitle").textContent = "Analysing your track…";
   pMsg.textContent = analyseMsgs[mi++];
-  $("progressFile").style.display = "none";
+  get("progressFile").style.display = "none";
   progTmr = setInterval(() => {
     pct = Math.min(pct + Math.random() * 4 + 1, 90);
     pBar.style.width = pct + "%";
-    if (mi < analyseMsgs.length) { pMsg.textContent = analyseMsgs[mi++]; }
+    if (mi < analyseMsgs.length) pMsg.textContent = analyseMsgs[mi++];
   }, 8000);
 }
 
 function stopProg() {
   clearInterval(progTmr);
   pBar.style.width = "100%";
-  $("progressTitle").textContent = "Report ready!";
+  get("progressTitle").textContent = "Report ready!";
   pMsg.textContent = "Your producer report is below.";
 }
 
-// ── RENDER REPORT ─────────────────────────────────────────────────────────────
 function renderReport(r) {
   progressCard.classList.remove("show");
   reportCard.classList.add("show");
+  get("rTrack").textContent = [r.input?.title, r.input?.artist].filter(Boolean).join(" — ") || "Untitled";
+  const dur = r.input?.duration_seconds ? Math.floor(r.input.duration_seconds/60) + ":" + String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0") : "";
+  get("rMeta").textContent = [dur ? dur+" min" : "", r.created_at ? new Date(r.created_at).toLocaleDateString() : ""].filter(Boolean).join(" · ");
+  get("rSnapshot").textContent = r.snapshot || "";
+  get("rBestNext").textContent = r.best_next_move || "";
 
-  $("rTrack").textContent = [r.input?.title, r.input?.artist].filter(Boolean).join(" — ") || "Untitled";
-  const dur = r.input?.duration_seconds
-    ? `${Math.floor(r.input.duration_seconds / 60)}:${String(Math.floor(r.input.duration_seconds % 60)).padStart(2, "0")}`
-    : "";
-  $("rMeta").textContent = [dur ? dur + " min" : "", r.created_at ? new Date(r.created_at).toLocaleDateString() : ""].filter(Boolean).join(" · ");
-  $("rSnapshot").textContent = r.snapshot || "";
-  $("rBestNext").textContent = r.best_next_move || "";
-
-  // Domains
-  const dEl = $("rDomains"); dEl.innerHTML = "";
-  for (const [key, label] of [["arrangement", "Arrangement"], ["production", "Production"], ["mix", "Mix"]]) {
+  const dEl = get("rDomains"); dEl.innerHTML = "";
+  for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
     const d = r.domains?.[key]; if (!d) continue;
     const el = document.createElement("div"); el.className = "domain";
-    el.innerHTML = `<div class="domain-name">${label}</div>`
-      + sec("What's working", d.what_works)
-      + sec("What's holding it back", d.what_holds_it_back)
-      + sec("Recommendations", d.recommendations);
+    el.innerHTML = "<div class='domain-name'>" + label + "</div>" + sec("What's working", d.what_works) + sec("What's holding it back", d.what_holds_it_back) + sec("Recommendations", d.recommendations);
     dEl.appendChild(el);
   }
 
-  // Priority
-  const pEl = $("rPrio"); pEl.innerHTML = "";
-  (r.priority_actions || []).forEach((a, i) => {
+  const pEl = get("rPrio"); pEl.innerHTML = "";
+  (r.priority_actions||[]).forEach((a,i) => {
     const row = document.createElement("div"); row.className = "prio-row";
-    row.innerHTML = `<div class="p-badge">P${i + 1}</div><div class="p-text">${esc(a.action)}</div>`;
+    row.innerHTML = "<div class='p-badge'>P"+(i+1)+"</div><div class='p-text'>"+esc(a.action)+"</div>";
     pEl.appendChild(row);
   });
 
-  // Timeline
-  const tl = r.timeline_moments || [];
-  const tlW = $("rTlWrap"); const tlEl = $("rTl"); tlEl.innerHTML = "";
+  const tl = r.timeline_moments||[];
+  const tlW = get("rTlWrap"); const tlEl = get("rTl"); tlEl.innerHTML = "";
   if (tl.length) {
     tlW.style.display = "block";
     tl.forEach(m => {
       const row = document.createElement("div"); row.className = "tl-row";
-      row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain || "")}</div><div class="tl-note">${esc(m.note || "")}</div></div>`;
+      row.innerHTML = "<div class='tl-stamp'>"+ts(m.t_start)+"–"+ts(m.t_end)+"</div><div><div class='tl-domain'>"+esc(m.domain||"")+"</div><div class='tl-note'>"+esc(m.note||"")+"</div></div>";
       tlEl.appendChild(row);
     });
   } else { tlW.style.display = "none"; }
 
-  // Reference
-  const ref = r.listening_reference; const rRef = $("rRef");
+  const ref = r.listening_reference; const rRef = get("rRef");
   if (ref?.title) {
     rRef.style.display = "";
-    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist || "")}</div></div><div class="ref-why">${esc(ref.why || "")}</div>`;
+    rRef.innerHTML = "<div><div class='lbl'>Reference track</div><div class='ref-track'>&ldquo;"+esc(ref.title)+"&rdquo; &mdash; "+esc(ref.artist||"")+"</div></div><div class='ref-why'>"+esc(ref.why||"")+"</div>";
   } else { rRef.style.display = "none"; }
 
-  $("rLim").textContent = r.limitations || "";
+  get("rLim").textContent = r.limitations || "";
   reportCard.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function sec(label, arr) {
   if (!arr?.length) return "";
-  return `<div class="domain-sub">${label}</div><ul class="dlist">${arr.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
+  return "<div class='domain-sub'>"+label+"</div><ul class='dlist'>"+arr.map(i=>"<li>"+esc(i)+"</li>").join("")+"</ul>";
 }
+function ts(s) { const t=Math.max(0,Math.floor(Number(s)||0)); return Math.floor(t/60)+":"+String(t%60).padStart(2,"0"); }
+function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 
-function ts(s) {
-  const t = Math.max(0, Math.floor(Number(s) || 0));
-  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
-}
-
-function esc(s) {
-  return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
-
-// ── NEW ANALYSIS ──────────────────────────────────────────────────────────────
 newBtn.addEventListener("click", () => {
   reportCard.classList.remove("show");
   uploadCard.style.display = "block";
-  clearFile(); clearMsg(uploadMsg);
-  trackTitle.value = ""; artistName.value = ""; intentField.value = "";
+  clearFile();
+  clearMsg(uploadMsg);
+  trackTitle.value = "";
+  artistName.value = "";
+  intentField.value = "";
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// ── BUY CREDITS ───────────────────────────────────────────────────────────────
 async function buy(pack) {
-  clearMsg(buyMsg); setMsg(buyMsg, "info", "Redirecting to checkout…");
+  clearMsg(buyMsg);
+  setMsg(buyMsg, "info", "Redirecting to checkout…");
   try {
-    const r = await fetch(`${API_BASE}/create-checkout-session`, {
-      method: "POST", headers: ah(), body: JSON.stringify({ pack }),
-    });
+    const r = await fetch(`${API_BASE}/create-checkout-session`, { method: "POST", headers: ah(), body: JSON.stringify({ pack }) });
     const d = await r.json();
     if (d?.url) { window.location.href = d.url; }
     else { setMsg(buyMsg, "err", d?.error?.message || "Could not start checkout."); }
@@ -649,10 +556,12 @@ async function buy(pack) {
 }
 
 buyStarter.addEventListener("click", () => buy("starter"));
-buyCreator.addEventListener("click", () => buy("creator"));
+buyCreator.addEventListener("click",  () => buy("creator"));
 
-// ── MSG HELPERS ───────────────────────────────────────────────────────────────
-function setMsg(el, type, txt) { el.className = `msg ${type} show`; el.textContent = txt; }
-function clearMsg(el)          { el.className = "msg"; el.textContent = ""; }
+function setMsg(el, type, txt) { el.className = "msg " + type + " show"; el.textContent = txt; }
+function clearMsg(el) { el.className = "msg"; el.textContent = ""; }
 
-// ── GO ──────
+boot();
+</script>
+</body>
+</html>
