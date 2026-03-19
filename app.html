@@ -59,13 +59,13 @@
     /* SECTION LABEL */
     .lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;opacity:0.9;}
 
-    /* DROP ZONE */
-    .drop-zone{border:1.5px dashed rgba(233,69,96,0.3);border-radius:18px;background:rgba(233,69,96,0.04);padding:36px 24px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:20px;position:relative;}
-    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--coral);background:rgba(233,69,96,0.08);}
-    .drop-icon{width:46px;height:46px;border-radius:50%;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px;}
-    .drop-title{font-size:0.97rem;font-weight:600;margin-bottom:5px;}
-    .drop-sub{font-size:0.82rem;color:var(--muted);margin-bottom:10px;}
-    .drop-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;}
+    /* FILE PICKER */
+    .file-row{display:flex;gap:10px;align-items:stretch;margin-bottom:6px;}
+    .file-name-box{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;font-size:0.92rem;color:var(--muted);font-family:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;transition:border-color 0.15s;}
+    .file-name-box.has-file{color:var(--text);border-color:rgba(233,69,96,0.35);}
+    .file-pick-btn{flex-shrink:0;min-height:42px;padding:0 18px;border-radius:12px;border:1px solid rgba(233,69,96,0.4);background:rgba(233,69,96,0.1);color:var(--coral);font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s,border-color 0.15s;white-space:nowrap;}
+    .file-pick-btn:hover{background:rgba(233,69,96,0.18);border-color:var(--coral);}
+    .file-limits{font-size:0.75rem;color:var(--muted);opacity:0.7;margin-bottom:20px;}
 
     /* FIELDS */
     .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;position:relative;}
@@ -199,26 +199,16 @@
         <p class="card-title">Analyse a track</p>
         <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
 
-        <!-- File input lives outside the drop zone so it never overlays the content -->
         <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="position:absolute;left:-9999px;opacity:0;width:1px;height:1px;" />
 
-        <div class="drop-zone" id="dropZone">
-          <div id="dropEmpty">
-            <div class="drop-icon">♪</div>
-            <div class="drop-title">Drop your track here</div>
-            <div class="drop-sub">or click to browse</div>
-          </div>
-          <div id="dropChosen" style="display:none;">
-            <div class="drop-icon" style="background:rgba(233,69,96,0.18);border-color:rgba(233,69,96,0.4);">✓</div>
-            <div class="drop-title" id="fileName" style="color:var(--text);"></div>
-            <div class="drop-sub" id="fileSz" style="color:var(--coral);"></div>
-            <div style="font-size:0.75rem;color:var(--muted);opacity:0.6;margin-top:4px;">Click to choose a different file</div>
+        <div class="field full" style="margin-bottom:6px;">
+          <label>Audio file</label>
+          <div class="file-row">
+            <div class="file-name-box" id="fileNameBox">No file selected</div>
+            <button class="file-pick-btn" id="pickBtn" type="button">Choose file</button>
           </div>
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;margin-bottom:16px;min-height:20px;">
-          <span style="font-size:0.78rem;color:var(--muted);">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</span>
-          <button class="file-clear" id="fileClear" style="display:none;font-size:0.78rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 4px;">&#10005; Remove file</button>
-        </div>
+        <div class="file-limits">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
 
         <div class="fields">
           <div class="field">
@@ -356,11 +346,9 @@ const pBar        = $("progressBar");
 const pMsg        = $("progressMsg");
 const reportCard  = $("reportCard");
 const creditsCard = $("creditsCard");
-const dropZone    = $("dropZone");
 const fileInput   = $("fileInput");
-const fileName    = $("fileName");
-const fileSz      = $("fileSz");
-const fileClear   = $("fileClear");
+const fileNameBox = $("fileNameBox");
+const pickBtn     = $("pickBtn");
 const trackTitle  = $("trackTitle");
 const artistName  = $("artistName");
 const intentField = $("intentField");
@@ -429,30 +417,14 @@ logoutBtn.addEventListener("click", async () => {
 });
 
 // ── FILE ──────────────────────────────────────────────────────────────────────
-let _dialogOpen = false;
-dropZone.addEventListener("click", (e) => {
-  if (e.target === fileClear) return;
-  if (_dialogOpen) return;
-  _dialogOpen = true;
-  fileInput.click();
-  // Reset flag after a short delay — covers both "dialog opened" and "dialog cancelled" cases
-  setTimeout(() => { _dialogOpen = false; }, 500);
-});
-// Stop the file input's own click from bubbling up and re-triggering the drop zone
-fileInput.addEventListener("click", (e) => { e.stopPropagation(); });
-dropZone.addEventListener("dragover",  e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
-dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
-dropZone.addEventListener("drop", e => { e.preventDefault(); dropZone.classList.remove("drag-over"); if (e.dataTransfer.files[0]) pick(e.dataTransfer.files[0]); });
+pickBtn.addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", () => { if (fileInput.files[0]) pick(fileInput.files[0]); });
-fileClear.addEventListener("click", (e) => { e.stopPropagation(); clearFile(); });
 
 function pick(f) {
   file = f;
-  fileName.textContent = f.name;
-  fileSz.textContent = fmtBytes(f.size);
-  $("dropEmpty").style.display = "none";
-  $("dropChosen").style.display = "block";
-  fileClear.style.display = "inline";
+  fileNameBox.textContent = f.name + "  (" + fmtBytes(f.size) + ")";
+  fileNameBox.classList.add("has-file");
+  pickBtn.textContent = "Change file";
   analyseBtn.disabled = false;
   clearMsg(uploadMsg);
   if (!trackTitle.value) trackTitle.value = f.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
@@ -460,9 +432,9 @@ function pick(f) {
 
 function clearFile() {
   file = null; fileInput.value = "";
-  $("dropEmpty").style.display = "block";
-  $("dropChosen").style.display = "none";
-  fileClear.style.display = "none";
+  fileNameBox.textContent = "No file selected";
+  fileNameBox.classList.remove("has-file");
+  pickBtn.textContent = "Choose file";
   analyseBtn.disabled = true;
 }
 
