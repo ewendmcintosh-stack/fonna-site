@@ -204,17 +204,17 @@
             <div class="drop-icon">♪</div>
             <div class="drop-title">Drop your track here</div>
             <div class="drop-sub">or click to browse</div>
-            <div class="drop-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF · AIF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
           </div>
           <div id="dropChosen" style="display:none;">
             <div class="drop-icon" style="background:rgba(233,69,96,0.18);border-color:rgba(233,69,96,0.4);">✓</div>
             <div class="drop-title" id="fileName" style="color:var(--text);"></div>
             <div class="drop-sub" id="fileSz" style="color:var(--coral);"></div>
-            <div class="drop-formats">Click to choose a different file</div>
+            <div style="font-size:0.75rem;color:var(--muted);opacity:0.6;margin-top:4px;">Click to choose a different file</div>
           </div>
           <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2;" />
         </div>
-        <div style="display:flex;justify-content:flex-end;margin-top:-12px;margin-bottom:8px;min-height:20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;margin-bottom:16px;min-height:20px;">
+          <span style="font-size:0.78rem;color:var(--muted);">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</span>
           <button class="file-clear" id="fileClear" style="display:none;font-size:0.78rem;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 4px;position:relative;z-index:3;">&#10005; Remove file</button>
         </div>
 
@@ -328,13 +328,13 @@
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        <a href="/cdn-cgi/l/email-protection#f8909d949497b89e97969699d69991"><span class="__cf_email__" data-cfemail="1a727f7676755a7c7574747b347b73">[email&#160;protected]</span></a>
       </div>
     </div>
   </div>
 </footer>
 
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
@@ -427,10 +427,17 @@ logoutBtn.addEventListener("click", async () => {
 });
 
 // ── FILE ──────────────────────────────────────────────────────────────────────
+let _dialogOpen = false;
 dropZone.addEventListener("click", (e) => {
   if (e.target === fileClear) return;
+  if (_dialogOpen) return;
+  _dialogOpen = true;
   fileInput.click();
+  // Reset flag after a short delay — covers both "dialog opened" and "dialog cancelled" cases
+  setTimeout(() => { _dialogOpen = false; }, 500);
 });
+// Stop the file input's own click from bubbling up and re-triggering the drop zone
+fileInput.addEventListener("click", (e) => { e.stopPropagation(); });
 dropZone.addEventListener("dragover",  e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
 dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
 dropZone.addEventListener("drop", e => { e.preventDefault(); dropZone.classList.remove("drag-over"); if (e.dataTransfer.files[0]) pick(e.dataTransfer.files[0]); });
@@ -674,8 +681,4 @@ buyCreator.addEventListener("click", () => buy("creator"));
 function setMsg(el, type, txt) { el.className = `msg ${type} show`; el.textContent = txt; }
 function clearMsg(el)          { el.className = "msg"; el.textContent = ""; }
 
-// ── GO ────────────────────────────────────────────────────────────────────────
-boot();
-</script>
-</body>
-</html>
+// ── GO ──────
