@@ -116,6 +116,9 @@
     .footer-shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;}
     .footer-links{display:flex;gap:18px;flex-wrap:wrap;}
     .footer-links a:hover{color:var(--text);}
+    .footer-social{display:flex;align-items:center;gap:16px;}
+    .social-icon{display:flex;align-items:center;color:var(--muted);transition:color 0.18s ease;}
+    .social-icon:hover{color:var(--text);}
     .hidden{display:none!important;}
     @media(max-width:720px){.nav{flex-wrap:wrap;padding:12px 0;}.domains{grid-template-columns:1fr;}.credits-grid{grid-template-columns:1fr;}.fields{grid-template-columns:1fr;}.card{padding:22px 20px;}.user-pill{display:none;}}
     @media(max-width:480px){.rpt-header{flex-direction:column;}}
@@ -254,6 +257,20 @@
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
         <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/fonna.ai/" target="_blank" rel="noopener" aria-label="Fonna on Instagram" class="social-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4.5"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=948309055043464" target="_blank" rel="noopener" aria-label="Fonna on Facebook" class="social-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
       </div>
     </div>
   </div>
