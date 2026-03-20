@@ -6,361 +6,125 @@
   <title>Fonna — Finish Better Records</title>
   <style>
     :root {
-      --navy: #1A1A2E;
-      --navy-mid: #16213E;
-      --navy-deep: #0F3460;
-      --coral: #E94560;
-      --coral-dark: #C73652;
-      --border: rgba(255,255,255,0.09);
-      --text: #f4f4f2;
-      --muted: #a4a4a0;
-      --soft: #d8d8d2;
-      --shadow: 0 18px 50px rgba(0,0,0,0.38);
-      --max: 1240px;
+      --navy: #1A1A2E; --navy-mid: #16213E; --navy-deep: #0F3460;
+      --coral: #E94560; --coral-dark: #C73652;
+      --border: rgba(255,255,255,0.09); --text: #f4f4f2;
+      --muted: #a4a4a0; --soft: #d8d8d2;
+      --shadow: 0 18px 50px rgba(0,0,0,0.38); --max: 1240px;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      color: var(--text);
-      background: var(--navy);
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      top: -120px; right: -120px;
-      width: 480px; height: 480px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.07;
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: 10%; left: -100px;
-      width: 340px; height: 340px;
-      border-radius: 50%;
-      background: var(--navy-deep);
-      opacity: 0.6;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .wrap, .nav-shell, main, footer { position: relative; z-index: 1; }
-    a { color: inherit; text-decoration: none; }
-    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
-
-    /* NAV */
-    .nav-shell {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(26,26,46,0.88);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
-    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.01em; }
-    .brand-mark {
-      width: 34px; height: 34px; border-radius: 10px;
-      display: inline-flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 20px rgba(233,69,96,0.35);
-      flex-shrink: 0;
-    }
-    .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 0.96rem; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-actions { display: flex; align-items: center; gap: 12px; }
-
-    /* BUTTONS */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      min-height: 46px; padding: 0 20px; border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--text); font-weight: 600;
-      transition: transform 0.18s ease, background 0.18s ease;
-      cursor: pointer; font-family: inherit; font-size: inherit;
-    }
-    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.1); }
-    .btn.primary {
-      background: var(--coral);
-      color: #fff; border-color: transparent;
-      box-shadow: 0 10px 28px rgba(233,69,96,0.35);
-    }
-    .btn.primary:hover { background: var(--coral-dark); }
-
-    /* HERO */
-    .hero { padding: 78px 0 46px; }
-    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: stretch; }
-    .hero-copy, .hero-card {
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(22,33,62,0.7);
-      border-radius: 30px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-copy::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; right: -60px;
-      width: 220px; height: 220px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.09;
-      pointer-events: none;
-    }
-    .hero-card::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.12;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .hero-copy { padding: 42px; }
-    .hero-card { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
-
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 14px; border-radius: 999px;
-      border: 1px solid rgba(233,69,96,0.3);
-      background: rgba(233,69,96,0.1);
-      color: var(--coral);
-      font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 22px;
-    }
-    .hero h1 {
-      font-size: clamp(3rem,6vw,5.8rem);
-      line-height: 0.95; letter-spacing: -0.05em;
-      margin: 0 0 18px; max-width: 9ch;
-    }
-    .differentiator { margin: 0 0 14px; font-size: 1.08rem; font-weight: 600; color: var(--text); line-height: 1.5; max-width: 52ch; }
-    .hero p.lead { margin: 0; color: var(--soft); font-size: 1.05rem; line-height: 1.7; max-width: 58ch; }
-    .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
-    .micro { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; color: var(--muted); font-size: 0.92rem; }
-    .micro span {
-      padding: 9px 12px; border-radius: 999px;
-      background: rgba(233,69,96,0.08);
-      border: 1px solid rgba(233,69,96,0.18);
-    }
-
-    /* REPORT WINDOW */
-    .report-window {
-      flex: 1; border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(15,52,96,0.5);
-      padding: 18px; display: flex; flex-direction: column; gap: 10px;
-      position: relative; z-index: 1;
-    }
-    .window-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.84rem; }
-    .dots { display: flex; gap: 7px; }
-    .dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.18); display: block; }
-    .dots span:first-child { background: var(--coral); opacity: 0.7; }
-    .report-section {
-      border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(255,255,255,0.03);
-      border-radius: 16px; padding: 13px;
-    }
-    .report-label {
-      font-size: 0.72rem; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--coral);
-      margin-bottom: 7px; opacity: 0.85;
-    }
-    .report-body { color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
-    .report-list { margin: 0; padding-left: 16px; color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
-    .best-next {
-      border: 1px solid rgba(233,69,96,0.2);
-      background: rgba(233,69,96,0.06);
-      border-radius: 16px; padding: 13px;
-    }
-
-    /* SECTIONS */
-    .section { padding: 34px 0; }
-    .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
-    .section-head h2 { margin: 0 0 8px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; }
-    .section-head p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 58ch; }
-
-    /* CARDS */
-    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-    .card {
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--navy-mid);
-      box-shadow: var(--shadow);
-      padding: 24px;
-      position: relative; overflow: hidden;
-    }
-    .card::after {
-      content: '';
-      position: absolute;
-      bottom: -30px; right: -30px;
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.05;
-      pointer-events: none;
-    }
-    .card h3 { margin: 0 0 10px; font-size: 1.22rem; letter-spacing: -0.02em; }
-    .card p { margin: 0; color: var(--soft); line-height: 1.7; }
-    .step-no {
-      width: 40px; height: 40px; border-radius: 999px;
-      display: grid; place-items: center; margin-bottom: 16px;
-      background: rgba(233,69,96,0.12);
-      border: 1px solid rgba(233,69,96,0.25);
-      color: var(--coral); font-weight: 700;
-    }
-
-    /* PRICING */
-    .pricing-card { display: flex; flex-direction: column; gap: 18px; min-height: 100%; }
-    .pricing-card .tier { font-size: 1.1rem; font-weight: 700; }
-    .price { font-size: 2.35rem; letter-spacing: -0.05em; font-weight: 800; margin: 0; }
-    .price-sub { color: var(--muted); font-size: 0.95rem; margin-top: -10px; }
-    .feature-list { margin: 0; padding-left: 18px; color: var(--soft); line-height: 1.7; }
-    .pricing-card .btn { margin-top: auto; }
-    .highlight {
-      border-color: var(--coral) !important;
-      background: rgba(233,69,96,0.08) !important;
-    }
-    .highlight::after { opacity: 0.1; }
-
-    /* ABOUT */
-    .about-card {
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--navy-mid);
-      box-shadow: var(--shadow);
-      padding: 36px;
-      position: relative; overflow: hidden;
-    }
-    .about-card::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.07;
-      pointer-events: none;
-    }
-    .about-card::after {
-      content: '';
-      position: absolute;
-      bottom: -40px; left: -40px;
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      background: var(--navy-deep);
-      opacity: 0.8;
-      pointer-events: none;
-    }
-    .about-card h2 { margin: 0 0 16px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; position: relative; z-index: 1; }
-    .about-card .belief {
-      font-size: clamp(1.1rem,2vw,1.45rem); line-height: 1.6;
-      color: var(--soft); margin: 0 0 20px; max-width: 72ch;
-      position: relative; z-index: 1;
-    }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 24px; position: relative; z-index: 1; }
-    .about-point h4 { margin: 0 0 6px; font-size: 1rem; font-weight: 700; color: var(--coral); }
-    .about-point p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
-    .philosophy-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 20px; color: var(--soft); font-size: 0.95rem;
-      border-bottom: 1px solid rgba(233,69,96,0.3);
-      padding-bottom: 2px;
-      transition: color 0.15s, border-color 0.15s;
-      position: relative; z-index: 1;
-    }
-    .philosophy-link:hover { color: var(--coral); border-color: var(--coral); }
-
-    /* AUTH */
-    .auth-shell { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; align-items: start; }
-    .auth-card {
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--navy-mid);
-      box-shadow: var(--shadow);
-      padding: 24px;
-      position: relative; overflow: hidden;
-    }
-    .auth-card::after {
-      content: '';
-      position: absolute;
-      bottom: -30px; right: -30px;
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.08;
-      pointer-events: none;
-    }
-    .auth-form { display: grid; gap: 14px; }
-    .auth-form input {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px; padding: 12px;
-      background: rgba(255,255,255,0.04);
-      color: var(--text); font-size: 14px; font-family: inherit;
-      transition: border-color 0.15s;
-    }
-    .auth-form input:focus { outline: none; border-color: var(--coral); }
-    .auth-form input::placeholder { color: var(--muted); }
-    .auth-form input:-webkit-autofill,
-    .auth-form input:-webkit-autofill:hover,
-    .auth-form input:-webkit-autofill:focus {
-      -webkit-box-shadow: 0 0 0 1000px #16213E inset !important;
-      -webkit-text-fill-color: #f4f4f2 !important;
-      caret-color: #f4f4f2;
-    }
-    .auth-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .auth-status {
-      margin-top: 14px; padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      color: var(--soft); line-height: 1.6; min-height: 48px; font-size: 14px;
-    }
-    .auth-userbox { display: grid; gap: 10px; }
-    .auth-userbox .row {
-      padding: 12px 14px; border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-    }
-    .auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
-
-    /* FOOTER */
-    .footer { padding: 28px 0 60px; color: var(--muted); }
-    .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
-    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
-    .footer-links a:hover { color: var(--text); }
-    .footer-social { display: flex; align-items: center; gap: 16px; }
-    .social-icon { display: flex; align-items: center; color: var(--muted); transition: color 0.18s ease; }
-    .social-icon:hover { color: var(--text); }
-    .hidden { display: none !important; }
-
-    @media (max-width: 1080px) {
-      .hero-grid { grid-template-columns: 1fr 1fr; }
-      .about-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 860px) {
-      .nav { flex-wrap: wrap; padding: 14px 0; }
-      .nav-links { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 14px 18px; padding-bottom: 4px; }
-      .hero-grid, .grid-3, .about-grid { grid-template-columns: 1fr; }
-      .hero-copy, .hero-card, .card { padding: 22px; }
-      .section-head { flex-direction: column; align-items: start; }
-      .auth-shell { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 520px) {
-      .hero h1 { font-size: 2.6rem; }
-      .hero-cta { flex-direction: column; }
-      .hero-cta .btn { width: 100%; justify-content: center; }
-      .micro { flex-direction: column; }
-      .nav-actions .btn:first-child { display: none; }
-      body::before { width: 260px; height: 260px; top: -80px; right: -80px; }
-    }
+    body { margin:0; font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--text); background:var(--navy); min-height:100vh; position:relative; overflow-x:hidden; }
+    body::before { content:''; position:fixed; top:-120px; right:-120px; width:480px; height:480px; border-radius:50%; background:var(--coral); opacity:0.07; pointer-events:none; z-index:0; }
+    body::after  { content:''; position:fixed; bottom:10%; left:-100px; width:340px; height:340px; border-radius:50%; background:var(--navy-deep); opacity:0.6; pointer-events:none; z-index:0; }
+    .wrap,.nav-shell,main,footer { position:relative; z-index:1; }
+    a { color:inherit; text-decoration:none; }
+    .wrap { width:min(var(--max),calc(100% - 32px)); margin:0 auto; }
+    .nav-shell { position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(26,26,46,0.88); border-bottom:1px solid rgba(255,255,255,0.07); }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:76px; }
+    .brand { display:flex; align-items:center; gap:12px; font-size:1.05rem; font-weight:700; letter-spacing:0.01em; }
+    .brand-mark { width:34px; height:34px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(233,69,96,0.35); flex-shrink:0; }
+    .nav-links { display:flex; align-items:center; gap:24px; color:var(--muted); font-size:0.96rem; }
+    .nav-links a:hover { color:var(--text); }
+    .nav-actions { display:flex; align-items:center; gap:12px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:46px; padding:0 20px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,0.06); color:var(--text); font-weight:600; transition:transform 0.18s,background 0.18s; cursor:pointer; font-family:inherit; font-size:inherit; }
+    .btn:hover { transform:translateY(-1px); background:rgba(255,255,255,0.1); }
+    .btn.primary { background:var(--coral); color:#fff; border-color:transparent; box-shadow:0 10px 28px rgba(233,69,96,0.35); }
+    .btn.primary:hover { background:var(--coral-dark); }
+    .hero { padding:78px 0 46px; }
+    .hero-grid { display:grid; grid-template-columns:1.15fr 0.85fr; gap:28px; align-items:stretch; }
+    .hero-copy,.hero-card { border:1px solid rgba(255,255,255,0.08); background:rgba(22,33,62,0.7); border-radius:30px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+    .hero-copy::after { content:''; position:absolute; bottom:-60px; right:-60px; width:220px; height:220px; border-radius:50%; background:var(--coral); opacity:0.09; pointer-events:none; }
+    .hero-card::before { content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; border-radius:50%; background:var(--coral); opacity:0.12; pointer-events:none; z-index:0; }
+    .hero-copy { padding:42px; }
+    .hero-card { padding:24px; display:flex; flex-direction:column; gap:12px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(233,69,96,0.3); background:rgba(233,69,96,0.1); color:var(--coral); font-size:0.84rem; letter-spacing:0.02em; margin-bottom:22px; }
+    .hero h1 { font-size:clamp(3rem,6vw,5.8rem); line-height:0.95; letter-spacing:-0.05em; margin:0 0 18px; max-width:9ch; }
+    .differentiator { margin:0 0 14px; font-size:1.08rem; font-weight:600; color:var(--text); line-height:1.5; max-width:52ch; }
+    .hero p.lead { margin:0; color:var(--soft); font-size:1.05rem; line-height:1.7; max-width:58ch; }
+    .hero-cta { display:flex; flex-wrap:wrap; gap:14px; margin-top:28px; }
+    .micro { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; color:var(--muted); font-size:0.92rem; }
+    .micro span { padding:9px 12px; border-radius:999px; background:rgba(233,69,96,0.08); border:1px solid rgba(233,69,96,0.18); }
+    .report-window { flex:1; border-radius:22px; border:1px solid rgba(255,255,255,0.08); background:rgba(15,52,96,0.5); padding:18px; display:flex; flex-direction:column; gap:10px; position:relative; z-index:1; }
+    .window-top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:0.84rem; }
+    .dots { display:flex; gap:7px; }
+    .dots span { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.18); display:block; }
+    .dots span:first-child { background:var(--coral); opacity:0.7; }
+    .report-section { border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.03); border-radius:16px; padding:13px; }
+    .report-label { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--coral); margin-bottom:7px; opacity:0.85; }
+    .report-body { color:var(--soft); line-height:1.6; font-size:0.9rem; }
+    .report-list { margin:0; padding-left:16px; color:var(--soft); line-height:1.6; font-size:0.9rem; }
+    .best-next { border:1px solid rgba(233,69,96,0.2); background:rgba(233,69,96,0.06); border-radius:16px; padding:13px; }
+    .section { padding:34px 0; }
+    .section-head { display:flex; justify-content:space-between; gap:24px; align-items:end; margin-bottom:22px; }
+    .section-head h2 { margin:0 0 8px; font-size:clamp(1.9rem,3vw,3rem); letter-spacing:-0.04em; }
+    .section-head p { margin:0; color:var(--muted); line-height:1.7; max-width:58ch; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .card { border-radius:24px; border:1px solid rgba(255,255,255,0.08); background:var(--navy-mid); box-shadow:var(--shadow); padding:24px; position:relative; overflow:hidden; }
+    .card::after { content:''; position:absolute; bottom:-30px; right:-30px; width:100px; height:100px; border-radius:50%; background:var(--coral); opacity:0.05; pointer-events:none; }
+    .card h3 { margin:0 0 10px; font-size:1.22rem; letter-spacing:-0.02em; }
+    .card p { margin:0; color:var(--soft); line-height:1.7; }
+    .step-no { width:40px; height:40px; border-radius:999px; display:grid; place-items:center; margin-bottom:16px; background:rgba(233,69,96,0.12); border:1px solid rgba(233,69,96,0.25); color:var(--coral); font-weight:700; }
+    .pricing-card { display:flex; flex-direction:column; gap:18px; min-height:100%; }
+    .pricing-card .tier { font-size:1.1rem; font-weight:700; }
+    .price { font-size:2.35rem; letter-spacing:-0.05em; font-weight:800; margin:0; }
+    .price-sub { color:var(--muted); font-size:0.95rem; margin-top:-10px; }
+    .feature-list { margin:0; padding-left:18px; color:var(--soft); line-height:1.7; }
+    .pricing-card .btn { margin-top:auto; }
+    .highlight { border-color:var(--coral)!important; background:rgba(233,69,96,0.08)!important; }
+    .highlight::after { opacity:0.1; }
+    .about-card { border-radius:24px; border:1px solid rgba(255,255,255,0.08); background:var(--navy-mid); box-shadow:var(--shadow); padding:36px; position:relative; overflow:hidden; }
+    .about-card::before { content:''; position:absolute; top:-60px; right:-60px; width:260px; height:260px; border-radius:50%; background:var(--coral); opacity:0.07; pointer-events:none; }
+    .about-card::after { content:''; position:absolute; bottom:-40px; left:-40px; width:180px; height:180px; border-radius:50%; background:var(--navy-deep); opacity:0.8; pointer-events:none; }
+    .about-card h2 { margin:0 0 16px; font-size:clamp(1.9rem,3vw,3rem); letter-spacing:-0.04em; position:relative; z-index:1; }
+    .about-card .belief { font-size:clamp(1.1rem,2vw,1.45rem); line-height:1.6; color:var(--soft); margin:0 0 20px; max-width:72ch; position:relative; z-index:1; }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; margin-top:24px; position:relative; z-index:1; }
+    .about-point h4 { margin:0 0 6px; font-size:1rem; font-weight:700; color:var(--coral); }
+    .about-point p { margin:0; color:var(--muted); font-size:0.95rem; line-height:1.65; }
+    .philosophy-link { display:inline-flex; align-items:center; gap:6px; margin-top:20px; color:var(--soft); font-size:0.95rem; border-bottom:1px solid rgba(233,69,96,0.3); padding-bottom:2px; transition:color 0.15s,border-color 0.15s; position:relative; z-index:1; }
+    .philosophy-link:hover { color:var(--coral); border-color:var(--coral); }
+    .auth-shell { display:grid; grid-template-columns:1.1fr 0.9fr; gap:18px; align-items:start; }
+    .auth-card { border-radius:24px; border:1px solid rgba(255,255,255,0.08); background:var(--navy-mid); box-shadow:var(--shadow); padding:24px; position:relative; overflow:hidden; }
+    .auth-card::after { content:''; position:absolute; bottom:-30px; right:-30px; width:120px; height:120px; border-radius:50%; background:var(--coral); opacity:0.08; pointer-events:none; }
+    .auth-form { display:grid; gap:14px; }
+    .auth-form input { width:100%; border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:12px; background:rgba(255,255,255,0.04); color:var(--text); font-size:14px; font-family:inherit; transition:border-color 0.15s; }
+    .auth-form input:focus { outline:none; border-color:var(--coral); }
+    .auth-form input::placeholder { color:var(--muted); }
+    .auth-form input:-webkit-autofill,.auth-form input:-webkit-autofill:hover,.auth-form input:-webkit-autofill:focus { -webkit-box-shadow:0 0 0 1000px #16213E inset!important; -webkit-text-fill-color:#f4f4f2!important; caret-color:#f4f4f2; }
+    .auth-actions { display:flex; gap:12px; flex-wrap:wrap; }
+    .auth-status { margin-top:14px; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--soft); line-height:1.6; min-height:48px; font-size:14px; }
+    .auth-userbox { display:grid; gap:10px; }
+    .auth-userbox .row { padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); }
+    .auth-userbox .k { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px; }
+    .footer { padding:28px 0 60px; color:var(--muted); }
+    .footer-shell { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.08); padding-top:22px; }
+    .footer-links { display:flex; gap:18px; flex-wrap:wrap; }
+    .footer-links a:hover { color:var(--text); }
+    .footer-social { display:flex; align-items:center; gap:16px; }
+    .social-icon { display:flex; align-items:center; color:var(--muted); transition:color 0.18s; }
+    .social-icon:hover { color:var(--text); }
+    .contact-link { color:var(--muted); cursor:pointer; background:none; border:none; font:inherit; font-size:inherit; padding:0; transition:color 0.15s; }
+    .contact-link:hover { color:var(--text); }
+    .hidden { display:none!important; }
+    .overlay { display:none; position:fixed; inset:0; z-index:200; background:rgba(10,10,20,0.75); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px; }
+    .overlay.open { display:flex; }
+    .modal { background:var(--navy-mid); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:36px; width:100%; max-width:480px; position:relative; box-shadow:0 24px 60px rgba(0,0,0,0.5); }
+    .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--muted); cursor:pointer; font-size:1.4rem; line-height:1; padding:4px; }
+    .modal h3 { margin:0 0 6px; font-size:1.3rem; letter-spacing:-0.03em; }
+    .modal p  { margin:0 0 24px; color:var(--muted); font-size:0.9rem; line-height:1.6; }
+    .form-grid { display:grid; gap:14px; }
+    .flbl { display:block; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-bottom:6px; }
+    .finput { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:10px 14px; color:var(--text); font-size:0.92rem; font-family:inherit; box-sizing:border-box; transition:border-color 0.15s; }
+    .finput:focus { outline:none; border-color:var(--coral); }
+    .finput::placeholder { color:var(--muted); }
+    .ferr { display:none; color:#f4a0af; font-size:0.84rem; background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.25); border-radius:10px; padding:10px 14px; }
+    .ferr.show { display:block; }
+    .fsubmit { width:100%; min-height:46px; border-radius:12px; border:none; background:var(--coral); color:#fff; font-size:0.95rem; font-weight:700; cursor:pointer; font-family:inherit; transition:background 0.15s; }
+    .fsubmit:hover { background:var(--coral-dark); }
+    .fsubmit:disabled { opacity:0.5; cursor:not-allowed; }
+    @media(max-width:1080px) { .hero-grid,.about-grid { grid-template-columns:1fr 1fr; } }
+    @media(max-width:860px) { .nav{flex-wrap:wrap;padding:14px 0;} .nav-links{order:3;width:100%;justify-content:center;flex-wrap:wrap;gap:14px 18px;padding-bottom:4px;} .hero-grid,.grid-3,.about-grid{grid-template-columns:1fr;} .hero-copy,.hero-card,.card{padding:22px;} .section-head{flex-direction:column;align-items:start;} .auth-shell{grid-template-columns:1fr;} }
+    @media(max-width:520px) { .hero h1{font-size:2.6rem;} .hero-cta{flex-direction:column;} .hero-cta .btn{width:100%;justify-content:center;} .micro{flex-direction:column;} .nav-actions .btn:first-child{display:none;} body::before{width:260px;height:260px;top:-80px;right:-80px;} }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
@@ -481,42 +245,18 @@
       <div class="section-head"><div><h2>Pricing</h2><p>Simple credit-based access. One free analysis on signup.</p></div></div>
       <div class="grid-3">
         <div class="card pricing-card">
-          <div>
-            <div class="tier">Free</div>
-            <p class="price">$0</p>
-            <div class="price-sub">1 credit on signup</div>
-          </div>
-          <ul class="feature-list">
-            <li>Try the full Fonna experience</li>
-            <li>One complete producer report</li>
-            <li>Signup required</li>
-          </ul>
+          <div><div class="tier">Free</div><p class="price">$0</p><div class="price-sub">1 credit on signup</div></div>
+          <ul class="feature-list"><li>Try the full Fonna experience</li><li>One complete producer report</li><li>Signup required</li></ul>
           <a class="btn" href="#login">Start free</a>
         </div>
         <div class="card pricing-card highlight">
-          <div>
-            <div class="tier">Starter</div>
-            <p class="price">$9.99</p>
-            <div class="price-sub">10 credits</div>
-          </div>
-          <ul class="feature-list">
-            <li>10 full analyses</li>
-            <li>Useful for active revision weeks</li>
-            <li>Simple one-time purchase</li>
-          </ul>
+          <div><div class="tier">Starter</div><p class="price">$9.99</p><div class="price-sub">10 credits</div></div>
+          <ul class="feature-list"><li>10 full analyses</li><li>Useful for active revision weeks</li><li>Simple one-time purchase</li></ul>
           <a class="btn primary" href="#login">Buy Starter</a>
         </div>
         <div class="card pricing-card">
-          <div>
-            <div class="tier">Creator</div>
-            <p class="price">$19.99</p>
-            <div class="price-sub">30 credits</div>
-          </div>
-          <ul class="feature-list">
-            <li>30 full analyses</li>
-            <li>Ideal for producers and serious artists</li>
-            <li>Best value at launch</li>
-          </ul>
+          <div><div class="tier">Creator</div><p class="price">$19.99</p><div class="price-sub">30 credits</div></div>
+          <ul class="feature-list"><li>30 full analyses</li><li>Ideal for producers and serious artists</li><li>Best value at launch</li></ul>
           <a class="btn" href="#login">Buy Creator</a>
         </div>
       </div>
@@ -527,18 +267,9 @@
         <h2>What we believe</h2>
         <p class="belief">Better records usually come from better decisions, not more plugins, more layers, or more noise. Fonna exists at the intersection of music production and music education — built for artists who want to hear their own work more clearly and make more intentional choices.</p>
         <div class="about-grid">
-          <div class="about-point">
-            <h4>Helps you grow</h4>
-            <p>Every report is a chance to internalize a new way of hearing. Use it enough and the framework becomes your own.</p>
-          </div>
-          <div class="about-point">
-            <h4>Helps you refine</h4>
-            <p>Fonna is for the stage where the record is real enough to evaluate but still malleable enough to change.</p>
-          </div>
-          <div class="about-point">
-            <h4>Expands your perspective</h4>
-            <p>Outside ears break the loop. Fonna hears the track as it actually is, not as you remember it sounding.</p>
-          </div>
+          <div class="about-point"><h4>Helps you grow</h4><p>Every report is a chance to internalize a new way of hearing. Use it enough and the framework becomes your own.</p></div>
+          <div class="about-point"><h4>Helps you refine</h4><p>Fonna is for the stage where the record is real enough to evaluate but still malleable enough to change.</p></div>
+          <div class="about-point"><h4>Expands your perspective</h4><p>Outside ears break the loop. Fonna hears the track as it actually is, not as you remember it sounding.</p></div>
         </div>
         <a href="/philosophy.html" class="philosophy-link">Read the full philosophy →</a>
       </div>
@@ -592,132 +323,65 @@
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        <button class="contact-link" onclick="openContact()">Contact Us</button>
       </div>
       <div class="footer-social">
         <a href="https://www.instagram.com/fonna.ai/" target="_blank" rel="noopener" aria-label="Fonna on Instagram" class="social-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4.5"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
         </a>
         <a href="https://www.facebook.com/profile.php?id=948309055043464" target="_blank" rel="noopener" aria-label="Fonna on Facebook" class="social-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         </a>
       </div>
     </div>
   </footer>
 
+  <div id="contactOverlay" class="overlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeContact()">&times;</button>
+      <h3>Get in touch</h3>
+      <p>We read every message and will follow up by email.</p>
+      <div class="form-grid">
+        <div><label class="flbl">Your name</label><input id="cName" class="finput" type="text" placeholder="Ewen McIntosh" /></div>
+        <div><label class="flbl">Your email</label><input id="cEmail" class="finput" type="email" placeholder="you@example.com" /></div>
+        <div><label class="flbl">Message</label><textarea id="cMessage" class="finput" rows="4" placeholder="What's on your mind?"></textarea></div>
+        <div id="contactErr" class="ferr"></div>
+        <button class="fsubmit" id="contactSubmitBtn" onclick="submitContact()">Send message</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
     const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const authStatus      = document.getElementById("authStatus");
-    const authLoggedOut   = document.getElementById("authLoggedOut");
-    const authLoggedIn    = document.getElementById("authLoggedIn");
-    const authEmail       = document.getElementById("authEmail");
-    const authPassword    = document.getElementById("authPassword");
-    const signUpBtn       = document.getElementById("signUpBtn");
-    const loginBtn        = document.getElementById("loginBtn");
-    const logoutBtn       = document.getElementById("logoutBtn");
-    const userEmailText   = document.getElementById("userEmailText");
-    const userCreditsText = document.getElementById("userCreditsText");
-
-    function setStatus(msg) { authStatus.textContent = msg; }
-
-    async function loadProfile(user) {
-      try {
-        const { data, error } = await supabase
-          .from("users")
-          .select("email, credits")
-          .eq("id", user.id)
-          .maybeSingle()
-          .abortSignal(AbortSignal.timeout(5000));
-        if (error) throw error;
-        userEmailText.textContent   = (data && data.email) ? data.email : (user.email || "Unknown");
-        userCreditsText.textContent = data ? String(data.credits ?? 0) : "0";
-      } catch (err) {
-        userEmailText.textContent   = user.email || "Unknown";
-        userCreditsText.textContent = "—";
-      }
-    }
-
-    async function refreshAuthUI() {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.user) {
-          authLoggedOut.classList.remove("hidden");
-          authLoggedIn.classList.add("hidden");
-          setStatus("Ready.");
-          return;
-        }
-        authLoggedOut.classList.add("hidden");
-        authLoggedIn.classList.remove("hidden");
-        setStatus("Logged in successfully.");
-        await loadProfile(session.user);
-      } catch (err) {
-        setStatus("Something went wrong. Please refresh.");
-      }
-    }
-
-    signUpBtn.addEventListener("click", async () => {
-      const email    = authEmail.value.trim();
-      const password = authPassword.value;
-      if (!email || !password) { setStatus("Enter an email and password."); return; }
-      signUpBtn.disabled = true;
-      setStatus("Creating account...");
-      try {
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        if (error) { setStatus("Signup failed: " + error.message); return; }
-        if (data.user) {
-          setStatus("Account created! Redirecting to app...");
-          setTimeout(() => { window.location.href = "/app.html"; }, 1000);
-        } else {
-          setStatus("Signup submitted. Check your email if confirmation is required.");
-        }
-      } finally {
-        signUpBtn.disabled = false;
-      }
-    });
-
-    loginBtn.addEventListener("click", doLogin);
-    document.querySelector(".auth-form").addEventListener("submit", (e) => { e.preventDefault(); doLogin(); });
-
-    async function doLogin() {
-      const email    = authEmail.value.trim();
-      const password = authPassword.value;
-      if (!email || !password) { setStatus("Enter an email and password."); return; }
-      loginBtn.disabled = true;
-      setStatus("Logging in...");
-      try {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) { setStatus("Login failed: " + error.message); return; }
-        setStatus("Logged in! Redirecting to app...");
-        setTimeout(() => { window.location.href = "/app.html"; }, 800);
-      } catch (err) {
-        setStatus("Login error: " + err.message);
-      } finally {
-        loginBtn.disabled = false;
-      }
-    }
-
-    logoutBtn.addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      authLoggedOut.classList.remove("hidden");
-      authLoggedIn.classList.add("hidden");
-      setStatus("Ready.");
-      userEmailText.textContent   = "—";
-      userCreditsText.textContent = "—";
-    });
-
+    const authStatus=document.getElementById("authStatus"),authLoggedOut=document.getElementById("authLoggedOut"),authLoggedIn=document.getElementById("authLoggedIn"),authEmail=document.getElementById("authEmail"),authPassword=document.getElementById("authPassword"),signUpBtn=document.getElementById("signUpBtn"),loginBtn=document.getElementById("loginBtn"),logoutBtn=document.getElementById("logoutBtn"),userEmailText=document.getElementById("userEmailText"),userCreditsText=document.getElementById("userCreditsText");
+    const setStatus=msg=>authStatus.textContent=msg;
+    async function loadProfile(user){try{const{data,error}=await supabase.from("users").select("email, credits").eq("id",user.id).maybeSingle().abortSignal(AbortSignal.timeout(5000));if(error)throw error;userEmailText.textContent=(data&&data.email)?data.email:(user.email||"Unknown");userCreditsText.textContent=data?String(data.credits??0):"0";}catch{userEmailText.textContent=user.email||"Unknown";userCreditsText.textContent="—";}}
+    async function refreshAuthUI(){try{const{data:{session}}=await supabase.auth.getSession();if(!session?.user){authLoggedOut.classList.remove("hidden");authLoggedIn.classList.add("hidden");setStatus("Ready.");return;}authLoggedOut.classList.add("hidden");authLoggedIn.classList.remove("hidden");setStatus("Logged in successfully.");await loadProfile(session.user);}catch{setStatus("Something went wrong. Please refresh.");}}
+    signUpBtn.addEventListener("click",async()=>{const email=authEmail.value.trim(),password=authPassword.value;if(!email||!password){setStatus("Enter an email and password.");return;}signUpBtn.disabled=true;setStatus("Creating account...");try{const{data,error}=await supabase.auth.signUp({email,password});if(error){setStatus("Signup failed: "+error.message);return;}if(data.user){setStatus("Account created! Redirecting...");setTimeout(()=>{window.location.href="/app.html";},1000);}else{setStatus("Signup submitted. Check your email if confirmation is required.");}}finally{signUpBtn.disabled=false;}});
+    loginBtn.addEventListener("click",doLogin);
+    document.querySelector(".auth-form").addEventListener("submit",e=>{e.preventDefault();doLogin();});
+    async function doLogin(){const email=authEmail.value.trim(),password=authPassword.value;if(!email||!password){setStatus("Enter an email and password.");return;}loginBtn.disabled=true;setStatus("Logging in...");try{const{error}=await supabase.auth.signInWithPassword({email,password});if(error){setStatus("Login failed: "+error.message);return;}setStatus("Logged in! Redirecting...");setTimeout(()=>{window.location.href="/app.html";},800);}catch(err){setStatus("Login error: "+err.message);}finally{loginBtn.disabled=false;}}
+    logoutBtn.addEventListener("click",async()=>{await supabase.auth.signOut();authLoggedOut.classList.remove("hidden");authLoggedIn.classList.add("hidden");setStatus("Ready.");userEmailText.textContent="—";userCreditsText.textContent="—";});
     refreshAuthUI();
-  </script>
 
+    window.openContact=()=>{document.getElementById("contactOverlay").classList.add("open");document.body.style.overflow="hidden";};
+    window.closeContact=()=>{document.getElementById("contactOverlay").classList.remove("open");document.body.style.overflow="";};
+    document.getElementById("contactOverlay").addEventListener("click",e=>{if(e.target===e.currentTarget)window.closeContact();});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")window.closeContact();});
+    window.submitContact=async()=>{
+      const name=document.getElementById("cName").value.trim(),email=document.getElementById("cEmail").value.trim(),message=document.getElementById("cMessage").value.trim(),errEl=document.getElementById("contactErr"),btn=document.getElementById("contactSubmitBtn");
+      errEl.classList.remove("show");
+      if(!name){errEl.textContent="Please enter your name.";errEl.classList.add("show");return;}
+      if(!email||!email.includes("@")){errEl.textContent="Please enter a valid email address.";errEl.classList.add("show");return;}
+      if(!message){errEl.textContent="Please enter a message.";errEl.classList.add("show");return;}
+      btn.disabled=true;btn.textContent="Sending…";
+      try{const res=await fetch(`${SUPABASE_URL}/rest/v1/contacts`,{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_ANON_KEY,"Authorization":`Bearer ${SUPABASE_ANON_KEY}`,"Prefer":"return=minimal"},body:JSON.stringify({name,email,message})});if(!res.ok)throw new Error();window.location.href="/thankyou.html";}
+      catch{errEl.textContent="Something went wrong — please try again.";errEl.classList.add("show");btn.disabled=false;btn.textContent="Send message";}
+    };
+  </script>
 </body>
 </html>
