@@ -360,8 +360,8 @@
       body::before { width: 260px; height: 260px; top: -80px; right: -80px; }
     }
   </style>
-<script defer src="/_vercel/insights/script.js"></script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
 
@@ -616,21 +616,17 @@
     function setStatus(msg) { authStatus.textContent = msg; }
 
     async function loadProfile(user) {
-      const timeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Profile fetch timed out")), 5000)
-      );
       try {
-        const query = supabase
+        const { data, error } = await supabase
           .from("users")
           .select("email, credits")
           .eq("id", user.id)
-          .maybeSingle();
-        const { data, error } = await Promise.race([query, timeout]);
+          .maybeSingle()
+          .abortSignal(AbortSignal.timeout(5000));
         if (error) throw error;
         userEmailText.textContent   = (data && data.email) ? data.email : (user.email || "Unknown");
         userCreditsText.textContent = data ? String(data.credits ?? 0) : "0";
       } catch (err) {
-        console.warn("loadProfile error:", err.message);
         userEmailText.textContent   = user.email || "Unknown";
         userCreditsText.textContent = "—";
       }
@@ -650,7 +646,6 @@
         setStatus("Logged in successfully.");
         await loadProfile(session.user);
       } catch (err) {
-        console.error("refreshAuthUI error:", err.message);
         setStatus("Something went wrong. Please refresh.");
       }
     }
@@ -666,7 +661,6 @@
         if (error) { setStatus("Signup failed: " + error.message); return; }
         if (data.user) {
           setStatus("Account created! Redirecting to app...");
-          await refreshAuthUI();
           setTimeout(() => { window.location.href = "/app.html"; }, 1000);
         } else {
           setStatus("Signup submitted. Check your email if confirmation is required.");
@@ -689,7 +683,6 @@
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) { setStatus("Login failed: " + error.message); return; }
         setStatus("Logged in! Redirecting to app...");
-        await refreshAuthUI();
         setTimeout(() => { window.location.href = "/app.html"; }, 800);
       } catch (err) {
         setStatus("Login error: " + err.message);
@@ -700,30 +693,16 @@
 
     logoutBtn.addEventListener("click", async () => {
       await supabase.auth.signOut();
-      await refreshAuthUI();
+      authLoggedOut.classList.remove("hidden");
+      authLoggedIn.classList.add("hidden");
+      setStatus("Ready.");
+      userEmailText.textContent   = "—";
+      userCreditsText.textContent = "—";
     });
 
-    let authChangeBusy = false;
-    supabase.auth.onAuthStateChange(async (event, session) => {
-      if (authChangeBusy) return;
-      authChangeBusy = true;
-      try {
-        if (session?.user) {
-          authLoggedOut.classList.add("hidden");
-          authLoggedIn.classList.remove("hidden");
-          await loadProfile(session.user);
-        } else {
-          authLoggedOut.classList.remove("hidden");
-          authLoggedIn.classList.add("hidden");
-          setStatus("Ready.");
-        }
-      } finally {
-        authChangeBusy = false;
-      }
-    });
-
-    // Run on load
+    // Run once on load only — no persistent auth listener needed on the landing page
     refreshAuthUI();
   </script>
+
 </body>
 </html>
