@@ -1,120 +1,31 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Philosophy - Fonna</title>
   <style>
-    :root {
-      --navy: #1A1A2E;
-      --navy-mid: #16213E;
-      --coral: #E94560;
-      --coral-dark: #C73652;
-      --border: rgba(255,255,255,0.09);
-      --text: #f4f4f2;
-      --muted: #a4a4a0;
-      --soft: #d8d8d2;
-      --max: 780px;
-    }
+    :root { --navy: #1A1A2E; --navy-mid: #16213E; --coral: #E94560; --coral-dark: #C73652; --border: rgba(255,255,255,0.09); --text: #f4f4f2; --muted: #a4a4a0; --soft: #d8d8d2; --max: 780px; }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      color: var(--text);
-      background: var(--navy);
-      min-height: 100vh;
-      font-size: 16px;
-      line-height: 1.75;
-      position: relative;
-      overflow-x: hidden;
-    }
-    /* Decorative circles */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -100px; right: -100px;
-      width: 380px; height: 380px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.06;
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: 5%; left: -80px;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: var(--navy-mid);
-      opacity: 0.7;
-      pointer-events: none;
-      z-index: 0;
-    }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--text); background: var(--navy); min-height: 100vh; font-size: 16px; line-height: 1.75; position: relative; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; top: -100px; right: -100px; width: 380px; height: 380px; border-radius: 50%; background: var(--coral); opacity: 0.06; pointer-events: none; z-index: 0; }
+    body::after { content: ''; position: fixed; bottom: 5%; left: -80px; width: 260px; height: 260px; border-radius: 50%; background: var(--navy-mid); opacity: 0.7; pointer-events: none; z-index: 0; }
     a { color: inherit; text-decoration: none; }
     .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; }
-    .nav-shell {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(26,26,46,0.88);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
+    .nav-shell { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(26,26,46,0.88); border-bottom: 1px solid rgba(255,255,255,0.07); }
     .nav { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
     .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; }
-    .brand-mark {
-      width: 34px; height: 34px; border-radius: 10px;
-      display: inline-flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 20px rgba(233,69,96,0.35);
-      flex-shrink: 0;
-    }
-    .btn {
-      display: inline-flex; align-items: center;
-      min-height: 42px; padding: 0 18px; border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--text); font-weight: 600; font-size: 0.9rem;
-      cursor: pointer; font-family: inherit;
-      transition: background 0.15s;
-    }
+    .brand-mark { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(233,69,96,0.35); flex-shrink: 0; }
+    .btn { display: inline-flex; align-items: center; min-height: 42px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.06); color: var(--text); font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: inherit; transition: background 0.15s; }
     .btn:hover { background: rgba(255,255,255,0.1); }
-    .btn.primary {
-      background: var(--coral); color: #fff; border-color: transparent;
-      box-shadow: 0 8px 22px rgba(233,69,96,0.35);
-      position: relative; overflow: hidden;
-    }
-    .btn.primary::before {
-      content: '';
-      position: absolute;
-      top: -18px; right: -18px;
-      width: 52px; height: 52px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.18);
-      pointer-events: none;
-    }
-    .btn.primary::after {
-      content: '';
-      position: absolute;
-      bottom: -14px; left: -10px;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.13);
-      pointer-events: none;
-    }
+    .btn.primary { background: var(--coral); color: #fff; border-color: transparent; box-shadow: 0 8px 22px rgba(233,69,96,0.35); position: relative; overflow: hidden; }
+    .btn.primary::before { content: ''; position: absolute; top: -18px; right: -18px; width: 52px; height: 52px; border-radius: 50%; background: rgba(0,0,0,0.18); pointer-events: none; }
+    .btn.primary::after { content: ''; position: absolute; bottom: -14px; left: -10px; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.13); pointer-events: none; }
     .btn.primary:hover { background: var(--coral-dark); }
     .hero { padding: 64px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
-    .eyebrow {
-      display: inline-block; padding: 6px 14px; border-radius: 999px;
-      border: 1px solid rgba(233,69,96,0.3);
-      background: rgba(233,69,96,0.1);
-      color: var(--coral); font-size: 0.84rem;
-      letter-spacing: 0.02em; margin-bottom: 20px;
-    }
+    .eyebrow { display: inline-block; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(233,69,96,0.3); background: rgba(233,69,96,0.1); color: var(--coral); font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 20px; }
     h1 { font-size: clamp(2rem,5vw,3.2rem); line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 12px; }
-  </style>
-
-  <style>
     .lead { font-size: 1.18rem; color: var(--soft); margin: 0; max-width: 60ch; line-height: 1.7; }
     .body-copy { padding-bottom: 80px; }
     .body-copy h2 { font-size: clamp(1.4rem,3vw,2rem); letter-spacing: -0.03em; margin: 64px 0 20px; line-height: 1.15; }
@@ -129,9 +40,28 @@
     .footer { padding: 28px 0 60px; color: var(--muted); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1; }
     .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 22px; }
     .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
-.footer-social { display: flex; align-items: center; gap: 16px; }
-.social-icon { display: flex; align-items: center; color: var(--muted); transition: color 0.18s ease; }
-.social-icon:hover { color: var(--text); }
+    .footer-links a:hover { color: var(--text); }
+    .footer-social { display: flex; align-items: center; gap: 16px; }
+    .social-icon { display: flex; align-items: center; color: var(--muted); transition: color 0.18s ease; }
+    .social-icon:hover { color: var(--text); }
+    /* CONTACT MODAL */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,10,20,0.75); backdrop-filter: blur(6px); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); padding: 36px; width: 100%; max-width: 480px; position: relative; overflow: hidden; }
+    .modal::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: var(--coral); opacity: 0.07; pointer-events: none; }
+    .modal-inner { position: relative; z-index: 1; }
+    .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--muted); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; line-height: 1; transition: background 0.15s, color 0.15s; z-index: 2; }
+    .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .modal h2 { margin: 0 0 6px; font-size: 1.3rem; letter-spacing: -0.03em; }
+    .modal .modal-sub { margin: 0 0 24px; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+    .modal .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .modal .field label { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+    .modal .field input, .modal .field textarea { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 14px; color: var(--text); font-size: 0.92rem; font-family: inherit; transition: border-color 0.15s; resize: none; }
+    .modal .field input:focus, .modal .field textarea:focus { outline: none; border-color: var(--coral); }
+    .modal .field input::placeholder, .modal .field textarea::placeholder { color: var(--muted); }
+    .modal .modal-msg { display: none; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 14px; line-height: 1.5; }
+    .modal .modal-msg.err { display: block; background: rgba(233,69,96,0.1); border: 1px solid rgba(233,69,96,0.25); color: #f4a0af; }
+    .modal .submit-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
   </style>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
@@ -139,20 +69,19 @@
 <body>
   <div class="nav-shell">
     <div class="wrap nav">
-      <a href="/" class="brand"><span class="brand-mark"><svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
-  <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
-  <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
-  <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
-  <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
-  <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
-  <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
-  <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
-  <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
-  <circle cx="272" cy="318" r="18" fill="#E94560"/>
-</svg></span><span>Fonna</span></a>
+      <a href="/" class="brand">
+        <span class="brand-mark">
+          <svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
+            <circle cx="200" cy="200" r="200" fill="#1A1A2E"/><circle cx="340" cy="80" r="130" fill="#E94560" opacity="0.10"/><circle cx="60" cy="310" r="90" fill="#16213E" opacity="0.9"/><circle cx="320" cy="300" r="70" fill="#0F3460" opacity="0.6"/><circle cx="100" cy="100" r="50" fill="#E94560" opacity="0.06"/>
+            <rect x="138" y="130" width="34" height="155" rx="4" fill="#FFFFFF"/><rect x="138" y="130" width="110" height="34" rx="4" fill="#FFFFFF"/><rect x="138" y="196" width="84" height="28" rx="4" fill="#E94560"/><circle cx="272" cy="318" r="18" fill="#E94560"/>
+          </svg>
+        </span>
+        <span>Fonna</span>
+      </a>
       <a href="/#login" class="btn primary">Try Fonna free</a>
     </div>
   </div>
+
   <main>
     <div class="wrap">
       <div class="hero">
@@ -161,53 +90,40 @@
         <p class="lead">Fonna was built at the intersection of two lifelong pursuits &mdash; music making and education &mdash; by someone who has lived both deeply.</p>
       </div>
       <div class="body-copy">
-
-    <h2>The problem Fonna is built to solve</h2>
-    <p>Independent artists have no reliable feedback loop. You finish a rough mix at midnight. Your producer friends are asleep. Your partner has heard this song eleven times. You post it in a forum and get three responses, two of which are people promoting their own work. You wait. You second-guess. You start changing things before you even know what needs to change.</p>
-    <p>This is not a technology problem. It is a structural problem. The feedback that serious artists need &mdash; focused, honest, directional, timely &mdash; simply does not exist at a price or pace that works for independent creators. A session with a professional producer costs hundreds of dollars and takes days to schedule. A trusted friend with good ears is a rare and finite resource.</p>
-    <p>Fonna is available at midnight. It does not need context. It does not need to be kind. It listens to what is actually there and tells you what it hears.</p>
-
-    <h2>The education lens</h2>
-    <p>Robust Arts curriculum is built on two interconnected processes: creative and critical. Students are not just asked to make art &mdash; they are asked to reflect on it, analyse it, and use that analysis to make better decisions in the next iteration. Feedback is not a reward at the end of the process. It is built into every stage of it.</p>
-    <p>That framework is what most independent musicians never have access to once they leave formal education. The feedback loop that is standard practice in any serious arts programme &mdash; make something, hear honest observations, revise with intention &mdash; simply disappears for most artists the moment they are working alone.</p>
-    <p>Fonna is an attempt to restore that loop. Not to replace human feedback, and not to tell you how to make music. But to provide the kind of structured, honest, directional observation that helps artists move from where the record is to where they want it to be.</p>
-
-    <div class="pull-quote">
-      Artists need to feel heard, but they also need provocation. Fonna aims to provide both &mdash; through feedback and direction. Not how. Just what.
-    </div>
-
-    <h2>Clarity over abundance</h2>
-    <p>Thirty years of making music alongside a career in education teaches you this: abundance without direction is its own kind of paralysis. More tools do not make better records. More opinions do not make better decisions. What makes better records is knowing what to listen for, and having the discipline to act on it.</p>
-    <p>Fonna is not here to sand the edges off your music or push you toward a radio sound. It is here to help you hear what is actually happening in the record &mdash; so that whatever you do next, you do it on purpose.</p>
-    <p>The cost of abundance is real. Fonna exists because someone wished, many times, that someone would just tell them what to fix first.</p>
-
-    <h2>What Fonna will and will not do</h2>
-    <p>Fonna analyses arrangement, production, and mix. It does not critique songwriting, lyrics, or genre. That boundary is deliberate. Whether a chord change is right for a song is a question only you can answer.</p>
-    <p>Fonna stays in its lane. Every report is built around the same discipline: here is what is working, here is what is getting in the way, here is where to focus first. The goal is not to overwhelm. The goal is to give you the one or two things most worth your attention in the next session.</p>
-    <p>It does not remember your previous version. Each upload is a fresh listen, without bias or attachment. That is not a limitation &mdash; it is the point. You get the same honest ears every time, regardless of how many times you have uploaded, how long you have been working on the track, or how attached you are to a particular decision.</p>
-
-    <h2>Where this started</h2>
-    <p>The founder of Fonna is a lifelong gigging musician and independent recording artist &mdash; and a former educator who spent a career teaching structured creative critique at every level of a school system. Making records for students and artists in the community started before most people had a computer in their house.</p>
-    <p>The first serious recording setup was a Fostex X-55 &mdash; a four-track cassette recorder. From there, a Fostex VF160 digital workstation, then an RME Fireface, Cubase, and a UAD-1 card. Today, like most independent artists, the work happens inside a myriad of AI-powered creation tools that would have seemed impossible to the version bouncing tracks to cassette.</p>
-    <p>Each step forward brought more capability and more noise. More plugins, more tutorials, more rabbit holes. More time spent chasing a sound instead of finishing a record. What it feels like to lose a full weekend to a compressor setting &mdash; that is known territory. So is finally getting something right and having no one around to hear whether it actually worked.</p>
-
-    <div class="pull-quote">
-      Countless hours lost chasing sounds through plugins and tutorials, room treatments and monitoring upgrades &mdash; and untold patience from friends and family who felt compelled to listen to semi-finished tracks and give something useful back. Fonna solves this entirely.
-    </div>
-
-    <div class="cta-block">
-      <h3>Hear your track differently.</h3>
-      <p>One free analysis on signup. No commitment.</p>
-      <div class="cta-actions">
-        <a href="/#login" class="btn primary">Try Fonna free</a>
-        <a href="/" class="btn">Back to home</a>
+        <h2>The problem Fonna is built to solve</h2>
+        <p>Independent artists have no reliable feedback loop. You finish a rough mix at midnight. Your producer friends are asleep. Your partner has heard this song eleven times. You post it in a forum and get three responses, two of which are people promoting their own work. You wait. You second-guess. You start changing things before you even know what needs to change.</p>
+        <p>This is not a technology problem. It is a structural problem. The feedback that serious artists need &mdash; focused, honest, directional, timely &mdash; simply does not exist at a price or pace that works for independent creators. A session with a professional producer costs hundreds of dollars and takes days to schedule. A trusted friend with good ears is a rare and finite resource.</p>
+        <p>Fonna is available at midnight. It does not need context. It does not need to be kind. It listens to what is actually there and tells you what it hears.</p>
+        <h2>The education lens</h2>
+        <p>Robust Arts curriculum is built on two interconnected processes: creative and critical. Students are not just asked to make art &mdash; they are asked to reflect on it, analyse it, and use that analysis to make better decisions in the next iteration. Feedback is not a reward at the end of the process. It is built into every stage of it.</p>
+        <p>That framework is what most independent musicians never have access to once they leave formal education. The feedback loop that is standard practice in any serious arts programme &mdash; make something, hear honest observations, revise with intention &mdash; simply disappears for most artists the moment they are working alone.</p>
+        <p>Fonna is an attempt to restore that loop. Not to replace human feedback, and not to tell you how to make music. But to provide the kind of structured, honest, directional observation that helps artists move from where the record is to where they want it to be.</p>
+        <div class="pull-quote">Artists need to feel heard, but they also need provocation. Fonna aims to provide both &mdash; through feedback and direction. Not how. Just what.</div>
+        <h2>Clarity over abundance</h2>
+        <p>Thirty years of making music alongside a career in education teaches you this: abundance without direction is its own kind of paralysis. More tools do not make better records. More opinions do not make better decisions. What makes better records is knowing what to listen for, and having the discipline to act on it.</p>
+        <p>Fonna is not here to sand the edges off your music or push you toward a radio sound. It is here to help you hear what is actually happening in the record &mdash; so that whatever you do next, you do it on purpose.</p>
+        <p>The cost of abundance is real. Fonna exists because someone wished, many times, that someone would just tell them what to fix first.</p>
+        <h2>What Fonna will and will not do</h2>
+        <p>Fonna analyses arrangement, production, and mix. It does not critique songwriting, lyrics, or genre. That boundary is deliberate. Whether a chord change is right for a song is a question only you can answer.</p>
+        <p>Fonna stays in its lane. Every report is built around the same discipline: here is what is working, here is what is getting in the way, here is where to focus first. The goal is not to overwhelm. The goal is to give you the one or two things most worth your attention in the next session.</p>
+        <p>It does not remember your previous version. Each upload is a fresh listen, without bias or attachment. That is not a limitation &mdash; it is the point. You get the same honest ears every time, regardless of how many times you have uploaded, how long you have been working on the track, or how attached you are to a particular decision.</p>
+        <h2>Where this started</h2>
+        <p>The founder of Fonna is a lifelong gigging musician and independent recording artist &mdash; and a former educator who spent a career teaching structured creative critique at every level of a school system. Making records for students and artists in the community started before most people had a computer in their house.</p>
+        <p>The first serious recording setup was a Fostex X-55 &mdash; a four-track cassette recorder. From there, a Fostex VF160 digital workstation, then an RME Fireface, Cubase, and a UAD-1 card. Today, like most independent artists, the work happens inside a myriad of AI-powered creation tools that would have seemed impossible to the version bouncing tracks to cassette.</p>
+        <p>Each step forward brought more capability and more noise. More plugins, more tutorials, more rabbit holes. More time spent chasing a sound instead of finishing a record. What it feels like to lose a full weekend to a compressor setting &mdash; that is known territory. So is finally getting something right and having no one around to hear whether it actually worked.</p>
+        <div class="pull-quote">Countless hours lost chasing sounds through plugins and tutorials, room treatments and monitoring upgrades &mdash; and untold patience from friends and family who felt compelled to listen to semi-finished tracks and give something useful back. Fonna solves this entirely.</div>
+        <div class="cta-block">
+          <h3>Hear your track differently.</h3>
+          <p>One free analysis on signup. No commitment.</p>
+          <div class="cta-actions">
+            <a href="/#login" class="btn primary">Try Fonna free</a>
+            <a href="/" class="btn">Back to home</a>
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-</div>
-
   </main>
+
   <footer class="footer">
     <div class="wrap">
       <div class="footer-shell">
@@ -215,22 +131,62 @@
         <div class="footer-links">
           <a href="/terms.html">Terms of Use</a>
           <a href="/faq.html">FAQ</a>
-          <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+          <a href="#" data-contact>Contact</a>
         </div>
         <div class="footer-social">
           <a href="https://www.instagram.com/fonna.ai/" target="_blank" rel="noopener" aria-label="Fonna on Instagram" class="social-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-              <circle cx="12" cy="12" r="4.5"/>
-              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
           <a href="https://www.facebook.com/profile.php?id=948309055043464" target="_blank" rel="noopener" aria-label="Fonna on Facebook" class="social-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
         </div>
       </div>
     </div>
   </footer>
+
+  <!-- CONTACT MODAL -->
+  <div class="modal-backdrop" id="contactBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <div class="modal-inner">
+        <h2 id="modalTitle">Get in touch</h2>
+        <p class="modal-sub">We read every message and reply as soon as we can.</p>
+        <div class="modal-msg" id="modalMsg"></div>
+        <div class="field"><label for="contactName">Name</label><input type="text" id="contactName" placeholder="Your name" maxlength="120" /></div>
+        <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" placeholder="you@example.com" maxlength="254" /></div>
+        <div class="field"><label for="contactMessage">Message</label><textarea id="contactMessage" rows="4" placeholder="What's on your mind?" maxlength="2000"></textarea></div>
+        <div class="submit-row"><button class="btn primary" id="contactSubmit">Send message</button></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    const SUPABASE_URL = "https://kukqwyakchsaqquudqiu.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
+    const backdrop = document.getElementById("contactBackdrop"), closeBtn = document.getElementById("modalClose"), submitBtn = document.getElementById("contactSubmit"), msgEl = document.getElementById("modalMsg"), nameEl = document.getElementById("contactName"), emailEl = document.getElementById("contactEmail"), msgInput = document.getElementById("contactMessage");
+    function openModal() { backdrop.classList.add("open"); nameEl.focus(); }
+    function closeModal() { backdrop.classList.remove("open"); nameEl.value = ""; emailEl.value = ""; msgInput.value = ""; msgEl.className = "modal-msg"; msgEl.textContent = ""; submitBtn.disabled = false; submitBtn.textContent = "Send message"; }
+    document.addEventListener("click", function(e) { if (e.target.closest("[data-contact], .contact-trigger")) { e.preventDefault(); openModal(); } });
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", function(e) { if (e.target === backdrop) closeModal(); });
+    document.addEventListener("keydown", function(e) { if (e.key === "Escape") closeModal(); });
+    submitBtn.addEventListener("click", async function() {
+      const name = nameEl.value.trim(), email = emailEl.value.trim(), message = msgInput.value.trim();
+      msgEl.className = "modal-msg"; msgEl.textContent = "";
+      if (!name) { showErr("Please enter your name."); return; }
+      if (!email || !email.includes("@")) { showErr("Please enter a valid email address."); return; }
+      if (!message) { showErr("Please enter a message."); return; }
+      submitBtn.disabled = true; submitBtn.textContent = "Sending…";
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/contacts`, { method: "POST", headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}`, "Prefer": "return=minimal" }, body: JSON.stringify({ name, email, message }) });
+        if (res.ok || res.status === 201) { window.location.href = "/thankyou.html"; }
+        else { const err = await res.json().catch(() => ({})); showErr(err?.message || "Something went wrong. Please try again."); submitBtn.disabled = false; submitBtn.textContent = "Send message"; }
+      } catch { showErr("Connection error — please check your network and try again."); submitBtn.disabled = false; submitBtn.textContent = "Send message"; }
+    });
+    function showErr(msg) { msgEl.className = "modal-msg err"; msgEl.textContent = msg; }
+  })();
+  </script>
+</body>
+</html>
