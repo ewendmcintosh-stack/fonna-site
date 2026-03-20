@@ -120,6 +120,24 @@
     .social-icon{display:flex;align-items:center;color:var(--muted);transition:color 0.18s ease;}
     .social-icon:hover{color:var(--text);}
     .hidden{display:none!important;}
+    /* CONTACT MODAL */
+    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.75);backdrop-filter:blur(6px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+    .modal-backdrop.open{display:flex;}
+    .modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.5);padding:36px;width:100%;max-width:480px;position:relative;overflow:hidden;}
+    .modal::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;}
+    .modal-inner{position:relative;z-index:1;}
+    .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;line-height:1;transition:background 0.15s,color 0.15s;z-index:2;}
+    .modal-close:hover{background:rgba(255,255,255,0.1);color:var(--text);}
+    .modal h2{margin:0 0 6px;font-size:1.3rem;letter-spacing:-0.03em;}
+    .modal .modal-sub{margin:0 0 24px;color:var(--muted);font-size:0.9rem;line-height:1.6;}
+    .modal .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+    .modal .field label{font-size:0.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
+    .modal .field input,.modal .field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;resize:none;}
+    .modal .field input:focus,.modal .field textarea:focus{outline:none;border-color:var(--coral);}
+    .modal .field input::placeholder,.modal .field textarea::placeholder{color:var(--muted);}
+    .modal .modal-msg{display:none;padding:10px 14px;border-radius:10px;font-size:0.85rem;margin-bottom:14px;line-height:1.5;}
+    .modal .modal-msg.err{display:block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
+    .modal .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;}
     @media(max-width:720px){.nav{flex-wrap:wrap;padding:12px 0;}.domains{grid-template-columns:1fr;}.credits-grid{grid-template-columns:1fr;}.fields{grid-template-columns:1fr;}.card{padding:22px 20px;}.user-pill{display:none;}}
     @media(max-width:480px){.rpt-header{flex-direction:column;}}
   </style>
@@ -133,15 +151,8 @@
     <a href="/" class="brand">
       <span class="brand-mark">
         <svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
-          <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
-          <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
-          <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
-          <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
-          <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
-          <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
-          <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
-          <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
-          <circle cx="272" cy="318" r="18" fill="#E94560"/>
+          <circle cx="200" cy="200" r="200" fill="#1A1A2E"/><circle cx="340" cy="80" r="130" fill="#E94560" opacity="0.10"/><circle cx="60" cy="310" r="90" fill="#16213E" opacity="0.9"/><circle cx="320" cy="300" r="70" fill="#0F3460" opacity="0.6"/><circle cx="100" cy="100" r="50" fill="#E94560" opacity="0.06"/>
+          <rect x="138" y="130" width="34" height="155" rx="4" fill="#FFFFFF"/><rect x="138" y="130" width="110" height="34" rx="4" fill="#FFFFFF"/><rect x="138" y="196" width="84" height="28" rx="4" fill="#E94560"/><circle cx="272" cy="318" r="18" fill="#E94560"/>
         </svg>
       </span>
       <span>Fonna</span>
@@ -156,16 +167,12 @@
 
 <main style="padding:36px 0 60px;">
   <div class="wrap">
-
     <div class="msg ok" id="purchaseBanner"></div>
-
     <div class="card" id="uploadCard">
       <div class="card-inner">
         <p class="card-title">Analyse a track</p>
         <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
-
         <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="display:none;" />
-
         <div class="field full" style="margin-bottom:6px;">
           <label>Audio file</label>
           <div class="file-row">
@@ -174,23 +181,19 @@
           </div>
         </div>
         <div class="file-limits">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
-
         <div class="fields">
           <div class="field full">
             <label for="intentField">Intent <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional — steer the feedback)</span></label>
             <textarea id="intentField" rows="2" maxlength="1500" placeholder="e.g. Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first."></textarea>
           </div>
         </div>
-
         <div class="msg" id="uploadMsg"></div>
-
         <div class="submit-row">
           <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
           <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
         </div>
       </div>
     </div>
-
     <div class="card progress-card" id="progressCard">
       <div class="card-inner" style="text-align:center;">
         <div class="spinner"></div>
@@ -200,7 +203,6 @@
         <div id="progressFile" style="margin-top:14px;font-size:0.8rem;color:var(--muted);display:none;"></div>
       </div>
     </div>
-
     <div class="card report-card" id="reportCard">
       <div class="card-inner">
         <div class="rpt-header">
@@ -223,28 +225,17 @@
         <div class="limitations" id="rLim"></div>
       </div>
     </div>
-
     <div class="card" id="creditsCard" style="display:none;">
       <div class="card-inner">
         <p class="card-title">Get more credits</p>
         <p class="card-sub">Each analysis uses 1 credit. Credits never expire.</p>
         <div class="msg" id="buyMsg"></div>
         <div class="credits-grid">
-          <div class="pack" id="buyStarter">
-            <div class="pack-name">Starter</div>
-            <div class="pack-price">$9.99</div>
-            <div class="pack-credits">10 credits</div>
-          </div>
-          <div class="pack featured" id="buyCreator">
-            <div class="pack-badge">Best value</div>
-            <div class="pack-name">Creator</div>
-            <div class="pack-price">$19.99</div>
-            <div class="pack-credits">30 credits</div>
-          </div>
+          <div class="pack" id="buyStarter"><div class="pack-name">Starter</div><div class="pack-price">$9.99</div><div class="pack-credits">10 credits</div></div>
+          <div class="pack featured" id="buyCreator"><div class="pack-badge">Best value</div><div class="pack-name">Creator</div><div class="pack-price">$19.99</div><div class="pack-credits">30 credits</div></div>
         </div>
       </div>
     </div>
-
   </div>
 </main>
 
@@ -256,318 +247,101 @@
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        <a href="#" data-contact>Contact</a>
       </div>
       <div class="footer-social">
         <a href="https://www.instagram.com/fonna.ai/" target="_blank" rel="noopener" aria-label="Fonna on Instagram" class="social-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4.5"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
         </a>
         <a href="https://www.facebook.com/profile.php?id=948309055043464" target="_blank" rel="noopener" aria-label="Fonna on Facebook" class="social-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         </a>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- CONTACT MODAL -->
+<div class="modal-backdrop" id="contactBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <div class="modal-inner">
+      <h2 id="modalTitle">Get in touch</h2>
+      <p class="modal-sub">We read every message and reply as soon as we can.</p>
+      <div class="modal-msg" id="modalMsg"></div>
+      <div class="field"><label for="contactName">Name</label><input type="text" id="contactName" placeholder="Your name" maxlength="120" /></div>
+      <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" placeholder="you@example.com" maxlength="254" /></div>
+      <div class="field"><label for="contactMessage">Message</label><textarea id="contactMessage" rows="4" placeholder="What's on your mind?" maxlength="2000"></textarea></div>
+      <div class="submit-row"><button class="btn primary" id="contactSubmit">Send message</button></div>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
 const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
 const API_BASE          = "https://listener-service-1esi.onrender.com";
-
 const sb  = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const get = id => document.getElementById(id);
-
-const navEmail    = get("navEmail");
-const navCredits  = get("navCredits");
-const navCreditN  = get("navCreditCount");
-const logoutBtn   = get("logoutBtn");
-const uploadCard  = get("uploadCard");
-const progressCard= get("progressCard");
-const pBar        = get("progressBar");
-const pMsg        = get("progressMsg");
-const reportCard  = get("reportCard");
-const creditsCard = get("creditsCard");
-const fileInput   = get("fileInput");
-const fileNameBox = get("fileNameBox");
-const pickBtn     = get("pickBtn");
-const intentField = get("intentField");
-const analyseBtn  = get("analyseBtn");
-const uploadMsg   = get("uploadMsg");
-const newBtn      = get("newBtn");
-const purchaseBnr = get("purchaseBanner");
-const buyStarter  = get("buyStarter");
-const buyCreator  = get("buyCreator");
-const buyMsg      = get("buyMsg");
-
-let session = null;
-let file    = null;
-let progTmr = null;
-
-async function boot() {
-  const { data: { session: s } } = await sb.auth.getSession();
-  if (!s) { window.location.href = "/#login"; return; }
-  session = s;
-  navEmail.textContent = s.user.email || "";
-  await refreshCredits();
-  creditsCard.style.display = "block";
-  checkBanner();
-}
-
-async function refreshCredits() {
-  try {
-    const r = await fetch(`${API_BASE}/me`, { headers: ah() });
-    const d = await r.json();
-    if (d?.user?.credits !== undefined) {
-      const c = Number(d.user.credits);
-      navCreditN.textContent = c;
-      navCredits.classList.add("show");
-      if (c < 1) {
-        setMsg(uploadMsg, "err", "You have no credits remaining. Purchase a pack below to continue.");
-        analyseBtn.disabled = true;
-      }
-    }
-  } catch {}
-}
-
-function ah() {
-  return { "Authorization": `Bearer ${session.access_token}`, "Content-Type": "application/json" };
-}
-
-function checkBanner() {
-  const p = new URLSearchParams(location.search);
-  if (p.get("purchase") === "success") {
-    purchaseBnr.textContent = "Purchase successful — your credits have been added.";
-    purchaseBnr.classList.add("show");
-    history.replaceState({}, "", "/app.html");
-    setTimeout(refreshCredits, 2500);
-  } else if (p.get("purchase") === "cancelled") {
-    purchaseBnr.textContent = "Purchase cancelled. No charge was made.";
-    purchaseBnr.classList.add("show");
-    purchaseBnr.style.cssText += "background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);color:var(--soft);";
-    history.replaceState({}, "", "/app.html");
-  }
-}
-
-logoutBtn.addEventListener("click", async () => {
-  await sb.auth.signOut();
-  window.location.href = "/";
-});
-
-pickBtn.addEventListener("click", () => fileInput.click());
-fileInput.addEventListener("change", () => { if (fileInput.files[0]) pick(fileInput.files[0]); });
-
-function pick(f) {
-  file = f;
-  fileNameBox.textContent = f.name + "  (" + fmtBytes(f.size) + ")";
-  fileNameBox.classList.add("has-file");
-  pickBtn.textContent = "Change file";
-  analyseBtn.disabled = false;
-  clearMsg(uploadMsg);
-}
-
-function clearFile() {
-  file = null;
-  fileInput.value = "";
-  fileNameBox.textContent = "No file selected";
-  fileNameBox.classList.remove("has-file");
-  pickBtn.textContent = "Choose file";
-  analyseBtn.disabled = true;
-}
-
-function fmtBytes(b) {
-  return b < 1048576 ? (b / 1024).toFixed(1) + " KB" : (b / 1048576).toFixed(1) + " MB";
-}
-
-analyseBtn.addEventListener("click", analyse);
-
-async function analyse() {
-  if (!file) return;
-  const { data: { session: s } } = await sb.auth.getSession();
-  if (!s) { window.location.href = "/#login"; return; }
-  session = s;
-
-  const title  = file.name.replace(/\.[^/.]+$/, "");
-  const artist = "Unknown";
-  const intent = intentField.value.trim() ||
-    "Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.";
-
-  uploadCard.style.display = "none";
-  progressCard.classList.add("show");
-  reportCard.classList.remove("show");
-  startUploadProg(file.name, file.size);
-
-  try {
-    const buf = await file.arrayBuffer();
-    const result = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", `${API_BASE}/critique-upload`);
-      xhr.setRequestHeader("Authorization", `Bearer ${session.access_token}`);
-      xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
-      xhr.setRequestHeader("X-Filename",    file.name);
-      xhr.setRequestHeader("X-Track-Title", title);
-      xhr.setRequestHeader("X-Artist-Name", artist);
-      xhr.setRequestHeader("X-Intent",      intent);
-      xhr.timeout = 20 * 60 * 1000;
-      xhr.upload.addEventListener("progress", e => {
-        if (e.lengthComputable) {
-          pBar.style.width = Math.round((e.loaded / e.total) * 28) + "%";
-          pMsg.textContent = "Uploading… " + Math.round((e.loaded / e.total) * 100) + "%";
-        }
-      });
-      xhr.upload.addEventListener("load", () => switchToAnalyseProg());
-      xhr.addEventListener("load", () => {
-        try { resolve({ ok: xhr.status >= 200 && xhr.status < 300, status: xhr.status, data: JSON.parse(xhr.responseText) }); }
-        catch { resolve({ ok: false, status: xhr.status, data: {} }); }
-      });
-      xhr.addEventListener("error",   () => reject(new Error("Network error — check your connection and try again.")));
-      xhr.addEventListener("timeout", () => reject(new Error("The request timed out. Your track may be too long or the server is busy.")));
-      xhr.send(buf);
-    });
-
-    stopProg();
-
-    if (!result.ok) {
-      let msg = result.data?.error?.message || "Server error (" + result.status + ")";
-      if (result.status === 402) msg = "No credits remaining. Purchase a pack below to continue.";
-      else if (result.status === 401) msg = "Session expired — please log in again.";
-      uploadCard.style.display = "block";
-      progressCard.classList.remove("show");
-      setMsg(uploadMsg, "err", msg);
-      if (result.status === 401) setTimeout(() => { window.location.href = "/#login"; }, 2000);
-      return;
-    }
-
-    await refreshCredits();
-    renderReport(result.data);
-
-  } catch (e) {
-    stopProg();
-    uploadCard.style.display = "block";
-    progressCard.classList.remove("show");
-    setMsg(uploadMsg, "err", e.message || "Connection error — please check your network and try again.");
-  }
-}
-
-const analyseMsgs = ["Listening to your arrangement…","Checking production choices…","Reviewing the mix…","Pulling the report together…","Almost there…"];
-
-function startUploadProg(filename, filesize) {
-  pBar.style.width = "0%";
-  get("progressTitle").textContent = "Uploading your track…";
-  pMsg.textContent = "Sending " + filename + " to Fonna.";
-  const fi = get("progressFile");
-  fi.textContent = fmtBytes(filesize);
-  fi.style.display = "block";
-}
-
-function switchToAnalyseProg() {
-  clearInterval(progTmr);
-  let pct = 30, mi = 0;
-  pBar.style.width = "30%";
-  get("progressTitle").textContent = "Analysing your track…";
-  pMsg.textContent = analyseMsgs[mi++];
-  get("progressFile").style.display = "none";
-  progTmr = setInterval(() => {
-    pct = Math.min(pct + Math.random() * 4 + 1, 90);
-    pBar.style.width = pct + "%";
-    if (mi < analyseMsgs.length) pMsg.textContent = analyseMsgs[mi++];
-  }, 8000);
-}
-
-function stopProg() {
-  clearInterval(progTmr);
-  pBar.style.width = "100%";
-  get("progressTitle").textContent = "Report ready!";
-  pMsg.textContent = "Your producer report is below.";
-}
-
-function renderReport(r) {
-  progressCard.classList.remove("show");
-  reportCard.classList.add("show");
-  get("rTrack").textContent = [r.input?.title, r.input?.artist].filter(Boolean).join(" — ") || "Untitled";
-  const dur = r.input?.duration_seconds ? Math.floor(r.input.duration_seconds/60) + ":" + String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0") : "";
-  get("rMeta").textContent = [dur ? dur+" min" : "", r.created_at ? new Date(r.created_at).toLocaleDateString() : ""].filter(Boolean).join(" · ");
-  get("rSnapshot").textContent = r.snapshot || "";
-  get("rBestNext").textContent = r.best_next_move || "";
-
-  const dEl = get("rDomains"); dEl.innerHTML = "";
-  for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
-    const d = r.domains?.[key]; if (!d) continue;
-    const el = document.createElement("div"); el.className = "domain";
-    el.innerHTML = "<div class='domain-name'>" + label + "</div>" + sec("What's working", d.what_works) + sec("What's holding it back", d.what_holds_it_back) + sec("Recommendations", d.recommendations);
-    dEl.appendChild(el);
-  }
-
-  const pEl = get("rPrio"); pEl.innerHTML = "";
-  (r.priority_actions||[]).forEach((a,i) => {
-    const row = document.createElement("div"); row.className = "prio-row";
-    row.innerHTML = "<div class='p-badge'>P"+(i+1)+"</div><div class='p-text'>"+esc(a.action)+"</div>";
-    pEl.appendChild(row);
-  });
-
-  const tl = r.timeline_moments||[];
-  const tlW = get("rTlWrap"); const tlEl = get("rTl"); tlEl.innerHTML = "";
-  if (tl.length) {
-    tlW.style.display = "block";
-    tl.forEach(m => {
-      const row = document.createElement("div"); row.className = "tl-row";
-      row.innerHTML = "<div class='tl-stamp'>"+ts(m.t_start)+"–"+ts(m.t_end)+"</div><div><div class='tl-domain'>"+esc(m.domain||"")+"</div><div class='tl-note'>"+esc(m.note||"")+"</div></div>";
-      tlEl.appendChild(row);
-    });
-  } else { tlW.style.display = "none"; }
-
-  const ref = r.listening_reference; const rRef = get("rRef");
-  if (ref?.title) {
-    rRef.style.display = "";
-    rRef.innerHTML = "<div><div class='lbl'>Reference track</div><div class='ref-track'>&ldquo;"+esc(ref.title)+"&rdquo; &mdash; "+esc(ref.artist||"")+"</div></div><div class='ref-why'>"+esc(ref.why||"")+"</div>";
-  } else { rRef.style.display = "none"; }
-
-  get("rLim").textContent = r.limitations || "";
-  reportCard.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function sec(label, arr) {
-  if (!arr?.length) return "";
-  return "<div class='domain-sub'>"+label+"</div><ul class='dlist'>"+arr.map(i=>"<li>"+esc(i)+"</li>").join("")+"</ul>";
-}
-function ts(s) { const t=Math.max(0,Math.floor(Number(s)||0)); return Math.floor(t/60)+":"+String(t%60).padStart(2,"0"); }
-function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
-
-newBtn.addEventListener("click", () => {
-  reportCard.classList.remove("show");
-  uploadCard.style.display = "block";
-  clearFile();
-  clearMsg(uploadMsg);
-  intentField.value = "";
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-async function buy(pack) {
-  clearMsg(buyMsg);
-  setMsg(buyMsg, "info", "Redirecting to checkout…");
-  try {
-    const r = await fetch(`${API_BASE}/create-checkout-session`, { method: "POST", headers: ah(), body: JSON.stringify({ pack }) });
-    const d = await r.json();
-    if (d?.url) { window.location.href = d.url; }
-    else { setMsg(buyMsg, "err", d?.error?.message || "Could not start checkout."); }
-  } catch { setMsg(buyMsg, "err", "Connection error — please try again."); }
-}
-
-buyStarter.addEventListener("click", () => buy("starter"));
-buyCreator.addEventListener("click",  () => buy("creator"));
-
-function setMsg(el, type, txt) { el.className = "msg " + type + " show"; el.textContent = txt; }
-function clearMsg(el) { el.className = "msg"; el.textContent = ""; }
-
+const navEmail=get("navEmail"),navCredits=get("navCredits"),navCreditN=get("navCreditCount"),logoutBtn=get("logoutBtn"),uploadCard=get("uploadCard"),progressCard=get("progressCard"),pBar=get("progressBar"),pMsg=get("progressMsg"),reportCard=get("reportCard"),creditsCard=get("creditsCard"),fileInput=get("fileInput"),fileNameBox=get("fileNameBox"),pickBtn=get("pickBtn"),intentField=get("intentField"),analyseBtn=get("analyseBtn"),uploadMsg=get("uploadMsg"),newBtn=get("newBtn"),purchaseBnr=get("purchaseBanner"),buyStarter=get("buyStarter"),buyCreator=get("buyCreator"),buyMsg=get("buyMsg");
+let session=null,file=null,progTmr=null;
+async function boot(){const{data:{session:s}}=await sb.auth.getSession();if(!s){window.location.href="/#login";return;}session=s;navEmail.textContent=s.user.email||"";await refreshCredits();creditsCard.style.display="block";checkBanner();}
+async function refreshCredits(){try{const r=await fetch(`${API_BASE}/me`,{headers:ah()});const d=await r.json();if(d?.user?.credits!==undefined){const c=Number(d.user.credits);navCreditN.textContent=c;navCredits.classList.add("show");if(c<1){setMsg(uploadMsg,"err","You have no credits remaining. Purchase a pack below to continue.");analyseBtn.disabled=true;}}}catch{}}
+function ah(){return{"Authorization":`Bearer ${session.access_token}`,"Content-Type":"application/json"};}
+function checkBanner(){const p=new URLSearchParams(location.search);if(p.get("purchase")==="success"){purchaseBnr.textContent="Purchase successful — your credits have been added.";purchaseBnr.classList.add("show");history.replaceState({},"","/app.html");setTimeout(refreshCredits,2500);}else if(p.get("purchase")==="cancelled"){purchaseBnr.textContent="Purchase cancelled. No charge was made.";purchaseBnr.classList.add("show");purchaseBnr.style.cssText+="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);color:var(--soft);";history.replaceState({},"","/app.html");}}
+logoutBtn.addEventListener("click",async()=>{await sb.auth.signOut();window.location.href="/";});
+pickBtn.addEventListener("click",()=>fileInput.click());
+fileInput.addEventListener("change",()=>{if(fileInput.files[0])pick(fileInput.files[0]);});
+function pick(f){file=f;fileNameBox.textContent=f.name+"  ("+fmtBytes(f.size)+")";fileNameBox.classList.add("has-file");pickBtn.textContent="Change file";analyseBtn.disabled=false;clearMsg(uploadMsg);}
+function clearFile(){file=null;fileInput.value="";fileNameBox.textContent="No file selected";fileNameBox.classList.remove("has-file");pickBtn.textContent="Choose file";analyseBtn.disabled=true;}
+function fmtBytes(b){return b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(1)+" MB";}
+analyseBtn.addEventListener("click",analyse);
+async function analyse(){if(!file)return;const{data:{session:s}}=await sb.auth.getSession();if(!s){window.location.href="/#login";return;}session=s;const title=file.name.replace(/\.[^/.]+$/,""),artist="Unknown",intent=intentField.value.trim()||"Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.";uploadCard.style.display="none";progressCard.classList.add("show");reportCard.classList.remove("show");startUploadProg(file.name,file.size);try{const buf=await file.arrayBuffer();const result=await new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open("POST",`${API_BASE}/critique-upload`);xhr.setRequestHeader("Authorization",`Bearer ${session.access_token}`);xhr.setRequestHeader("Content-Type",file.type||"application/octet-stream");xhr.setRequestHeader("X-Filename",file.name);xhr.setRequestHeader("X-Track-Title",title);xhr.setRequestHeader("X-Artist-Name",artist);xhr.setRequestHeader("X-Intent",intent);xhr.timeout=20*60*1000;xhr.upload.addEventListener("progress",e=>{if(e.lengthComputable){pBar.style.width=Math.round((e.loaded/e.total)*28)+"%";pMsg.textContent="Uploading… "+Math.round((e.loaded/e.total)*100)+"%";}});xhr.upload.addEventListener("load",()=>switchToAnalyseProg());xhr.addEventListener("load",()=>{try{resolve({ok:xhr.status>=200&&xhr.status<300,status:xhr.status,data:JSON.parse(xhr.responseText)});}catch{resolve({ok:false,status:xhr.status,data:{}});}});xhr.addEventListener("error",()=>reject(new Error("Network error — check your connection and try again.")));xhr.addEventListener("timeout",()=>reject(new Error("The request timed out. Your track may be too long or the server is busy.")));xhr.send(buf);});stopProg();if(!result.ok){let msg=result.data?.error?.message||"Server error ("+result.status+")";if(result.status===402)msg="No credits remaining. Purchase a pack below to continue.";else if(result.status===401)msg="Session expired — please log in again.";uploadCard.style.display="block";progressCard.classList.remove("show");setMsg(uploadMsg,"err",msg);if(result.status===401)setTimeout(()=>{window.location.href="/#login";},2000);return;}await refreshCredits();renderReport(result.data);}catch(e){stopProg();uploadCard.style.display="block";progressCard.classList.remove("show");setMsg(uploadMsg,"err",e.message||"Connection error — please check your network and try again.");}}
+const analyseMsgs=["Listening to your arrangement…","Checking production choices…","Reviewing the mix…","Pulling the report together…","Almost there…"];
+function startUploadProg(filename,filesize){pBar.style.width="0%";get("progressTitle").textContent="Uploading your track…";pMsg.textContent="Sending "+filename+" to Fonna.";const fi=get("progressFile");fi.textContent=fmtBytes(filesize);fi.style.display="block";}
+function switchToAnalyseProg(){clearInterval(progTmr);let pct=30,mi=0;pBar.style.width="30%";get("progressTitle").textContent="Analysing your track…";pMsg.textContent=analyseMsgs[mi++];get("progressFile").style.display="none";progTmr=setInterval(()=>{pct=Math.min(pct+Math.random()*4+1,90);pBar.style.width=pct+"%";if(mi<analyseMsgs.length)pMsg.textContent=analyseMsgs[mi++];},8000);}
+function stopProg(){clearInterval(progTmr);pBar.style.width="100%";get("progressTitle").textContent="Report ready!";pMsg.textContent="Your producer report is below.";}
+function renderReport(r){progressCard.classList.remove("show");reportCard.classList.add("show");get("rTrack").textContent=[r.input?.title,r.input?.artist].filter(Boolean).join(" — ")||"Untitled";const dur=r.input?.duration_seconds?Math.floor(r.input.duration_seconds/60)+":"+String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0"):"";get("rMeta").textContent=[dur?dur+" min":"",r.created_at?new Date(r.created_at).toLocaleDateString():""].filter(Boolean).join(" · ");get("rSnapshot").textContent=r.snapshot||"";get("rBestNext").textContent=r.best_next_move||"";const dEl=get("rDomains");dEl.innerHTML="";for(const[key,label]of[["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]){const d=r.domains?.[key];if(!d)continue;const el=document.createElement("div");el.className="domain";el.innerHTML="<div class='domain-name'>"+label+"</div>"+sec("What's working",d.what_works)+sec("What's holding it back",d.what_holds_it_back)+sec("Recommendations",d.recommendations);dEl.appendChild(el);}const pEl=get("rPrio");pEl.innerHTML="";(r.priority_actions||[]).forEach((a,i)=>{const row=document.createElement("div");row.className="prio-row";row.innerHTML="<div class='p-badge'>P"+(i+1)+"</div><div class='p-text'>"+esc(a.action)+"</div>";pEl.appendChild(row);});const tl=r.timeline_moments||[];const tlW=get("rTlWrap");const tlEl=get("rTl");tlEl.innerHTML="";if(tl.length){tlW.style.display="block";tl.forEach(m=>{const row=document.createElement("div");row.className="tl-row";row.innerHTML="<div class='tl-stamp'>"+ts(m.t_start)+"–"+ts(m.t_end)+"</div><div><div class='tl-domain'>"+esc(m.domain||"")+"</div><div class='tl-note'>"+esc(m.note||"")+"</div></div>";tlEl.appendChild(row);});}else{tlW.style.display="none";}const ref=r.listening_reference;const rRef=get("rRef");if(ref?.title){rRef.style.display="";rRef.innerHTML="<div><div class='lbl'>Reference track</div><div class='ref-track'>&ldquo;"+esc(ref.title)+"&rdquo; &mdash; "+esc(ref.artist||"")+"</div></div><div class='ref-why'>"+esc(ref.why||"")+"</div>";}else{rRef.style.display="none";}get("rLim").textContent=r.limitations||"";reportCard.scrollIntoView({behavior:"smooth",block:"start"});}
+function sec(label,arr){if(!arr?.length)return"";return"<div class='domain-sub'>"+label+"</div><ul class='dlist'>"+arr.map(i=>"<li>"+esc(i)+"</li>").join("")+"</ul>";}
+function ts(s){const t=Math.max(0,Math.floor(Number(s)||0));return Math.floor(t/60)+":"+String(t%60).padStart(2,"0");}
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+newBtn.addEventListener("click",()=>{reportCard.classList.remove("show");uploadCard.style.display="block";clearFile();clearMsg(uploadMsg);intentField.value="";window.scrollTo({top:0,behavior:"smooth"});});
+async function buy(pack){clearMsg(buyMsg);setMsg(buyMsg,"info","Redirecting to checkout…");try{const r=await fetch(`${API_BASE}/create-checkout-session`,{method:"POST",headers:ah(),body:JSON.stringify({pack})});const d=await r.json();if(d?.url){window.location.href=d.url;}else{setMsg(buyMsg,"err",d?.error?.message||"Could not start checkout.");}}catch{setMsg(buyMsg,"err","Connection error — please try again.");}}
+buyStarter.addEventListener("click",()=>buy("starter"));
+buyCreator.addEventListener("click",()=>buy("creator"));
+function setMsg(el,type,txt){el.className="msg "+type+" show";el.textContent=txt;}
+function clearMsg(el){el.className="msg";el.textContent="";}
 boot();
 </script>
+
+<script>
+(function() {
+  const SUPABASE_URL = "https://kukqwyakchsaqquudqiu.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
+  const backdrop=document.getElementById("contactBackdrop"),closeBtn=document.getElementById("modalClose"),submitBtn=document.getElementById("contactSubmit"),msgEl=document.getElementById("modalMsg"),nameEl=document.getElementById("contactName"),emailEl=document.getElementById("contactEmail"),msgInput=document.getElementById("contactMessage");
+  function openModal(){backdrop.classList.add("open");nameEl.focus();}
+  function closeModal(){backdrop.classList.remove("open");nameEl.value="";emailEl.value="";msgInput.value="";msgEl.className="modal-msg";msgEl.textContent="";submitBtn.disabled=false;submitBtn.textContent="Send message";}
+  document.addEventListener("click",function(e){if(e.target.closest("[data-contact], .contact-trigger")){e.preventDefault();openModal();}});
+  closeBtn.addEventListener("click",closeModal);
+  backdrop.addEventListener("click",function(e){if(e.target===backdrop)closeModal();});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeModal();});
+  submitBtn.addEventListener("click",async function(){
+    const name=nameEl.value.trim(),email=emailEl.value.trim(),message=msgInput.value.trim();
+    msgEl.className="modal-msg";msgEl.textContent="";
+    if(!name){showErr("Please enter your name.");return;}
+    if(!email||!email.includes("@")){showErr("Please enter a valid email address.");return;}
+    if(!message){showErr("Please enter a message.");return;}
+    submitBtn.disabled=true;submitBtn.textContent="Sending…";
+    try{
+      const res=await fetch(`${SUPABASE_URL}/rest/v1/contacts`,{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_ANON_KEY,"Authorization":`Bearer ${SUPABASE_ANON_KEY}`,"Prefer":"return=minimal"},body:JSON.stringify({name,email,message})});
+      if(res.ok||res.status===201){window.location.href="/thankyou.html";}
+      else{const err=await res.json().catch(()=>({}));showErr(err?.message||"Something went wrong. Please try again.");submitBtn.disabled=false;submitBtn.textContent="Send message";}
+    }catch{showErr("Connection error — please check your network and try again.");submitBtn.disabled=false;submitBtn.textContent="Send message";}
+  });
+  function showErr(msg){msgEl.className="modal-msg err";msgEl.textContent=msg;}
+})();
+</script>
+
 </body>
 </html>
