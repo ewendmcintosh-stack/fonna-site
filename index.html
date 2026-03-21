@@ -6,147 +6,426 @@
   <title>Fonna — Finish Better Records</title>
   <style>
     :root {
-      --navy: #1A1A2E; --navy-mid: #16213E; --navy-deep: #0F3460;
-      --coral: #E94560; --coral-dark: #C73652;
-      --border: rgba(255,255,255,0.09); --text: #f4f4f2;
-      --muted: #a4a4a0; --soft: #d8d8d2;
-      --shadow: 0 18px 50px rgba(0,0,0,0.38); --max: 1240px;
+      --navy: #1A1A2E;
+      --navy-mid: #16213E;
+      --navy-deep: #0F3460;
+      --coral: #E94560;
+      --coral-dark: #C73652;
+      --border: rgba(255,255,255,0.09);
+      --text: #f4f4f2;
+      --muted: #a4a4a0;
+      --soft: #d8d8d2;
+      --shadow: 0 18px 50px rgba(0,0,0,0.38);
+      --max: 1240px;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin:0; font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--text); background:var(--navy); min-height:100vh; position:relative; overflow-x:hidden; }
-    body::before { content:''; position:fixed; top:-120px; right:-120px; width:480px; height:480px; border-radius:50%; background:var(--coral); opacity:0.07; pointer-events:none; z-index:0; }
-    body::after  { content:''; position:fixed; bottom:10%; left:-100px; width:340px; height:340px; border-radius:50%; background:var(--navy-deep); opacity:0.6; pointer-events:none; z-index:0; }
-    .wrap,.nav-shell,main,footer { position:relative; z-index:1; }
-    a { color:inherit; text-decoration:none; }
-    .wrap { width:min(var(--max),calc(100% - 32px)); margin:0 auto; }
-    .nav-shell { position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(26,26,46,0.88); border-bottom:1px solid rgba(255,255,255,0.07); }
-    .nav { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:76px; }
-    .brand { display:flex; align-items:center; gap:12px; font-size:1.05rem; font-weight:700; letter-spacing:0.01em; }
-    .brand-mark { width:34px; height:34px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(233,69,96,0.35); flex-shrink:0; }
-    .nav-links { display:flex; align-items:center; gap:24px; color:var(--muted); font-size:0.96rem; }
-    .nav-links a:hover { color:var(--text); }
-    .nav-actions { display:flex; align-items:center; gap:12px; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:46px; padding:0 20px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,0.06); color:var(--text); font-weight:600; transition:transform 0.18s,background 0.18s; cursor:pointer; font-family:inherit; font-size:inherit; }
-    .btn:hover { transform:translateY(-1px); background:rgba(255,255,255,0.1); }
-    .btn.primary { background:var(--coral); color:#fff; border-color:transparent; box-shadow:0 10px 28px rgba(233,69,96,0.35); }
-    .btn.primary:hover { background:var(--coral-dark); }
-    .hero { padding:78px 0 46px; }
-    .hero-grid { display:grid; grid-template-columns:1.15fr 0.85fr; gap:28px; align-items:stretch; }
-    .hero-copy,.hero-card { border:1px solid rgba(255,255,255,0.08); background:rgba(22,33,62,0.7); border-radius:30px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
-    .hero-copy::after { content:''; position:absolute; bottom:-60px; right:-60px; width:220px; height:220px; border-radius:50%; background:var(--coral); opacity:0.09; pointer-events:none; }
-    .hero-card::before { content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; border-radius:50%; background:var(--coral); opacity:0.12; pointer-events:none; z-index:0; }
-    .hero-copy { padding:42px; }
-    .hero-card { padding:24px; display:flex; flex-direction:column; gap:12px; }
-    .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(233,69,96,0.3); background:rgba(233,69,96,0.1); color:var(--coral); font-size:0.84rem; letter-spacing:0.02em; margin-bottom:22px; }
-    .hero h1 { font-size:clamp(3rem,6vw,5.8rem); line-height:0.95; letter-spacing:-0.05em; margin:0 0 18px; max-width:9ch; }
-    .differentiator { margin:0 0 14px; font-size:1.08rem; font-weight:600; color:var(--text); line-height:1.5; max-width:52ch; }
-    .hero p.lead { margin:0; color:var(--soft); font-size:1.05rem; line-height:1.7; max-width:58ch; }
-    .hero-cta { display:flex; flex-wrap:wrap; gap:14px; margin-top:28px; }
-    .micro { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; color:var(--muted); font-size:0.92rem; }
-    .micro span { padding:9px 12px; border-radius:999px; background:rgba(233,69,96,0.08); border:1px solid rgba(233,69,96,0.18); }
-    .report-window { flex:1; border-radius:22px; border:1px solid rgba(255,255,255,0.08); background:rgba(15,52,96,0.5); padding:18px; display:flex; flex-direction:column; gap:10px; position:relative; z-index:1; }
-    .window-top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:0.84rem; }
-    .dots { display:flex; gap:7px; }
-    .dots span { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.18); display:block; }
-    .dots span:first-child { background:var(--coral); opacity:0.7; }
-    .report-section { border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.03); border-radius:16px; padding:13px; }
-    .report-label { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--coral); margin-bottom:7px; opacity:0.85; }
-    .report-body { color:var(--soft); line-height:1.6; font-size:0.9rem; }
-    .report-list { margin:0; padding-left:16px; color:var(--soft); line-height:1.6; font-size:0.9rem; }
-    .best-next { border:1px solid rgba(233,69,96,0.2); background:rgba(233,69,96,0.06); border-radius:16px; padding:13px; }
-    .section { padding:34px 0; }
-    .section-head { display:flex; justify-content:space-between; gap:24px; align-items:end; margin-bottom:22px; }
-    .section-head h2 { margin:0 0 8px; font-size:clamp(1.9rem,3vw,3rem); letter-spacing:-0.04em; }
-    .section-head p { margin:0; color:var(--muted); line-height:1.7; max-width:58ch; }
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .card { border-radius:24px; border:1px solid rgba(255,255,255,0.08); background:var(--navy-mid); box-shadow:var(--shadow); padding:24px; position:relative; overflow:hidden; }
-    .card::after { content:''; position:absolute; bottom:-30px; right:-30px; width:100px; height:100px; border-radius:50%; background:var(--coral); opacity:0.05; pointer-events:none; }
-    .card h3 { margin:0 0 10px; font-size:1.22rem; letter-spacing:-0.02em; }
-    .card p { margin:0; color:var(--soft); line-height:1.7; }
-    .step-no { width:40px; height:40px; border-radius:999px; display:grid; place-items:center; margin-bottom:16px; background:rgba(233,69,96,0.12); border:1px solid rgba(233,69,96,0.25); color:var(--coral); font-weight:700; }
-    .pricing-card { display:flex; flex-direction:column; gap:18px; min-height:100%; }
-    .pricing-card .tier { font-size:1.1rem; font-weight:700; }
-    .price { font-size:2.35rem; letter-spacing:-0.05em; font-weight:800; margin:0; }
-    .price-sub { color:var(--muted); font-size:0.95rem; margin-top:-10px; }
-    .feature-list { margin:0; padding-left:18px; color:var(--soft); line-height:1.7; }
-    .pricing-card .btn { margin-top:auto; }
-    .highlight { border-color:var(--coral)!important; background:rgba(233,69,96,0.08)!important; }
-    .highlight::after { opacity:0.1; }
-    .about-card { border-radius:24px; border:1px solid rgba(255,255,255,0.08); background:var(--navy-mid); box-shadow:var(--shadow); padding:36px; position:relative; overflow:hidden; }
-    .about-card::before { content:''; position:absolute; top:-60px; right:-60px; width:260px; height:260px; border-radius:50%; background:var(--coral); opacity:0.07; pointer-events:none; }
-    .about-card::after { content:''; position:absolute; bottom:-40px; left:-40px; width:180px; height:180px; border-radius:50%; background:var(--navy-deep); opacity:0.8; pointer-events:none; }
-    .about-card h2 { margin:0 0 16px; font-size:clamp(1.9rem,3vw,3rem); letter-spacing:-0.04em; position:relative; z-index:1; }
-    .about-card .belief { font-size:clamp(1.1rem,2vw,1.45rem); line-height:1.6; color:var(--soft); margin:0 0 20px; max-width:72ch; position:relative; z-index:1; }
-    .about-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; margin-top:24px; position:relative; z-index:1; }
-    .about-point h4 { margin:0 0 6px; font-size:1rem; font-weight:700; color:var(--coral); }
-    .about-point p { margin:0; color:var(--muted); font-size:0.95rem; line-height:1.65; }
-    .philosophy-link { display:inline-flex; align-items:center; gap:6px; margin-top:20px; color:var(--soft); font-size:0.95rem; border-bottom:1px solid rgba(233,69,96,0.3); padding-bottom:2px; transition:color 0.15s,border-color 0.15s; position:relative; z-index:1; }
-    .philosophy-link:hover { color:var(--coral); border-color:var(--coral); }
-    .auth-shell { display:grid; grid-template-columns:1.1fr 0.9fr; gap:18px; align-items:start; }
-    .auth-card { border-radius:24px; border:1px solid rgba(255,255,255,0.08); background:var(--navy-mid); box-shadow:var(--shadow); padding:24px; position:relative; overflow:hidden; }
-    .auth-card::after { content:''; position:absolute; bottom:-30px; right:-30px; width:120px; height:120px; border-radius:50%; background:var(--coral); opacity:0.08; pointer-events:none; }
-    .auth-form { display:grid; gap:14px; }
-    .auth-form input { width:100%; border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:12px; background:rgba(255,255,255,0.04); color:var(--text); font-size:14px; font-family:inherit; transition:border-color 0.15s; }
-    .auth-form input:focus { outline:none; border-color:var(--coral); }
-    .auth-form input::placeholder { color:var(--muted); }
-    .auth-form input:-webkit-autofill,.auth-form input:-webkit-autofill:hover,.auth-form input:-webkit-autofill:focus { -webkit-box-shadow:0 0 0 1000px #16213E inset!important; -webkit-text-fill-color:#f4f4f2!important; caret-color:#f4f4f2; }
-    .auth-actions { display:flex; gap:12px; flex-wrap:wrap; }
-    .auth-status { margin-top:14px; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--soft); line-height:1.6; min-height:48px; font-size:14px; }
-    .auth-userbox { display:grid; gap:10px; }
-    .auth-userbox .row { padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); }
-    .auth-userbox .k { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px; }
-    .footer { padding:28px 0 60px; color:var(--muted); }
-    .footer-shell { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.08); padding-top:22px; }
-    .footer-links { display:flex; gap:18px; flex-wrap:wrap; }
-    .footer-links a:hover { color:var(--text); }
-    .footer-social { display:flex; align-items:center; gap:16px; }
-    .social-icon { display:flex; align-items:center; color:var(--muted); transition:color 0.18s; }
-    .social-icon:hover { color:var(--text); }
-    .contact-link { color:var(--muted); cursor:pointer; background:none; border:none; font:inherit; font-size:inherit; padding:0; transition:color 0.15s; }
-    .contact-link:hover { color:var(--text); }
-    .hidden { display:none!important; }
-    .overlay { display:none; position:fixed; inset:0; z-index:200; background:rgba(10,10,20,0.75); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px; }
-    .overlay.open { display:flex; }
-    .modal { background:var(--navy-mid); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:36px; width:100%; max-width:480px; position:relative; box-shadow:0 24px 60px rgba(0,0,0,0.5); }
-    .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--muted); cursor:pointer; font-size:1.4rem; line-height:1; padding:4px; }
-    .modal h3 { margin:0 0 6px; font-size:1.3rem; letter-spacing:-0.03em; }
-    .modal p  { margin:0 0 24px; color:var(--muted); font-size:0.9rem; line-height:1.6; }
-    .form-grid { display:grid; gap:14px; }
-    .flbl { display:block; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-bottom:6px; }
-    .finput { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:10px 14px; color:var(--text); font-size:0.92rem; font-family:inherit; box-sizing:border-box; transition:border-color 0.15s; }
-    .finput:focus { outline:none; border-color:var(--coral); }
-    .finput::placeholder { color:var(--muted); }
-    .ferr { display:none; color:#f4a0af; font-size:0.84rem; background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.25); border-radius:10px; padding:10px 14px; }
-    .ferr.show { display:block; }
-    .fsubmit { width:100%; min-height:46px; border-radius:12px; border:none; background:var(--coral); color:#fff; font-size:0.95rem; font-weight:700; cursor:pointer; font-family:inherit; transition:background 0.15s; }
-    .fsubmit:hover { background:var(--coral-dark); }
-    .fsubmit:disabled { opacity:0.5; cursor:not-allowed; }
-    @media(max-width:1080px) { .hero-grid,.about-grid { grid-template-columns:1fr 1fr; } }
-    @media(max-width:860px) { .nav{flex-wrap:wrap;padding:14px 0;} .nav-links{order:3;width:100%;justify-content:center;flex-wrap:wrap;gap:14px 18px;padding-bottom:4px;} .hero-grid,.grid-3,.about-grid{grid-template-columns:1fr;} .hero-copy,.hero-card,.card{padding:22px;} .section-head{flex-direction:column;align-items:start;} .auth-shell{grid-template-columns:1fr;} }
-    @media(max-width:520px) { .hero h1{font-size:2.6rem;} .hero-cta{flex-direction:column;} .hero-cta .btn{width:100%;justify-content:center;} .micro{flex-direction:column;} .nav-actions .btn:first-child{display:none;} body::before{width:260px;height:260px;top:-80px;right:-80px;} }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--navy);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ── DECORATIVE CIRCLES ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -120px; right: -120px;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 10%; left: -100px;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: var(--navy-deep);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .wrap, .nav-shell, main, footer { position: relative; z-index: 1; }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+
+    /* ── NAV ── */
+    .nav-shell {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(26,26,46,0.88);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.01em; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 20px rgba(233,69,96,0.35);
+      flex-shrink: 0;
+    }
+    .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 0.96rem; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 46px; padding: 0 20px; border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text); font-weight: 600;
+      transition: transform 0.18s ease, background 0.18s ease;
+      cursor: pointer; font-family: inherit; font-size: inherit;
+    }
+    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.1); }
+    .btn.primary {
+      background: var(--coral);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 10px 28px rgba(233,69,96,0.35);
+      position: relative; overflow: hidden;
+    }
+    .btn.primary::before {
+      content: '';
+      position: absolute;
+      top: -18px; right: -18px;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.18);
+      pointer-events: none;
+    }
+    .btn.primary::after {
+      content: '';
+      position: absolute;
+      bottom: -14px; left: -10px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.13);
+      pointer-events: none;
+    }
+    .btn.primary:hover { background: var(--coral-dark); }
+
+    /* ── HERO ── */
+    .hero { padding: 78px 0 46px; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: stretch; }
+    .hero-copy, .hero-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(22,33,62,0.7);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Circle accent on hero-copy */
+    .hero-copy::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.09;
+      pointer-events: none;
+    }
+    /* Circle accent on hero-card */
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-copy { padding: 42px; }
+    .hero-card { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      border: 1px solid rgba(233,69,96,0.3);
+      background: rgba(233,69,96,0.1);
+      color: var(--coral);
+      font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: clamp(3rem,6vw,5.8rem);
+      line-height: 0.95; letter-spacing: -0.05em;
+      margin: 0 0 18px; max-width: 9ch;
+    }
+    .differentiator { margin: 0 0 14px; font-size: 1.08rem; font-weight: 600; color: var(--text); line-height: 1.5; max-width: 52ch; }
+    .hero p.lead { margin: 0; color: var(--soft); font-size: 1.05rem; line-height: 1.7; max-width: 58ch; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+    .micro { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; color: var(--muted); font-size: 0.92rem; }
+    .micro span {
+      padding: 9px 12px; border-radius: 999px;
+      background: rgba(233,69,96,0.08);
+      border: 1px solid rgba(233,69,96,0.18);
+    }
+
+    /* ── REPORT WINDOW ── */
+    .report-window {
+      flex: 1; border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(15,52,96,0.5);
+      padding: 18px; display: flex; flex-direction: column; gap: 10px;
+      position: relative; z-index: 1;
+    }
+    .window-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.84rem; }
+    .dots { display: flex; gap: 7px; }
+    .dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.18); display: block; }
+    .dots span:first-child { background: var(--coral); opacity: 0.7; }
+    .report-section {
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px; padding: 13px;
+    }
+    .report-label {
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--coral);
+      margin-bottom: 7px; opacity: 0.85;
+    }
+    .report-title { font-weight: 700; margin-bottom: 7px; font-size: 0.95rem; }
+    .report-body { color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
+    .report-list { margin: 0; padding-left: 16px; color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
+    .best-next {
+      border: 1px solid rgba(233,69,96,0.2);
+      background: rgba(233,69,96,0.06);
+      border-radius: 16px; padding: 13px;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 34px 0; }
+    .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
+    .section-head h2 { margin: 0 0 8px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; }
+    .section-head p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 58ch; }
+
+    /* ── CARDS ── */
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .card {
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--navy-mid);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative; overflow: hidden;
+    }
+    /* Subtle circle per card */
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.05;
+      pointer-events: none;
+    }
+    .card h3 { margin: 0 0 10px; font-size: 1.22rem; letter-spacing: -0.02em; }
+    .card p { margin: 0; color: var(--soft); line-height: 1.7; }
+    .step-no {
+      width: 40px; height: 40px; border-radius: 999px;
+      display: grid; place-items: center; margin-bottom: 16px;
+      background: rgba(233,69,96,0.12);
+      border: 1px solid rgba(233,69,96,0.25);
+      color: var(--coral); font-weight: 700;
+    }
+
+    /* ── PRICING ── */
+    .pricing-card { display: flex; flex-direction: column; gap: 18px; min-height: 100%; }
+    .pricing-card .tier { font-size: 1.1rem; font-weight: 700; }
+    .price { font-size: 2.35rem; letter-spacing: -0.05em; font-weight: 800; margin: 0; }
+    .price-sub { color: var(--muted); font-size: 0.95rem; margin-top: -10px; }
+    .feature-list { margin: 0; padding-left: 18px; color: var(--soft); line-height: 1.7; }
+    .pricing-card .btn { margin-top: auto; }
+    .highlight {
+      border-color: var(--coral) !important;
+      background: rgba(233,69,96,0.08) !important;
+    }
+    .highlight::after { opacity: 0.1; }
+
+    /* ── ABOUT ── */
+    .about-card {
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--navy-mid);
+      box-shadow: var(--shadow);
+      padding: 36px;
+      position: relative; overflow: hidden;
+    }
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.07;
+      pointer-events: none;
+    }
+    .about-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: var(--navy-deep);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    .about-card h2 { margin: 0 0 16px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; position: relative; z-index: 1; }
+    .about-card .belief {
+      font-size: clamp(1.1rem,2vw,1.45rem); line-height: 1.6;
+      color: var(--soft); margin: 0 0 20px; max-width: 72ch;
+      position: relative; z-index: 1;
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 24px; position: relative; z-index: 1; }
+    .about-point h4 { margin: 0 0 6px; font-size: 1rem; font-weight: 700; color: var(--coral); }
+    .about-point p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
+    .philosophy-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px; color: var(--soft); font-size: 0.95rem;
+      border-bottom: 1px solid rgba(233,69,96,0.3);
+      padding-bottom: 2px;
+      transition: color 0.15s, border-color 0.15s;
+      position: relative; z-index: 1;
+    }
+    .philosophy-link:hover { color: var(--coral); border-color: var(--coral); }
+
+    /* ── AUTH ── */
+    .auth-shell { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; align-items: start; }
+    .auth-card {
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--navy-mid);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      position: relative; overflow: hidden;
+    }
+    .auth-card.main { border-color: rgba(233,69,96,0.3); }
+    .auth-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0.09;
+      pointer-events: none;
+    }
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: -40px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: var(--navy-deep);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .magic-form { display: grid; gap: 14px; position: relative; z-index: 1; }
+    .magic-input-row { display: flex; gap: 10px; }
+    .magic-input-row input {
+      flex: 1;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; padding: 14px 16px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text); font-size: 1rem; font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .magic-input-row input:focus { outline: none; border-color: var(--coral); }
+    .magic-input-row input::placeholder { color: var(--muted); }
+    .trust-signals { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+    .trust-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 11px; border-radius: 999px;
+      font-size: 0.78rem; color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .trust-pill::before { content: "\2713"; color: var(--coral); font-size: 0.75rem; }
+    .auth-status {
+      margin-top: 12px; padding: 13px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: var(--soft); line-height: 1.6; font-size: 0.9rem;
+      display: none; position: relative; z-index: 1;
+    }
+    .auth-status.visible { display: block; }
+    .auth-status.sent { border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.06); color: #7febb0; }
+    .auth-status.error { border-color: rgba(233,69,96,0.3); background: rgba(233,69,96,0.06); color: #f4a0af; }
+    .auth-userbox { display: grid; gap: 10px; position: relative; z-index: 1; }
+    .auth-userbox .row {
+      padding: 12px 14px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+    .auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+    .auth-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    @media (max-width: 520px) {
+      .magic-input-row { flex-direction: column; }
+      .magic-input-row .btn { width: 100%; justify-content: center; }
+    }
+
+    /* ── FOOTER ── */
+    .footer { padding: 28px 0 60px; color: var(--muted); }
+    .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── UTILS ── */
+    .hidden { display: none !important; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1080px) {
+      .hero-grid { grid-template-columns: 1fr 1fr; }
+      .about-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 860px) {
+      .nav { flex-wrap: wrap; padding: 14px 0; }
+      .nav-links { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 14px 18px; padding-bottom: 4px; }
+      .hero-grid, .grid-3, .about-grid { grid-template-columns: 1fr; }
+      .hero-copy, .hero-card, .card { padding: 22px; }
+      .section-head { flex-direction: column; align-items: start; }
+      .auth-shell { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .hero h1 { font-size: 2.6rem; }
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn { width: 100%; justify-content: center; }
+      .micro { flex-direction: column; }
+      .nav-actions .btn:first-child { display: none; }
+      body::before { width: 260px; height: 260px; top: -80px; right: -80px; }
+    }
   </style>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
-
   <div class="nav-shell">
     <div class="wrap nav">
       <a href="#top" class="brand">
-        <span class="brand-mark">
-          <svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
-            <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
-            <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
-            <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
-            <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
-            <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
-            <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
-            <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
-            <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
-            <circle cx="272" cy="318" r="18" fill="#E94560"/>
-          </svg>
-        </span>
+        <span class="brand-mark"><svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
+  <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
+  <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
+  <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
+  <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
+  <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
+  <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
+  <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
+  <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
+  <circle cx="272" cy="318" r="18" fill="#E94560"/>
+</svg></span>
         <span>Fonna</span>
       </a>
       <nav class="nav-links">
@@ -163,7 +442,6 @@
   </div>
 
   <main id="top">
-
     <section class="hero wrap">
       <div class="hero-grid">
         <div class="hero-copy">
@@ -194,8 +472,8 @@
             <div class="report-section">
               <div class="report-label">Mix</div>
               <ul class="report-list">
-                <li>Tighten the low-end relationship by carving space between kick and bass.</li>
-                <li>Bring the vocal forward in choruses with a presence boost and subtle compression.</li>
+                <li>Tighten the low-end relationship by carving space between kick and bass (EQ separation and/or sidechain compression).</li>
+                <li>Bring the vocal forward in choruses with a presence boost and subtle compression to improve clarity and focus.</li>
               </ul>
             </div>
             <div class="report-section">
@@ -203,11 +481,12 @@
               <ul class="report-list">
                 <li><strong>0:00&ndash;0:14</strong> &mdash; Strong opening tone, but the intro gives away too much energy too early.</li>
                 <li><strong>0:46&ndash;0:58</strong> &mdash; Transition feels flat; a brief drop in texture would create more pull.</li>
+                <li><strong>1:18&ndash;1:32</strong> &mdash; Vocal and instrumental density start competing for the center.</li>
               </ul>
             </div>
             <div class="best-next">
-              <div class="report-label">Best Next Move</div>
-              <div class="report-body">Strip back the pre-chorus to a single texture layer and rebuild the drop into the chorus with one new element.</div>
+              <div class="report-label">Reference Track</div>
+              <div class="report-body"><strong>&ldquo;Dreams&rdquo; &mdash; Fleetwood Mac</strong><br>Listen for how restraint in the arrangement makes each added element feel important.</div>
             </div>
           </div>
         </div>
@@ -237,7 +516,7 @@
       <div class="grid-3">
         <div class="card"><h3>No generic praise</h3><p>The goal is not to flatter the track. The goal is to help you understand how the record is landing and what is getting in its way.</p></div>
         <div class="card"><h3>No songwriting detours</h3><p>Fonna stays disciplined. It does not drift into lyric critique or vague genre commentary when the real issue is production or mix.</p></div>
-        <div class="card"><h3>A fresh listen, every time</h3><p>Every revision deserves honest ears. Upload after each major session and hear the track as it actually sounds — not as you remember it.</p></div>
+        <div class="card"><h3>A fresh listen, every time</h3><p>Every revision deserves honest ears. Upload after each major session and hear the track as it actually sounds &mdash; not as you remember it.</p></div>
       </div>
     </section>
 
@@ -245,18 +524,42 @@
       <div class="section-head"><div><h2>Pricing</h2><p>Simple credit-based access. One free analysis on signup.</p></div></div>
       <div class="grid-3">
         <div class="card pricing-card">
-          <div><div class="tier">Free</div><p class="price">$0</p><div class="price-sub">1 credit on signup</div></div>
-          <ul class="feature-list"><li>Try the full Fonna experience</li><li>One complete producer report</li><li>Signup required</li></ul>
+          <div>
+            <div class="tier">Free</div>
+            <p class="price">$0</p>
+            <div class="price-sub">1 credit on signup</div>
+          </div>
+          <ul class="feature-list">
+            <li>Try the full Fonna experience</li>
+            <li>One complete producer report</li>
+            <li>Signup required</li>
+          </ul>
           <a class="btn" href="#login">Start free</a>
         </div>
         <div class="card pricing-card highlight">
-          <div><div class="tier">Starter</div><p class="price">$9.99</p><div class="price-sub">10 credits</div></div>
-          <ul class="feature-list"><li>10 full analyses</li><li>Useful for active revision weeks</li><li>Simple one-time purchase</li></ul>
+          <div>
+            <div class="tier">Starter</div>
+            <p class="price">$9.99</p>
+            <div class="price-sub">10 credits</div>
+          </div>
+          <ul class="feature-list">
+            <li>10 full analyses</li>
+            <li>Useful for active revision weeks</li>
+            <li>Simple one-time purchase</li>
+          </ul>
           <a class="btn primary" href="#login">Buy Starter</a>
         </div>
         <div class="card pricing-card">
-          <div><div class="tier">Creator</div><p class="price">$19.99</p><div class="price-sub">30 credits</div></div>
-          <ul class="feature-list"><li>30 full analyses</li><li>Ideal for producers and serious artists</li><li>Best value at launch</li></ul>
+          <div>
+            <div class="tier">Creator</div>
+            <p class="price">$19.99</p>
+            <div class="price-sub">30 credits</div>
+          </div>
+          <ul class="feature-list">
+            <li>30 full analyses</li>
+            <li>Ideal for producers and serious artists</li>
+            <li>Best value at launch</li>
+          </ul>
           <a class="btn" href="#login">Buy Creator</a>
         </div>
       </div>
@@ -267,28 +570,48 @@
         <h2>What we believe</h2>
         <p class="belief">Better records usually come from better decisions, not more plugins, more layers, or more noise. Fonna exists at the intersection of music production and music education — built for artists who want to hear their own work more clearly and make more intentional choices.</p>
         <div class="about-grid">
-          <div class="about-point"><h4>Helps you grow</h4><p>Every report is a chance to internalize a new way of hearing. Use it enough and the framework becomes your own.</p></div>
-          <div class="about-point"><h4>Helps you refine</h4><p>Fonna is for the stage where the record is real enough to evaluate but still malleable enough to change.</p></div>
-          <div class="about-point"><h4>Expands your perspective</h4><p>Outside ears break the loop. Fonna hears the track as it actually is, not as you remember it sounding.</p></div>
+          <div class="about-point">
+            <h4>Helps you grow</h4>
+            <p>Every report is a chance to internalize a new way of hearing. Use it enough and the framework becomes your own.</p>
+          </div>
+          <div class="about-point">
+            <h4>Helps you refine</h4>
+            <p>Fonna is for the stage where the record is real enough to evaluate but still malleable enough to change.</p>
+          </div>
+          <div class="about-point">
+            <h4>Expands your perspective</h4>
+            <p>Outside ears break the loop. Fonna hears the track as it actually is, not as you remember it sounding.</p>
+          </div>
         </div>
         <a href="/philosophy.html" class="philosophy-link">Read the full philosophy →</a>
       </div>
     </section>
 
-    <section id="login" class="section wrap">
+    <section id="login" class="section wrap" style="scroll-margin-top: 90px;">
+      <div class="section-head">
+        <div>
+          <h2>Try Fonna free</h2>
+          <p>Enter your email and we'll send you a link. Click it and you're in — 1 free analysis waiting, no password required.</p>
+        </div>
+      </div>
       <div class="auth-shell">
-        <div class="auth-card">
-          <h3 style="margin-top:0;margin-bottom:8px;">Get started with Fonna</h3>
-          <p style="margin-top:0;color:var(--muted);line-height:1.7;">Create an account to receive 1 free credit. Each analysis uses 1 credit.</p>
+        <div class="auth-card main">
           <div id="authLoggedOut">
-            <form class="auth-form" onsubmit="return false;">
-              <input id="authEmail" type="email" placeholder="Email address" autocomplete="email" />
-              <input id="authPassword" type="password" placeholder="Password" autocomplete="current-password" />
-              <div class="auth-actions">
-                <button class="btn primary" id="signUpBtn" type="submit">Sign up</button>
-                <button class="btn" id="loginBtn" type="button">Log in</button>
+            <div class="magic-form">
+              <div>
+                <p style="margin:0 0 16px;font-size:1.05rem;font-weight:600;color:var(--text);position:relative;z-index:1;">Get your free analysis</p>
+                <div class="magic-input-row">
+                  <input id="authEmail" type="email" placeholder="Your email address" autocomplete="email" />
+                  <button class="btn primary" id="magicBtn" type="button">Send link</button>
+                </div>
               </div>
-            </form>
+              <div class="trust-signals">
+                <span class="trust-pill">1 free credit on signup</span>
+                <span class="trust-pill">Audio deleted after analysis</span>
+                <span class="trust-pill">No commitment</span>
+                <span class="trust-pill">No password needed</span>
+              </div>
+            </div>
           </div>
           <div id="authLoggedIn" class="hidden">
             <div class="auth-userbox">
@@ -300,12 +623,13 @@
               </div>
             </div>
           </div>
-          <div id="authStatus" class="auth-status">Ready.</div>
+          <div id="authStatus" class="auth-status"></div>
         </div>
         <div class="auth-card">
-          <h3 style="margin-top:0;margin-bottom:8px;">How access works</h3>
-          <p style="color:var(--soft);line-height:1.7;margin-top:0;">New accounts receive 1 free credit automatically. When you use Fonna to analyze a track, 1 credit is deducted after a successful report.</p>
-          <ul class="feature-list">
+          <h3 style="margin-top:0;margin-bottom:8px;position:relative;z-index:1;">How it works</h3>
+          <p style="color:var(--soft);line-height:1.8;margin-top:0;position:relative;z-index:1;">Enter your email above. We'll send you a secure link — click it and you're straight into the app with 1 free analysis credit, no password ever created or remembered.</p>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;position:relative;z-index:1;">Returning? Just enter your email again and we'll send a fresh link.</p>
+          <ul class="feature-list" style="position:relative;z-index:1;">
             <li>Free account: 1 credit</li>
             <li>Starter: 10 credits for $9.99</li>
             <li>Creator: 30 credits for $19.99</li>
@@ -313,75 +637,101 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="footer wrap">
     <div class="footer-shell">
-      <span>&copy; 2026 Fonna, a division of 170681639 Ontario</span>
+      <span>© 2026 Fonna</span>
       <div class="footer-links">
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <button class="contact-link" onclick="openContact()">Contact Us</button>
-      </div>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/fonna.ai/" target="_blank" rel="noopener" aria-label="Fonna on Instagram" class="social-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=948309055043464" target="_blank" rel="noopener" aria-label="Fonna on Facebook" class="social-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
+        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
       </div>
     </div>
   </footer>
 
-  <div id="contactOverlay" class="overlay">
-    <div class="modal">
-      <button class="modal-close" onclick="closeContact()">&times;</button>
-      <h3>Get in touch</h3>
-      <p>We read every message and will follow up by email.</p>
-      <div class="form-grid">
-        <div><label class="flbl">Your name</label><input id="cName" class="finput" type="text" placeholder="Ewen McIntosh" /></div>
-        <div><label class="flbl">Your email</label><input id="cEmail" class="finput" type="email" placeholder="you@example.com" /></div>
-        <div><label class="flbl">Message</label><textarea id="cMessage" class="finput" rows="4" placeholder="What's on your mind?"></textarea></div>
-        <div id="contactErr" class="ferr"></div>
-        <button class="fsubmit" id="contactSubmitBtn" onclick="submitContact()">Send message</button>
-      </div>
-    </div>
-  </div>
-
   <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
     const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
+    const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const authStatus=document.getElementById("authStatus"),authLoggedOut=document.getElementById("authLoggedOut"),authLoggedIn=document.getElementById("authLoggedIn"),authEmail=document.getElementById("authEmail"),authPassword=document.getElementById("authPassword"),signUpBtn=document.getElementById("signUpBtn"),loginBtn=document.getElementById("loginBtn"),logoutBtn=document.getElementById("logoutBtn"),userEmailText=document.getElementById("userEmailText"),userCreditsText=document.getElementById("userCreditsText");
-    const setStatus=msg=>authStatus.textContent=msg;
-    async function loadProfile(user){try{const{data,error}=await supabase.from("users").select("email, credits").eq("id",user.id).maybeSingle().abortSignal(AbortSignal.timeout(5000));if(error)throw error;userEmailText.textContent=(data&&data.email)?data.email:(user.email||"Unknown");userCreditsText.textContent=data?String(data.credits??0):"0";}catch{userEmailText.textContent=user.email||"Unknown";userCreditsText.textContent="—";}}
-    async function refreshAuthUI(){try{const{data:{session}}=await supabase.auth.getSession();if(!session?.user){authLoggedOut.classList.remove("hidden");authLoggedIn.classList.add("hidden");setStatus("Ready.");return;}authLoggedOut.classList.add("hidden");authLoggedIn.classList.remove("hidden");setStatus("Logged in successfully.");await loadProfile(session.user);}catch{setStatus("Something went wrong. Please refresh.");}}
-    signUpBtn.addEventListener("click",async()=>{const email=authEmail.value.trim(),password=authPassword.value;if(!email||!password){setStatus("Enter an email and password.");return;}signUpBtn.disabled=true;setStatus("Creating account...");try{const{data,error}=await supabase.auth.signUp({email,password});if(error){setStatus("Signup failed: "+error.message);return;}if(data.user){setStatus("Account created! Redirecting...");setTimeout(()=>{window.location.href="/app.html";},1000);}else{setStatus("Signup submitted. Check your email if confirmation is required.");}}finally{signUpBtn.disabled=false;}});
-    loginBtn.addEventListener("click",doLogin);
-    document.querySelector(".auth-form").addEventListener("submit",e=>{e.preventDefault();doLogin();});
-    async function doLogin(){const email=authEmail.value.trim(),password=authPassword.value;if(!email||!password){setStatus("Enter an email and password.");return;}loginBtn.disabled=true;setStatus("Logging in...");try{const{error}=await supabase.auth.signInWithPassword({email,password});if(error){setStatus("Login failed: "+error.message);return;}setStatus("Logged in! Redirecting...");setTimeout(()=>{window.location.href="/app.html";},800);}catch(err){setStatus("Login error: "+err.message);}finally{loginBtn.disabled=false;}}
-    logoutBtn.addEventListener("click",async()=>{await supabase.auth.signOut();authLoggedOut.classList.remove("hidden");authLoggedIn.classList.add("hidden");setStatus("Ready.");userEmailText.textContent="—";userCreditsText.textContent="—";});
+    const authStatus    = document.getElementById("authStatus");
+    const authLoggedOut = document.getElementById("authLoggedOut");
+    const authLoggedIn  = document.getElementById("authLoggedIn");
+    const authEmail     = document.getElementById("authEmail");
+    const magicBtn      = document.getElementById("magicBtn");
+    const logoutBtn     = document.getElementById("logoutBtn");
+    const userEmailText  = document.getElementById("userEmailText");
+    const userCreditsText = document.getElementById("userCreditsText");
+
+    function setStatus(msg, type="") {
+      authStatus.textContent = msg;
+      authStatus.className = "auth-status" + (type ? " " + type : "") + " visible";
+    }
+
+    async function loadProfile(user) {
+      const { data, error } = await supabase.from("users").select("email, credits").eq("id", user.id).single();
+      if (error) { userEmailText.textContent = user.email || "Unknown"; userCreditsText.textContent = "Unavailable"; return; }
+      userEmailText.textContent = data.email || user.email || "Unknown";
+      userCreditsText.textContent = String(data.credits ?? 0);
+    }
+
+    async function refreshAuthUI() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) {
+        authLoggedOut.classList.remove("hidden");
+        authLoggedIn.classList.add("hidden");
+        authStatus.className = "auth-status";
+        return;
+      }
+      authLoggedOut.classList.add("hidden");
+      authLoggedIn.classList.remove("hidden");
+      await loadProfile(session.user);
+    }
+
+    magicBtn.addEventListener("click", async () => {
+      const email = authEmail.value.trim();
+      if (!email) { setStatus("Please enter your email address.", "error"); return; }
+      magicBtn.disabled = true;
+      magicBtn.textContent = "Sending...";
+      setStatus("");
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: "https://fonna.ai/app.html",
+          shouldCreateUser: true,
+        }
+      });
+      magicBtn.disabled = false;
+      magicBtn.textContent = "Send link";
+      if (error) {
+        setStatus("Something went wrong: " + error.message, "error");
+        return;
+      }
+      setStatus("Check your inbox — we've sent a link to " + email + ". Click it to get started.", "sent");
+      authEmail.value = "";
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      refreshAuthUI();
+    });
+
+    supabase.auth.onAuthStateChange(() => refreshAuthUI());
     refreshAuthUI();
 
-    window.openContact=()=>{document.getElementById("contactOverlay").classList.add("open");document.body.style.overflow="hidden";};
-    window.closeContact=()=>{document.getElementById("contactOverlay").classList.remove("open");document.body.style.overflow="";};
-    document.getElementById("contactOverlay").addEventListener("click",e=>{if(e.target===e.currentTarget)window.closeContact();});
-    document.addEventListener("keydown",e=>{if(e.key==="Escape")window.closeContact();});
-    window.submitContact=async()=>{
-      const name=document.getElementById("cName").value.trim(),email=document.getElementById("cEmail").value.trim(),message=document.getElementById("cMessage").value.trim(),errEl=document.getElementById("contactErr"),btn=document.getElementById("contactSubmitBtn");
-      errEl.classList.remove("show");
-      if(!name){errEl.textContent="Please enter your name.";errEl.classList.add("show");return;}
-      if(!email||!email.includes("@")){errEl.textContent="Please enter a valid email address.";errEl.classList.add("show");return;}
-      if(!message){errEl.textContent="Please enter a message.";errEl.classList.add("show");return;}
-      btn.disabled=true;btn.textContent="Sending…";
-      try{const res=await fetch(`${SUPABASE_URL}/rest/v1/contacts`,{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_ANON_KEY,"Authorization":`Bearer ${SUPABASE_ANON_KEY}`,"Prefer":"return=minimal"},body:JSON.stringify({name,email,message})});if(!res.ok)throw new Error();window.location.href="/thankyou.html";}
-      catch{errEl.textContent="Something went wrong — please try again.";errEl.classList.add("show");btn.disabled=false;btn.textContent="Send message";}
-    };
+    // Smooth scroll for all anchor links — prevents full page reload on Vercel
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", function(e) {
+        const target = document.getElementById(this.getAttribute("href").slice(1));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
   </script>
 </body>
 </html>
