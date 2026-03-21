@@ -590,8 +590,8 @@
     <section id="login" class="section wrap" style="scroll-margin-top: 90px;">
       <div class="section-head">
         <div>
-          <h2>Try Fonna free</h2>
-          <p>Enter your email and we'll send you a link. Click it and you're in — 1 free analysis waiting, no password required.</p>
+          <h2>Get into Fonna</h2>
+          <p>New or returning — enter your email and we'll send you a link straight to your app. First time? Your free credit is waiting. Coming back? Your credits are right where you left them.</p>
         </div>
       </div>
       <div class="auth-shell">
@@ -599,7 +599,7 @@
           <div id="authLoggedOut">
             <div class="magic-form">
               <div>
-                <p style="margin:0 0 16px;font-size:1.05rem;font-weight:600;color:var(--text);position:relative;z-index:1;">Get your free analysis</p>
+                <p style="margin:0 0 16px;font-size:1.05rem;font-weight:600;color:var(--text);position:relative;z-index:1;">New or returning — just enter your email</p>
                 <div class="magic-input-row">
                   <input id="authEmail" type="email" placeholder="Your email address" autocomplete="email" />
                   <button class="btn primary" id="magicBtn" type="button">Send link</button>
@@ -627,8 +627,9 @@
         </div>
         <div class="auth-card">
           <h3 style="margin-top:0;margin-bottom:8px;position:relative;z-index:1;">How it works</h3>
-          <p style="color:var(--soft);line-height:1.8;margin-top:0;position:relative;z-index:1;">Enter your email above. We'll send you a secure link — click it and you're straight into the app with 1 free analysis credit, no password ever created or remembered.</p>
-          <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;position:relative;z-index:1;">Returning? Just enter your email again and we'll send a fresh link.</p>
+          <p style="color:var(--soft);line-height:1.8;margin-top:0;position:relative;z-index:1;">One box, one button — works for everyone. Enter your email and we'll send you a secure link direct to the app.</p>
+          <p style="color:var(--soft);line-height:1.8;position:relative;z-index:1;"><strong style="color:var(--text);">First time?</strong> Your free analysis credit is waiting the moment you click the link.</p>
+          <p style="color:var(--soft);line-height:1.8;position:relative;z-index:1;"><strong style="color:var(--text);">Coming back?</strong> Your credits are exactly where you left them — no password to remember, ever.</p>
           <ul class="feature-list" style="position:relative;z-index:1;">
             <li>Free account: 1 credit</li>
             <li>Starter: 10 credits for $9.99</li>
@@ -710,7 +711,7 @@
         setStatus("Something went wrong: " + error.message, "error");
         return;
       }
-      setStatus("Check your inbox — we've sent a link to " + email + ". Click it to get started.", "sent");
+      setStatus("Check your inbox — we've sent a link to " + email + ". Click it to get started. If you don't see it within a minute, check your junk or spam folder.", "sent");
       authEmail.value = "";
     });
 
