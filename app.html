@@ -731,7 +731,7 @@ async function loadReports() {
   try {
     const { data, error } = await sb
       .from("reports")
-      .select("id, created_at, track_title, duration_seconds, report_json")
+      .select("id, created_at, track_title, duration_seconds")
       .eq("user_id", session.user.id)
       .order("created_at", { ascending: false })
       .limit(50);
@@ -769,24 +769,45 @@ async function loadReports() {
   }
 }
 
-function openReportDetail(row) {
+async function openReportDetail(row) {
   $("reportsList").classList.add("hidden");
   $("reportsEmpty").classList.add("hidden");
   const detail = $("reportDetail");
   detail.classList.add("show");
+  $("dTrack").textContent = row.track_title || "Loading…";
+  $("dMeta").textContent = "";
 
-  // Parse report JSON if it's a string
-  let r = row.report_json;
+  // Fetch the full row to get report content
+  const { data, error } = await sb
+    .from("reports")
+    .select("*")
+    .eq("id", row.id)
+    .single();
+
+  if (error || !data) {
+    $("dSnapshot").textContent = "Could not load report — " + (error?.message || "unknown error");
+    detail.scrollIntoView({ behavior:"smooth", block:"start" });
+    return;
+  }
+
+  // Find the report content — try common column names
+  let r = data.report_json || data.critique || data.result || data.report || data.data || null;
   if (typeof r === "string") { try { r = JSON.parse(r); } catch {} }
 
-  // Merge metadata for the renderer
-  if (r && !r.input) r.input = { title: row.track_title, duration_seconds: row.duration_seconds };
-  if (r) r.created_at = row.created_at;
+  // Merge metadata
+  if (r && !r.input) r.input = { title: data.track_title, duration_seconds: data.duration_seconds };
+  if (r) r.created_at = data.created_at;
 
-  renderReportInto(r || {}, {
-    track:"dTrack", meta:"dMeta", snapshot:"dSnapshot", bestNext:"dBestNext",
-    domains:"dDomains", prio:"dPrio", tlWrap:"dTlWrap", tl:"dTl", ref:"dRef", lim:"dLim"
-  });
+  if (r) {
+    renderReportInto(r, {
+      track:"dTrack", meta:"dMeta", snapshot:"dSnapshot", bestNext:"dBestNext",
+      domains:"dDomains", prio:"dPrio", tlWrap:"dTlWrap", tl:"dTl", ref:"dRef", lim:"dLim"
+    });
+  } else {
+    // No recognised report column — show what we have
+    $("dTrack").textContent = data.track_title || "Untitled";
+    $("dSnapshot").textContent = "Report content not found. Columns available: " + Object.keys(data).join(", ");
+  }
 
   detail.scrollIntoView({ behavior:"smooth", block:"start" });
 }
