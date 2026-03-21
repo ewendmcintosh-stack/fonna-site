@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fonna — Analyze Track</title>
+  <title>Fonna — App</title>
   <style>
     :root {
       --navy:#1A1A2E; --navy-mid:#16213E; --navy-deep:#0F3460;
@@ -14,11 +14,18 @@
     }
     *{box-sizing:border-box;}
     html{scroll-behavior:smooth;}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--text);background:var(--navy);min-height:100vh;position:relative;overflow-x:hidden;}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+      color:var(--text);background:var(--navy);min-height:100vh;
+      position:relative;overflow-x:hidden;
+    }
     body::before{content:'';position:fixed;top:-120px;right:-120px;width:480px;height:480px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;z-index:0;}
     body::after{content:'';position:fixed;bottom:10%;left:-100px;width:340px;height:340px;border-radius:50%;background:var(--navy-deep);opacity:0.6;pointer-events:none;z-index:0;}
     a{color:inherit;text-decoration:none;}
     .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto;position:relative;z-index:1;}
+
+    /* NAV */
     .nav-shell{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(26,26,46,0.88);border-bottom:1px solid rgba(255,255,255,0.07);}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px;}
     .brand{display:flex;align-items:center;gap:12px;font-size:1.05rem;font-weight:700;}
@@ -28,27 +35,46 @@
     .credit-pill.show{display:inline-flex;}
     .credit-pill strong{color:var(--coral);font-weight:700;}
     .user-pill{font-size:0.82rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+    /* BUTTONS */
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-weight:600;font-size:0.9rem;transition:transform 0.15s,background 0.15s;cursor:pointer;font-family:inherit;}
     .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.1);}
     .btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
-    .btn.primary{background:var(--coral);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(233,69,96,0.35);}
+    .btn.primary{background:var(--coral);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(233,69,96,0.35);position:relative;overflow:hidden;}
+    .btn.primary::before{content:'';position:absolute;top:-18px;right:-18px;width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,0.18);pointer-events:none;}
+    .btn.primary::after{content:'';position:absolute;bottom:-14px;left:-10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.13);pointer-events:none;}
     .btn.primary:hover{background:var(--coral-dark);}
     .btn.sm{min-height:36px;padding:0 14px;font-size:0.84rem;}
     .btn.ghost{background:transparent;border-color:rgba(255,255,255,0.15);color:var(--muted);}
     .btn.ghost:hover{background:rgba(255,255,255,0.06);color:var(--text);}
+
+    /* CARDS */
     .card{border-radius:24px;border:1px solid rgba(255,255,255,0.08);background:var(--navy-mid);box-shadow:var(--shadow);padding:32px 36px;margin-bottom:22px;position:relative;overflow:hidden;}
     .card::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
     .card::after{content:'';position:absolute;bottom:-30px;left:-30px;width:130px;height:130px;border-radius:50%;background:var(--navy-deep);opacity:0.7;pointer-events:none;}
     .card-inner{position:relative;z-index:1;}
     .card-title{font-size:1.2rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 6px;}
     .card-sub{font-size:0.9rem;color:var(--muted);margin:0 0 24px;line-height:1.6;}
+
+    /* SECTION LABEL */
     .lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;opacity:0.9;}
-    .file-row{display:flex;gap:10px;align-items:stretch;margin-bottom:6px;}
-    .file-name-box{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;font-size:0.92rem;color:var(--muted);font-family:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;transition:border-color 0.15s;}
-    .file-name-box.has-file{color:var(--text);border-color:rgba(233,69,96,0.35);}
-    .file-pick-btn{flex-shrink:0;min-height:42px;padding:0 18px;border-radius:12px;border:1px solid rgba(233,69,96,0.4);background:rgba(233,69,96,0.1);color:var(--coral);font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s,border-color 0.15s;white-space:nowrap;}
-    .file-pick-btn:hover{background:rgba(233,69,96,0.18);border-color:var(--coral);}
-    .file-limits{font-size:0.75rem;color:var(--muted);opacity:0.7;margin-bottom:20px;}
+
+    /* DROP ZONE */
+    .drop-zone{border:1.5px dashed rgba(233,69,96,0.3);border-radius:18px;background:rgba(233,69,96,0.04);padding:36px 24px;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:20px;}
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--coral);background:rgba(233,69,96,0.08);}
+    .drop-icon{width:46px;height:46px;border-radius:50%;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px;}
+    .drop-title{font-size:0.97rem;font-weight:600;margin-bottom:5px;}
+    .drop-sub{font-size:0.82rem;color:var(--muted);margin-bottom:10px;}
+    .drop-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;}
+    #fileInput{display:none;}
+    .file-chosen{display:none;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.2);font-size:0.88rem;margin-bottom:20px;}
+    .file-chosen.show{display:flex;}
+    .file-name{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .file-sz{font-size:0.78rem;color:var(--muted);flex-shrink:0;}
+    .file-clear{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:0;flex-shrink:0;}
+    .file-clear:hover{color:var(--text);}
+
+    /* FIELDS */
     .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
     .field{display:flex;flex-direction:column;gap:6px;}
     .field.full{grid-column:1/-1;}
@@ -59,11 +85,15 @@
     .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
     .submit-note{font-size:0.8rem;color:var(--muted);}
     .submit-note strong{color:var(--coral);}
+
+    /* STATUS */
     .msg{display:none;padding:13px 18px;border-radius:14px;font-size:0.88rem;line-height:1.55;margin-bottom:18px;}
     .msg.show{display:block;}
     .msg.err{background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
     .msg.ok{background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
     .msg.info{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--soft);}
+
+    /* PROGRESS */
     .progress-card{display:none;text-align:center;}
     .progress-card.show{display:block;}
     .spinner{width:46px;height:46px;border-radius:50%;border:3px solid rgba(233,69,96,0.2);border-top-color:var(--coral);animation:spin 0.85s linear infinite;margin:0 auto 16px;}
@@ -72,6 +102,8 @@
     .p-sub{font-size:0.88rem;color:var(--muted);line-height:1.6;}
     .p-bar-wrap{background:rgba(255,255,255,0.06);border-radius:999px;height:3px;margin-top:20px;overflow:hidden;}
     .p-bar{height:100%;background:var(--coral);border-radius:999px;width:5%;transition:width 0.6s ease;}
+
+    /* REPORT */
     .report-card{display:none;}
     .report-card.show{display:block;}
     .rpt-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
@@ -103,6 +135,8 @@
     .ref-track{font-size:0.97rem;font-weight:700;margin-bottom:3px;}
     .ref-why{font-size:0.85rem;color:var(--soft);line-height:1.6;}
     .limitations{font-size:0.78rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;}
+
+    /* BUY */
     .credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
     .pack{border-radius:18px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);padding:20px;cursor:pointer;transition:border-color 0.15s,background 0.15s;position:relative;overflow:hidden;}
     .pack:hover{border-color:var(--coral);background:rgba(233,69,96,0.06);}
@@ -112,37 +146,60 @@
     .pack-name{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
     .pack-price{font-size:1.7rem;font-weight:800;letter-spacing:-0.04em;}
     .pack-credits{font-size:0.82rem;color:var(--muted);margin-top:2px;}
+
+    /* TABS */
+    .tab-nav{display:flex;gap:6px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:0;}
+    .tab-btn{background:none;border:none;color:var(--muted);font-family:inherit;font-size:0.92rem;font-weight:600;padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.15s,border-color 0.15s;border-radius:8px 8px 0 0;}
+    .tab-btn:hover{color:var(--text);}
+    .tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;}
+
+    /* UPGRADE PROMPT */
+    .upgrade-prompt{background:linear-gradient(135deg,rgba(233,69,96,0.1),rgba(15,52,96,0.4));border:1px solid rgba(233,69,96,0.25);border-radius:20px;padding:28px 32px;margin-top:24px;display:none;position:relative;overflow:hidden;}
+    .upgrade-prompt::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:var(--coral);opacity:0.08;pointer-events:none;}
+    .upgrade-prompt.show{display:block;}
+    .up-eyebrow{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:10px;}
+    .up-title{font-size:1.25rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;}
+    .up-body{font-size:0.92rem;color:var(--soft);line-height:1.7;margin-bottom:20px;}
+    .up-benefits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
+    .up-benefit{display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:var(--soft);line-height:1.5;}
+    .up-benefit::before{content:"✓";color:var(--coral);font-size:0.8rem;flex-shrink:0;margin-top:1px;}
+    .up-actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+    /* REPORTS TAB */
+    .reports-empty{text-align:center;padding:60px 20px;color:var(--muted);}
+    .reports-empty .icon{font-size:2.5rem;margin-bottom:14px;opacity:0.4;}
+    .report-list{display:grid;gap:12px;}
+    .report-row{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color 0.15s,background 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .report-row:hover{border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
+    .report-row-left{flex:1;min-width:0;}
+    .report-title{font-size:0.97rem;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .report-meta{font-size:0.78rem;color:var(--muted);}
+    .report-arrow{color:var(--muted);font-size:1.2rem;flex-shrink:0;}
+    .report-detail{display:none;margin-top:16px;}
+    .report-detail.show{display:block;}
+    .report-detail-back{margin-bottom:18px;}
+
+    /* FOOTER */
     .footer{padding:24px 0 48px;color:var(--muted);}
     .footer-shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;}
     .footer-links{display:flex;gap:18px;flex-wrap:wrap;}
     .footer-links a:hover{color:var(--text);}
-    .footer-social{display:flex;align-items:center;gap:16px;}
-    .social-icon{display:flex;align-items:center;color:var(--muted);transition:color 0.18s ease;}
-    .social-icon:hover{color:var(--text);}
     .hidden{display:none!important;}
-    /* CONTACT MODAL */
-    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.75);backdrop-filter:blur(6px);z-index:200;align-items:center;justify-content:center;padding:20px;}
-    .modal-backdrop.open{display:flex;}
-    .modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.5);padding:36px;width:100%;max-width:480px;position:relative;overflow:hidden;}
-    .modal::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;}
-    .modal-inner{position:relative;z-index:1;}
-    .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;line-height:1;transition:background 0.15s,color 0.15s;z-index:2;}
-    .modal-close:hover{background:rgba(255,255,255,0.1);color:var(--text);}
-    .modal h2{margin:0 0 6px;font-size:1.3rem;letter-spacing:-0.03em;}
-    .modal .modal-sub{margin:0 0 24px;color:var(--muted);font-size:0.9rem;line-height:1.6;}
-    .modal .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
-    .modal .field label{font-size:0.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
-    .modal .field input,.modal .field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;resize:none;}
-    .modal .field input:focus,.modal .field textarea:focus{outline:none;border-color:var(--coral);}
-    .modal .field input::placeholder,.modal .field textarea::placeholder{color:var(--muted);}
-    .modal .modal-msg{display:none;padding:10px 14px;border-radius:10px;font-size:0.85rem;margin-bottom:14px;line-height:1.5;}
-    .modal .modal-msg.err{display:block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
-    .modal .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;}
-    @media(max-width:720px){.nav{flex-wrap:wrap;padding:12px 0;}.domains{grid-template-columns:1fr;}.credits-grid{grid-template-columns:1fr;}.fields{grid-template-columns:1fr;}.card{padding:22px 20px;}.user-pill{display:none;}}
-    @media(max-width:480px){.rpt-header{flex-direction:column;}}
+
+    @media(max-width:720px){
+      .nav{flex-wrap:wrap;padding:12px 0;}
+      .domains{grid-template-columns:1fr;}
+      .credits-grid{grid-template-columns:1fr;}
+      .fields{grid-template-columns:1fr;}
+      .card{padding:22px 20px;}
+      .user-pill{display:none;}
+    }
+    @media(max-width:480px){
+      .rpt-header{flex-direction:column;}
+    }
   </style>
-<script defer src="/_vercel/insights/script.js"></script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
 
@@ -151,8 +208,15 @@
     <a href="/" class="brand">
       <span class="brand-mark">
         <svg width="34" height="34" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:10px;">
-          <circle cx="200" cy="200" r="200" fill="#1A1A2E"/><circle cx="340" cy="80" r="130" fill="#E94560" opacity="0.10"/><circle cx="60" cy="310" r="90" fill="#16213E" opacity="0.9"/><circle cx="320" cy="300" r="70" fill="#0F3460" opacity="0.6"/><circle cx="100" cy="100" r="50" fill="#E94560" opacity="0.06"/>
-          <rect x="138" y="130" width="34" height="155" rx="4" fill="#FFFFFF"/><rect x="138" y="130" width="110" height="34" rx="4" fill="#FFFFFF"/><rect x="138" y="196" width="84" height="28" rx="4" fill="#E94560"/><circle cx="272" cy="318" r="18" fill="#E94560"/>
+          <circle cx="200" cy="200" r="200" fill="#1A1A2E"/>
+          <circle cx="340" cy="80"  r="130" fill="#E94560" opacity="0.10"/>
+          <circle cx="60"  cy="310" r="90"  fill="#16213E" opacity="0.9"/>
+          <circle cx="320" cy="300" r="70"  fill="#0F3460" opacity="0.6"/>
+          <circle cx="100" cy="100" r="50"  fill="#E94560" opacity="0.06"/>
+          <rect x="138" y="130" width="34"  height="155" rx="4" fill="#FFFFFF"/>
+          <rect x="138" y="130" width="110" height="34"  rx="4" fill="#FFFFFF"/>
+          <rect x="138" y="196" width="84"  height="28"  rx="4" fill="#E94560"/>
+          <circle cx="272" cy="318" r="18" fill="#E94560"/>
         </svg>
       </span>
       <span>Fonna</span>
@@ -167,42 +231,73 @@
 
 <main style="padding:36px 0 60px;">
   <div class="wrap">
+
     <div class="msg ok" id="purchaseBanner"></div>
+
+    <!-- TAB NAV -->
+    <div class="tab-nav" id="tabNav">
+      <button class="tab-btn active" id="tabAnalyse" onclick="switchTab('analyse')">Analyse</button>
+      <button class="tab-btn" id="tabReports" onclick="switchTab('reports')">My Reports</button>
+    </div>
+
+    <!-- TAB: ANALYSE -->
+    <div class="tab-panel active" id="panelAnalyse">
+
+    <!-- UPLOAD -->
     <div class="card" id="uploadCard">
       <div class="card-inner">
         <p class="card-title">Analyse a track</p>
         <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
-        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" style="display:none;" />
-        <div class="field full" style="margin-bottom:6px;">
-          <label>Audio file</label>
-          <div class="file-row">
-            <div class="file-name-box" id="fileNameBox">No file selected</div>
-            <button class="file-pick-btn" id="pickBtn" type="button">Choose file</button>
-          </div>
+
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-icon">♪</div>
+          <div class="drop-title">Drop your track here</div>
+          <div class="drop-sub">or click to browse</div>
+          <div class="drop-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF · AIF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
         </div>
-        <div class="file-limits">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
+        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
+
+        <div class="file-chosen" id="fileChosen">
+          <span class="file-name" id="fileName"></span>
+          <span class="file-sz" id="fileSz"></span>
+          <button class="file-clear" id="fileClear">✕</button>
+        </div>
+
         <div class="fields">
+          <div class="field">
+            <label for="trackTitle">Track title</label>
+            <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="artistName">Artist name</label>
+            <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
+          </div>
           <div class="field full">
             <label for="intentField">Intent <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional — steer the feedback)</span></label>
-            <textarea id="intentField" rows="2" maxlength="1500" placeholder="e.g. Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first."></textarea>
+            <textarea id="intentField" rows="2" maxlength="1500" placeholder="e.g. The mix is rough — focus on arrangement for now. Version 3. Recorded at home. (Add version number, mix stage, personal notes…)"></textarea>
           </div>
         </div>
+
         <div class="msg" id="uploadMsg"></div>
+
         <div class="submit-row">
           <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
           <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
         </div>
       </div>
     </div>
+
+    <!-- PROGRESS -->
     <div class="card progress-card" id="progressCard">
       <div class="card-inner" style="text-align:center;">
         <div class="spinner"></div>
-        <div class="p-title" id="progressTitle">Uploading your track…</div>
-        <div class="p-sub" id="progressMsg">Preparing your file for analysis.</div>
+        <div class="p-title">Listening to your track…</div>
+        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
         <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
-        <div id="progressFile" style="margin-top:14px;font-size:0.8rem;color:var(--muted);display:none;"></div>
       </div>
     </div>
+
+    <!-- REPORT -->
     <div class="card report-card" id="reportCard">
       <div class="card-inner">
         <div class="rpt-header">
@@ -211,137 +306,555 @@
             <div class="rpt-track" id="rTrack"></div>
             <div class="rpt-meta" id="rMeta"></div>
           </div>
-          <button class="btn sm ghost" id="newBtn">New analysis</button>
+          <div>
+            <button class="btn sm ghost" id="newBtn">New analysis</button>
+          </div>
         </div>
-        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="rSnapshot"></div></div>
-        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="rBestNext"></div></div>
+
+        <div class="snapshot">
+          <div class="lbl">Snapshot</div>
+          <div class="snapshot-text" id="rSnapshot"></div>
+        </div>
+
+        <div class="best-next">
+          <div class="lbl">Best next move</div>
+          <div class="best-next-text" id="rBestNext"></div>
+        </div>
+
         <div class="lbl">Arrangement · Production · Mix</div>
         <div class="domains" id="rDomains"></div>
+
         <div class="lbl">Priority actions</div>
         <div class="prio-items" id="rPrio"></div>
-        <div id="rTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="rTl"></div></div>
+
+        <div id="rTlWrap">
+          <div class="lbl">Timestamped notes</div>
+          <div class="tl-items" id="rTl"></div>
+        </div>
+
         <div class="lbl">Listening reference</div>
         <div class="ref-block" id="rRef"></div>
+
         <div class="limitations" id="rLim"></div>
       </div>
     </div>
+
+    <!-- UPGRADE PROMPT (shown to magic-link / free users after report) -->
+    <div class="upgrade-prompt" id="upgradePrompt">
+      <div class="up-eyebrow">Your report is ready</div>
+      <div class="up-title">Save it. Keep your history.</div>
+      <div class="up-body">Right now your report lives only in this session. Create a full account and every analysis you run is saved — ready to revisit whenever you need it.</div>
+      <div class="up-benefits">
+        <div class="up-benefit">Access all your past reports anytime</div>
+        <div class="up-benefit">Your credits carry over — nothing is lost</div>
+        <div class="up-benefit">One email and password — always direct access</div>
+        <div class="up-benefit">No more waiting for a new magic link</div>
+      </div>
+      <div class="up-actions">
+        <button class="btn primary" onclick="showCreateAccount()">Create a full account</button>
+        <button class="btn ghost" onclick="document.getElementById('upgradePrompt').classList.remove('show')">Maybe later</button>
+      </div>
+    </div>
+
+    <!-- BUY CREDITS -->
     <div class="card" id="creditsCard" style="display:none;">
       <div class="card-inner">
         <p class="card-title">Get more credits</p>
         <p class="card-sub">Each analysis uses 1 credit. Credits never expire.</p>
         <div class="msg" id="buyMsg"></div>
         <div class="credits-grid">
-          <div class="pack" id="buyStarter"><div class="pack-name">Starter</div><div class="pack-price">$9.99</div><div class="pack-credits">10 credits</div></div>
-          <div class="pack featured" id="buyCreator"><div class="pack-badge">Best value</div><div class="pack-name">Creator</div><div class="pack-price">$19.99</div><div class="pack-credits">30 credits</div></div>
+          <div class="pack" id="buyStarter">
+            <div class="pack-name">Starter</div>
+            <div class="pack-price">$9.99</div>
+            <div class="pack-credits">10 credits</div>
+          </div>
+          <div class="pack featured" id="buyCreator">
+            <div class="pack-badge">Best value</div>
+            <div class="pack-name">Creator</div>
+            <div class="pack-price">$19.99</div>
+            <div class="pack-credits">30 credits</div>
+          </div>
         </div>
       </div>
     </div>
+
+    </div><!-- /panelAnalyse -->
+
+    <!-- TAB: REPORTS -->
+    <div class="tab-panel" id="panelReports">
+      <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
+      <div id="reportsEmpty" class="reports-empty hidden">
+        <div class="icon">♪</div>
+        <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
+        <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
+      </div>
+      <div id="reportsList" class="report-list hidden"></div>
+      <div id="reportDetail" class="report-detail">
+        <div class="report-detail-back">
+          <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
+        </div>
+        <div class="card">
+          <div class="card-inner">
+            <div class="rpt-header">
+              <div>
+                <div class="lbl">Producer Report</div>
+                <div class="rpt-track" id="dTrack"></div>
+                <div class="rpt-meta" id="dMeta"></div>
+              </div>
+            </div>
+            <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
+            <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
+            <div class="lbl">Arrangement · Production · Mix</div>
+            <div class="domains" id="dDomains"></div>
+            <div class="lbl">Priority actions</div>
+            <div class="prio-items" id="dPrio"></div>
+            <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
+            <div class="lbl">Listening reference</div>
+            <div class="ref-block" id="dRef"></div>
+            <div class="limitations" id="dLim"></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /panelReports -->
+
   </div>
 </main>
 
 <footer class="footer">
   <div class="wrap">
     <div class="footer-shell">
-      <span>&copy; 2026 Fonna, a division of 170681639 Ontario</span>
+      <span>© 2026 Fonna</span>
       <div class="footer-links">
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="#" data-contact>Contact</a>
-      </div>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/fonna.ai/" target="_blank" rel="noopener" aria-label="Fonna on Instagram" class="social-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=948309055043464" target="_blank" rel="noopener" aria-label="Fonna on Facebook" class="social-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
+        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- CONTACT MODAL -->
-<div class="modal-backdrop" id="contactBackdrop">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-    <div class="modal-inner">
-      <h2 id="modalTitle">Get in touch</h2>
-      <p class="modal-sub">We read every message and reply as soon as we can.</p>
-      <div class="modal-msg" id="modalMsg"></div>
-      <div class="field"><label for="contactName">Name</label><input type="text" id="contactName" placeholder="Your name" maxlength="120" /></div>
-      <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" placeholder="you@example.com" maxlength="254" /></div>
-      <div class="field"><label for="contactMessage">Message</label><textarea id="contactMessage" rows="4" placeholder="What's on your mind?" maxlength="2000"></textarea></div>
-      <div class="submit-row"><button class="btn primary" id="contactSubmit">Send message</button></div>
-    </div>
-  </div>
-</div>
-
 <script type="module">
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+
 const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
+const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
 const API_BASE          = "https://listener-service-1esi.onrender.com";
-const sb  = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const get = id => document.getElementById(id);
-const navEmail=get("navEmail"),navCredits=get("navCredits"),navCreditN=get("navCreditCount"),logoutBtn=get("logoutBtn"),uploadCard=get("uploadCard"),progressCard=get("progressCard"),pBar=get("progressBar"),pMsg=get("progressMsg"),reportCard=get("reportCard"),creditsCard=get("creditsCard"),fileInput=get("fileInput"),fileNameBox=get("fileNameBox"),pickBtn=get("pickBtn"),intentField=get("intentField"),analyseBtn=get("analyseBtn"),uploadMsg=get("uploadMsg"),newBtn=get("newBtn"),purchaseBnr=get("purchaseBanner"),buyStarter=get("buyStarter"),buyCreator=get("buyCreator"),buyMsg=get("buyMsg");
-let session=null,file=null,progTmr=null;
-async function boot(){const{data:{session:s}}=await sb.auth.getSession();if(!s){window.location.href="/#login";return;}session=s;navEmail.textContent=s.user.email||"";await refreshCredits();creditsCard.style.display="block";checkBanner();}
-async function refreshCredits(){try{const r=await fetch(`${API_BASE}/me`,{headers:ah()});const d=await r.json();if(d?.user?.credits!==undefined){const c=Number(d.user.credits);navCreditN.textContent=c;navCredits.classList.add("show");if(c<1){setMsg(uploadMsg,"err","You have no credits remaining. Purchase a pack below to continue.");analyseBtn.disabled=true;}}}catch{}}
-function ah(){return{"Authorization":`Bearer ${session.access_token}`,"Content-Type":"application/json"};}
-function checkBanner(){const p=new URLSearchParams(location.search);if(p.get("purchase")==="success"){purchaseBnr.textContent="Purchase successful — your credits have been added.";purchaseBnr.classList.add("show");history.replaceState({},"","/app.html");setTimeout(refreshCredits,2500);}else if(p.get("purchase")==="cancelled"){purchaseBnr.textContent="Purchase cancelled. No charge was made.";purchaseBnr.classList.add("show");purchaseBnr.style.cssText+="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);color:var(--soft);";history.replaceState({},"","/app.html");}}
-logoutBtn.addEventListener("click",async()=>{await sb.auth.signOut();window.location.href="/";});
-pickBtn.addEventListener("click",()=>fileInput.click());
-fileInput.addEventListener("change",()=>{if(fileInput.files[0])pick(fileInput.files[0]);});
-function pick(f){file=f;fileNameBox.textContent=f.name+"  ("+fmtBytes(f.size)+")";fileNameBox.classList.add("has-file");pickBtn.textContent="Change file";analyseBtn.disabled=false;clearMsg(uploadMsg);}
-function clearFile(){file=null;fileInput.value="";fileNameBox.textContent="No file selected";fileNameBox.classList.remove("has-file");pickBtn.textContent="Choose file";analyseBtn.disabled=true;}
-function fmtBytes(b){return b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(1)+" MB";}
-analyseBtn.addEventListener("click",analyse);
-async function analyse(){if(!file)return;const{data:{session:s}}=await sb.auth.getSession();if(!s){window.location.href="/#login";return;}session=s;const title=file.name.replace(/\.[^/.]+$/,""),artist="Unknown",intent=intentField.value.trim()||"Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.";uploadCard.style.display="none";progressCard.classList.add("show");reportCard.classList.remove("show");startUploadProg(file.name,file.size);try{const buf=await file.arrayBuffer();const result=await new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open("POST",`${API_BASE}/critique-upload`);xhr.setRequestHeader("Authorization",`Bearer ${session.access_token}`);xhr.setRequestHeader("Content-Type",file.type||"application/octet-stream");xhr.setRequestHeader("X-Filename",file.name);xhr.setRequestHeader("X-Track-Title",title);xhr.setRequestHeader("X-Artist-Name",artist);xhr.setRequestHeader("X-Intent",intent);xhr.timeout=20*60*1000;xhr.upload.addEventListener("progress",e=>{if(e.lengthComputable){pBar.style.width=Math.round((e.loaded/e.total)*28)+"%";pMsg.textContent="Uploading… "+Math.round((e.loaded/e.total)*100)+"%";}});xhr.upload.addEventListener("load",()=>switchToAnalyseProg());xhr.addEventListener("load",()=>{try{resolve({ok:xhr.status>=200&&xhr.status<300,status:xhr.status,data:JSON.parse(xhr.responseText)});}catch{resolve({ok:false,status:xhr.status,data:{}});}});xhr.addEventListener("error",()=>reject(new Error("Network error — check your connection and try again.")));xhr.addEventListener("timeout",()=>reject(new Error("The request timed out. Your track may be too long or the server is busy.")));xhr.send(buf);});stopProg();if(!result.ok){let msg=result.data?.error?.message||"Server error ("+result.status+")";if(result.status===402)msg="No credits remaining. Purchase a pack below to continue.";else if(result.status===401)msg="Session expired — please log in again.";uploadCard.style.display="block";progressCard.classList.remove("show");setMsg(uploadMsg,"err",msg);if(result.status===401)setTimeout(()=>{window.location.href="/#login";},2000);return;}await refreshCredits();renderReport(result.data);}catch(e){stopProg();uploadCard.style.display="block";progressCard.classList.remove("show");setMsg(uploadMsg,"err",e.message||"Connection error — please check your network and try again.");}}
-const analyseMsgs=["Listening to your arrangement…","Checking production choices…","Reviewing the mix…","Pulling the report together…","Almost there…"];
-function startUploadProg(filename,filesize){pBar.style.width="0%";get("progressTitle").textContent="Uploading your track…";pMsg.textContent="Sending "+filename+" to Fonna.";const fi=get("progressFile");fi.textContent=fmtBytes(filesize);fi.style.display="block";}
-function switchToAnalyseProg(){clearInterval(progTmr);let pct=30,mi=0;pBar.style.width="30%";get("progressTitle").textContent="Analysing your track…";pMsg.textContent=analyseMsgs[mi++];get("progressFile").style.display="none";progTmr=setInterval(()=>{pct=Math.min(pct+Math.random()*4+1,90);pBar.style.width=pct+"%";if(mi<analyseMsgs.length)pMsg.textContent=analyseMsgs[mi++];},8000);}
-function stopProg(){clearInterval(progTmr);pBar.style.width="100%";get("progressTitle").textContent="Report ready!";pMsg.textContent="Your producer report is below.";}
-function renderReport(r){progressCard.classList.remove("show");reportCard.classList.add("show");get("rTrack").textContent=[r.input?.title,r.input?.artist].filter(Boolean).join(" — ")||"Untitled";const dur=r.input?.duration_seconds?Math.floor(r.input.duration_seconds/60)+":"+String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0"):"";get("rMeta").textContent=[dur?dur+" min":"",r.created_at?new Date(r.created_at).toLocaleDateString():""].filter(Boolean).join(" · ");get("rSnapshot").textContent=r.snapshot||"";get("rBestNext").textContent=r.best_next_move||"";const dEl=get("rDomains");dEl.innerHTML="";for(const[key,label]of[["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]){const d=r.domains?.[key];if(!d)continue;const el=document.createElement("div");el.className="domain";el.innerHTML="<div class='domain-name'>"+label+"</div>"+sec("What's working",d.what_works)+sec("What's holding it back",d.what_holds_it_back)+sec("Recommendations",d.recommendations);dEl.appendChild(el);}const pEl=get("rPrio");pEl.innerHTML="";(r.priority_actions||[]).forEach((a,i)=>{const row=document.createElement("div");row.className="prio-row";row.innerHTML="<div class='p-badge'>P"+(i+1)+"</div><div class='p-text'>"+esc(a.action)+"</div>";pEl.appendChild(row);});const tl=r.timeline_moments||[];const tlW=get("rTlWrap");const tlEl=get("rTl");tlEl.innerHTML="";if(tl.length){tlW.style.display="block";tl.forEach(m=>{const row=document.createElement("div");row.className="tl-row";row.innerHTML="<div class='tl-stamp'>"+ts(m.t_start)+"–"+ts(m.t_end)+"</div><div><div class='tl-domain'>"+esc(m.domain||"")+"</div><div class='tl-note'>"+esc(m.note||"")+"</div></div>";tlEl.appendChild(row);});}else{tlW.style.display="none";}const ref=r.listening_reference;const rRef=get("rRef");if(ref?.title){rRef.style.display="";rRef.innerHTML="<div><div class='lbl'>Reference track</div><div class='ref-track'>&ldquo;"+esc(ref.title)+"&rdquo; &mdash; "+esc(ref.artist||"")+"</div></div><div class='ref-why'>"+esc(ref.why||"")+"</div>";}else{rRef.style.display="none";}get("rLim").textContent=r.limitations||"";reportCard.scrollIntoView({behavior:"smooth",block:"start"});}
-function sec(label,arr){if(!arr?.length)return"";return"<div class='domain-sub'>"+label+"</div><ul class='dlist'>"+arr.map(i=>"<li>"+esc(i)+"</li>").join("")+"</ul>";}
-function ts(s){const t=Math.max(0,Math.floor(Number(s)||0));return Math.floor(t/60)+":"+String(t%60).padStart(2,"0");}
-function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
-newBtn.addEventListener("click",()=>{reportCard.classList.remove("show");uploadCard.style.display="block";clearFile();clearMsg(uploadMsg);intentField.value="";window.scrollTo({top:0,behavior:"smooth"});});
-async function buy(pack){clearMsg(buyMsg);setMsg(buyMsg,"info","Redirecting to checkout…");try{const r=await fetch(`${API_BASE}/create-checkout-session`,{method:"POST",headers:ah(),body:JSON.stringify({pack})});const d=await r.json();if(d?.url){window.location.href=d.url;}else{setMsg(buyMsg,"err",d?.error?.message||"Could not start checkout.");}}catch{setMsg(buyMsg,"err","Connection error — please try again.");}}
-buyStarter.addEventListener("click",()=>buy("starter"));
-buyCreator.addEventListener("click",()=>buy("creator"));
-function setMsg(el,type,txt){el.className="msg "+type+" show";el.textContent=txt;}
-function clearMsg(el){el.className="msg";el.textContent="";}
+
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const $ = id => document.getElementById(id);
+const navEmail    = $("navEmail");
+const navCredits  = $("navCredits");
+const navCreditN  = $("navCreditCount");
+const logoutBtn   = $("logoutBtn");
+const uploadCard  = $("uploadCard");
+const progressCard= $("progressCard");
+const pBar        = $("progressBar");
+const pMsg        = $("progressMsg");
+const reportCard  = $("reportCard");
+const creditsCard = $("creditsCard");
+const dropZone    = $("dropZone");
+const fileInput   = $("fileInput");
+const fileChosen  = $("fileChosen");
+const fileName    = $("fileName");
+const fileSz      = $("fileSz");
+const fileClear   = $("fileClear");
+const trackTitle  = $("trackTitle");
+const artistName  = $("artistName");
+const intentField = $("intentField");
+const analyseBtn  = $("analyseBtn");
+const uploadMsg   = $("uploadMsg");
+const newBtn      = $("newBtn");
+const purchaseBnr = $("purchaseBanner");
+const buyStarter  = $("buyStarter");
+const buyCreator  = $("buyCreator");
+const buyMsg      = $("buyMsg");
+const upgradePrompt = $("upgradePrompt");
+const backToListBtn = $("backToListBtn");
+
+let session     = null;
+let file        = null;
+let progTmr     = null;
+let isMagicUser = false;  // true if signed in via magic link (no password)
+
+// ── TABS ─────────────────────────────────────────────────────────────────
+window.switchTab = function(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  $('panel' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  $('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  if (tab === 'reports') loadReports();
+};
+
+// ── BOOT ──────────────────────────────────────────────────────────────────
+async function boot() {
+  const { data: { session: s } } = await sb.auth.getSession();
+  if (!s) { window.location.href = "/#login"; return; }
+  session = s;
+  navEmail.textContent = s.user.email || "";
+
+  // Detect magic link users: they have no password provider
+  const providers = s.user?.app_metadata?.providers || [];
+  isMagicUser = !providers.includes('email') || s.user?.app_metadata?.provider === 'magiclink';
+  // Simpler check: if identities only has 'email' and no password was set
+  // We'll check by attempting to detect OTP-only sessions
+  isMagicUser = s.user?.app_metadata?.provider === 'email' &&
+                !s.user?.identities?.some(i => i.identity_data?.password_hash);
+
+  await refreshCredits();
+  creditsCard.style.display = "block";
+  checkBanner();
+}
+
+async function refreshCredits() {
+  try {
+    const r = await fetch(`${API_BASE}/me`, { headers: ah() });
+    const d = await r.json();
+    if (d?.user?.credits !== undefined) {
+      const c = Number(d.user.credits);
+      navCreditN.textContent = c;
+      navCredits.classList.add("show");
+      if (c < 1) {
+        setMsg(uploadMsg, "err", "You have no credits remaining. Purchase a pack below to continue.");
+        analyseBtn.disabled = true;
+      }
+    }
+  } catch {}
+}
+
+function ah() {
+  return { "Authorization": `Bearer ${session.access_token}`, "Content-Type": "application/json" };
+}
+
+function checkBanner() {
+  const p = new URLSearchParams(location.search);
+  if (p.get("purchase") === "success") {
+    purchaseBnr.textContent = "Purchase successful — your credits have been added.";
+    purchaseBnr.classList.add("show");
+    history.replaceState({}, "", "/app.html");
+    setTimeout(refreshCredits, 2500);
+  } else if (p.get("purchase") === "cancelled") {
+    purchaseBnr.textContent = "Purchase cancelled. No charge was made.";
+    purchaseBnr.classList.add("show");
+    purchaseBnr.style.cssText += "background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);color:var(--soft);";
+    history.replaceState({}, "", "/app.html");
+  }
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────
+logoutBtn.addEventListener("click", async () => {
+  await sb.auth.signOut();
+  window.location.href = "/";
+});
+
+// Create full account — redirect to index with upgrade flag
+window.showCreateAccount = function() {
+  window.location.href = "/#login?upgrade=1";
+};
+
+// ── FILE ──────────────────────────────────────────────────────────────────
+dropZone.addEventListener("click", () => fileInput.click());
+dropZone.addEventListener("dragover",  e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
+dropZone.addEventListener("drop", e => { e.preventDefault(); dropZone.classList.remove("drag-over"); if (e.dataTransfer.files[0]) pick(e.dataTransfer.files[0]); });
+fileInput.addEventListener("change", () => { if (fileInput.files[0]) pick(fileInput.files[0]); });
+fileClear.addEventListener("click", clearFile);
+
+function pick(f) {
+  file = f;
+  fileName.textContent = f.name;
+  fileSz.textContent = fmtBytes(f.size);
+  fileChosen.classList.add("show");
+  analyseBtn.disabled = false;
+  clearMsg(uploadMsg);
+  if (!trackTitle.value) trackTitle.value = f.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g," ");
+}
+
+function clearFile() {
+  file = null; fileInput.value = "";
+  fileChosen.classList.remove("show");
+  analyseBtn.disabled = true;
+}
+
+function fmtBytes(b) {
+  return b < 1048576 ? (b/1024).toFixed(1)+" KB" : (b/1048576).toFixed(1)+" MB";
+}
+
+// ── ANALYSE ───────────────────────────────────────────────────────────────
+analyseBtn.addEventListener("click", analyse);
+
+async function analyse() {
+  if (!file) return;
+  const { data: { session: s } } = await sb.auth.getSession();
+  if (!s) { window.location.href = "/#login"; return; }
+  session = s;
+
+  const title  = trackTitle.value.trim() || file.name.replace(/\.[^/.]+$/,"");
+  const artist = artistName.value.trim() || "Unknown";
+  const intent = intentField.value.trim() ||
+    "Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.";
+
+  uploadCard.style.display = "none";
+  progressCard.classList.add("show");
+  reportCard.classList.remove("show");
+  upgradePrompt.classList.remove("show");
+  startProg();
+
+  try {
+    const buf = await file.arrayBuffer();
+    const res = await fetch(`${API_BASE}/critique-upload`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${session.access_token}`,
+        "Content-Type":  file.type || "application/octet-stream",
+        "X-Filename":    file.name,
+        "X-Track-Title": title,
+        "X-Artist-Name": artist,
+        "X-Intent":      intent,
+      },
+      body: buf,
+    });
+
+    stopProg();
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      let msg = err?.error?.message || `Server error (${res.status})`;
+      if (res.status === 402) msg = "No credits remaining. Purchase a pack below to continue.";
+      else if (res.status === 401) msg = "Session expired — please log in again.";
+      uploadCard.style.display = "block";
+      progressCard.classList.remove("show");
+      setMsg(uploadMsg, "err", msg);
+      if (res.status === 401) setTimeout(() => { window.location.href = "/#login"; }, 2000);
+      return;
+    }
+
+    const rpt = await res.json();
+    await refreshCredits();
+    renderReport(rpt);
+
+    // Show upgrade prompt for magic link users after report
+    if (isMagicUser) {
+      setTimeout(() => upgradePrompt.classList.add("show"), 800);
+    }
+
+  } catch (e) {
+    stopProg();
+    uploadCard.style.display = "block";
+    progressCard.classList.remove("show");
+    setMsg(uploadMsg, "err", "Connection error — please check your network and try again.");
+  }
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────
+const progMsgs = [
+  "Analysing arrangement…",
+  "Checking production choices…",
+  "Reviewing the mix…",
+  "Pulling the report together…",
+];
+
+function startProg() {
+  let pct = 5, mi = 0;
+  pBar.style.width = "5%";
+  pMsg.innerHTML = "Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.";
+  progTmr = setInterval(() => {
+    pct = Math.min(pct + Math.random()*5 + 1, 88);
+    pBar.style.width = pct + "%";
+    if (mi < progMsgs.length) { pMsg.textContent = progMsgs[mi++]; }
+  }, 7000);
+}
+
+function stopProg() {
+  clearInterval(progTmr);
+  pBar.style.width = "100%";
+}
+
+// ── RENDER REPORT (live analysis) ─────────────────────────────────────────
+function renderReport(r) {
+  progressCard.classList.remove("show");
+  reportCard.classList.add("show");
+  renderReportInto(r, {
+    track:"rTrack", meta:"rMeta", snapshot:"rSnapshot", bestNext:"rBestNext",
+    domains:"rDomains", prio:"rPrio", tlWrap:"rTlWrap", tl:"rTl", ref:"rRef", lim:"rLim"
+  });
+  reportCard.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+// ── RENDER REPORT (shared renderer) ───────────────────────────────────────
+function renderReportInto(r, ids) {
+  $(ids.track).textContent = [r.input?.title, r.input?.artist].filter(Boolean).join(" — ") || r.track_title || "Untitled";
+  const dur = r.input?.duration_seconds
+    ? `${Math.floor(r.input.duration_seconds/60)}:${String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0")}`
+    : "";
+  const dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString() : "";
+  $(ids.meta).textContent = [dur ? dur+" min" : "", dateStr].filter(Boolean).join(" · ");
+  $(ids.snapshot).textContent  = r.snapshot || "";
+  $(ids.bestNext).textContent  = r.best_next_move || "";
+
+  const dEl = $(ids.domains); dEl.innerHTML = "";
+  for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
+    const d = r.domains?.[key]; if (!d) continue;
+    const el = document.createElement("div"); el.className = "domain";
+    el.innerHTML = `<div class="domain-name">${label}</div>`
+      + sec("What's working", d.what_works)
+      + sec("What's holding it back", d.what_holds_it_back)
+      + sec("Recommendations", d.recommendations);
+    dEl.appendChild(el);
+  }
+
+  const pEl = $(ids.prio); pEl.innerHTML = "";
+  (r.priority_actions||[]).forEach((a,i) => {
+    const row = document.createElement("div"); row.className = "prio-row";
+    row.innerHTML = `<div class="p-badge">P${i+1}</div><div class="p-text">${esc(a.action)}</div>`;
+    pEl.appendChild(row);
+  });
+
+  const tl = r.timeline_moments||[];
+  const tlW = $(ids.tlWrap); const tlEl = $(ids.tl); tlEl.innerHTML = "";
+  if (tl.length) {
+    tlW.style.display = "block";
+    tl.forEach(m => {
+      const row = document.createElement("div"); row.className = "tl-row";
+      row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain||"")}</div><div class="tl-note">${esc(m.note||"")}</div></div>`;
+      tlEl.appendChild(row);
+    });
+  } else { tlW.style.display = "none"; }
+
+  const ref = r.listening_reference; const rRef = $(ids.ref);
+  if (ref?.title) {
+    rRef.style.display = "";
+    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist||"")}</div></div><div class="ref-why">${esc(ref.why||"")}</div>`;
+  } else { rRef.style.display = "none"; }
+
+  $(ids.lim).textContent = r.limitations || "";
+}
+
+// ── NEW ANALYSIS ──────────────────────────────────────────────────────────
+newBtn.addEventListener("click", () => {
+  reportCard.classList.remove("show");
+  upgradePrompt.classList.remove("show");
+  uploadCard.style.display = "block";
+  clearFile(); clearMsg(uploadMsg);
+  trackTitle.value = ""; artistName.value = ""; intentField.value = "";
+  window.scrollTo({ top:0, behavior:"smooth" });
+});
+
+// ── LOAD REPORTS (tab) ────────────────────────────────────────────────────
+async function loadReports() {
+  if (!session) return;
+  $("reportsLoading").style.display = "block";
+  $("reportsEmpty").classList.add("hidden");
+  $("reportsList").classList.add("hidden");
+  $("reportDetail").classList.remove("show");
+
+  try {
+    const { data, error } = await sb
+      .from("reports")
+      .select("id, created_at, track_title, duration_seconds, report_json")
+      .eq("user_id", session.user.id)
+      .order("created_at", { ascending: false })
+      .limit(50);
+
+    $("reportsLoading").style.display = "none";
+
+    if (error || !data?.length) {
+      $("reportsEmpty").classList.remove("hidden");
+      return;
+    }
+
+    const list = $("reportsList");
+    list.innerHTML = "";
+    data.forEach(row => {
+      const dur = row.duration_seconds
+        ? `${Math.floor(row.duration_seconds/60)}:${String(Math.floor(row.duration_seconds%60)).padStart(2,"0")}`
+        : "";
+      const date = row.created_at ? new Date(row.created_at).toLocaleDateString() : "";
+      const el = document.createElement("div");
+      el.className = "report-row";
+      el.innerHTML = `
+        <div class="report-row-left">
+          <div class="report-title">${esc(row.track_title || "Untitled")}</div>
+          <div class="report-meta">${[dur ? dur+" min" : "", date].filter(Boolean).join(" · ")}</div>
+        </div>
+        <div class="report-arrow">›</div>`;
+      el.addEventListener("click", () => openReportDetail(row));
+      list.appendChild(el);
+    });
+    list.classList.remove("hidden");
+
+  } catch(e) {
+    $("reportsLoading").style.display = "none";
+    $("reportsEmpty").classList.remove("hidden");
+  }
+}
+
+function openReportDetail(row) {
+  $("reportsList").classList.add("hidden");
+  $("reportsEmpty").classList.add("hidden");
+  const detail = $("reportDetail");
+  detail.classList.add("show");
+
+  // Parse report JSON if it's a string
+  let r = row.report_json;
+  if (typeof r === "string") { try { r = JSON.parse(r); } catch {} }
+
+  // Merge metadata for the renderer
+  if (r && !r.input) r.input = { title: row.track_title, duration_seconds: row.duration_seconds };
+  if (r) r.created_at = row.created_at;
+
+  renderReportInto(r || {}, {
+    track:"dTrack", meta:"dMeta", snapshot:"dSnapshot", bestNext:"dBestNext",
+    domains:"dDomains", prio:"dPrio", tlWrap:"dTlWrap", tl:"dTl", ref:"dRef", lim:"dLim"
+  });
+
+  detail.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function closeReportDetail() {
+  $("reportDetail").classList.remove("show");
+  $("reportsList").classList.remove("hidden");
+}
+
+backToListBtn.addEventListener("click", closeReportDetail);
+
+// ── BUY CREDITS ───────────────────────────────────────────────────────────
+async function buy(pack) {
+  clearMsg(buyMsg); setMsg(buyMsg,"info","Redirecting to checkout…");
+  try {
+    const r = await fetch(`${API_BASE}/create-checkout-session`, {
+      method:"POST", headers:ah(), body:JSON.stringify({ pack }),
+    });
+    const d = await r.json();
+    if (d?.url) { window.location.href = d.url; }
+    else { setMsg(buyMsg,"err", d?.error?.message || "Could not start checkout."); }
+  } catch { setMsg(buyMsg,"err","Connection error — please try again."); }
+}
+
+buyStarter.addEventListener("click", () => buy("starter"));
+buyCreator.addEventListener("click", () => buy("creator"));
+
+// ── HELPERS ───────────────────────────────────────────────────────────────
+function sec(label, arr) {
+  if (!arr?.length) return "";
+  return `<div class="domain-sub">${label}</div><ul class="dlist">${arr.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
+}
+
+function ts(s) {
+  const t = Math.max(0,Math.floor(Number(s)||0));
+  return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`;
+}
+
+function esc(s) {
+  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+function setMsg(el,type,txt) { el.className=`msg ${type} show`; el.textContent=txt; }
+function clearMsg(el)        { el.className="msg"; el.textContent=""; }
+
+// ── GO ────────────────────────────────────────────────────────────────────
 boot();
 </script>
-
-<script>
-(function() {
-  const SUPABASE_URL = "https://kukqwyakchsaqquudqiu.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
-  const backdrop=document.getElementById("contactBackdrop"),closeBtn=document.getElementById("modalClose"),submitBtn=document.getElementById("contactSubmit"),msgEl=document.getElementById("modalMsg"),nameEl=document.getElementById("contactName"),emailEl=document.getElementById("contactEmail"),msgInput=document.getElementById("contactMessage");
-  function openModal(){backdrop.classList.add("open");nameEl.focus();}
-  function closeModal(){backdrop.classList.remove("open");nameEl.value="";emailEl.value="";msgInput.value="";msgEl.className="modal-msg";msgEl.textContent="";submitBtn.disabled=false;submitBtn.textContent="Send message";}
-  document.addEventListener("click",function(e){if(e.target.closest("[data-contact], .contact-trigger")){e.preventDefault();openModal();}});
-  closeBtn.addEventListener("click",closeModal);
-  backdrop.addEventListener("click",function(e){if(e.target===backdrop)closeModal();});
-  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeModal();});
-  submitBtn.addEventListener("click",async function(){
-    const name=nameEl.value.trim(),email=emailEl.value.trim(),message=msgInput.value.trim();
-    msgEl.className="modal-msg";msgEl.textContent="";
-    if(!name){showErr("Please enter your name.");return;}
-    if(!email||!email.includes("@")){showErr("Please enter a valid email address.");return;}
-    if(!message){showErr("Please enter a message.");return;}
-    submitBtn.disabled=true;submitBtn.textContent="Sending…";
-    try{
-      const res=await fetch(`${SUPABASE_URL}/rest/v1/contacts`,{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_ANON_KEY,"Authorization":`Bearer ${SUPABASE_ANON_KEY}`,"Prefer":"return=minimal"},body:JSON.stringify({name,email,message})});
-      if(res.ok||res.status===201){window.location.href="/thankyou.html";}
-      else{const err=await res.json().catch(()=>({}));showErr(err?.message||"Something went wrong. Please try again.");submitBtn.disabled=false;submitBtn.textContent="Send message";}
-    }catch{showErr("Connection error — please check your network and try again.");submitBtn.disabled=false;submitBtn.textContent="Send message";}
-  });
-  function showErr(msg){msgEl.className="modal-msg err";msgEl.textContent=msg;}
-})();
-</script>
-
 </body>
 </html>
