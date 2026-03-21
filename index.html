@@ -832,12 +832,9 @@
           }
           return;
         }
-        if (data?.session) {
-          setPwdStatus("Signed in — taking you to your app…", "sent");
-          setTimeout(() => { window.location.href = "/app.html"; }, 900);
-        } else {
-          setPwdStatus("Something went wrong — please try again.", "error");
-        }
+        // Session confirmed — redirect immediately, don't wait for onAuthStateChange
+        setPwdStatus("Signed in — taking you to your app…", "sent");
+        window.location.href = "/app.html";
       } catch(e) {
         signInBtn.disabled = false;
         signInBtn.textContent = "Sign in";
@@ -938,7 +935,8 @@
       pwdSignUp.style.display = "block";
     }
 
-    supabase.auth.onAuthStateChange(() => refreshAuthUI());
+    // Don't use onAuthStateChange here — it conflicts with signInWithPassword
+    // Just check session once on load
     refreshAuthUI();
 
     // Smooth scroll for all anchor links
