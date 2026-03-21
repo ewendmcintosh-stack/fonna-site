@@ -661,7 +661,88 @@ function renderReport(r) {
   reportCard.scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
-// ── RENDER REPORT (shared renderer) ───────────────────────────────────────
+// ── RENDER FLAT REPORT (from Supabase flat columns) ──────────────────────
+function renderFlatReport(d) {
+  const ids = {
+    track:"dTrack", meta:"dMeta", snapshot:"dSnapshot", bestNext:"dBestNext",
+    domains:"dDomains", prio:"dPrio", tlWrap:"dTlWrap", tl:"dTl",
+    ref:"dRef", lim:"dLim"
+  };
+
+  // Track + meta
+  $(ids.track).textContent = d.track_title || "Untitled";
+  const dur = d.duration_seconds
+    ? `${Math.floor(d.duration_seconds/60)}:${String(Math.floor(d.duration_seconds%60)).padStart(2,"0")}`
+    : "";
+  const dateStr = d.created_at ? new Date(d.created_at).toLocaleDateString() : "";
+  $(ids.meta).textContent = [dur ? dur+" min" : "", dateStr].filter(Boolean).join(" · ");
+
+  // Snapshot + best next move
+  $(ids.snapshot).textContent  = d.snapshot || "";
+  $(ids.bestNext).textContent  = d.best_next_move || "";
+
+  // Domains — from flat columns
+  const dEl = $(ids.domains); dEl.innerHTML = "";
+  for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
+    const works    = d[key + "_what_works"];
+    const holds    = d[key + "_what_holds_it_back"];
+    const recs     = d[key + "_recommendations"];
+    if (!works && !holds && !recs) continue;
+    const el = document.createElement("div"); el.className = "domain";
+    // Parse if stored as JSON string
+    const parseArr = v => {
+      if (!v) return [];
+      if (Array.isArray(v)) return v;
+      try { return JSON.parse(v); } catch { return [v]; }
+    };
+    el.innerHTML = `<div class="domain-name">${label}</div>`
+      + sec("What's working",        parseArr(works))
+      + sec("What's holding it back",parseArr(holds))
+      + sec("Recommendations",       parseArr(recs));
+    dEl.appendChild(el);
+  }
+
+  // Priority actions
+  const pEl = $(ids.prio); pEl.innerHTML = "";
+  const parseJSON = v => {
+    if (!v) return [];
+    if (Array.isArray(v)) return v;
+    try { return JSON.parse(v); } catch { return []; }
+  };
+  parseJSON(d.priority_actions).forEach((a, i) => {
+    const row = document.createElement("div"); row.className = "prio-row";
+    const action = typeof a === "string" ? a : (a.action || JSON.stringify(a));
+    row.innerHTML = `<div class="p-badge">P${i+1}</div><div class="p-text">${esc(action)}</div>`;
+    pEl.appendChild(row);
+  });
+
+  // Timeline
+  const tl = parseJSON(d.timeline_moments);
+  const tlW = $(ids.tlWrap); const tlEl = $(ids.tl); tlEl.innerHTML = "";
+  if (tl.length) {
+    tlW.style.display = "block";
+    tl.forEach(m => {
+      const row = document.createElement("div"); row.className = "tl-row";
+      row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain||"")}</div><div class="tl-note">${esc(m.note||"")}</div></div>`;
+      tlEl.appendChild(row);
+    });
+  } else { tlW.style.display = "none"; }
+
+  // Listening reference
+  const ref = parseJSON(d.listening_reference);
+  const rRef = $(ids.ref);
+  const refObj = Array.isArray(ref) ? ref[0] : ref;
+  if (refObj?.title) {
+    rRef.style.display = "";
+    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(refObj.title)}&rdquo; &mdash; ${esc(refObj.artist||"")}</div></div><div class="ref-why">${esc(refObj.why||"")}</div>`;
+  } else { rRef.style.display = "none"; }
+
+  $(ids.lim).textContent = d.limitations || "";
+
+  $("reportDetail").scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+// ── RENDER REPORT (shared renderer for live analyses) ─────────────────────
 function renderReportInto(r, ids) {
   $(ids.track).textContent = [r.input?.title, r.input?.artist].filter(Boolean).join(" — ") || r.track_title || "Untitled";
   const dur = r.input?.duration_seconds
@@ -798,16 +879,8 @@ async function openReportDetail(row) {
   if (r && !r.input) r.input = { title: data.track_title, duration_seconds: data.duration_seconds };
   if (r) r.created_at = data.created_at;
 
-  if (r) {
-    renderReportInto(r, {
-      track:"dTrack", meta:"dMeta", snapshot:"dSnapshot", bestNext:"dBestNext",
-      domains:"dDomains", prio:"dPrio", tlWrap:"dTlWrap", tl:"dTl", ref:"dRef", lim:"dLim"
-    });
-  } else {
-    // No recognised report column — show what we have
-    $("dTrack").textContent = data.track_title || "Untitled";
-    $("dSnapshot").textContent = "Report content not found. Columns available: " + Object.keys(data).join(", ");
-  }
+  // Data is stored in flat columns — render directly
+  renderFlatReport(data);
 
   detail.scrollIntoView({ behavior:"smooth", block:"start" });
 }
