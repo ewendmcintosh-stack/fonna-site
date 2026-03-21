@@ -687,7 +687,7 @@
                   <button class="btn primary" id="signInBtn" type="button">Sign in</button>
                 </div>
               </div>
-              <div class="pwd-switch">Don't have a password yet? <a id="showSignUpLink">Create a full account →</a></div>
+              <div class="pwd-switch">Don't have a password yet? <a id="showSignUpLink">Create a full account →</a> &nbsp;·&nbsp; <a id="forgotPasswordLink">Set / reset password →</a></div>
             </div>
 
             <!-- Create account form (shown on toggle) -->
@@ -701,6 +701,14 @@
                 </div>
               </div>
               <div class="pwd-switch">Already have a password? <a id="showSignInLink">Sign in →</a></div>
+              <!-- Reset helper — shown when account already exists -->
+              <div id="resetHelper" style="display:none;margin-top:16px;padding:14px 16px;border-radius:12px;background:rgba(233,69,96,0.06);border:1px solid rgba(233,69,96,0.2);">
+                <p style="margin:0 0 10px;font-size:0.82rem;color:var(--soft);line-height:1.6;"><strong style="color:var(--text);">Set a password</strong> — enter your email and we'll send you a link to set a password for your existing account.</p>
+                <div style="display:flex;gap:8px;">
+                  <input id="resetHelperEmail" type="email" placeholder="Your email" style="flex:1;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:9px 12px;background:rgba(255,255,255,0.05);color:var(--text);font-size:0.88rem;font-family:inherit;" />
+                  <button id="sendResetBtn" class="btn primary sm" type="button">Send link</button>
+                </div>
+              </div>
             </div>
 
             <div id="authStatusPwd" class="auth-status-pwd"></div>
@@ -776,6 +784,18 @@
       authStatusPwd.className = "auth-status-pwd" + (type ? " " + type : "") + " visible";
     }
 
+    // Forgot / set password inline
+    document.getElementById("forgotPasswordLink").addEventListener("click", async () => {
+      const email = $("pwdEmail").value.trim();
+      const entered = email || window.prompt("Enter your email address to receive a password reset link:");
+      if (!entered) return;
+      const { error } = await supabase.auth.resetPasswordForEmail(entered, {
+        redirectTo: "https://fonna.ai/app.html?setpassword=1"
+      });
+      if (error) { setPwdStatus("Could not send reset email: " + error.message, "error"); }
+      else { setPwdStatus("Password reset link sent to " + entered + " — check your inbox (and junk folder).", "sent"); }
+    });
+
     // Toggle between sign in and create account
     showSignUpLink.addEventListener("click", () => {
       pwdSignIn.style.display = "none";
@@ -795,12 +815,34 @@
       if (!email || !password) { setPwdStatus("Please enter your email and password.", "error"); return; }
       signInBtn.disabled = true;
       signInBtn.textContent = "Signing in...";
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      signInBtn.disabled = false;
-      signInBtn.textContent = "Sign in";
-      if (error) { setPwdStatus("Sign in failed: " + error.message, "error"); return; }
-      setPwdStatus("Signed in — taking you to your app…", "sent");
-      setTimeout(() => { window.location.href = "/app.html"; }, 900);
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        signInBtn.disabled = false;
+        signInBtn.textContent = "Sign in";
+        if (error) {
+          const msg = error.message.toLowerCase();
+          if (msg.includes("invalid") || msg.includes("credentials") || msg.includes("password")) {
+            // Could be a magic-link-only account with no password set
+            setPwdStatus(
+              "Sign in failed. If you\'ve only ever used a magic link, you may not have a password yet — use \"Create a full account\" and look for the \"Set a password\" option.",
+              "error"
+            );
+          } else {
+            setPwdStatus("Sign in failed: " + error.message, "error");
+          }
+          return;
+        }
+        if (data?.session) {
+          setPwdStatus("Signed in — taking you to your app…", "sent");
+          setTimeout(() => { window.location.href = "/app.html"; }, 900);
+        } else {
+          setPwdStatus("Something went wrong — please try again.", "error");
+        }
+      } catch(e) {
+        signInBtn.disabled = false;
+        signInBtn.textContent = "Sign in";
+        setPwdStatus("Connection error — please check your network and try again.", "error");
+      }
     });
 
     // Create full account with password
@@ -813,12 +855,48 @@
       if (password.length < 8) { setPwdStatus("Password must be at least 8 characters.", "error"); return; }
       createAccountBtn.disabled = true;
       createAccountBtn.textContent = "Creating account...";
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({ email, password });
       createAccountBtn.disabled = false;
       createAccountBtn.textContent = "Create account";
-      if (error) { setPwdStatus("Account creation failed: " + error.message, "error"); return; }
-      setPwdStatus("Account created — taking you to your app…", "sent");
-      setTimeout(() => { window.location.href = "/app.html"; }, 900);
+      if (error) {
+        // Account already exists — offer password reset instead
+        const msg = error.message.toLowerCase();
+        if (msg.includes("already") || msg.includes("registered") || msg.includes("exists")) {
+          setPwdStatus(
+            "An account with that email already exists. If you previously used a magic link, use \"Set a password\" below to attach a password to your account.",
+            "error"
+          );
+          // Show the reset password helper
+          document.getElementById("resetHelper").style.display = "block";
+          document.getElementById("resetHelperEmail").value = email;
+        } else {
+          setPwdStatus("Account creation failed: " + error.message, "error");
+        }
+        return;
+      }
+      // Supabase returns a user even if account exists (obfuscation) — check for session
+      if (data?.session) {
+        setPwdStatus("Account created — taking you to your app…", "sent");
+        setTimeout(() => { window.location.href = "/app.html"; }, 900);
+      } else {
+        // No session means confirmation email sent or account already existed
+        setPwdStatus("Check your inbox to confirm your account, then sign in.", "sent");
+      }
+    });
+
+    // Set / reset password for existing magic link accounts
+    document.getElementById("sendResetBtn").addEventListener("click", async () => {
+      const email = document.getElementById("resetHelperEmail").value.trim();
+      if (!email) return;
+      const btn = document.getElementById("sendResetBtn");
+      btn.disabled = true; btn.textContent = "Sending...";
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: "https://fonna.ai/app.html?setpassword=1"
+      });
+      btn.disabled = false; btn.textContent = "Send link";
+      if (error) { setPwdStatus("Could not send reset email: " + error.message, "error"); return; }
+      setPwdStatus("Password set link sent to " + email + " — click it to set your password, then sign in here.", "sent");
+      document.getElementById("resetHelper").style.display = "none";
     });
 
     // ── Already logged in state ───────────────────────────────────────────
