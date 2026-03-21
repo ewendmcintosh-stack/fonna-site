@@ -374,6 +374,45 @@
     }
     .auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
     .auth-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    /* Two-lane auth layout */
+    .auth-lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .auth-lane { padding: 32px; position: relative; z-index: 1; }
+    .auth-lane-divider {
+      width: 1px; background: rgba(255,255,255,0.08);
+      margin: 24px 0; align-self: stretch;
+    }
+    .auth-lane-label {
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--coral); font-weight: 600; margin-bottom: 14px;
+    }
+    .auth-lane h4 { font-size: 1rem; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em; }
+    .auth-lane p.lane-sub { font-size: 0.85rem; color: var(--muted); margin: 0 0 18px; line-height: 1.6; }
+    .pwd-form { display: grid; gap: 10px; }
+    .pwd-form input {
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
+      padding: 12px 14px; background: rgba(255,255,255,0.05);
+      color: var(--text); font-size: 0.92rem; font-family: inherit;
+      transition: border-color 0.15s; width: 100%;
+    }
+    .pwd-form input:focus { outline: none; border-color: var(--coral); }
+    .pwd-form input::placeholder { color: var(--muted); }
+    .pwd-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+    .pwd-switch { font-size: 0.78rem; color: var(--muted); margin-top: 10px; }
+    .pwd-switch a { color: var(--coral); cursor: pointer; text-decoration: underline; }
+    .auth-status-pwd {
+      margin-top: 10px; padding: 10px 14px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+      color: var(--soft); font-size: 0.85rem; line-height: 1.5;
+      display: none;
+    }
+    .auth-status-pwd.visible { display: block; }
+    .auth-status-pwd.sent { border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.06); color: #7febb0; }
+    .auth-status-pwd.error { border-color: rgba(233,69,96,0.3); background: rgba(233,69,96,0.06); color: #f4a0af; }
+    @media (max-width: 680px) {
+      .auth-lanes { grid-template-columns: 1fr; }
+      .auth-lane-divider { width: auto; height: 1px; margin: 0 24px; }
+      .auth-lane { padding: 24px; }
+    }
     @media (max-width: 520px) {
       .magic-input-row { flex-direction: column; }
       .magic-input-row .btn { width: 100%; justify-content: center; }
@@ -591,50 +630,82 @@
       <div class="section-head">
         <div>
           <h2>Get into Fonna</h2>
-          <p>New or returning — enter your email and we'll send you a link straight to your app. First time? Your free credit is waiting. Coming back? Your credits are right where you left them.</p>
+          <p>New here? Get a free analysis link. Already a member? Sign in directly with your email and password.</p>
         </div>
       </div>
-      <div class="auth-shell">
-        <div class="auth-card main">
-          <div id="authLoggedOut">
+
+      <!-- Already logged in state -->
+      <div id="authLoggedIn" class="auth-card hidden" style="margin-bottom:0;">
+        <div class="auth-userbox">
+          <div class="row"><span class="k">Logged in as</span><strong id="userEmailText">—</strong></div>
+          <div class="row"><span class="k">Credits</span><strong id="userCreditsText">—</strong></div>
+          <div class="auth-actions">
+            <a class="btn primary" href="/app.html">Go to app</a>
+            <button class="btn" id="logoutBtn" type="button">Log out</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-lane auth card -->
+      <div class="auth-card main" id="authLoggedOut">
+        <div class="auth-lanes">
+
+          <!-- LANE 1: New user / magic link -->
+          <div class="auth-lane">
+            <div class="auth-lane-label">New to Fonna</div>
+            <h4>Try it free</h4>
+            <p class="lane-sub">Enter your email and we'll send you a link straight to the app — 1 free analysis credit included, no password needed.</p>
             <div class="magic-form">
-              <div>
-                <p style="margin:0 0 16px;font-size:1.05rem;font-weight:600;color:var(--text);position:relative;z-index:1;">New or returning — just enter your email</p>
-                <div class="magic-input-row">
-                  <input id="authEmail" type="email" placeholder="Your email address" autocomplete="email" />
-                  <button class="btn primary" id="magicBtn" type="button">Send link</button>
-                </div>
+              <div class="magic-input-row">
+                <input id="authEmail" type="email" placeholder="Your email address" autocomplete="email" />
+                <button class="btn primary" id="magicBtn" type="button">Send link</button>
               </div>
               <div class="trust-signals">
                 <span class="trust-pill">1 free credit on signup</span>
                 <span class="trust-pill">Audio deleted after analysis</span>
                 <span class="trust-pill">No commitment</span>
-                <span class="trust-pill">No password needed</span>
               </div>
             </div>
+            <div id="authStatus" class="auth-status"></div>
           </div>
-          <div id="authLoggedIn" class="hidden">
-            <div class="auth-userbox">
-              <div class="row"><span class="k">Logged in as</span><strong id="userEmailText">—</strong></div>
-              <div class="row"><span class="k">Credits</span><strong id="userCreditsText">—</strong></div>
-              <div class="auth-actions">
-                <a class="btn primary" href="/app.html">Go to app</a>
-                <button class="btn" id="logoutBtn" type="button">Log out</button>
+
+          <!-- Divider -->
+          <div class="auth-lane-divider"></div>
+
+          <!-- LANE 2: Returning member / password -->
+          <div class="auth-lane">
+            <div class="auth-lane-label">Already a member</div>
+            <h4>Sign in</h4>
+            <p class="lane-sub">Sign in with your email and password to access your credits and report history.</p>
+
+            <!-- Sign in form (default) -->
+            <div id="pwdSignIn">
+              <div class="pwd-form">
+                <input id="pwdEmail" type="email" placeholder="Email address" autocomplete="email" />
+                <input id="pwdPassword" type="password" placeholder="Password" autocomplete="current-password" />
+                <div class="pwd-actions">
+                  <button class="btn primary" id="signInBtn" type="button">Sign in</button>
+                </div>
               </div>
+              <div class="pwd-switch">Don't have a password yet? <a id="showSignUpLink">Create a full account →</a></div>
             </div>
+
+            <!-- Create account form (shown on toggle) -->
+            <div id="pwdSignUp" style="display:none;">
+              <div class="pwd-form">
+                <input id="newEmail" type="email" placeholder="Email address" autocomplete="email" />
+                <input id="newPassword" type="password" placeholder="Choose a password" autocomplete="new-password" />
+                <input id="newPasswordConfirm" type="password" placeholder="Confirm password" autocomplete="new-password" />
+                <div class="pwd-actions">
+                  <button class="btn primary" id="createAccountBtn" type="button">Create account</button>
+                </div>
+              </div>
+              <div class="pwd-switch">Already have a password? <a id="showSignInLink">Sign in →</a></div>
+            </div>
+
+            <div id="authStatusPwd" class="auth-status-pwd"></div>
           </div>
-          <div id="authStatus" class="auth-status"></div>
-        </div>
-        <div class="auth-card">
-          <h3 style="margin-top:0;margin-bottom:8px;position:relative;z-index:1;">How it works</h3>
-          <p style="color:var(--soft);line-height:1.8;margin-top:0;position:relative;z-index:1;">One box, one button — works for everyone. Enter your email and we'll send you a secure link direct to the app.</p>
-          <p style="color:var(--soft);line-height:1.8;position:relative;z-index:1;"><strong style="color:var(--text);">First time?</strong> Your free analysis credit is waiting the moment you click the link.</p>
-          <p style="color:var(--soft);line-height:1.8;position:relative;z-index:1;"><strong style="color:var(--text);">Coming back?</strong> Your credits are exactly where you left them — no password to remember, ever.</p>
-          <ul class="feature-list" style="position:relative;z-index:1;">
-            <li>Free account: 1 credit</li>
-            <li>Starter: 10 credits for $9.99</li>
-            <li>Creator: 30 credits for $19.99</li>
-          </ul>
+
         </div>
       </div>
     </section>
@@ -652,31 +723,115 @@
     </div>
   </footer>
 
-  <script type="module">
+    <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
     const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const authStatus    = document.getElementById("authStatus");
-    const authLoggedOut = document.getElementById("authLoggedOut");
-    const authLoggedIn  = document.getElementById("authLoggedIn");
-    const authEmail     = document.getElementById("authEmail");
-    const magicBtn      = document.getElementById("magicBtn");
-    const logoutBtn     = document.getElementById("logoutBtn");
-    const userEmailText  = document.getElementById("userEmailText");
-    const userCreditsText = document.getElementById("userCreditsText");
+    const $ = id => document.getElementById(id);
 
-    function setStatus(msg, type="") {
+    // ── Magic link lane ───────────────────────────────────────────────────
+    const magicBtn   = $("magicBtn");
+    const authEmail  = $("authEmail");
+    const authStatus = $("authStatus");
+
+    function setMagicStatus(msg, type="") {
       authStatus.textContent = msg;
       authStatus.className = "auth-status" + (type ? " " + type : "") + " visible";
     }
 
+    magicBtn.addEventListener("click", async () => {
+      const email = authEmail.value.trim();
+      if (!email) { setMagicStatus("Please enter your email address.", "error"); return; }
+      magicBtn.disabled = true;
+      magicBtn.textContent = "Sending...";
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: "https://fonna.ai/app.html", shouldCreateUser: true }
+      });
+      magicBtn.disabled = false;
+      magicBtn.textContent = "Send link";
+      if (error) { setMagicStatus("Something went wrong: " + error.message, "error"); return; }
+      setMagicStatus("Check your inbox — we've sent a link to " + email + ". If you don't see it within a minute, check your junk or spam folder.", "sent");
+      authEmail.value = "";
+    });
+
+    // ── Password lane ─────────────────────────────────────────────────────
+    const signInBtn       = $("signInBtn");
+    const createAccountBtn= $("createAccountBtn");
+    const pwdEmail        = $("pwdEmail");
+    const pwdPassword     = $("pwdPassword");
+    const newEmail        = $("newEmail");
+    const newPassword     = $("newPassword");
+    const newPasswordConfirm = $("newPasswordConfirm");
+    const authStatusPwd   = $("authStatusPwd");
+    const showSignUpLink  = $("showSignUpLink");
+    const showSignInLink  = $("showSignInLink");
+    const pwdSignIn       = $("pwdSignIn");
+    const pwdSignUp       = $("pwdSignUp");
+
+    function setPwdStatus(msg, type="") {
+      authStatusPwd.textContent = msg;
+      authStatusPwd.className = "auth-status-pwd" + (type ? " " + type : "") + " visible";
+    }
+
+    // Toggle between sign in and create account
+    showSignUpLink.addEventListener("click", () => {
+      pwdSignIn.style.display = "none";
+      pwdSignUp.style.display = "block";
+      authStatusPwd.className = "auth-status-pwd";
+    });
+    showSignInLink.addEventListener("click", () => {
+      pwdSignUp.style.display = "none";
+      pwdSignIn.style.display = "block";
+      authStatusPwd.className = "auth-status-pwd";
+    });
+
+    // Sign in with password
+    signInBtn.addEventListener("click", async () => {
+      const email = pwdEmail.value.trim();
+      const password = pwdPassword.value;
+      if (!email || !password) { setPwdStatus("Please enter your email and password.", "error"); return; }
+      signInBtn.disabled = true;
+      signInBtn.textContent = "Signing in...";
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      signInBtn.disabled = false;
+      signInBtn.textContent = "Sign in";
+      if (error) { setPwdStatus("Sign in failed: " + error.message, "error"); return; }
+      setPwdStatus("Signed in — taking you to your app…", "sent");
+      setTimeout(() => { window.location.href = "/app.html"; }, 900);
+    });
+
+    // Create full account with password
+    createAccountBtn.addEventListener("click", async () => {
+      const email    = newEmail.value.trim();
+      const password = newPassword.value;
+      const confirm  = newPasswordConfirm.value;
+      if (!email || !password) { setPwdStatus("Please fill in all fields.", "error"); return; }
+      if (password !== confirm) { setPwdStatus("Passwords don't match.", "error"); return; }
+      if (password.length < 8) { setPwdStatus("Password must be at least 8 characters.", "error"); return; }
+      createAccountBtn.disabled = true;
+      createAccountBtn.textContent = "Creating account...";
+      const { error } = await supabase.auth.signUp({ email, password });
+      createAccountBtn.disabled = false;
+      createAccountBtn.textContent = "Create account";
+      if (error) { setPwdStatus("Account creation failed: " + error.message, "error"); return; }
+      setPwdStatus("Account created — taking you to your app…", "sent");
+      setTimeout(() => { window.location.href = "/app.html"; }, 900);
+    });
+
+    // ── Already logged in state ───────────────────────────────────────────
+    const authLoggedOut = $("authLoggedOut");
+    const authLoggedIn  = $("authLoggedIn");
+    const userEmailText  = $("userEmailText");
+    const userCreditsText= $("userCreditsText");
+    const logoutBtn      = $("logoutBtn");
+
     async function loadProfile(user) {
-      const { data, error } = await supabase.from("users").select("email, credits").eq("id", user.id).single();
-      if (error) { userEmailText.textContent = user.email || "Unknown"; userCreditsText.textContent = "Unavailable"; return; }
-      userEmailText.textContent = data.email || user.email || "Unknown";
-      userCreditsText.textContent = String(data.credits ?? 0);
+      const { data } = await supabase.from("users").select("email, credits").eq("id", user.id).single();
+      userEmailText.textContent  = data?.email || user.email || "Unknown";
+      userCreditsText.textContent = String(data?.credits ?? 0);
     }
 
     async function refreshAuthUI() {
@@ -684,7 +839,6 @@
       if (!session?.user) {
         authLoggedOut.classList.remove("hidden");
         authLoggedIn.classList.add("hidden");
-        authStatus.className = "auth-status";
         return;
       }
       authLoggedOut.classList.add("hidden");
@@ -692,38 +846,24 @@
       await loadProfile(session.user);
     }
 
-    magicBtn.addEventListener("click", async () => {
-      const email = authEmail.value.trim();
-      if (!email) { setStatus("Please enter your email address.", "error"); return; }
-      magicBtn.disabled = true;
-      magicBtn.textContent = "Sending...";
-      setStatus("");
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: "https://fonna.ai/app.html",
-          shouldCreateUser: true,
-        }
-      });
-      magicBtn.disabled = false;
-      magicBtn.textContent = "Send link";
-      if (error) {
-        setStatus("Something went wrong: " + error.message, "error");
-        return;
-      }
-      setStatus("Check your inbox — we've sent a link to " + email + ". Click it to get started. If you don't see it within a minute, check your junk or spam folder.", "sent");
-      authEmail.value = "";
-    });
-
     logoutBtn.addEventListener("click", async () => {
       await supabase.auth.signOut();
       refreshAuthUI();
     });
 
+    // Check if arriving from upgrade prompt in app
+    const params = new URLSearchParams(location.search);
+    if (params.get("upgrade") === "1") {
+      // Scroll to login section and show the create account form
+      document.querySelector("#login").scrollIntoView({ behavior: "smooth" });
+      pwdSignIn.style.display = "none";
+      pwdSignUp.style.display = "block";
+    }
+
     supabase.auth.onAuthStateChange(() => refreshAuthUI());
     refreshAuthUI();
 
-    // Smooth scroll for all anchor links — prevents full page reload on Vercel
+    // Smooth scroll for all anchor links
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener("click", function(e) {
         const target = document.getElementById(this.getAttribute("href").slice(1));
