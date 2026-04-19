@@ -228,8 +228,8 @@
 
     <!-- TAB NAV -->
     <div class="tab-nav" id="tabNav">
-      <button class="tab-btn active" id="tabAnalyse" onclick="switchTab('analyse')">Analyse</button>
-      <button class="tab-btn" id="tabReports" onclick="switchTab('reports')">My Reports</button>
+      <button class="tab-btn active" id="tabAnalyse" >Analyse</button>
+      <button class="tab-btn" id="tabReports" >My Reports</button>
     </div>
 
     <!-- TAB: ANALYSE -->
@@ -337,7 +337,7 @@
         <div class="up-benefit">No more waiting for a new magic link</div>
       </div>
       <div class="up-actions">
-        <button class="btn primary" onclick="showCreateAccount()">Create a full account</button>
+        <button class="btn primary" id="createAccountBtn">Create a full account</button>
         <button class="btn ghost" onclick="document.getElementById('upgradePrompt').classList.remove('show')">Maybe later</button>
       </div>
     </div>
@@ -457,16 +457,16 @@ const backToListBtn = $("backToListBtn");
 let session     = null;
 let file        = null;
 let progTmr     = null;
-let isMagicUser = false;  // true if signed in via magic link (no password)
+let isMagicUser = false;
 
 // ── TABS ─────────────────────────────────────────────────────────────────
-window.switchTab = function(tab) {
+function switchTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   $('panel' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
   $('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
   if (tab === 'reports') loadReports();
-};
+}
 
 // ── BOOT ──────────────────────────────────────────────────────────────────
 async function boot() {
@@ -474,15 +474,8 @@ async function boot() {
   if (!s) { window.location.href = "/#login"; return; }
   session = s;
   navEmail.textContent = s.user.email || "";
-
-  // Detect magic link users: they have no password provider
-  const providers = s.user?.app_metadata?.providers || [];
-  isMagicUser = !providers.includes('email') || s.user?.app_metadata?.provider === 'magiclink';
-  // Simpler check: if identities only has 'email' and no password was set
-  // We'll check by attempting to detect OTP-only sessions
   isMagicUser = s.user?.app_metadata?.provider === 'email' &&
                 !s.user?.identities?.some(i => i.identity_data?.password_hash);
-
   await refreshCredits();
   creditsCard.style.display = "block";
   checkBanner();
@@ -529,7 +522,6 @@ logoutBtn.addEventListener("click", async () => {
   window.location.href = "/";
 });
 
-// Create full account — redirect to index with upgrade flag
 window.showCreateAccount = function() {
   window.location.href = "/#login?upgrade=1";
 };
@@ -613,7 +605,6 @@ async function analyse() {
     await refreshCredits();
     renderReport(rpt);
 
-    // Show upgrade prompt for magic link users after report
     if (isMagicUser) {
       setTimeout(() => upgradePrompt.classList.add("show"), 800);
     }
@@ -669,7 +660,6 @@ function renderFlatReport(d) {
     ref:"dRef", lim:"dLim"
   };
 
-  // Track + meta
   $(ids.track).textContent = d.track_title || "Untitled";
   const dur = d.duration_seconds
     ? `${Math.floor(d.duration_seconds/60)}:${String(Math.floor(d.duration_seconds%60)).padStart(2,"0")}`
@@ -677,28 +667,26 @@ function renderFlatReport(d) {
   const dateStr = d.created_at ? new Date(d.created_at).toLocaleDateString() : "";
   $(ids.meta).textContent = [dur ? dur+" min" : "", dateStr].filter(Boolean).join(" · ");
 
-  // Snapshot + best next move
-  $(ids.snapshot).textContent  = d.snapshot || "";
-  $(ids.bestNext).textContent  = d.best_next_move || "";
+  $(ids.snapshot).textContent = d.snapshot || "";
+  $(ids.bestNext).textContent = d.best_next_move || "";
 
-  // Domains — from flat columns
+  // Domains — flat columns, values arrive as arrays from jsonb
   const dEl = $(ids.domains); dEl.innerHTML = "";
   for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
-    const works    = d[key + "_what_works"];
-    const holds    = d[key + "_what_holds_it_back"];
-    const recs     = d[key + "_recommendations"];
+    const works = d[key + "_what_works"];
+    const holds = d[key + "_what_holds_it_back"];
+    const recs  = d[key + "_recommendations"];
     if (!works && !holds && !recs) continue;
     const el = document.createElement("div"); el.className = "domain";
-    // Parse if stored as JSON string
     const parseArr = v => {
       if (!v) return [];
       if (Array.isArray(v)) return v;
       try { return JSON.parse(v); } catch { return [v]; }
     };
     el.innerHTML = `<div class="domain-name">${label}</div>`
-      + sec("What's working",        parseArr(works))
-      + sec("What's holding it back",parseArr(holds))
-      + sec("Recommendations",       parseArr(recs));
+      + sec("What's working",         parseArr(works))
+      + sec("What's holding it back", parseArr(holds))
+      + sec("Recommendations",        parseArr(recs));
     dEl.appendChild(el);
   }
 
@@ -728,17 +716,19 @@ function renderFlatReport(d) {
     });
   } else { tlW.style.display = "none"; }
 
-  // Listening reference
-  const ref = parseJSON(d.listening_reference);
+  // ── LISTENING REFERENCE (fixed) ──────────────────────────────────────
+  // Supabase returns jsonb columns already parsed — don't JSON.parse() an object
+  const refRaw = d.listening_reference;
+  const ref = Array.isArray(refRaw) ? refRaw[0]
+             : (refRaw && typeof refRaw === "object") ? refRaw
+             : (() => { try { const p = JSON.parse(refRaw); return Array.isArray(p) ? p[0] : p; } catch { return null; } })();
   const rRef = $(ids.ref);
-  const refObj = Array.isArray(ref) ? ref[0] : ref;
-  if (refObj?.title) {
+  if (ref?.title) {
     rRef.style.display = "";
-    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(refObj.title)}&rdquo; &mdash; ${esc(refObj.artist||"")}</div></div><div class="ref-why">${esc(refObj.why||"")}</div>`;
+    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist||"")}</div></div><div class="ref-why">${esc(ref.why||"")}</div>`;
   } else { rRef.style.display = "none"; }
 
   $(ids.lim).textContent = d.limitations || "";
-
   $("reportDetail").scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
@@ -750,8 +740,8 @@ function renderReportInto(r, ids) {
     : "";
   const dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString() : "";
   $(ids.meta).textContent = [dur ? dur+" min" : "", dateStr].filter(Boolean).join(" · ");
-  $(ids.snapshot).textContent  = r.snapshot || "";
-  $(ids.bestNext).textContent  = r.best_next_move || "";
+  $(ids.snapshot).textContent = r.snapshot || "";
+  $(ids.bestNext).textContent = r.best_next_move || "";
 
   const dEl = $(ids.domains); dEl.innerHTML = "";
   for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
@@ -858,7 +848,6 @@ async function openReportDetail(row) {
   $("dTrack").textContent = row.track_title || "Loading…";
   $("dMeta").textContent = "";
 
-  // Fetch the full row to get report content
   const { data, error } = await sb
     .from("reports")
     .select("*")
@@ -871,17 +860,7 @@ async function openReportDetail(row) {
     return;
   }
 
-  // Find the report content — try common column names
-  let r = data.report_json || data.critique || data.result || data.report || data.data || null;
-  if (typeof r === "string") { try { r = JSON.parse(r); } catch {} }
-
-  // Merge metadata
-  if (r && !r.input) r.input = { title: data.track_title, duration_seconds: data.duration_seconds };
-  if (r) r.created_at = data.created_at;
-
-  // Data is stored in flat columns — render directly
   renderFlatReport(data);
-
   detail.scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
@@ -927,6 +906,9 @@ function setMsg(el,type,txt) { el.className=`msg ${type} show`; el.textContent=t
 function clearMsg(el)        { el.className="msg"; el.textContent=""; }
 
 // ── GO ────────────────────────────────────────────────────────────────────
+$("tabAnalyse").addEventListener("click", () => switchTab("analyse"));
+$("tabReports").addEventListener("click", () => switchTab("reports"));
+$("createAccountBtn").addEventListener("click", () => { window.location.href = "/#login?upgrade=1"; });
 boot();
 </script>
   <script defer src="/_vercel/insights/script.js"></script>
