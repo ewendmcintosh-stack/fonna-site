@@ -328,11 +328,6 @@
       padding: 14px 16px;
     }
 
-    .what-item-icon {
-      font-size: 1.1rem;
-      margin-bottom: 6px;
-    }
-
     .what-item-label {
       font-size: 0.78rem;
       font-weight: 600;
@@ -536,6 +531,72 @@
     .what      { animation: fadeUp 0.5s 0.3s ease both; }
     .foot      { animation: fadeUp 0.5s 0.4s ease both; }
 
+    /* ── PRIVACY BLOCK ── */
+    .privacy {
+      width: 100%;
+      max-width: 420px;
+      margin-top: 16px;
+      background: rgba(15, 52, 96, 0.3);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 20px 22px;
+    }
+
+    .privacy-title {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--coral);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .privacy-rows {
+      display: grid;
+      gap: 10px;
+    }
+
+    .privacy-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .privacy-check {
+      color: var(--coral);
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .privacy-text {
+      font-size: 0.8rem;
+      color: var(--soft);
+      line-height: 1.55;
+    }
+
+    .privacy-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .privacy-fine {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 12px;
+      line-height: 1.55;
+      opacity: 0.8;
+    }
+
+    .privacy-fine a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .privacy-fine a:hover { color: var(--coral); }
+
     /* ── MOBILE TWEAKS ── */
     @media (max-width: 400px) {
       .form-card { padding: 24px 20px; }
@@ -587,11 +648,31 @@
     </div>
     <div class="trust-row">
       <span class="pill"><span class="pill-check">✓</span> 1 free credit</span>
-      <span class="pill"><span class="pill-check">✓</span> Audio deleted after</span>
+      <span class="pill"><span class="pill-check">✓</span> Your audio stays yours</span>
       <span class="pill"><span class="pill-check">✓</span> No password needed</span>
     </div>
     <div class="status" id="status"></div>
     <div class="member-link">Already a member? <a href="/#login">Sign in →</a></div>
+  </div>
+
+  <!-- Privacy reassurance -->
+  <div class="privacy">
+    <div class="privacy-title">Your music stays yours</div>
+    <div class="privacy-rows">
+      <div class="privacy-row">
+        <div class="privacy-check">✓</div>
+        <div class="privacy-text"><strong>We never keep your audio.</strong> Your file is deleted from our servers the moment your report is generated. We don't store it, archive it, or listen to it.</div>
+      </div>
+      <div class="privacy-row">
+        <div class="privacy-check">✓</div>
+        <div class="privacy-text"><strong>You own everything.</strong> Uploading to Fonna gives us nothing. No rights, no licence, no claim over your music — finished or not.</div>
+      </div>
+      <div class="privacy-row">
+        <div class="privacy-check">✓</div>
+        <div class="privacy-text"><strong>Your email is just for sign-in.</strong> We won't sell it, share it, or use it to market to you.</div>
+      </div>
+    </div>
+    <div class="privacy-fine">Analysis is powered by OpenAI's API. Per their standard policy, audio inputs may be held by OpenAI for up to 30 days for abuse monitoring before deletion. They do not train on API data by default. <a href="/terms.html">Full details in our Terms.</a></div>
   </div>
 
   <!-- What you get -->
@@ -599,22 +680,18 @@
     <div class="what-title">What's in every report</div>
     <div class="what-items">
       <div class="what-item">
-        <div class="what-item-icon">🎚</div>
         <div class="what-item-label">Arrangement</div>
         <div class="what-item-sub">Is each section earning its place?</div>
       </div>
       <div class="what-item">
-        <div class="what-item-icon">🎛</div>
         <div class="what-item-label">Production</div>
         <div class="what-item-sub">Are your choices landing the way you think?</div>
       </div>
       <div class="what-item">
-        <div class="what-item-icon">🔊</div>
         <div class="what-item-label">Mix</div>
         <div class="what-item-sub">What's getting in the way?</div>
       </div>
       <div class="what-item">
-        <div class="what-item-icon">⏱</div>
         <div class="what-item-label">Timestamped</div>
         <div class="what-item-sub">Notes tied to specific moments in the track.</div>
       </div>
