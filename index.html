@@ -125,7 +125,6 @@
       position: relative;
       overflow: hidden;
     }
-    /* Circle accent on hero-copy */
     .hero-copy::after {
       content: '';
       position: absolute;
@@ -136,7 +135,6 @@
       opacity: 0.09;
       pointer-events: none;
     }
-    /* Circle accent on hero-card */
     .hero-card::before {
       content: '';
       position: absolute;
@@ -221,7 +219,6 @@
       padding: 24px;
       position: relative; overflow: hidden;
     }
-    /* Subtle circle per card */
     .card::after {
       content: '';
       position: absolute;
@@ -374,7 +371,6 @@
     }
     .auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
     .auth-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    /* Two-lane auth layout */
     .auth-lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
     .auth-lane { padding: 32px; position: relative; z-index: 1; }
     .auth-lane-divider {
@@ -423,6 +419,25 @@
     .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
     .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
     .footer-links a:hover { color: var(--text); }
+
+    /* ── CONTACT MODAL ── */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,10,20,0.75); backdrop-filter: blur(6px); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); padding: 36px; width: 100%; max-width: 480px; position: relative; overflow: hidden; }
+    .modal::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: var(--coral); opacity: 0.07; pointer-events: none; }
+    .modal-inner { position: relative; z-index: 1; }
+    .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--muted); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; line-height: 1; transition: background 0.15s, color 0.15s; z-index: 2; }
+    .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .modal h2 { margin: 0 0 6px; font-size: 1.3rem; letter-spacing: -0.03em; }
+    .modal .modal-sub { margin: 0 0 24px; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+    .modal .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .modal .field label { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+    .modal .field input, .modal .field textarea { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 14px; color: var(--text); font-size: 0.92rem; font-family: inherit; transition: border-color 0.15s; resize: none; }
+    .modal .field input:focus, .modal .field textarea:focus { outline: none; border-color: var(--coral); }
+    .modal .field input::placeholder, .modal .field textarea::placeholder { color: var(--muted); }
+    .modal .modal-msg { display: none; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 14px; line-height: 1.5; }
+    .modal .modal-msg.err { display: block; background: rgba(233,69,96,0.1); border: 1px solid rgba(233,69,96,0.25); color: #f4a0af; }
+    .modal .submit-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
 
     /* ── UTILS ── */
     .hidden { display: none !important; }
@@ -556,7 +571,7 @@
         <div class="card"><h3>No generic praise</h3><p>The goal is not to flatter the track. The goal is to help you understand how the record is landing and what is getting in its way.</p></div>
         <div class="card"><h3>No songwriting detours</h3><p>Fonna stays disciplined. It does not drift into lyric critique or vague genre commentary when the real issue is production or mix.</p></div>
         <div class="card"><h3>A fresh listen, every time</h3><p>Every revision deserves honest ears. Upload after each major session and hear the track as it actually sounds- not as you remember it.</p></div>
-        <div class="card"><h3>A reference track in every report</h3><p>Every report includes a real released song chosen for what your mix needs to learn — not because your track sounds like it, but because it solves the same problem. It is the move a good producer makes in the room.</p></div>     
+        <div class="card"><h3>A reference track in every report</h3><p>Every report includes a real released song chosen for what your mix needs to learn — not because your track sounds like it, but because it solves the same problem. It is the move a good producer makes in the room.</p></div>
       </div>
     </section>
 
@@ -702,7 +717,6 @@
                 </div>
               </div>
               <div class="pwd-switch">Already have a password? <a id="showSignInLink">Sign in →</a></div>
-              <!-- Reset helper — shown when account already exists -->
               <div id="resetHelper" style="display:none;margin-top:16px;padding:14px 16px;border-radius:12px;background:rgba(233,69,96,0.06);border:1px solid rgba(233,69,96,0.2);">
                 <p style="margin:0 0 10px;font-size:0.82rem;color:var(--soft);line-height:1.6;"><strong style="color:var(--text);">Set a password</strong> — enter your email and we'll send you a link to set a password for your existing account.</p>
                 <div style="display:flex;gap:8px;">
@@ -727,12 +741,28 @@
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        <a href="#" data-contact>Contact</a>
       </div>
     </div>
   </footer>
 
-    <script type="module">
+  <!-- CONTACT MODAL -->
+  <div class="modal-backdrop" id="contactBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <div class="modal-inner">
+        <h2 id="modalTitle">Get in touch</h2>
+        <p class="modal-sub">We read every message and reply as soon as we can.</p>
+        <div class="modal-msg" id="modalMsg"></div>
+        <div class="field"><label for="contactName">Name</label><input type="text" id="contactName" placeholder="Your name" maxlength="120" /></div>
+        <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" placeholder="you@example.com" maxlength="254" /></div>
+        <div class="field"><label for="contactMessage">Message</label><textarea id="contactMessage" rows="4" placeholder="What's on your mind?" maxlength="2000"></textarea></div>
+        <div class="submit-row"><button class="btn primary" id="contactSubmit">Send message</button></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
     const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
@@ -785,7 +815,6 @@
       authStatusPwd.className = "auth-status-pwd" + (type ? " " + type : "") + " visible";
     }
 
-    // Forgot / set password inline
     document.getElementById("forgotPasswordLink").addEventListener("click", async () => {
       const email = $("pwdEmail").value.trim();
       const entered = email || window.prompt("Enter your email address to receive a password reset link:");
@@ -797,7 +826,6 @@
       else { setPwdStatus("Password reset link sent to " + entered + " — check your inbox (and junk folder).", "sent"); }
     });
 
-    // Toggle between sign in and create account
     showSignUpLink.addEventListener("click", () => {
       pwdSignIn.style.display = "none";
       pwdSignUp.style.display = "block";
@@ -809,7 +837,6 @@
       authStatusPwd.className = "auth-status-pwd";
     });
 
-    // Sign in with password
     signInBtn.addEventListener("click", async () => {
       const email = pwdEmail.value.trim();
       const password = pwdPassword.value;
@@ -823,7 +850,6 @@
         if (error) {
           const msg = error.message.toLowerCase();
           if (msg.includes("invalid") || msg.includes("credentials") || msg.includes("password")) {
-            // Could be a magic-link-only account with no password set
             setPwdStatus(
               "Sign in failed. If you\'ve only ever used a magic link, you may not have a password yet — use \"Create a full account\" and look for the \"Set a password\" option.",
               "error"
@@ -833,7 +859,6 @@
           }
           return;
         }
-        // Session confirmed — redirect immediately, don't wait for onAuthStateChange
         setPwdStatus("Signed in — taking you to your app…", "sent");
         window.location.href = "/app.html";
       } catch(e) {
@@ -843,7 +868,6 @@
       }
     });
 
-    // Create full account with password
     createAccountBtn.addEventListener("click", async () => {
       const email    = newEmail.value.trim();
       const password = newPassword.value;
@@ -857,14 +881,12 @@
       createAccountBtn.disabled = false;
       createAccountBtn.textContent = "Create account";
       if (error) {
-        // Account already exists — offer password reset instead
         const msg = error.message.toLowerCase();
         if (msg.includes("already") || msg.includes("registered") || msg.includes("exists")) {
           setPwdStatus(
             "An account with that email already exists. If you previously used a magic link, use \"Set a password\" below to attach a password to your account.",
             "error"
           );
-          // Show the reset password helper
           document.getElementById("resetHelper").style.display = "block";
           document.getElementById("resetHelperEmail").value = email;
         } else {
@@ -872,17 +894,14 @@
         }
         return;
       }
-      // Supabase returns a user even if account exists (obfuscation) — check for session
       if (data?.session) {
         setPwdStatus("Account created — taking you to your app…", "sent");
         setTimeout(() => { window.location.href = "/app.html"; }, 900);
       } else {
-        // No session means confirmation email sent or account already existed
         setPwdStatus("Check your inbox to confirm your account, then sign in.", "sent");
       }
     });
 
-    // Set / reset password for existing magic link accounts
     document.getElementById("sendResetBtn").addEventListener("click", async () => {
       const email = document.getElementById("resetHelperEmail").value.trim();
       if (!email) return;
@@ -927,20 +946,15 @@
       refreshAuthUI();
     });
 
-    // Check if arriving from upgrade prompt in app
     const params = new URLSearchParams(location.search);
     if (params.get("upgrade") === "1") {
-      // Scroll to login section and show the create account form
       document.querySelector("#login").scrollIntoView({ behavior: "smooth" });
       pwdSignIn.style.display = "none";
       pwdSignUp.style.display = "block";
     }
 
-    // Don't use onAuthStateChange here — it conflicts with signInWithPassword
-    // Just check session once on load
     refreshAuthUI();
 
-    // Smooth scroll for all anchor links
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener("click", function(e) {
         const target = document.getElementById(this.getAttribute("href").slice(1));
@@ -950,6 +964,65 @@
         }
       });
     });
+
+    // ── Contact modal ─────────────────────────────────────────────────────
+    const SUPABASE_ANON_KEY_FULL = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
+    const backdrop    = $("contactBackdrop");
+    const closeBtn    = $("modalClose");
+    const submitBtn   = $("contactSubmit");
+    const msgEl       = $("modalMsg");
+    const nameEl      = $("contactName");
+    const emailEl     = $("contactEmail");
+    const msgInput    = $("contactMessage");
+
+    function openModal()  { backdrop.classList.add("open"); nameEl.focus(); }
+    function closeModal() {
+      backdrop.classList.remove("open");
+      nameEl.value = ""; emailEl.value = ""; msgInput.value = "";
+      msgEl.className = "modal-msg"; msgEl.textContent = "";
+      submitBtn.disabled = false; submitBtn.textContent = "Send message";
+    }
+
+    document.addEventListener("click", e => {
+      if (e.target.closest("[data-contact]")) { e.preventDefault(); openModal(); }
+    });
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", e => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+    submitBtn.addEventListener("click", async () => {
+      const name    = nameEl.value.trim();
+      const email   = emailEl.value.trim();
+      const message = msgInput.value.trim();
+      msgEl.className = "modal-msg"; msgEl.textContent = "";
+      if (!name)                        { showErr("Please enter your name."); return; }
+      if (!email || !email.includes("@")) { showErr("Please enter a valid email address."); return; }
+      if (!message)                     { showErr("Please enter a message."); return; }
+      submitBtn.disabled = true; submitBtn.textContent = "Sending…";
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/contacts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY_FULL,
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY_FULL}`,
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({ name, email, message })
+        });
+        if (res.ok || res.status === 201) { window.location.href = "/thankyou.html"; }
+        else {
+          const err = await res.json().catch(() => ({}));
+          showErr(err?.message || "Something went wrong. Please try again.");
+          submitBtn.disabled = false; submitBtn.textContent = "Send message";
+        }
+      } catch {
+        showErr("Connection error — please check your network and try again.");
+        submitBtn.disabled = false; submitBtn.textContent = "Send message";
+      }
+    });
+
+    function showErr(msg) { msgEl.className = "modal-msg err"; msgEl.textContent = msg; }
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
