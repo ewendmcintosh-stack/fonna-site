@@ -380,8 +380,10 @@
     setStatus("Check your inbox — we've sent a link to " + email + ". If you don't see it, check your junk folder.", "sent");
     emailInput.value = "";
   });
-
   emailInput.addEventListener("keydown", e => { if (e.key === "Enter") sendBtn.click(); });
+</script>
+
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
+
