@@ -141,7 +141,7 @@
     .privacy-fine a:hover { color: var(--coral); }
 
     /* ── WHAT YOU GET ── */
-    .what { width: 100%; max-width: 420px; margin-top: 32px; }
+    .what { width: 100%; max-width: 420px; margin-top: 32px; margin-bottom: 32px; }
     .what-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 500; text-align: center; margin-bottom: 16px; }
     .what-items { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .what-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 14px 16px; }
@@ -163,8 +163,8 @@
     .logo      { animation: fadeUp 0.5s ease both; }
     .hero      { animation: fadeUp 0.5s 0.1s ease both; }
     .proof     { animation: fadeUp 0.5s 0.2s ease both; }
-    .form-card { animation: fadeUp 0.5s 0.3s ease both; }
-    .what      { animation: fadeUp 0.5s 0.4s ease both; }
+    .what      { animation: fadeUp 0.5s 0.3s ease both; }
+    .form-card { animation: fadeUp 0.5s 0.4s ease both; }
     .foot      { animation: fadeUp 0.5s 0.5s ease both; }
 
     @media (max-width: 400px) {
@@ -271,6 +271,33 @@
     </div>
   </div>
 
+  <!-- WHAT'S IN EVERY REPORT MOVED ABOVE FORM -->
+  <div class="what">
+    <div class="what-title">What's in every report</div>
+    <div class="what-items">
+      <div class="what-item">
+        <div class="what-item-label">Arrangement</div>
+        <div class="what-item-sub">Is each section earning its place?</div>
+      </div>
+      <div class="what-item">
+        <div class="what-item-label">Production</div>
+        <div class="what-item-sub">Are your choices landing the way you think?</div>
+      </div>
+      <div class="what-item">
+        <div class="what-item-label">Mix</div>
+        <div class="what-item-sub">What's getting in the way?</div>
+      </div>
+      <div class="what-item">
+        <div class="what-item-label">Timestamped notes</div>
+        <div class="what-item-sub">Notes tied to specific moments in the track.</div>
+      </div>
+      <div class="what-item featured" style="grid-column: 1 / -1;">
+        <div class="what-item-label">Reference track</div>
+        <div class="what-item-sub">A real released song chosen for what your mix needs to learn — not a comparison, a listening lesson.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- FORM WITH TIGHTENED TRUST COPY -->
   <div class="form-card">
     <label class="form-label" for="emailInput">Get your free analysis — no password needed</label>
@@ -310,32 +337,6 @@
       </div>
     </div>
     <div class="privacy-fine">Analysis is powered by OpenAI's API. Per their standard policy, audio inputs may be held by OpenAI for up to 30 days for abuse monitoring before deletion. They do not train on API data by default. <a href="/terms.html">Full details in our Terms.</a></div>
-  </div>
-
-  <div class="what">
-    <div class="what-title">What's in every report</div>
-    <div class="what-items">
-      <div class="what-item">
-        <div class="what-item-label">Arrangement</div>
-        <div class="what-item-sub">Is each section earning its place?</div>
-      </div>
-      <div class="what-item">
-        <div class="what-item-label">Production</div>
-        <div class="what-item-sub">Are your choices landing the way you think?</div>
-      </div>
-      <div class="what-item">
-        <div class="what-item-label">Mix</div>
-        <div class="what-item-sub">What's getting in the way?</div>
-      </div>
-      <div class="what-item">
-        <div class="what-item-label">Timestamped notes</div>
-        <div class="what-item-sub">Notes tied to specific moments in the track.</div>
-      </div>
-      <div class="what-item featured" style="grid-column: 1 / -1;">
-        <div class="what-item-label">Reference track</div>
-        <div class="what-item-sub">A real released song chosen for what your mix needs to learn — not a comparison, a listening lesson.</div>
-      </div>
-    </div>
   </div>
 
   <div class="foot">
