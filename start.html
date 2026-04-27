@@ -56,6 +56,34 @@
     .headline { font-family: 'Lora', serif; font-size: clamp(2rem, 8vw, 3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 16px; color: var(--text); }
     .headline em { font-style: italic; color: var(--soft); }
     .subhead { font-size: 1rem; color: var(--muted); line-height: 1.65; max-width: 38ch; margin: 0 auto 8px; font-weight: 300; }
+
+    /* ── PROOF (now above form) ── */
+    .proof { width: 100%; max-width: 420px; margin-bottom: 32px; }
+    .proof-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 500; text-align: center; margin-bottom: 16px; }
+    .proof-card { background: rgba(15, 52, 96, 0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; }
+    .proof-header { background: rgba(22, 33, 62, 0.8); padding: 14px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .proof-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral); flex-shrink: 0; }
+    .proof-header-label { font-size: 0.72rem; font-weight: 600; color: var(--soft); text-transform: uppercase; letter-spacing: 0.08em; }
+    .proof-body { padding: 20px; }
+    .proof-block { margin-bottom: 18px; }
+    .proof-block:last-child { margin-bottom: 0; }
+    .proof-block-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--coral); font-weight: 600; margin-bottom: 8px; }
+    .proof-best-next { font-size: 0.92rem; font-weight: 600; color: var(--text); line-height: 1.5; padding: 12px 14px; background: rgba(233,69,96,0.07); border: 1px solid rgba(233,69,96,0.18); border-radius: 12px; }
+    .proof-ts-list { display: grid; gap: 8px; }
+    .proof-ts-row { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .proof-ts-row:last-child { border-bottom: none; }
+    .proof-ts-stamp { font-size: 0.75rem; font-weight: 700; color: var(--coral); font-family: monospace; flex-shrink: 0; min-width: 80px; padding-top: 1px; }
+    .proof-ts-note { font-size: 0.82rem; color: var(--soft); line-height: 1.5; }
+    .proof-prio-list { display: grid; gap: 8px; }
+    .proof-prio-row { display: flex; gap: 10px; align-items: flex-start; }
+    .proof-prio-badge { width: 24px; height: 24px; border-radius: 999px; background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.25); color: var(--coral); font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .proof-prio-text { font-size: 0.82rem; color: var(--soft); line-height: 1.55; }
+    .proof-ref-block { display: flex; gap: 14px; align-items: flex-start; padding: 12px 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; }
+    .proof-ref-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .proof-ref-track { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .proof-ref-why { font-size: 0.78rem; color: var(--soft); line-height: 1.5; }
+
+    /* ── FORM CARD ── */
     .form-card {
       width: 100%; max-width: 420px;
       background: rgba(22, 33, 62, 0.7);
@@ -121,48 +149,23 @@
     .what-item-label { font-size: 0.78rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
     .what-item-sub { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
 
-    /* ── PROOF ── */
-    .proof { width: 100%; max-width: 420px; margin-top: 32px; }
-    .proof-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 500; text-align: center; margin-bottom: 16px; }
-    .proof-card { background: rgba(15, 52, 96, 0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; }
-    .proof-header { background: rgba(22, 33, 62, 0.8); padding: 14px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .proof-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral); flex-shrink: 0; }
-    .proof-header-label { font-size: 0.72rem; font-weight: 600; color: var(--soft); text-transform: uppercase; letter-spacing: 0.08em; }
-    .proof-body { padding: 20px; }
-    .proof-block { margin-bottom: 18px; }
-    .proof-block:last-child { margin-bottom: 0; }
-    .proof-block-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--coral); font-weight: 600; margin-bottom: 8px; }
-    .proof-best-next { font-size: 0.92rem; font-weight: 600; color: var(--text); line-height: 1.5; padding: 12px 14px; background: rgba(233,69,96,0.07); border: 1px solid rgba(233,69,96,0.18); border-radius: 12px; }
-    .proof-ts-list { display: grid; gap: 8px; }
-    .proof-ts-row { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .proof-ts-row:last-child { border-bottom: none; }
-    .proof-ts-stamp { font-size: 0.75rem; font-weight: 700; color: var(--coral); font-family: monospace; flex-shrink: 0; min-width: 80px; padding-top: 1px; }
-    .proof-ts-note { font-size: 0.82rem; color: var(--soft); line-height: 1.5; }
-    .proof-prio-list { display: grid; gap: 8px; }
-    .proof-prio-row { display: flex; gap: 10px; align-items: flex-start; }
-    .proof-prio-badge { width: 24px; height: 24px; border-radius: 999px; background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.25); color: var(--coral); font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-    .proof-prio-text { font-size: 0.82rem; color: var(--soft); line-height: 1.55; }
-    .proof-ref-block { display: flex; gap: 14px; align-items: flex-start; padding: 12px 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; }
-    .proof-ref-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-    .proof-ref-track { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
-    .proof-ref-why { font-size: 0.78rem; color: var(--soft); line-height: 1.5; }
-    .proof-disclaimer { font-size: 0.7rem; color: var(--muted); text-align: center; margin-top: 10px; opacity: 0.7; }
+    .member-link { text-align: center; margin-top: 20px; font-size: 0.82rem; color: var(--muted); position: relative; z-index: 1; }
+    .member-link a { color: var(--coral); text-decoration: none; font-weight: 500; }
 
     /* ── FOOTER ── */
     .foot { margin-top: 40px; text-align: center; }
     .foot a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
     .foot a:hover { color: var(--coral); }
     .foot-sep { margin: 0 10px; color: rgba(255,255,255,0.15); }
-    .member-link { text-align: center; margin-top: 20px; font-size: 0.82rem; color: var(--muted); position: relative; z-index: 1; }
-    .member-link a { color: var(--coral); text-decoration: none; font-weight: 500; }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     .logo      { animation: fadeUp 0.5s ease both; }
     .hero      { animation: fadeUp 0.5s 0.1s ease both; }
-    .form-card { animation: fadeUp 0.5s 0.2s ease both; }
-    .what      { animation: fadeUp 0.5s 0.3s ease both; }
-    .foot      { animation: fadeUp 0.5s 0.4s ease both; }
+    .proof     { animation: fadeUp 0.5s 0.2s ease both; }
+    .form-card { animation: fadeUp 0.5s 0.3s ease both; }
+    .what      { animation: fadeUp 0.5s 0.4s ease both; }
+    .foot      { animation: fadeUp 0.5s 0.5s ease both; }
 
     @media (max-width: 400px) {
       .form-card { padding: 24px 20px; }
@@ -196,72 +199,7 @@
     <p class="subhead">Upload your track. Get honest producer notes on arrangement, production, and mix. No fluff.</p>
   </div>
 
-  <div class="form-card">
-    <label class="form-label" for="emailInput">Get your free analysis</label>
-    <div class="input-row">
-      <input id="emailInput" class="email-input" type="email" placeholder="your@email.com" autocomplete="email" autocapitalize="off" />
-      <button class="send-btn" id="sendBtn">Send link</button>
-    </div>
-    <div class="trust-row">
-      <span class="pill"><span class="pill-check">✓</span> 1 free credit</span>
-      <span class="pill"><span class="pill-check">✓</span> Your audio stays yours</span>
-      <span class="pill"><span class="pill-check">✓</span> No password needed</span>
-    </div>
-    <div class="newsletter-row">
-      <label class="newsletter-label">
-        <input type="checkbox" id="newsletterCheck" class="newsletter-check" />
-        <span>Occasionally notify me about Fonna updates and feedback requests</span>
-      </label>
-    </div>
-    <div class="status" id="status"></div>
-    <div class="member-link">Already a member? <a href="/#login">Sign in →</a></div>
-  </div>
-
-  <div class="privacy">
-    <div class="privacy-title">Your music stays yours</div>
-    <div class="privacy-rows">
-      <div class="privacy-row">
-        <div class="privacy-check">✓</div>
-        <div class="privacy-text"><strong>We never keep your audio.</strong> Your file is deleted from our servers the moment your report is generated. We don't store it, archive it, or listen to it.</div>
-      </div>
-      <div class="privacy-row">
-        <div class="privacy-check">✓</div>
-        <div class="privacy-text"><strong>You own everything.</strong> Uploading to Fonna gives us nothing. No rights, no licence, no claim over your music — finished or not.</div>
-      </div>
-      <div class="privacy-row">
-        <div class="privacy-check">✓</div>
-        <div class="privacy-text"><strong>Your email is just for sign-in.</strong> We won't sell it, share it, or use it to market to you.</div>
-      </div>
-    </div>
-    <div class="privacy-fine">Analysis is powered by OpenAI's API. Per their standard policy, audio inputs may be held by OpenAI for up to 30 days for abuse monitoring before deletion. They do not train on API data by default. <a href="/terms.html">Full details in our Terms.</a></div>
-  </div>
-
-  <div class="what">
-    <div class="what-title">What's in every report</div>
-    <div class="what-items">
-      <div class="what-item">
-        <div class="what-item-label">Arrangement</div>
-        <div class="what-item-sub">Is each section earning its place?</div>
-      </div>
-      <div class="what-item">
-        <div class="what-item-label">Production</div>
-        <div class="what-item-sub">Are your choices landing the way you think?</div>
-      </div>
-      <div class="what-item">
-        <div class="what-item-label">Mix</div>
-        <div class="what-item-sub">What's getting in the way?</div>
-      </div>
-      <div class="what-item">
-        <div class="what-item-label">Timestamped notes</div>
-        <div class="what-item-sub">Notes tied to specific moments in the track.</div>
-      </div>
-      <div class="what-item featured" style="grid-column: 1 / -1;">
-        <div class="what-item-label">Reference track</div>
-        <div class="what-item-sub">A real released song chosen for what your mix needs to learn — not a comparison, a listening lesson.</div>
-      </div>
-    </div>
-  </div>
-
+  <!-- PROOF MOVED ABOVE FORM -->
   <div class="proof">
     <div class="proof-title">What a real report looks like</div>
     <div class="proof-card">
@@ -331,7 +269,73 @@
 
       </div>
     </div>
-    <div class="proof-disclaimer">Fonna. Finish Better Records.</div>
+  </div>
+
+  <!-- FORM WITH TIGHTENED TRUST COPY -->
+  <div class="form-card">
+    <label class="form-label" for="emailInput">Get your free analysis — no password needed</label>
+    <div class="input-row">
+      <input id="emailInput" class="email-input" type="email" placeholder="your@email.com" autocomplete="email" autocapitalize="off" />
+      <button class="send-btn" id="sendBtn">Send link</button>
+    </div>
+    <div class="trust-row">
+      <span class="pill"><span class="pill-check">✓</span> 1 free credit</span>
+      <span class="pill"><span class="pill-check">✓</span> Audio deleted after report</span>
+      <span class="pill"><span class="pill-check">✓</span> Email for sign-in only</span>
+    </div>
+    <div class="newsletter-row">
+      <label class="newsletter-label">
+        <input type="checkbox" id="newsletterCheck" class="newsletter-check" />
+        <span>Occasionally notify me about Fonna updates and feedback requests</span>
+      </label>
+    </div>
+    <div class="status" id="status"></div>
+    <div class="member-link">Already a member? <a href="/#login">Sign in →</a></div>
+  </div>
+
+  <div class="privacy">
+    <div class="privacy-title">Your music stays yours</div>
+    <div class="privacy-rows">
+      <div class="privacy-row">
+        <div class="privacy-check">✓</div>
+        <div class="privacy-text"><strong>We never keep your audio.</strong> Your file is deleted from our servers the moment your report is generated. We don't store it, archive it, or listen to it.</div>
+      </div>
+      <div class="privacy-row">
+        <div class="privacy-check">✓</div>
+        <div class="privacy-text"><strong>You own everything.</strong> Uploading to Fonna gives us nothing. No rights, no licence, no claim over your music — finished or not.</div>
+      </div>
+      <div class="privacy-row">
+        <div class="privacy-check">✓</div>
+        <div class="privacy-text"><strong>Your email is just for sign-in.</strong> We won't sell it, share it, or use it to market to you.</div>
+      </div>
+    </div>
+    <div class="privacy-fine">Analysis is powered by OpenAI's API. Per their standard policy, audio inputs may be held by OpenAI for up to 30 days for abuse monitoring before deletion. They do not train on API data by default. <a href="/terms.html">Full details in our Terms.</a></div>
+  </div>
+
+  <div class="what">
+    <div class="what-title">What's in every report</div>
+    <div class="what-items">
+      <div class="what-item">
+        <div class="what-item-label">Arrangement</div>
+        <div class="what-item-sub">Is each section earning its place?</div>
+      </div>
+      <div class="what-item">
+        <div class="what-item-label">Production</div>
+        <div class="what-item-sub">Are your choices landing the way you think?</div>
+      </div>
+      <div class="what-item">
+        <div class="what-item-label">Mix</div>
+        <div class="what-item-sub">What's getting in the way?</div>
+      </div>
+      <div class="what-item">
+        <div class="what-item-label">Timestamped notes</div>
+        <div class="what-item-sub">Notes tied to specific moments in the track.</div>
+      </div>
+      <div class="what-item featured" style="grid-column: 1 / -1;">
+        <div class="what-item-label">Reference track</div>
+        <div class="what-item-sub">A real released song chosen for what your mix needs to learn — not a comparison, a listening lesson.</div>
+      </div>
+    </div>
   </div>
 
   <div class="foot">
@@ -386,4 +390,3 @@
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
-
