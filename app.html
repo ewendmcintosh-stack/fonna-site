@@ -135,17 +135,6 @@ a{color:inherit;text-decoration:none;}
 .tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
 .tab-panel{display:none;}
 .tab-panel.active{display:block;}
-/* UPGRADE PROMPT */
-.upgrade-prompt{background:linear-gradient(135deg,rgba(233,69,96,0.1),rgba(15,52,96,0.4));border:1px solid rgba(233,69,96,0.25);border-radius:20px;padding:28px 32px;margin-top:24px;display:none;position:relative;overflow:hidden;}
-.upgrade-prompt::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:var(--coral);opacity:0.08;pointer-events:none;}
-.upgrade-prompt.show{display:block;}
-.up-eyebrow{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:10px;}
-.up-title{font-size:1.25rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;}
-.up-body{font-size:0.92rem;color:var(--soft);line-height:1.7;margin-bottom:20px;}
-.up-benefits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
-.up-benefit{display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:var(--soft);line-height:1.5;}
-.up-benefit::before{content:"✓";color:var(--coral);font-size:0.8rem;flex-shrink:0;margin-top:1px;}
-.up-actions{display:flex;gap:12px;flex-wrap:wrap;}
 /* REPORTS TAB */
 .reports-empty{text-align:center;padding:60px 20px;color:var(--muted);}
 .reports-empty .icon{font-size:2.5rem;margin-bottom:14px;opacity:0.4;}
@@ -212,6 +201,31 @@ a{color:inherit;text-decoration:none;}
 .fb-msg.err{display:block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
 .fb-msg.ok{display:block;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
 .fb-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;}
+/* PASSWORD GATE (post-survey, magic-link users only) */
+.pwd-gate{display:none;margin-top:20px;}
+.pwd-gate.show{display:block;}
+.pwd-gate-inner{background:linear-gradient(135deg,rgba(233,69,96,0.08),rgba(15,52,96,0.5));border:1px solid rgba(233,69,96,0.25);border-radius:20px;padding:28px 32px;position:relative;overflow:hidden;}
+.pwd-gate-inner::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:var(--coral);opacity:0.08;pointer-events:none;}
+.pwd-gate-content{position:relative;z-index:1;}
+.pwd-gate-eyebrow{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:10px;}
+.pwd-gate-title{font-size:1.2rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;}
+.pwd-gate-body{font-size:0.9rem;color:var(--soft);line-height:1.7;margin-bottom:20px;}
+.pwd-gate-benefits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
+.pwd-gate-benefit{display:flex;align-items:flex-start;gap:8px;font-size:0.84rem;color:var(--soft);line-height:1.5;}
+.pwd-gate-benefit::before{content:"✓";color:var(--coral);font-size:0.8rem;flex-shrink:0;margin-top:1px;}
+.pwd-gate-form{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px;}
+.pwd-gate-input{flex:1;min-width:200px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:12px 16px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;outline:none;}
+.pwd-gate-input:focus{border-color:var(--coral);}
+.pwd-gate-input::placeholder{color:var(--muted);}
+.pwd-gate-msg{font-size:0.84rem;line-height:1.5;padding:10px 14px;border-radius:12px;display:none;margin-bottom:10px;}
+.pwd-gate-msg.err{display:block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
+.pwd-gate-msg.ok{display:block;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
+.pwd-gate-skip{font-size:0.8rem;color:var(--muted);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-decoration:underline;text-underline-offset:3px;}
+.pwd-gate-skip:hover{color:var(--soft);}
+/* GET MORE CREDITS section inside pwd gate */
+.pwd-gate-credits{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.pwd-gate-credits-title{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
+.pwd-gate-credits-sub{font-size:0.84rem;color:var(--muted);margin-bottom:16px;line-height:1.5;}
 @media(max-width:720px){
 .nav{flex-wrap:wrap;padding:12px 0;}
 .domains{grid-template-columns:1fr;}
@@ -221,6 +235,9 @@ a{color:inherit;text-decoration:none;}
 .user-pill{display:none;}
 .fb-scale{gap:4px;}
 .fb-scale-btn{font-size:0.8rem;padding:8px 0;}
+.pwd-gate-benefits{grid-template-columns:1fr;}
+.pwd-gate-form{flex-direction:column;}
+.pwd-gate-input{min-width:unset;width:100%;}
 }
 @media(max-width:480px){.rpt-header{flex-direction:column;}}
 </style>
@@ -331,7 +348,7 @@ a{color:inherit;text-decoration:none;}
       </div>
     </div>
 
-    <!-- FEEDBACK PROMPT -->
+    <!-- FEEDBACK PROMPT (survey pill) -->
     <div class="feedback-prompt" id="feedbackPrompt">
       <div class="fp-eyebrow">You're one of the first</div>
       <div class="fp-title">Fonna is new. Your feedback shapes what it becomes.</div>
@@ -340,24 +357,51 @@ a{color:inherit;text-decoration:none;}
       <div class="fp-counter">Feedback credits earned: <strong id="feedbackCreditCount">0</strong> of 5</div>
     </div>
 
-    <!-- UPGRADE PROMPT (shown to magic-link / free users after report) -->
-    <div class="upgrade-prompt" id="upgradePrompt">
-      <div class="up-eyebrow">New Users: Like What You See?</div>
-      <div class="up-title">Save it. Keep your history.</div>
-      <div class="up-body">Right now your report lives only in this session. Create a full account and every analysis you run is saved — ready to revisit whenever you need it.</div>
-      <div class="up-benefits">
-        <div class="up-benefit">Access all your past reports anytime</div>
-        <div class="up-benefit">Your credits carry over — nothing is lost</div>
-        <div class="up-benefit">One email and password — always direct access</div>
-        <div class="up-benefit">No more waiting for a new magic link</div>
-      </div>
-      <div class="up-actions">
-        <button class="btn primary" id="createAccountBtn">Create a full account</button>
-        <button class="btn ghost" onclick="document.getElementById('upgradePrompt').classList.remove('show')">Maybe later</button>
+    <!-- PASSWORD GATE (shown to magic-link users after survey completion) -->
+    <div class="pwd-gate" id="pwdGate">
+      <div class="pwd-gate-inner">
+        <div class="pwd-gate-content">
+          <div class="pwd-gate-eyebrow">One more step</div>
+          <div class="pwd-gate-title">Secure your account to claim your credit.</div>
+          <div class="pwd-gate-body">Set a password and your bonus credit lands immediately. Your report is saved, your credits carry over, and you never need a magic link again.</div>
+          <div class="pwd-gate-benefits">
+            <div class="pwd-gate-benefit">Your report saved to your account</div>
+            <div class="pwd-gate-benefit">Credits never expire</div>
+            <div class="pwd-gate-benefit">Sign in directly anytime</div>
+            <div class="pwd-gate-benefit">No more waiting for a link</div>
+          </div>
+          <div class="pwd-gate-msg" id="pwdGateMsg"></div>
+          <div class="pwd-gate-form">
+            <input type="password" class="pwd-gate-input" id="pwdGateInput" placeholder="Choose a password (min. 8 characters)" autocomplete="new-password" />
+            <button class="btn primary" id="pwdGateBtn" type="button">Set password &amp; claim credit</button>
+          </div>
+          <button class="pwd-gate-skip" id="pwdGateSkip">Skip for now</button>
+
+          <!-- Credits section — shown after password is set -->
+          <div class="pwd-gate-credits" id="pwdGateCreditsSection" style="display:none;">
+            <div class="pwd-gate-credits-title">Get more analyses</div>
+            <div class="pwd-gate-credits-sub">Each analysis uses 1 credit. Credits never expire. Your account is saved and ready.</div>
+            <div class="msg" id="pwdGateBuyMsg"></div>
+            <div class="credits-grid">
+              <div class="pack" id="pgBuyStarter">
+                <div class="pack-name">Starter</div>
+                <div class="pack-price">$9.99</div>
+                <div class="pack-credits">10 credits</div>
+              </div>
+              <div class="pack featured" id="pgBuyCreator">
+                <div class="pack-badge">Best value</div>
+                <div class="pack-name">Creator</div>
+                <div class="pack-price">$19.99</div>
+                <div class="pack-credits">30 credits</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
 
-    <!-- BUY CREDITS -->
+    <!-- BUY CREDITS (returning users) -->
     <div class="card" id="creditsCard" style="display:none;">
       <div class="card-inner">
         <p class="card-title">Get more credits</p>
@@ -551,9 +595,9 @@ a{color:inherit;text-decoration:none;}
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
-const SUPABASE_URL    = "https://kukqwyakchsaqquudqiu.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
-const API_BASE        = "https://listener-service-1esi.onrender.com";
+const SUPABASE_URL     = "https://kukqwyakchsaqquudqiu.supabase.co";
+const SUPABASE_ANON_KEY= "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
+const API_BASE         = "https://listener-service-1esi.onrender.com";
 
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const $  = id => document.getElementById(id);
@@ -578,10 +622,10 @@ const purchaseBnr   = $("purchaseBanner");
 const buyStarter    = $("buyStarter");
 const buyCreator    = $("buyCreator");
 const buyMsg        = $("buyMsg");
-const upgradePrompt = $("upgradePrompt");
 const backToListBtn = $("backToListBtn");
 const feedbackPrompt= $("feedbackPrompt");
 const fbBackdrop    = $("fbBackdrop");
+const pwdGate       = $("pwdGate");
 
 let session         = null;
 let file            = null;
@@ -609,7 +653,8 @@ async function boot() {
                 !s.user?.identities?.some(i => i.identity_data?.password_hash);
   await refreshCredits();
   await loadFeedbackCount();
-  creditsCard.style.display = "block";
+  // Only show buy credits card for returning (non-magic) users
+  if (!isMagicUser) creditsCard.style.display = "block";
   checkBanner();
 }
 
@@ -670,10 +715,6 @@ logoutBtn.addEventListener("click", async () => {
   window.location.href = "/";
 });
 
-window.showCreateAccount = function() {
-  window.location.href = "/#login?upgrade=1";
-};
-
 // ── FILE ──────────────────────────────────────────────────────────────────
 $("chooseFileBtn").addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", () => { if (fileInput.files[0]) pick(fileInput.files[0]); });
@@ -716,7 +757,7 @@ async function analyse() {
   progressCard.classList.add("show");
   reportCard.classList.remove("show");
   feedbackPrompt.classList.remove("show");
-  upgradePrompt.classList.remove("show");
+  pwdGate.classList.remove("show");
   startProg();
 
   try {
@@ -752,11 +793,9 @@ async function analyse() {
     await refreshCredits();
     renderReport(rpt);
 
+    // Show feedback prompt if they haven't maxed it out
     if (feedbackCount < 5) {
       setTimeout(() => feedbackPrompt.classList.add("show"), 600);
-    }
-    if (isMagicUser) {
-      setTimeout(() => upgradePrompt.classList.add("show"), 800);
     }
 
   } catch (e) {
@@ -802,7 +841,7 @@ function renderReport(r) {
   reportCard.scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
-// ── RENDER FLAT REPORT (from Supabase flat columns) ──────────────────────
+// ── RENDER FLAT REPORT (from Supabase flat columns) ───────────────────────
 function renderFlatReport(d) {
   const ids = {
     track:"dTrack", meta:"dMeta", snapshot:"dSnapshot", bestNext:"dBestNext",
@@ -928,7 +967,7 @@ function renderReportInto(r, ids) {
 newBtn.addEventListener("click", () => {
   reportCard.classList.remove("show");
   feedbackPrompt.classList.remove("show");
-  upgradePrompt.classList.remove("show");
+  pwdGate.classList.remove("show");
   uploadCard.style.display = "block";
   clearFile(); clearMsg(uploadMsg);
   trackTitle.value = ""; artistName.value = "";
@@ -1014,20 +1053,95 @@ function closeReportDetail() {
 backToListBtn.addEventListener("click", closeReportDetail);
 
 // ── BUY CREDITS ───────────────────────────────────────────────────────────
-async function buy(pack) {
-  clearMsg(buyMsg); setMsg(buyMsg,"info","Redirecting to checkout…");
+async function buy(pack, msgEl) {
+  const m = msgEl || buyMsg;
+  clearMsg(m); setMsg(m, "info", "Redirecting to checkout…");
   try {
     const r = await fetch(`${API_BASE}/create-checkout-session`, {
       method:"POST", headers:ah(), body:JSON.stringify({ pack }),
     });
     const d = await r.json();
     if (d?.url) { window.location.href = d.url; }
-    else { setMsg(buyMsg,"err", d?.error?.message || "Could not start checkout."); }
-  } catch { setMsg(buyMsg,"err","Connection error — please try again."); }
+    else { setMsg(m, "err", d?.error?.message || "Could not start checkout."); }
+  } catch { setMsg(m, "err", "Connection error — please try again."); }
 }
 
-buyStarter.addEventListener("click", () => buy("starter"));
-buyCreator.addEventListener("click", () => buy("creator"));
+buyStarter.addEventListener("click", () => buy("starter", buyMsg));
+buyCreator.addEventListener("click", () => buy("creator", buyMsg));
+$("pgBuyStarter").addEventListener("click", () => buy("starter", $("pwdGateBuyMsg")));
+$("pgBuyCreator").addEventListener("click", () => buy("creator", $("pwdGateBuyMsg")));
+
+// ── PASSWORD GATE ─────────────────────────────────────────────────────────
+function showPwdGate() {
+  pwdGate.classList.add("show");
+  pwdGate.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+$("pwdGateBtn").addEventListener("click", async () => {
+  const msgEl  = $("pwdGateMsg");
+  const input  = $("pwdGateInput");
+  const btn    = $("pwdGateBtn");
+  const pwd    = input.value.trim();
+
+  msgEl.className = "pwd-gate-msg"; msgEl.textContent = "";
+
+  if (pwd.length < 8) {
+    msgEl.className = "pwd-gate-msg err";
+    msgEl.textContent = "Password must be at least 8 characters.";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Setting password…";
+
+  try {
+    const { error } = await sb.auth.updateUser({ password: pwd });
+
+    if (error) {
+      msgEl.className = "pwd-gate-msg err";
+      msgEl.textContent = error.message || "Could not set password — please try again.";
+      btn.disabled = false;
+      btn.textContent = "Set password & claim credit";
+      return;
+    }
+
+    // Password set — refresh session state
+    const { data: { session: s } } = await sb.auth.getSession();
+    if (s) {
+      session = s;
+      isMagicUser = false;
+    }
+
+    // Refresh credits (survey credit already awarded by submit-feedback)
+    await refreshCredits();
+
+    // Show confirmation, hide form, show buy section
+    msgEl.className = "pwd-gate-msg ok";
+    msgEl.textContent = "Password set — your account is secured and your credit is ready.";
+    input.style.display = "none";
+    btn.style.display = "none";
+    $("pwdGateSkip").style.display = "none";
+    $("pwdGateCreditsSection").style.display = "block";
+
+    // Show purchase card for future top-ups
+    creditsCard.style.display = "block";
+
+    // Banner confirmation
+    purchaseBnr.textContent = "Account secured — 1 bonus credit added. You're all set.";
+    purchaseBnr.classList.add("show");
+    window.scrollTo({ top:0, behavior:"smooth" });
+
+  } catch {
+    msgEl.className = "pwd-gate-msg err";
+    msgEl.textContent = "Connection error — please try again.";
+    btn.disabled = false;
+    btn.textContent = "Set password & claim credit";
+  }
+});
+
+$("pwdGateSkip").addEventListener("click", () => {
+  pwdGate.classList.remove("show");
+});
 
 // ── FEEDBACK MODAL ────────────────────────────────────────────────────────
 function initScale(id) {
@@ -1155,13 +1269,20 @@ $("fbSubmitBtn").addEventListener("click", async () => {
     $("fbTallyCount").textContent = feedbackCount;
 
     fbMsg.className = "fb-msg ok";
-    fbMsg.textContent = "Thank you — 1 credit has been added to your account.";
+    fbMsg.textContent = "Thanks — credit added.";
     $("fbSubmitBtn").textContent = "Done";
 
     await refreshCredits();
     if (feedbackCount >= 5) feedbackPrompt.classList.remove("show");
 
-    setTimeout(closeFeedbackModal, 2200);
+    // Close modal then show password gate if magic-link user
+    setTimeout(() => {
+      closeFeedbackModal();
+      feedbackPrompt.classList.remove("show");
+      if (isMagicUser) {
+        showPwdGate();
+      }
+    }, 1400);
 
   } catch {
     showFbErr("Connection error — please check your network and try again.");
@@ -1191,7 +1312,6 @@ function clearMsg(el)        { el.className="msg"; el.textContent=""; }
 // ── GO ────────────────────────────────────────────────────────────────────
 $("tabAnalyse").addEventListener("click", () => switchTab("analyse"));
 $("tabReports").addEventListener("click", () => switchTab("reports"));
-$("createAccountBtn").addEventListener("click", () => { window.location.href = "/#login?upgrade=1"; });
 
 boot();
 </script>
