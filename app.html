@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -166,6 +165,53 @@ a{color:inherit;text-decoration:none;}
 .footer-links{display:flex;gap:18px;flex-wrap:wrap;}
 .footer-links a:hover{color:var(--text);}
 .hidden{display:none!important;}
+/* FEEDBACK PROMPT */
+.feedback-prompt{background:linear-gradient(135deg,rgba(15,52,96,0.6),rgba(26,26,46,0.8));border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px 28px;margin-top:20px;display:none;position:relative;overflow:hidden;}
+.feedback-prompt::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:var(--coral);opacity:0.08;pointer-events:none;}
+.feedback-prompt.show{display:block;}
+.fp-eyebrow{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;}
+.fp-title{font-size:1.05rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;}
+.fp-body{font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+.fp-counter{font-size:0.78rem;color:var(--muted);margin-top:10px;}
+.fp-counter strong{color:var(--coral);}
+/* FEEDBACK MODAL */
+.fb-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.8);backdrop-filter:blur(6px);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
+.fb-backdrop.open{display:flex;}
+.fb-modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.5);padding:36px;width:100%;max-width:520px;position:relative;overflow:hidden;margin:auto;}
+.fb-modal::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;}
+.fb-inner{position:relative;z-index:1;}
+.fb-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;line-height:1;transition:background 0.15s,color 0.15s;z-index:2;}
+.fb-close:hover{background:rgba(255,255,255,0.1);color:var(--text);}
+.fb-eyebrow{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;}
+.fb-title{font-size:1.25rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 4px;}
+.fb-sub{font-size:0.88rem;color:var(--muted);margin:0 0 6px;line-height:1.5;}
+.fb-tally{display:inline-block;font-size:0.78rem;color:var(--muted);background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.2);padding:3px 10px;border-radius:999px;margin-bottom:22px;}
+.fb-tally strong{color:var(--coral);}
+.fb-q{margin-bottom:20px;}
+.fb-q label{display:block;font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;}
+.fb-scale{display:flex;gap:6px;}
+.fb-scale-btn{flex:1;padding:10px 0;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:center;}
+.fb-scale-btn:hover{border-color:rgba(233,69,96,0.4);color:var(--text);}
+.fb-scale-btn.selected{background:rgba(233,69,96,0.15);border-color:rgba(233,69,96,0.5);color:var(--coral);}
+.fb-scale-labels{display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted);margin-top:5px;padding:0 2px;}
+.fb-select{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;appearance:none;-webkit-appearance:none;cursor:pointer;}
+.fb-select:focus{outline:none;border-color:var(--coral);}
+.fb-select option{background:var(--navy-mid);color:var(--text);}
+.fb-textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;resize:vertical;min-height:80px;}
+.fb-textarea:focus{outline:none;border-color:var(--coral);}
+.fb-textarea::placeholder{color:var(--muted);}
+.fb-multiselect{display:flex;flex-wrap:wrap;gap:8px;}
+.fb-chip{padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.82rem;cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.fb-chip:hover{border-color:rgba(233,69,96,0.4);color:var(--text);}
+.fb-chip.selected{background:rgba(233,69,96,0.15);border-color:rgba(233,69,96,0.5);color:var(--coral);}
+.fb-yesno{display:flex;gap:8px;}
+.fb-yn-btn{flex:1;padding:10px 0;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:center;}
+.fb-yn-btn:hover{border-color:rgba(233,69,96,0.4);color:var(--text);}
+.fb-yn-btn.selected{background:rgba(233,69,96,0.15);border-color:rgba(233,69,96,0.5);color:var(--coral);}
+.fb-msg{display:none;padding:10px 14px;border-radius:10px;font-size:0.85rem;margin-bottom:14px;line-height:1.5;}
+.fb-msg.err{display:block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
+.fb-msg.ok{display:block;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
+.fb-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;}
 @media(max-width:720px){
 .nav{flex-wrap:wrap;padding:12px 0;}
 .domains{grid-template-columns:1fr;}
@@ -173,10 +219,10 @@ a{color:inherit;text-decoration:none;}
 .fields{grid-template-columns:1fr;}
 .card{padding:22px 20px;}
 .user-pill{display:none;}
+.fb-scale{gap:4px;}
+.fb-scale-btn{font-size:0.8rem;padding:8px 0;}
 }
-@media(max-width:480px){
-.rpt-header{flex-direction:column;}
-}
+@media(max-width:480px){.rpt-header{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -210,173 +256,167 @@ a{color:inherit;text-decoration:none;}
 <main style="padding:36px 0 60px;">
   <div class="wrap">
 
-<div class="msg ok" id="purchaseBanner"></div>
+    <div class="msg ok" id="purchaseBanner"></div>
 
-<!-- TAB NAV -->
-<div class="tab-nav" id="tabNav">
-  <button class="tab-btn active" id="tabAnalyse" >Analyse</button>
-  <button class="tab-btn" id="tabReports" >My Reports</button>
-</div>
-
-<!-- TAB: ANALYSE -->
-<div class="tab-panel active" id="panelAnalyse">
-
-<!-- UPLOAD -->
-<div class="card" id="uploadCard">
-  <div class="card-inner">
-    <p class="card-title">Analyse a track</p>
-    <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
-
-    <div class="lbl">Audio file</div>
-    <div class="file-row">
-      <div class="file-input-display" id="fileDisplay">No file selected</div>
-      <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
-    </div>
-    <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
-    <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
-
-    <div class="fields">
-      <div class="field">
-        <label for="trackTitle">Track title</label>
-        <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
-      </div>
-      <div class="field">
-        <label for="artistName">Artist name</label>
-        <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
-      </div>
+    <!-- TAB NAV -->
+    <div class="tab-nav" id="tabNav">
+      <button class="tab-btn active" id="tabAnalyse">Analyse</button>
+      <button class="tab-btn" id="tabReports">My Reports</button>
     </div>
 
-    <div class="msg" id="uploadMsg"></div>
-    <div class="submit-row">
-      <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
-      <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
-    </div>
-  </div>
-</div>
+    <!-- TAB: ANALYSE -->
+    <div class="tab-panel active" id="panelAnalyse">
 
-<!-- PROGRESS -->
-<div class="card progress-card" id="progressCard">
-  <div class="card-inner" style="text-align:center;">
-    <div class="spinner"></div>
-    <div class="p-title">Listening to your track…</div>
-    <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
-    <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
-  </div>
-</div>
-
-<!-- REPORT -->
-<div class="card report-card" id="reportCard">
-  <div class="card-inner">
-    <div class="rpt-header">
-      <div>
-        <div class="lbl">Producer Report</div>
-        <div class="rpt-track" id="rTrack"></div>
-        <div class="rpt-meta" id="rMeta"></div>
-      </div>
-      <div>
-        <button class="btn sm ghost" id="newBtn">New analysis</button>
+    <!-- UPLOAD -->
+    <div class="card" id="uploadCard">
+      <div class="card-inner">
+        <p class="card-title">Analyse a track</p>
+        <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
+        <div class="lbl">Audio file</div>
+        <div class="file-row">
+          <div class="file-input-display" id="fileDisplay">No file selected</div>
+          <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
+        </div>
+        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
+        <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
+        <div class="fields">
+          <div class="field">
+            <label for="trackTitle">Track title</label>
+            <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="artistName">Artist name</label>
+            <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
+          </div>
+        </div>
+        <div class="msg" id="uploadMsg"></div>
+        <div class="submit-row">
+          <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
+          <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
+        </div>
       </div>
     </div>
-    <div class="snapshot">
-      <div class="lbl">Snapshot</div>
-      <div class="snapshot-text" id="rSnapshot"></div>
-    </div>
-    <div class="best-next">
-      <div class="lbl">Best next move</div>
-      <div class="best-next-text" id="rBestNext"></div>
-    </div>
-    <div class="lbl">Arrangement · Production · Mix</div>
-    <div class="domains" id="rDomains"></div>
-    <div class="lbl">Priority actions</div>
-    <div class="prio-items" id="rPrio"></div>
-    <div id="rTlWrap">
-      <div class="lbl">Timestamped notes</div>
-      <div class="tl-items" id="rTl"></div>
-    </div>
-    <div class="lbl">Listening reference</div>
-    <div class="ref-block" id="rRef"></div>
-    <div class="limitations" id="rLim"></div>
-  </div>
-</div>
 
-<!-- UPGRADE PROMPT (shown to magic-link / free users after report) -->
-<div class="upgrade-prompt" id="upgradePrompt">
-  <div class="up-eyebrow">New Users: Like What You See?</div>
-  <div class="up-title">Save it. Keep your history.</div>
-  <div class="up-body">Right now your report lives only in this session. Create a full account and every analysis you run is saved — ready to revisit whenever you need it.</div>
-  <div class="up-benefits">
-    <div class="up-benefit">Access all your past reports anytime</div>
-    <div class="up-benefit">Your credits carry over — nothing is lost</div>
-    <div class="up-benefit">One email and password — always direct access</div>
-    <div class="up-benefit">No more waiting for a new magic link</div>
-  </div>
-  <div class="up-actions">
-    <button class="btn primary" id="createAccountBtn">Create a full account</button>
-    <button class="btn ghost" onclick="document.getElementById('upgradePrompt').classList.remove('show')">Maybe later</button>
-  </div>
-</div>
-
-<!-- BUY CREDITS -->
-<div class="card" id="creditsCard" style="display:none;">
-  <div class="card-inner">
-    <p class="card-title">Get more credits</p>
-    <p class="card-sub">Each analysis uses 1 credit. Credits never expire.</p>
-    <div class="msg" id="buyMsg"></div>
-    <div class="credits-grid">
-      <div class="pack" id="buyStarter">
-        <div class="pack-name">Starter</div>
-        <div class="pack-price">$9.99</div>
-        <div class="pack-credits">10 credits</div>
-      </div>
-      <div class="pack featured" id="buyCreator">
-        <div class="pack-badge">Best value</div>
-        <div class="pack-name">Creator</div>
-        <div class="pack-price">$19.99</div>
-        <div class="pack-credits">30 credits</div>
+    <!-- PROGRESS -->
+    <div class="card progress-card" id="progressCard">
+      <div class="card-inner" style="text-align:center;">
+        <div class="spinner"></div>
+        <div class="p-title">Listening to your track…</div>
+        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
+        <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
       </div>
     </div>
-  </div>
-</div>
 
-</div><!-- /panelAnalyse -->
-
-<!-- TAB: REPORTS -->
-<div class="tab-panel" id="panelReports">
-  <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
-  <div id="reportsEmpty" class="reports-empty hidden">
-    <div class="icon">♪</div>
-    <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
-    <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
-  </div>
-  <div id="reportsList" class="report-list hidden"></div>
-  <div id="reportDetail" class="report-detail">
-    <div class="report-detail-back">
-      <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
-    </div>
-    <div class="card">
+    <!-- REPORT -->
+    <div class="card report-card" id="reportCard">
       <div class="card-inner">
         <div class="rpt-header">
           <div>
             <div class="lbl">Producer Report</div>
-            <div class="rpt-track" id="dTrack"></div>
-            <div class="rpt-meta" id="dMeta"></div>
+            <div class="rpt-track" id="rTrack"></div>
+            <div class="rpt-meta" id="rMeta"></div>
           </div>
+          <div><button class="btn sm ghost" id="newBtn">New analysis</button></div>
         </div>
-        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
-        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
+        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="rSnapshot"></div></div>
+        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="rBestNext"></div></div>
         <div class="lbl">Arrangement · Production · Mix</div>
-        <div class="domains" id="dDomains"></div>
+        <div class="domains" id="rDomains"></div>
         <div class="lbl">Priority actions</div>
-        <div class="prio-items" id="dPrio"></div>
-        <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
+        <div class="prio-items" id="rPrio"></div>
+        <div id="rTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="rTl"></div></div>
         <div class="lbl">Listening reference</div>
-        <div class="ref-block" id="dRef"></div>
-        <div class="limitations" id="dLim"></div>
+        <div class="ref-block" id="rRef"></div>
+        <div class="limitations" id="rLim"></div>
       </div>
     </div>
-  </div>
-</div><!-- /panelReports -->
 
+    <!-- FEEDBACK PROMPT -->
+    <div class="feedback-prompt" id="feedbackPrompt">
+      <div class="fp-eyebrow">You're one of the first</div>
+      <div class="fp-title">Fonna is new. Your feedback shapes what it becomes.</div>
+      <div class="fp-body">Share what you heard — takes about 60 seconds — and earn a free credit as a thank-you.</div>
+      <button class="btn primary" id="openFeedbackBtn" type="button">Share feedback</button>
+      <div class="fp-counter">Feedback credits earned: <strong id="feedbackCreditCount">0</strong> of 5</div>
+    </div>
+
+    <!-- UPGRADE PROMPT (shown to magic-link / free users after report) -->
+    <div class="upgrade-prompt" id="upgradePrompt">
+      <div class="up-eyebrow">New Users: Like What You See?</div>
+      <div class="up-title">Save it. Keep your history.</div>
+      <div class="up-body">Right now your report lives only in this session. Create a full account and every analysis you run is saved — ready to revisit whenever you need it.</div>
+      <div class="up-benefits">
+        <div class="up-benefit">Access all your past reports anytime</div>
+        <div class="up-benefit">Your credits carry over — nothing is lost</div>
+        <div class="up-benefit">One email and password — always direct access</div>
+        <div class="up-benefit">No more waiting for a new magic link</div>
+      </div>
+      <div class="up-actions">
+        <button class="btn primary" id="createAccountBtn">Create a full account</button>
+        <button class="btn ghost" onclick="document.getElementById('upgradePrompt').classList.remove('show')">Maybe later</button>
+      </div>
+    </div>
+
+    <!-- BUY CREDITS -->
+    <div class="card" id="creditsCard" style="display:none;">
+      <div class="card-inner">
+        <p class="card-title">Get more credits</p>
+        <p class="card-sub">Each analysis uses 1 credit. Credits never expire.</p>
+        <div class="msg" id="buyMsg"></div>
+        <div class="credits-grid">
+          <div class="pack" id="buyStarter">
+            <div class="pack-name">Starter</div>
+            <div class="pack-price">$9.99</div>
+            <div class="pack-credits">10 credits</div>
+          </div>
+          <div class="pack featured" id="buyCreator">
+            <div class="pack-badge">Best value</div>
+            <div class="pack-name">Creator</div>
+            <div class="pack-price">$19.99</div>
+            <div class="pack-credits">30 credits</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /panelAnalyse -->
+
+    <!-- TAB: REPORTS -->
+    <div class="tab-panel" id="panelReports">
+      <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
+      <div id="reportsEmpty" class="reports-empty hidden">
+        <div class="icon">♪</div>
+        <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
+        <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
+      </div>
+      <div id="reportsList" class="report-list hidden"></div>
+      <div id="reportDetail" class="report-detail">
+        <div class="report-detail-back">
+          <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
+        </div>
+        <div class="card">
+          <div class="card-inner">
+            <div class="rpt-header">
+              <div>
+                <div class="lbl">Producer Report</div>
+                <div class="rpt-track" id="dTrack"></div>
+                <div class="rpt-meta" id="dMeta"></div>
+              </div>
+            </div>
+            <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
+            <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
+            <div class="lbl">Arrangement · Production · Mix</div>
+            <div class="domains" id="dDomains"></div>
+            <div class="lbl">Priority actions</div>
+            <div class="prio-items" id="dPrio"></div>
+            <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
+            <div class="lbl">Listening reference</div>
+            <div class="ref-block" id="dRef"></div>
+            <div class="limitations" id="dLim"></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /panelReports -->
 
   </div>
 </main>
@@ -395,6 +435,119 @@ a{color:inherit;text-decoration:none;}
   </div>
 </footer>
 
+<!-- FEEDBACK MODAL -->
+<div class="fb-backdrop" id="fbBackdrop">
+  <div class="fb-modal">
+    <button class="fb-close" id="fbClose" aria-label="Close">&times;</button>
+    <div class="fb-inner">
+      <div class="fb-eyebrow">Early access feedback</div>
+      <h2 class="fb-title">You're one of the first.</h2>
+      <p class="fb-sub">Fonna is new. Your honest take shapes what it becomes.</p>
+      <div class="fb-tally">Feedback credits earned: <strong id="fbTallyCount">0</strong> of 5</div>
+      <div class="fb-msg" id="fbMsg"></div>
+
+      <div class="fb-q">
+        <label>How accurate did the feedback feel?</label>
+        <div class="fb-scale" id="scaleAccuracy">
+          <button class="fb-scale-btn" data-val="1">1</button>
+          <button class="fb-scale-btn" data-val="2">2</button>
+          <button class="fb-scale-btn" data-val="3">3</button>
+          <button class="fb-scale-btn" data-val="4">4</button>
+          <button class="fb-scale-btn" data-val="5">5</button>
+        </div>
+        <div class="fb-scale-labels"><span>Not at all</span><span>Spot on</span></div>
+      </div>
+
+      <div class="fb-q">
+        <label>Was the report actionable?</label>
+        <div class="fb-scale" id="scaleActionable">
+          <button class="fb-scale-btn" data-val="1">1</button>
+          <button class="fb-scale-btn" data-val="2">2</button>
+          <button class="fb-scale-btn" data-val="3">3</button>
+          <button class="fb-scale-btn" data-val="4">4</button>
+          <button class="fb-scale-btn" data-val="5">5</button>
+        </div>
+        <div class="fb-scale-labels"><span>Not really</span><span>Absolutely</span></div>
+      </div>
+
+      <div class="fb-q">
+        <label>What stage was this track at?</label>
+        <select class="fb-select" id="trackStage">
+          <option value="">Select a stage…</option>
+          <option value="demo">Demo</option>
+          <option value="rough_mix">Rough mix</option>
+          <option value="near_finish">Near-finish</option>
+          <option value="pre_master">Pre-master</option>
+          <option value="mastered">Mastered track</option>
+        </select>
+      </div>
+
+      <div class="fb-q">
+        <label>What part of the report was most useful?</label>
+        <div class="fb-multiselect" id="mostUseful">
+          <button class="fb-chip" data-val="arrangement">Arrangement</button>
+          <button class="fb-chip" data-val="production">Production</button>
+          <button class="fb-chip" data-val="mix">Mix</button>
+          <button class="fb-chip" data-val="timestamps">Timestamped notes</button>
+          <button class="fb-chip" data-val="reference_track">Reference track</button>
+        </div>
+      </div>
+
+      <div class="fb-q">
+        <label>What part was least useful or most confusing?</label>
+        <div class="fb-multiselect" id="leastUseful">
+          <button class="fb-chip" data-val="arrangement">Arrangement</button>
+          <button class="fb-chip" data-val="production">Production</button>
+          <button class="fb-chip" data-val="mix">Mix</button>
+          <button class="fb-chip" data-val="timestamps">Timestamped notes</button>
+          <button class="fb-chip" data-val="reference_track">Reference track</button>
+        </div>
+      </div>
+
+      <div class="fb-q">
+        <label>Would you come back to Fonna?</label>
+        <div class="fb-yesno" id="comeBack">
+          <button class="fb-yn-btn" data-val="yes">Yes</button>
+          <button class="fb-yn-btn" data-val="maybe">Maybe</button>
+          <button class="fb-yn-btn" data-val="no">No</button>
+        </div>
+      </div>
+
+      <div class="fb-q">
+        <label>Would you recommend Fonna to others?</label>
+        <div class="fb-yesno" id="recommend">
+          <button class="fb-yn-btn" data-val="yes">Yes</button>
+          <button class="fb-yn-btn" data-val="maybe">Maybe</button>
+          <button class="fb-yn-btn" data-val="no">No</button>
+        </div>
+      </div>
+
+      <div class="fb-q">
+        <label>How did you find out about Fonna?</label>
+        <select class="fb-select" id="acquisitionSource">
+          <option value="">Select a source…</option>
+          <option value="friend_colleague">Friend or colleague</option>
+          <option value="instagram_facebook">Instagram or Facebook</option>
+          <option value="youtube_creator">YouTube creator</option>
+          <option value="reddit">Reddit</option>
+          <option value="search">Search</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="fb-q">
+        <label>Anything else you want us to know? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional)</span></label>
+        <textarea class="fb-textarea" id="otherComments" placeholder="Your thoughts…" maxlength="1000"></textarea>
+      </div>
+
+      <div class="fb-actions">
+        <button class="btn primary" id="fbSubmitBtn" type="button">Submit &amp; earn 1 credit</button>
+        <button class="btn ghost" id="fbCancelBtn" type="button">Maybe later</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
@@ -405,35 +558,39 @@ const API_BASE        = "https://listener-service-1esi.onrender.com";
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const $  = id => document.getElementById(id);
 
-const navEmail    = $("navEmail");
-const navCredits  = $("navCredits");
-const navCreditN  = $("navCreditCount");
-const logoutBtn   = $("logoutBtn");
-const uploadCard  = $("uploadCard");
-const progressCard= $("progressCard");
-const pBar        = $("progressBar");
-const pMsg        = $("progressMsg");
-const reportCard  = $("reportCard");
-const creditsCard = $("creditsCard");
-const fileInput   = $("fileInput");
-const trackTitle  = $("trackTitle");
-const artistName  = $("artistName");
-const analyseBtn  = $("analyseBtn");
-const uploadMsg   = $("uploadMsg");
-const newBtn      = $("newBtn");
-const purchaseBnr = $("purchaseBanner");
-const buyStarter  = $("buyStarter");
-const buyCreator  = $("buyCreator");
-const buyMsg      = $("buyMsg");
+const navEmail      = $("navEmail");
+const navCredits    = $("navCredits");
+const navCreditN    = $("navCreditCount");
+const logoutBtn     = $("logoutBtn");
+const uploadCard    = $("uploadCard");
+const progressCard  = $("progressCard");
+const pBar          = $("progressBar");
+const pMsg          = $("progressMsg");
+const reportCard    = $("reportCard");
+const creditsCard   = $("creditsCard");
+const fileInput     = $("fileInput");
+const trackTitle    = $("trackTitle");
+const artistName    = $("artistName");
+const analyseBtn    = $("analyseBtn");
+const uploadMsg     = $("uploadMsg");
+const newBtn        = $("newBtn");
+const purchaseBnr   = $("purchaseBanner");
+const buyStarter    = $("buyStarter");
+const buyCreator    = $("buyCreator");
+const buyMsg        = $("buyMsg");
 const upgradePrompt = $("upgradePrompt");
 const backToListBtn = $("backToListBtn");
+const feedbackPrompt= $("feedbackPrompt");
+const fbBackdrop    = $("fbBackdrop");
 
-let session     = null;
-let file        = null;
-let progTmr     = null;
-let isMagicUser = false;
+let session         = null;
+let file            = null;
+let progTmr         = null;
+let isMagicUser     = false;
+let currentReportId = null;
+let feedbackCount   = 0;
 
-// ── TABS ─────────────────────────────────────────────────────────────────
+// ── TABS ──────────────────────────────────────────────────────────────────
 function switchTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -451,6 +608,7 @@ async function boot() {
   isMagicUser = s.user?.app_metadata?.provider === 'email' &&
                 !s.user?.identities?.some(i => i.identity_data?.password_hash);
   await refreshCredits();
+  await loadFeedbackCount();
   creditsCard.style.display = "block";
   checkBanner();
 }
@@ -466,8 +624,24 @@ async function refreshCredits() {
       if (c < 1) {
         setMsg(uploadMsg, "err", "You have no credits remaining. Purchase a pack below to continue.");
         analyseBtn.disabled = true;
+      } else {
+        analyseBtn.disabled = false;
+        clearMsg(uploadMsg);
       }
     }
+  } catch {}
+}
+
+async function loadFeedbackCount() {
+  try {
+    const { count } = await sb
+      .from("feedback")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", session.user.id)
+      .eq("credit_awarded", true);
+    feedbackCount = count || 0;
+    $("feedbackCreditCount").textContent = feedbackCount;
+    $("fbTallyCount").textContent = feedbackCount;
   } catch {}
 }
 
@@ -541,6 +715,7 @@ async function analyse() {
   uploadCard.style.display = "none";
   progressCard.classList.add("show");
   reportCard.classList.remove("show");
+  feedbackPrompt.classList.remove("show");
   upgradePrompt.classList.remove("show");
   startProg();
 
@@ -573,9 +748,13 @@ async function analyse() {
     }
 
     const rpt = await res.json();
+    currentReportId = rpt.report_id || rpt.meta?.request_id || null;
     await refreshCredits();
     renderReport(rpt);
 
+    if (feedbackCount < 5) {
+      setTimeout(() => feedbackPrompt.classList.add("show"), 600);
+    }
     if (isMagicUser) {
       setTimeout(() => upgradePrompt.classList.add("show"), 800);
     }
@@ -630,17 +809,15 @@ function renderFlatReport(d) {
     domains:"dDomains", prio:"dPrio", tlWrap:"dTlWrap", tl:"dTl",
     ref:"dRef", lim:"dLim"
   };
-
   $(ids.track).textContent = d.track_title || "Untitled";
   const dur = d.duration_seconds
     ? `${Math.floor(d.duration_seconds/60)}:${String(Math.floor(d.duration_seconds%60)).padStart(2,"0")}`
     : "";
   const dateStr = d.created_at ? new Date(d.created_at).toLocaleDateString() : "";
   $(ids.meta).textContent = [dur ? dur+" min" : "", dateStr].filter(Boolean).join(" · ");
-  $(ids.snapshot).textContent  = d.snapshot || "";
-  $(ids.bestNext).textContent  = d.best_next_move || "";
+  $(ids.snapshot).textContent = d.snapshot || "";
+  $(ids.bestNext).textContent = d.best_next_move || "";
 
-  // Domains — flat columns, values arrive as arrays from jsonb
   const dEl = $(ids.domains); dEl.innerHTML = "";
   for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
     const works = d[key + "_what_works"];
@@ -654,13 +831,12 @@ function renderFlatReport(d) {
       try { return JSON.parse(v); } catch { return [v]; }
     };
     el.innerHTML = `<div class="domain-name">${label}</div>`
-      + sec("What's working",        parseArr(works))
-      + sec("What's holding it back",parseArr(holds))
-      + sec("Recommendations",       parseArr(recs));
+      + sec("What's working", parseArr(works))
+      + sec("What's holding it back", parseArr(holds))
+      + sec("Recommendations", parseArr(recs));
     dEl.appendChild(el);
   }
 
-  // Priority actions
   const pEl = $(ids.prio); pEl.innerHTML = "";
   const parseJSON = v => {
     if (!v) return [];
@@ -674,8 +850,7 @@ function renderFlatReport(d) {
     pEl.appendChild(row);
   });
 
-  // Timeline
-  const tl  = parseJSON(d.timeline_moments);
+  const tl = parseJSON(d.timeline_moments);
   const tlW = $(ids.tlWrap); const tlEl = $(ids.tl); tlEl.innerHTML = "";
   if (tl.length) {
     tlW.style.display = "block";
@@ -686,7 +861,6 @@ function renderFlatReport(d) {
     });
   } else { tlW.style.display = "none"; }
 
-  // Listening reference
   const refRaw = d.listening_reference;
   const ref = Array.isArray(refRaw) ? refRaw[0]
     : (refRaw && typeof refRaw === "object") ? refRaw
@@ -717,9 +891,9 @@ function renderReportInto(r, ids) {
     const d = r.domains?.[key]; if (!d) continue;
     const el = document.createElement("div"); el.className = "domain";
     el.innerHTML = `<div class="domain-name">${label}</div>`
-      + sec("What's working",        d.what_works)
-      + sec("What's holding it back",d.what_holds_it_back)
-      + sec("Recommendations",       d.recommendations);
+      + sec("What's working", d.what_works)
+      + sec("What's holding it back", d.what_holds_it_back)
+      + sec("Recommendations", d.recommendations);
     dEl.appendChild(el);
   }
 
@@ -730,7 +904,7 @@ function renderReportInto(r, ids) {
     pEl.appendChild(row);
   });
 
-  const tl  = r.timeline_moments||[];
+  const tl = r.timeline_moments||[];
   const tlW = $(ids.tlWrap); const tlEl = $(ids.tl); tlEl.innerHTML = "";
   if (tl.length) {
     tlW.style.display = "block";
@@ -753,6 +927,7 @@ function renderReportInto(r, ids) {
 // ── NEW ANALYSIS ──────────────────────────────────────────────────────────
 newBtn.addEventListener("click", () => {
   reportCard.classList.remove("show");
+  feedbackPrompt.classList.remove("show");
   upgradePrompt.classList.remove("show");
   uploadCard.style.display = "block";
   clearFile(); clearMsg(uploadMsg);
@@ -854,6 +1029,147 @@ async function buy(pack) {
 buyStarter.addEventListener("click", () => buy("starter"));
 buyCreator.addEventListener("click", () => buy("creator"));
 
+// ── FEEDBACK MODAL ────────────────────────────────────────────────────────
+function initScale(id) {
+  $(id).querySelectorAll(".fb-scale-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      $(id).querySelectorAll(".fb-scale-btn").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+    });
+  });
+}
+
+function initYesNo(id) {
+  $(id).querySelectorAll(".fb-yn-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      $(id).querySelectorAll(".fb-yn-btn").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+    });
+  });
+}
+
+function initChips(id) {
+  $(id).querySelectorAll(".fb-chip").forEach(chip => {
+    chip.addEventListener("click", () => chip.classList.toggle("selected"));
+  });
+}
+
+function getScale(id) {
+  const sel = $(id).querySelector(".fb-scale-btn.selected");
+  return sel ? Number(sel.dataset.val) : null;
+}
+
+function getYesNo(id) {
+  const sel = $(id).querySelector(".fb-yn-btn.selected");
+  return sel ? sel.dataset.val : null;
+}
+
+function getChips(id) {
+  return Array.from($(id).querySelectorAll(".fb-chip.selected")).map(c => c.dataset.val);
+}
+
+function resetFeedbackModal() {
+  ["scaleAccuracy","scaleActionable"].forEach(id =>
+    $(id).querySelectorAll(".fb-scale-btn").forEach(b => b.classList.remove("selected"))
+  );
+  ["comeBack","recommend"].forEach(id =>
+    $(id).querySelectorAll(".fb-yn-btn").forEach(b => b.classList.remove("selected"))
+  );
+  ["mostUseful","leastUseful"].forEach(id =>
+    $(id).querySelectorAll(".fb-chip").forEach(c => c.classList.remove("selected"))
+  );
+  $("trackStage").value = "";
+  $("acquisitionSource").value = "";
+  $("otherComments").value = "";
+  const msg = $("fbMsg"); msg.className = "fb-msg"; msg.textContent = "";
+  $("fbSubmitBtn").disabled = false;
+  $("fbSubmitBtn").textContent = "Submit & earn 1 credit";
+}
+
+function openFeedbackModal() { resetFeedbackModal(); fbBackdrop.classList.add("open"); }
+function closeFeedbackModal() { fbBackdrop.classList.remove("open"); }
+
+initScale("scaleAccuracy");
+initScale("scaleActionable");
+initYesNo("comeBack");
+initYesNo("recommend");
+initChips("mostUseful");
+initChips("leastUseful");
+
+$("openFeedbackBtn").addEventListener("click", openFeedbackModal);
+$("fbClose").addEventListener("click", closeFeedbackModal);
+$("fbCancelBtn").addEventListener("click", closeFeedbackModal);
+fbBackdrop.addEventListener("click", e => { if (e.target === fbBackdrop) closeFeedbackModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeFeedbackModal(); });
+
+$("fbSubmitBtn").addEventListener("click", async () => {
+  const fbMsg = $("fbMsg");
+  fbMsg.className = "fb-msg"; fbMsg.textContent = "";
+
+  const accuracy           = getScale("scaleAccuracy");
+  const actionable         = getScale("scaleActionable");
+  const track_stage        = $("trackStage").value || null;
+  const most_useful        = getChips("mostUseful");
+  const least_useful       = getChips("leastUseful");
+  const come_back          = getYesNo("comeBack");
+  const recommend          = getYesNo("recommend");
+  const acquisition_source = $("acquisitionSource").value || null;
+  const other_comments     = $("otherComments").value.trim() || null;
+
+  function showFbErr(msg) { fbMsg.className = "fb-msg err"; fbMsg.textContent = msg; }
+
+  if (!accuracy)           { showFbErr("Please rate how accurate the feedback felt."); return; }
+  if (!actionable)         { showFbErr("Please rate how actionable the report was."); return; }
+  if (!track_stage)        { showFbErr("Please select the stage of your track."); return; }
+  if (!come_back)          { showFbErr("Please answer whether you'd come back to Fonna."); return; }
+  if (!recommend)          { showFbErr("Please answer whether you'd recommend Fonna."); return; }
+  if (!acquisition_source) { showFbErr("Please let us know how you found out about Fonna."); return; }
+
+  $("fbSubmitBtn").disabled = true;
+  $("fbSubmitBtn").textContent = "Submitting…";
+
+  try {
+    const r = await fetch(`${API_BASE}/submit-feedback`, {
+      method: "POST",
+      headers: ah(),
+      body: JSON.stringify({
+        report_id: currentReportId,
+        accuracy, actionable, track_stage,
+        most_useful, least_useful,
+        come_back, recommend,
+        acquisition_source, other_comments,
+      }),
+    });
+
+    const d = await r.json();
+
+    if (!r.ok) {
+      showFbErr(d?.error?.message || "Something went wrong — please try again.");
+      $("fbSubmitBtn").disabled = false;
+      $("fbSubmitBtn").textContent = "Submit & earn 1 credit";
+      return;
+    }
+
+    feedbackCount = d.feedback_count ?? feedbackCount + 1;
+    $("feedbackCreditCount").textContent = feedbackCount;
+    $("fbTallyCount").textContent = feedbackCount;
+
+    fbMsg.className = "fb-msg ok";
+    fbMsg.textContent = "Thank you — 1 credit has been added to your account.";
+    $("fbSubmitBtn").textContent = "Done";
+
+    await refreshCredits();
+    if (feedbackCount >= 5) feedbackPrompt.classList.remove("show");
+
+    setTimeout(closeFeedbackModal, 2200);
+
+  } catch {
+    showFbErr("Connection error — please check your network and try again.");
+    $("fbSubmitBtn").disabled = false;
+    $("fbSubmitBtn").textContent = "Submit & earn 1 credit";
+  }
+});
+
 // ── HELPERS ───────────────────────────────────────────────────────────────
 function sec(label, arr) {
   if (!arr?.length) return "";
@@ -881,6 +1197,5 @@ boot();
 </script>
 
 <script defer src="/_vercel/insights/script.js"></script>
-
 </body>
 </html>
