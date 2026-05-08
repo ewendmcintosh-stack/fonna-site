@@ -653,8 +653,7 @@ async function boot() {
                 !s.user?.identities?.some(i => i.identity_data?.password_hash);
   await refreshCredits();
   await loadFeedbackCount();
-  // Only show buy credits card for returning (non-magic) users
-  if (!isMagicUser) creditsCard.style.display = "block";
+  creditsCard.style.display = "block";
   checkBanner();
 }
 
@@ -797,6 +796,8 @@ async function analyse() {
     if (feedbackCount < 5) {
       setTimeout(() => feedbackPrompt.classList.add("show"), 600);
     }
+    // Always show buy credits below report
+    creditsCard.style.display = "block";
 
   } catch (e) {
     stopProg();
@@ -1122,9 +1123,6 @@ $("pwdGateBtn").addEventListener("click", async () => {
     btn.style.display = "none";
     $("pwdGateSkip").style.display = "none";
     $("pwdGateCreditsSection").style.display = "block";
-
-    // Show purchase card for future top-ups
-    creditsCard.style.display = "block";
 
     // Banner confirmation
     purchaseBnr.textContent = "Account secured — 1 bonus credit added. You're all set.";
