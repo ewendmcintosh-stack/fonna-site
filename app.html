@@ -1,197 +1,183 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fonna — App</title>
-  <style>
-    :root {
-      --navy:#1A1A2E; --navy-mid:#16213E; --navy-deep:#0F3460;
-      --coral:#E94560; --coral-dark:#C73652;
-      --border:rgba(255,255,255,0.09); --text:#f4f4f2;
-      --muted:#a4a4a0; --soft:#d8d8d2;
-      --shadow:0 18px 50px rgba(0,0,0,0.38); --max:900px;
-    }
-    *{box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
-    body{
-      margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-      color:var(--text);background:var(--navy);min-height:100vh;
-      position:relative;overflow-x:hidden;
-    }
-    body::before{content:'';position:fixed;top:-120px;right:-120px;width:480px;height:480px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;z-index:0;}
-    body::after{content:'';position:fixed;bottom:10%;left:-100px;width:340px;height:340px;border-radius:50%;background:var(--navy-deep);opacity:0.6;pointer-events:none;z-index:0;}
-    a{color:inherit;text-decoration:none;}
-    .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto;position:relative;z-index:1;}
-
-    /* NAV */
-    .nav-shell{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(26,26,46,0.88);border-bottom:1px solid rgba(255,255,255,0.07);}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px;}
-    .brand{display:flex;align-items:center;gap:12px;font-size:1.05rem;font-weight:700;}
-    .brand-mark{width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(233,69,96,0.35);flex-shrink:0;}
-    .nav-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-    .credit-pill{display:none;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;border:1px solid rgba(233,69,96,0.25);background:rgba(233,69,96,0.08);font-size:0.86rem;color:var(--soft);white-space:nowrap;}
-    .credit-pill.show{display:inline-flex;}
-    .credit-pill strong{color:var(--coral);font-weight:700;}
-    .user-pill{font-size:0.82rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-
-    /* BUTTONS */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-weight:600;font-size:0.9rem;transition:transform 0.15s,background 0.15s;cursor:pointer;font-family:inherit;}
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.1);}
-    .btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
-    .btn.primary{background:var(--coral);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(233,69,96,0.35);position:relative;overflow:hidden;}
-    .btn.primary::before{content:'';position:absolute;top:-18px;right:-18px;width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,0.18);pointer-events:none;}
-    .btn.primary::after{content:'';position:absolute;bottom:-14px;left:-10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.13);pointer-events:none;}
-    .btn.primary:hover{background:var(--coral-dark);}
-    .btn.sm{min-height:36px;padding:0 14px;font-size:0.84rem;}
-    .btn.ghost{background:transparent;border-color:rgba(255,255,255,0.15);color:var(--muted);}
-    .btn.ghost:hover{background:rgba(255,255,255,0.06);color:var(--text);}
-
-    /* CARDS */
-    .card{border-radius:24px;border:1px solid rgba(255,255,255,0.08);background:var(--navy-mid);box-shadow:var(--shadow);padding:32px 36px;margin-bottom:22px;position:relative;overflow:hidden;}
-    .card::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
-    .card::after{content:'';position:absolute;bottom:-30px;left:-30px;width:130px;height:130px;border-radius:50%;background:var(--navy-deep);opacity:0.7;pointer-events:none;}
-    .card-inner{position:relative;z-index:1;}
-    .card-title{font-size:1.2rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 6px;}
-    .card-sub{font-size:0.9rem;color:var(--muted);margin:0 0 24px;line-height:1.6;}
-
-    /* SECTION LABEL */
-    .lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;opacity:0.9;}
-
-    /* FILE INPUT ROW */
-    .file-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
-    .file-input-display{flex:1;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:11px 14px;background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.9rem;font-family:inherit;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-    .file-input-display.chosen{color:var(--text);border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
-    #fileInput{display:none;}
-    .file-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;margin-bottom:20px;}
-
-    /* FIELDS */
-    .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
-    .field{display:flex;flex-direction:column;gap:6px;}
-    .field.full{grid-column:1/-1;}
-    .field label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
-    .field input,.field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;resize:none;}
-    .field input:focus,.field textarea:focus{outline:none;border-color:var(--coral);}
-    .field input::placeholder,.field textarea::placeholder{color:var(--muted);}
-    .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-    .submit-note{font-size:0.8rem;color:var(--muted);}
-    .submit-note strong{color:var(--coral);}
-
-    /* STATUS */
-    .msg{display:none;padding:13px 18px;border-radius:14px;font-size:0.88rem;line-height:1.55;margin-bottom:18px;}
-    .msg.show{display:block;}
-    .msg.err{background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
-    .msg.ok{background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
-    .msg.info{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--soft);}
-
-    /* PROGRESS */
-    .progress-card{display:none;text-align:center;}
-    .progress-card.show{display:block;}
-    .spinner{width:46px;height:46px;border-radius:50%;border:3px solid rgba(233,69,96,0.2);border-top-color:var(--coral);animation:spin 0.85s linear infinite;margin:0 auto 16px;}
-    @keyframes spin{to{transform:rotate(360deg);}}
-    .p-title{font-size:1.05rem;font-weight:700;margin-bottom:7px;}
-    .p-sub{font-size:0.88rem;color:var(--muted);line-height:1.6;}
-    .p-bar-wrap{background:rgba(255,255,255,0.06);border-radius:999px;height:3px;margin-top:20px;overflow:hidden;}
-    .p-bar{height:100%;background:var(--coral);border-radius:999px;width:5%;transition:width 0.6s ease;}
-
-    /* REPORT */
-    .report-card{display:none;}
-    .report-card.show{display:block;}
-    .rpt-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
-    .rpt-track{font-size:1.3rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:3px;}
-    .rpt-meta{font-size:0.82rem;color:var(--muted);}
-    .snapshot{background:rgba(15,52,96,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 20px;margin-bottom:20px;}
-    .snapshot-text{color:var(--soft);line-height:1.7;font-size:0.95rem;font-style:italic;}
-    .best-next{background:rgba(233,69,96,0.07);border:1px solid rgba(233,69,96,0.2);border-radius:14px;padding:18px 20px;margin-bottom:20px;}
-    .best-next-text{font-size:0.97rem;font-weight:600;color:var(--text);line-height:1.6;}
-    .domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
-    .domain{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;position:relative;overflow:hidden;}
-    .domain::after{content:'';position:absolute;bottom:-16px;right:-16px;width:60px;height:60px;border-radius:50%;background:var(--coral);opacity:0.05;pointer-events:none;}
-    .domain-name{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--coral);font-weight:600;margin-bottom:12px;}
-    .domain-sub{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;margin-top:10px;}
-    .dlist{margin:0;padding-left:14px;}
-    .dlist li{font-size:0.83rem;color:var(--soft);line-height:1.55;margin-bottom:3px;}
-    .prio-items{margin-bottom:20px;}
-    .prio-row{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
-    .prio-row:last-child{border-bottom:none;}
-    .p-badge{flex-shrink:0;width:26px;height:26px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);color:var(--coral);}
-    .p-text{font-size:0.88rem;color:var(--soft);line-height:1.55;padding-top:3px;}
-    .tl-items{margin-bottom:20px;}
-    .tl-row{display:flex;gap:14px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
-    .tl-row:last-child{border-bottom:none;}
-    .tl-stamp{flex-shrink:0;font-size:0.76rem;font-weight:700;color:var(--coral);font-family:monospace;min-width:90px;padding-top:2px;}
-    .tl-domain{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;}
-    .tl-note{font-size:0.86rem;color:var(--soft);line-height:1.5;}
-    .ref-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:20px;}
-    .ref-track{font-size:0.97rem;font-weight:700;margin-bottom:3px;}
-    .ref-why{font-size:0.85rem;color:var(--soft);line-height:1.6;}
-    .limitations{font-size:0.78rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;}
-
-    /* BUY */
-    .credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
-    .pack{border-radius:18px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);padding:20px;cursor:pointer;transition:border-color 0.15s,background 0.15s;position:relative;overflow:hidden;}
-    .pack:hover{border-color:var(--coral);background:rgba(233,69,96,0.06);}
-    .pack::after{content:'';position:absolute;bottom:-16px;right:-16px;width:70px;height:70px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
-    .pack.featured{border-color:rgba(233,69,96,0.35);}
-    .pack-badge{display:inline-block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--coral);background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);padding:2px 9px;border-radius:999px;margin-bottom:8px;}
-    .pack-name{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
-    .pack-price{font-size:1.7rem;font-weight:800;letter-spacing:-0.04em;}
-    .pack-credits{font-size:0.82rem;color:var(--muted);margin-top:2px;}
-
-    /* TABS */
-    .tab-nav{display:flex;gap:6px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:0;}
-    .tab-btn{background:none;border:none;color:var(--muted);font-family:inherit;font-size:0.92rem;font-weight:600;padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.15s,border-color 0.15s;border-radius:8px 8px 0 0;}
-    .tab-btn:hover{color:var(--text);}
-    .tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
-    .tab-panel{display:none;}
-    .tab-panel.active{display:block;}
-
-    /* UPGRADE PROMPT */
-    .upgrade-prompt{background:linear-gradient(135deg,rgba(233,69,96,0.1),rgba(15,52,96,0.4));border:1px solid rgba(233,69,96,0.25);border-radius:20px;padding:28px 32px;margin-top:24px;display:none;position:relative;overflow:hidden;}
-    .upgrade-prompt::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:var(--coral);opacity:0.08;pointer-events:none;}
-    .upgrade-prompt.show{display:block;}
-    .up-eyebrow{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:10px;}
-    .up-title{font-size:1.25rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;}
-    .up-body{font-size:0.92rem;color:var(--soft);line-height:1.7;margin-bottom:20px;}
-    .up-benefits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
-    .up-benefit{display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:var(--soft);line-height:1.5;}
-    .up-benefit::before{content:"✓";color:var(--coral);font-size:0.8rem;flex-shrink:0;margin-top:1px;}
-    .up-actions{display:flex;gap:12px;flex-wrap:wrap;}
-
-    /* REPORTS TAB */
-    .reports-empty{text-align:center;padding:60px 20px;color:var(--muted);}
-    .reports-empty .icon{font-size:2.5rem;margin-bottom:14px;opacity:0.4;}
-    .report-list{display:grid;gap:12px;}
-    .report-row{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color 0.15s,background 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-    .report-row:hover{border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
-    .report-row-left{flex:1;min-width:0;}
-    .report-title{font-size:0.97rem;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .report-meta{font-size:0.78rem;color:var(--muted);}
-    .report-arrow{color:var(--muted);font-size:1.2rem;flex-shrink:0;}
-    .report-detail{display:none;margin-top:16px;}
-    .report-detail.show{display:block;}
-    .report-detail-back{margin-bottom:18px;}
-
-    /* FOOTER */
-    .footer{padding:24px 0 48px;color:var(--muted);}
-    .footer-shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;}
-    .footer-links{display:flex;gap:18px;flex-wrap:wrap;}
-    .footer-links a:hover{color:var(--text);}
-    .hidden{display:none!important;}
-
-    @media(max-width:720px){
-      .nav{flex-wrap:wrap;padding:12px 0;}
-      .domains{grid-template-columns:1fr;}
-      .credits-grid{grid-template-columns:1fr;}
-      .fields{grid-template-columns:1fr;}
-      .card{padding:22px 20px;}
-      .user-pill{display:none;}
-    }
-    @media(max-width:480px){
-      .rpt-header{flex-direction:column;}
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fonna — App</title>
+<style>
+:root {
+--navy:#1A1A2E; --navy-mid:#16213E; --navy-deep:#0F3460;
+--coral:#E94560; --coral-dark:#C73652;
+--border:rgba(255,255,255,0.09); --text:#f4f4f2;
+--muted:#a4a4a0; --soft:#d8d8d2;
+--shadow:0 18px 50px rgba(0,0,0,0.38); --max:900px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+margin:0;
+font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+color:var(--text);background:var(--navy);min-height:100vh;
+position:relative;overflow-x:hidden;
+}
+body::before{content:'';position:fixed;top:-120px;right:-120px;width:480px;height:480px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;bottom:10%;left:-100px;width:340px;height:340px;border-radius:50%;background:var(--navy-deep);opacity:0.6;pointer-events:none;z-index:0;}
+a{color:inherit;text-decoration:none;}
+.wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto;position:relative;z-index:1;}
+/* NAV */
+.nav-shell{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(26,26,46,0.88);border-bottom:1px solid rgba(255,255,255,0.07);}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px;}
+.brand{display:flex;align-items:center;gap:12px;font-size:1.05rem;font-weight:700;}
+.brand-mark{width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(233,69,96,0.35);flex-shrink:0;}
+.nav-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.credit-pill{display:none;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;border:1px solid rgba(233,69,96,0.25);background:rgba(233,69,96,0.08);font-size:0.86rem;color:var(--soft);white-space:nowrap;}
+.credit-pill.show{display:inline-flex;}
+.credit-pill strong{color:var(--coral);font-weight:700;}
+.user-pill{font-size:0.82rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-weight:600;font-size:0.9rem;transition:transform 0.15s,background 0.15s;cursor:pointer;font-family:inherit;}
+.btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.1);}
+.btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
+.btn.primary{background:var(--coral);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(233,69,96,0.35);position:relative;overflow:hidden;}
+.btn.primary::before{content:'';position:absolute;top:-18px;right:-18px;width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,0.18);pointer-events:none;}
+.btn.primary::after{content:'';position:absolute;bottom:-14px;left:-10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.13);pointer-events:none;}
+.btn.primary:hover{background:var(--coral-dark);}
+.btn.sm{min-height:36px;padding:0 14px;font-size:0.84rem;}
+.btn.ghost{background:transparent;border-color:rgba(255,255,255,0.15);color:var(--muted);}
+.btn.ghost:hover{background:rgba(255,255,255,0.06);color:var(--text);}
+/* CARDS */
+.card{border-radius:24px;border:1px solid rgba(255,255,255,0.08);background:var(--navy-mid);box-shadow:var(--shadow);padding:32px 36px;margin-bottom:22px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
+.card::after{content:'';position:absolute;bottom:-30px;left:-30px;width:130px;height:130px;border-radius:50%;background:var(--navy-deep);opacity:0.7;pointer-events:none;}
+.card-inner{position:relative;z-index:1;}
+.card-title{font-size:1.2rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 6px;}
+.card-sub{font-size:0.9rem;color:var(--muted);margin:0 0 24px;line-height:1.6;}
+/* SECTION LABEL */
+.lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;opacity:0.9;}
+/* FILE INPUT ROW */
+.file-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+.file-input-display{flex:1;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:11px 14px;background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.9rem;font-family:inherit;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.file-input-display.chosen{color:var(--text);border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
+#fileInput{display:none;}
+.file-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;margin-bottom:20px;}
+/* FIELDS */
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field.full{grid-column:1/-1;}
+.field label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
+.field input,.field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;resize:none;}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--coral);}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted);}
+.submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.submit-note{font-size:0.8rem;color:var(--muted);}
+.submit-note strong{color:var(--coral);}
+/* STATUS */
+.msg{display:none;padding:13px 18px;border-radius:14px;font-size:0.88rem;line-height:1.55;margin-bottom:18px;}
+.msg.show{display:block;}
+.msg.err{background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
+.msg.ok{background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
+.msg.info{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--soft);}
+/* PROGRESS */
+.progress-card{display:none;text-align:center;}
+.progress-card.show{display:block;}
+.spinner{width:46px;height:46px;border-radius:50%;border:3px solid rgba(233,69,96,0.2);border-top-color:var(--coral);animation:spin 0.85s linear infinite;margin:0 auto 16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.p-title{font-size:1.05rem;font-weight:700;margin-bottom:7px;}
+.p-sub{font-size:0.88rem;color:var(--muted);line-height:1.6;}
+.p-bar-wrap{background:rgba(255,255,255,0.06);border-radius:999px;height:3px;margin-top:20px;overflow:hidden;}
+.p-bar{height:100%;background:var(--coral);border-radius:999px;width:5%;transition:width 0.6s ease;}
+/* REPORT */
+.report-card{display:none;}
+.report-card.show{display:block;}
+.rpt-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+.rpt-track{font-size:1.3rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:3px;}
+.rpt-meta{font-size:0.82rem;color:var(--muted);}
+.snapshot{background:rgba(15,52,96,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 20px;margin-bottom:20px;}
+.snapshot-text{color:var(--soft);line-height:1.7;font-size:0.95rem;font-style:italic;}
+.best-next{background:rgba(233,69,96,0.07);border:1px solid rgba(233,69,96,0.2);border-radius:14px;padding:18px 20px;margin-bottom:20px;}
+.best-next-text{font-size:0.97rem;font-weight:600;color:var(--text);line-height:1.6;}
+.domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.domain{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;position:relative;overflow:hidden;}
+.domain::after{content:'';position:absolute;bottom:-16px;right:-16px;width:60px;height:60px;border-radius:50%;background:var(--coral);opacity:0.05;pointer-events:none;}
+.domain-name{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--coral);font-weight:600;margin-bottom:12px;}
+.domain-sub{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;margin-top:10px;}
+.dlist{margin:0;padding-left:14px;}
+.dlist li{font-size:0.83rem;color:var(--soft);line-height:1.55;margin-bottom:3px;}
+.prio-items{margin-bottom:20px;}
+.prio-row{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.prio-row:last-child{border-bottom:none;}
+.p-badge{flex-shrink:0;width:26px;height:26px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;background:rgba(233,69,96,0.12);border:1px solid rgba(233,69,96,0.25);color:var(--coral);}
+.p-text{font-size:0.88rem;color:var(--soft);line-height:1.55;padding-top:3px;}
+.tl-items{margin-bottom:20px;}
+.tl-row{display:flex;gap:14px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.tl-row:last-child{border-bottom:none;}
+.tl-stamp{flex-shrink:0;font-size:0.76rem;font-weight:700;color:var(--coral);font-family:monospace;min-width:90px;padding-top:2px;}
+.tl-domain{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;}
+.tl-note{font-size:0.86rem;color:var(--soft);line-height:1.5;}
+.ref-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:20px;}
+.ref-track{font-size:0.97rem;font-weight:700;margin-bottom:3px;}
+.ref-why{font-size:0.85rem;color:var(--soft);line-height:1.6;}
+.limitations{font-size:0.78rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;}
+/* BUY */
+.credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
+.pack{border-radius:18px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);padding:20px;cursor:pointer;transition:border-color 0.15s,background 0.15s;position:relative;overflow:hidden;}
+.pack:hover{border-color:var(--coral);background:rgba(233,69,96,0.06);}
+.pack::after{content:'';position:absolute;bottom:-16px;right:-16px;width:70px;height:70px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
+.pack.featured{border-color:rgba(233,69,96,0.35);}
+.pack-badge{display:inline-block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--coral);background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);padding:2px 9px;border-radius:999px;margin-bottom:8px;}
+.pack-name{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
+.pack-price{font-size:1.7rem;font-weight:800;letter-spacing:-0.04em;}
+.pack-credits{font-size:0.82rem;color:var(--muted);margin-top:2px;}
+/* TABS */
+.tab-nav{display:flex;gap:6px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:0;}
+.tab-btn{background:none;border:none;color:var(--muted);font-family:inherit;font-size:0.92rem;font-weight:600;padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.15s,border-color 0.15s;border-radius:8px 8px 0 0;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+/* UPGRADE PROMPT */
+.upgrade-prompt{background:linear-gradient(135deg,rgba(233,69,96,0.1),rgba(15,52,96,0.4));border:1px solid rgba(233,69,96,0.25);border-radius:20px;padding:28px 32px;margin-top:24px;display:none;position:relative;overflow:hidden;}
+.upgrade-prompt::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:var(--coral);opacity:0.08;pointer-events:none;}
+.upgrade-prompt.show{display:block;}
+.up-eyebrow{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:10px;}
+.up-title{font-size:1.25rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;}
+.up-body{font-size:0.92rem;color:var(--soft);line-height:1.7;margin-bottom:20px;}
+.up-benefits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
+.up-benefit{display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;color:var(--soft);line-height:1.5;}
+.up-benefit::before{content:"✓";color:var(--coral);font-size:0.8rem;flex-shrink:0;margin-top:1px;}
+.up-actions{display:flex;gap:12px;flex-wrap:wrap;}
+/* REPORTS TAB */
+.reports-empty{text-align:center;padding:60px 20px;color:var(--muted);}
+.reports-empty .icon{font-size:2.5rem;margin-bottom:14px;opacity:0.4;}
+.report-list{display:grid;gap:12px;}
+.report-row{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color 0.15s,background 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.report-row:hover{border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
+.report-row-left{flex:1;min-width:0;}
+.report-title{font-size:0.97rem;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.report-meta{font-size:0.78rem;color:var(--muted);}
+.report-arrow{color:var(--muted);font-size:1.2rem;flex-shrink:0;}
+.report-detail{display:none;margin-top:16px;}
+.report-detail.show{display:block;}
+.report-detail-back{margin-bottom:18px;}
+/* FOOTER */
+.footer{padding:24px 0 48px;color:var(--muted);}
+.footer-shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap;}
+.footer-links a:hover{color:var(--text);}
+.hidden{display:none!important;}
+@media(max-width:720px){
+.nav{flex-wrap:wrap;padding:12px 0;}
+.domains{grid-template-columns:1fr;}
+.credits-grid{grid-template-columns:1fr;}
+.fields{grid-template-columns:1fr;}
+.card{padding:22px 20px;}
+.user-pill{display:none;}
+}
+@media(max-width:480px){
+.rpt-header{flex-direction:column;}
+}
+</style>
 </head>
 <body>
 
@@ -224,184 +210,174 @@
 <main style="padding:36px 0 60px;">
   <div class="wrap">
 
-    <div class="msg ok" id="purchaseBanner"></div>
+```
+<div class="msg ok" id="purchaseBanner"></div>
 
-    <!-- TAB NAV -->
-    <div class="tab-nav" id="tabNav">
-      <button class="tab-btn active" id="tabAnalyse" >Analyse</button>
-      <button class="tab-btn" id="tabReports" >My Reports</button>
+<!-- TAB NAV -->
+<div class="tab-nav" id="tabNav">
+  <button class="tab-btn active" id="tabAnalyse" >Analyse</button>
+  <button class="tab-btn" id="tabReports" >My Reports</button>
+</div>
+
+<!-- TAB: ANALYSE -->
+<div class="tab-panel active" id="panelAnalyse">
+
+<!-- UPLOAD -->
+<div class="card" id="uploadCard">
+  <div class="card-inner">
+    <p class="card-title">Analyse a track</p>
+    <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
+
+    <div class="lbl">Audio file</div>
+    <div class="file-row">
+      <div class="file-input-display" id="fileDisplay">No file selected</div>
+      <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
     </div>
+    <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
+    <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
 
-    <!-- TAB: ANALYSE -->
-    <div class="tab-panel active" id="panelAnalyse">
-
-    <!-- UPLOAD -->
-    <div class="card" id="uploadCard">
-      <div class="card-inner">
-        <p class="card-title">Analyse a track</p>
-        <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
-
-        <div class="lbl">Audio file</div>
-        <div class="file-row">
-          <div class="file-input-display" id="fileDisplay">No file selected</div>
-          <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
-        </div>
-        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
-        <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
-
-        <div class="fields">
-          <div class="field">
-            <label for="trackTitle">Track title</label>
-            <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
-          </div>
-          <div class="field">
-            <label for="artistName">Artist name</label>
-            <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
-          </div>
-          <div class="field full">
-            <label for="intentField">Intent <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional — steer the feedback)</span></label>
-            <textarea id="intentField" rows="2" maxlength="1500" placeholder="e.g. The mix is rough — focus on arrangement for now. Version 3. Recorded at home. (Add version number, mix stage, personal notes…)"></textarea>
-          </div>
-        </div>
-
-        <div class="msg" id="uploadMsg"></div>
-
-        <div class="submit-row">
-          <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
-          <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
-        </div>
+    <div class="fields">
+      <div class="field">
+        <label for="trackTitle">Track title</label>
+        <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
+      </div>
+      <div class="field">
+        <label for="artistName">Artist name</label>
+        <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
       </div>
     </div>
 
-    <!-- PROGRESS -->
-    <div class="card progress-card" id="progressCard">
-      <div class="card-inner" style="text-align:center;">
-        <div class="spinner"></div>
-        <div class="p-title">Listening to your track…</div>
-        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
-        <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
+    <div class="msg" id="uploadMsg"></div>
+    <div class="submit-row">
+      <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
+      <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="card progress-card" id="progressCard">
+  <div class="card-inner" style="text-align:center;">
+    <div class="spinner"></div>
+    <div class="p-title">Listening to your track…</div>
+    <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
+    <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
+  </div>
+</div>
+
+<!-- REPORT -->
+<div class="card report-card" id="reportCard">
+  <div class="card-inner">
+    <div class="rpt-header">
+      <div>
+        <div class="lbl">Producer Report</div>
+        <div class="rpt-track" id="rTrack"></div>
+        <div class="rpt-meta" id="rMeta"></div>
+      </div>
+      <div>
+        <button class="btn sm ghost" id="newBtn">New analysis</button>
       </div>
     </div>
+    <div class="snapshot">
+      <div class="lbl">Snapshot</div>
+      <div class="snapshot-text" id="rSnapshot"></div>
+    </div>
+    <div class="best-next">
+      <div class="lbl">Best next move</div>
+      <div class="best-next-text" id="rBestNext"></div>
+    </div>
+    <div class="lbl">Arrangement · Production · Mix</div>
+    <div class="domains" id="rDomains"></div>
+    <div class="lbl">Priority actions</div>
+    <div class="prio-items" id="rPrio"></div>
+    <div id="rTlWrap">
+      <div class="lbl">Timestamped notes</div>
+      <div class="tl-items" id="rTl"></div>
+    </div>
+    <div class="lbl">Listening reference</div>
+    <div class="ref-block" id="rRef"></div>
+    <div class="limitations" id="rLim"></div>
+  </div>
+</div>
 
-    <!-- REPORT -->
-    <div class="card report-card" id="reportCard">
+<!-- UPGRADE PROMPT (shown to magic-link / free users after report) -->
+<div class="upgrade-prompt" id="upgradePrompt">
+  <div class="up-eyebrow">New Users: Like What You See?</div>
+  <div class="up-title">Save it. Keep your history.</div>
+  <div class="up-body">Right now your report lives only in this session. Create a full account and every analysis you run is saved — ready to revisit whenever you need it.</div>
+  <div class="up-benefits">
+    <div class="up-benefit">Access all your past reports anytime</div>
+    <div class="up-benefit">Your credits carry over — nothing is lost</div>
+    <div class="up-benefit">One email and password — always direct access</div>
+    <div class="up-benefit">No more waiting for a new magic link</div>
+  </div>
+  <div class="up-actions">
+    <button class="btn primary" id="createAccountBtn">Create a full account</button>
+    <button class="btn ghost" onclick="document.getElementById('upgradePrompt').classList.remove('show')">Maybe later</button>
+  </div>
+</div>
+
+<!-- BUY CREDITS -->
+<div class="card" id="creditsCard" style="display:none;">
+  <div class="card-inner">
+    <p class="card-title">Get more credits</p>
+    <p class="card-sub">Each analysis uses 1 credit. Credits never expire.</p>
+    <div class="msg" id="buyMsg"></div>
+    <div class="credits-grid">
+      <div class="pack" id="buyStarter">
+        <div class="pack-name">Starter</div>
+        <div class="pack-price">$9.99</div>
+        <div class="pack-credits">10 credits</div>
+      </div>
+      <div class="pack featured" id="buyCreator">
+        <div class="pack-badge">Best value</div>
+        <div class="pack-name">Creator</div>
+        <div class="pack-price">$19.99</div>
+        <div class="pack-credits">30 credits</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panelAnalyse -->
+
+<!-- TAB: REPORTS -->
+<div class="tab-panel" id="panelReports">
+  <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
+  <div id="reportsEmpty" class="reports-empty hidden">
+    <div class="icon">♪</div>
+    <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
+    <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
+  </div>
+  <div id="reportsList" class="report-list hidden"></div>
+  <div id="reportDetail" class="report-detail">
+    <div class="report-detail-back">
+      <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
+    </div>
+    <div class="card">
       <div class="card-inner">
         <div class="rpt-header">
           <div>
             <div class="lbl">Producer Report</div>
-            <div class="rpt-track" id="rTrack"></div>
-            <div class="rpt-meta" id="rMeta"></div>
-          </div>
-          <div>
-            <button class="btn sm ghost" id="newBtn">New analysis</button>
+            <div class="rpt-track" id="dTrack"></div>
+            <div class="rpt-meta" id="dMeta"></div>
           </div>
         </div>
-
-        <div class="snapshot">
-          <div class="lbl">Snapshot</div>
-          <div class="snapshot-text" id="rSnapshot"></div>
-        </div>
-
-        <div class="best-next">
-          <div class="lbl">Best next move</div>
-          <div class="best-next-text" id="rBestNext"></div>
-        </div>
-
+        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
+        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
         <div class="lbl">Arrangement · Production · Mix</div>
-        <div class="domains" id="rDomains"></div>
-
+        <div class="domains" id="dDomains"></div>
         <div class="lbl">Priority actions</div>
-        <div class="prio-items" id="rPrio"></div>
-
-        <div id="rTlWrap">
-          <div class="lbl">Timestamped notes</div>
-          <div class="tl-items" id="rTl"></div>
-        </div>
-
+        <div class="prio-items" id="dPrio"></div>
+        <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
         <div class="lbl">Listening reference</div>
-        <div class="ref-block" id="rRef"></div>
-
-        <div class="limitations" id="rLim"></div>
+        <div class="ref-block" id="dRef"></div>
+        <div class="limitations" id="dLim"></div>
       </div>
     </div>
-
-    <!-- UPGRADE PROMPT (shown to magic-link / free users after report) -->
-    <div class="upgrade-prompt" id="upgradePrompt">
-      <div class="up-eyebrow">New Users: Like What You See?</div>
-      <div class="up-title">Save it. Keep your history.</div>
-      <div class="up-body">Right now your report lives only in this session. Create a full account and every analysis you run is saved — ready to revisit whenever you need it.</div>
-      <div class="up-benefits">
-        <div class="up-benefit">Access all your past reports anytime</div>
-        <div class="up-benefit">Your credits carry over — nothing is lost</div>
-        <div class="up-benefit">One email and password — always direct access</div>
-        <div class="up-benefit">No more waiting for a new magic link</div>
-      </div>
-      <div class="up-actions">
-        <button class="btn primary" id="createAccountBtn">Create a full account</button>
-        <button class="btn ghost" onclick="document.getElementById('upgradePrompt').classList.remove('show')">Maybe later</button>
-      </div>
-    </div>
-
-    <!-- BUY CREDITS -->
-    <div class="card" id="creditsCard" style="display:none;">
-      <div class="card-inner">
-        <p class="card-title">Get more credits</p>
-        <p class="card-sub">Each analysis uses 1 credit. Credits never expire.</p>
-        <div class="msg" id="buyMsg"></div>
-        <div class="credits-grid">
-          <div class="pack" id="buyStarter">
-            <div class="pack-name">Starter</div>
-            <div class="pack-price">$9.99</div>
-            <div class="pack-credits">10 credits</div>
-          </div>
-          <div class="pack featured" id="buyCreator">
-            <div class="pack-badge">Best value</div>
-            <div class="pack-name">Creator</div>
-            <div class="pack-price">$19.99</div>
-            <div class="pack-credits">30 credits</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    </div><!-- /panelAnalyse -->
-
-    <!-- TAB: REPORTS -->
-    <div class="tab-panel" id="panelReports">
-      <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
-      <div id="reportsEmpty" class="reports-empty hidden">
-        <div class="icon">♪</div>
-        <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
-        <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
-      </div>
-      <div id="reportsList" class="report-list hidden"></div>
-      <div id="reportDetail" class="report-detail">
-        <div class="report-detail-back">
-          <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
-        </div>
-        <div class="card">
-          <div class="card-inner">
-            <div class="rpt-header">
-              <div>
-                <div class="lbl">Producer Report</div>
-                <div class="rpt-track" id="dTrack"></div>
-                <div class="rpt-meta" id="dMeta"></div>
-              </div>
-            </div>
-            <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
-            <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
-            <div class="lbl">Arrangement · Production · Mix</div>
-            <div class="domains" id="dDomains"></div>
-            <div class="lbl">Priority actions</div>
-            <div class="prio-items" id="dPrio"></div>
-            <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
-            <div class="lbl">Listening reference</div>
-            <div class="ref-block" id="dRef"></div>
-            <div class="limitations" id="dLim"></div>
-          </div>
-        </div>
-      </div>
-    </div><!-- /panelReports -->
+  </div>
+</div><!-- /panelReports -->
+```
 
   </div>
 </main>
@@ -423,13 +399,13 @@
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
-const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
+const SUPABASE_URL    = "https://kukqwyakchsaqquudqiu.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
-const API_BASE          = "https://listener-service-1esi.onrender.com";
+const API_BASE        = "https://listener-service-1esi.onrender.com";
 
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const $  = id => document.getElementById(id);
 
-const $ = id => document.getElementById(id);
 const navEmail    = $("navEmail");
 const navCredits  = $("navCredits");
 const navCreditN  = $("navCreditCount");
@@ -443,7 +419,6 @@ const creditsCard = $("creditsCard");
 const fileInput   = $("fileInput");
 const trackTitle  = $("trackTitle");
 const artistName  = $("artistName");
-const intentField = $("intentField");
 const analyseBtn  = $("analyseBtn");
 const uploadMsg   = $("uploadMsg");
 const newBtn      = $("newBtn");
@@ -464,7 +439,7 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   $('panel' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
-  $('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  $('tab'   + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
   if (tab === 'reports') loadReports();
 }
 
@@ -563,8 +538,6 @@ async function analyse() {
 
   const title  = trackTitle.value.trim() || file.name.replace(/\.[^/.]+$/,"");
   const artist = artistName.value.trim() || "Unknown";
-  const intent = intentField.value.trim() ||
-    "Give me a balanced critique of arrangement, production, and mix, with practical producer advice on what to improve first.";
 
   uploadCard.style.display = "none";
   progressCard.classList.add("show");
@@ -582,7 +555,6 @@ async function analyse() {
         "X-Filename":    file.name,
         "X-Track-Title": title,
         "X-Artist-Name": artist,
-        "X-Intent":      intent,
       },
       body: buf,
     });
@@ -666,9 +638,8 @@ function renderFlatReport(d) {
     : "";
   const dateStr = d.created_at ? new Date(d.created_at).toLocaleDateString() : "";
   $(ids.meta).textContent = [dur ? dur+" min" : "", dateStr].filter(Boolean).join(" · ");
-
-  $(ids.snapshot).textContent = d.snapshot || "";
-  $(ids.bestNext).textContent = d.best_next_move || "";
+  $(ids.snapshot).textContent  = d.snapshot || "";
+  $(ids.bestNext).textContent  = d.best_next_move || "";
 
   // Domains — flat columns, values arrive as arrays from jsonb
   const dEl = $(ids.domains); dEl.innerHTML = "";
@@ -684,9 +655,9 @@ function renderFlatReport(d) {
       try { return JSON.parse(v); } catch { return [v]; }
     };
     el.innerHTML = `<div class="domain-name">${label}</div>`
-      + sec("What's working",         parseArr(works))
-      + sec("What's holding it back", parseArr(holds))
-      + sec("Recommendations",        parseArr(recs));
+      + sec("What's working",        parseArr(works))
+      + sec("What's holding it back",parseArr(holds))
+      + sec("Recommendations",       parseArr(recs));
     dEl.appendChild(el);
   }
 
@@ -705,7 +676,7 @@ function renderFlatReport(d) {
   });
 
   // Timeline
-  const tl = parseJSON(d.timeline_moments);
+  const tl  = parseJSON(d.timeline_moments);
   const tlW = $(ids.tlWrap); const tlEl = $(ids.tl); tlEl.innerHTML = "";
   if (tl.length) {
     tlW.style.display = "block";
@@ -716,12 +687,11 @@ function renderFlatReport(d) {
     });
   } else { tlW.style.display = "none"; }
 
-  // ── LISTENING REFERENCE (fixed) ──────────────────────────────────────
-  // Supabase returns jsonb columns already parsed — don't JSON.parse() an object
+  // Listening reference
   const refRaw = d.listening_reference;
   const ref = Array.isArray(refRaw) ? refRaw[0]
-             : (refRaw && typeof refRaw === "object") ? refRaw
-             : (() => { try { const p = JSON.parse(refRaw); return Array.isArray(p) ? p[0] : p; } catch { return null; } })();
+    : (refRaw && typeof refRaw === "object") ? refRaw
+    : (() => { try { const p = JSON.parse(refRaw); return Array.isArray(p) ? p[0] : p; } catch { return null; } })();
   const rRef = $(ids.ref);
   if (ref?.title) {
     rRef.style.display = "";
@@ -748,9 +718,9 @@ function renderReportInto(r, ids) {
     const d = r.domains?.[key]; if (!d) continue;
     const el = document.createElement("div"); el.className = "domain";
     el.innerHTML = `<div class="domain-name">${label}</div>`
-      + sec("What's working", d.what_works)
-      + sec("What's holding it back", d.what_holds_it_back)
-      + sec("Recommendations", d.recommendations);
+      + sec("What's working",        d.what_works)
+      + sec("What's holding it back",d.what_holds_it_back)
+      + sec("Recommendations",       d.recommendations);
     dEl.appendChild(el);
   }
 
@@ -761,7 +731,7 @@ function renderReportInto(r, ids) {
     pEl.appendChild(row);
   });
 
-  const tl = r.timeline_moments||[];
+  const tl  = r.timeline_moments||[];
   const tlW = $(ids.tlWrap); const tlEl = $(ids.tl); tlEl.innerHTML = "";
   if (tl.length) {
     tlW.style.display = "block";
@@ -787,7 +757,7 @@ newBtn.addEventListener("click", () => {
   upgradePrompt.classList.remove("show");
   uploadCard.style.display = "block";
   clearFile(); clearMsg(uploadMsg);
-  trackTitle.value = ""; artistName.value = ""; intentField.value = "";
+  trackTitle.value = ""; artistName.value = "";
   window.scrollTo({ top:0, behavior:"smooth" });
 });
 
@@ -808,7 +778,6 @@ async function loadReports() {
       .limit(50);
 
     $("reportsLoading").style.display = "none";
-
     if (error || !data?.length) {
       $("reportsEmpty").classList.remove("hidden");
       return;
@@ -817,11 +786,11 @@ async function loadReports() {
     const list = $("reportsList");
     list.innerHTML = "";
     data.forEach(row => {
-      const dur = row.duration_seconds
+      const dur  = row.duration_seconds
         ? `${Math.floor(row.duration_seconds/60)}:${String(Math.floor(row.duration_seconds%60)).padStart(2,"0")}`
         : "";
       const date = row.created_at ? new Date(row.created_at).toLocaleDateString() : "";
-      const el = document.createElement("div");
+      const el   = document.createElement("div");
       el.className = "report-row";
       el.innerHTML = `
         <div class="report-row-left">
@@ -833,7 +802,6 @@ async function loadReports() {
       list.appendChild(el);
     });
     list.classList.remove("hidden");
-
   } catch(e) {
     $("reportsLoading").style.display = "none";
     $("reportsEmpty").classList.remove("hidden");
@@ -846,7 +814,7 @@ async function openReportDetail(row) {
   const detail = $("reportDetail");
   detail.classList.add("show");
   $("dTrack").textContent = row.track_title || "Loading…";
-  $("dMeta").textContent = "";
+  $("dMeta").textContent  = "";
 
   const { data, error } = await sb
     .from("reports")
@@ -909,8 +877,11 @@ function clearMsg(el)        { el.className="msg"; el.textContent=""; }
 $("tabAnalyse").addEventListener("click", () => switchTab("analyse"));
 $("tabReports").addEventListener("click", () => switchTab("reports"));
 $("createAccountBtn").addEventListener("click", () => { window.location.href = "/#login?upgrade=1"; });
+
 boot();
 </script>
-  <script defer src="/_vercel/insights/script.js"></script>
+
+<script defer src="/_vercel/insights/script.js"></script>
+
 </body>
 </html>
