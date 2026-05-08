@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -30,462 +31,465 @@
       overflow-x: hidden;
     }
 
-    /* ── DECORATIVE CIRCLES ── */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -120px; right: -120px;
-      width: 480px; height: 480px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.07;
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: 10%; left: -100px;
-      width: 340px; height: 340px;
-      border-radius: 50%;
-      background: var(--navy-deep);
-      opacity: 0.6;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .wrap, .nav-shell, main, footer { position: relative; z-index: 1; }
+```
+/* ── DECORATIVE CIRCLES ── */
+body::before {
+  content: '';
+  position: fixed;
+  top: -120px; right: -120px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: var(--coral);
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 10%; left: -100px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: var(--navy-deep);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+.wrap, .nav-shell, main, footer { position: relative; z-index: 1; }
 
-    a { color: inherit; text-decoration: none; }
-    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+a { color: inherit; text-decoration: none; }
+.wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
 
-    /* ── NAV ── */
-    .nav-shell {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(26,26,46,0.88);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
-    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.01em; }
-    .brand-mark {
-      width: 34px; height: 34px; border-radius: 10px;
-      display: inline-flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 20px rgba(233,69,96,0.35);
-      flex-shrink: 0;
-    }
-    .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 0.96rem; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-actions { display: flex; align-items: center; gap: 12px; }
+/* ── NAV ── */
+.nav-shell {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px);
+  background: rgba(26,26,46,0.88);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
+.brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.01em; }
+.brand-mark {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 20px rgba(233,69,96,0.35);
+  flex-shrink: 0;
+}
+.nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 0.96rem; }
+.nav-links a:hover { color: var(--text); }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
 
-    /* ── BUTTONS ── */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      min-height: 46px; padding: 0 20px; border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--text); font-weight: 600;
-      transition: transform 0.18s ease, background 0.18s ease;
-      cursor: pointer; font-family: inherit; font-size: inherit;
-    }
-    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.1); }
-    .btn.primary {
-      background: var(--coral);
-      color: #fff; border-color: transparent;
-      box-shadow: 0 10px 28px rgba(233,69,96,0.35);
-      position: relative; overflow: hidden;
-    }
-    .btn.primary::before {
-      content: '';
-      position: absolute;
-      top: -18px; right: -18px;
-      width: 52px; height: 52px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.18);
-      pointer-events: none;
-    }
-    .btn.primary::after {
-      content: '';
-      position: absolute;
-      bottom: -14px; left: -10px;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.13);
-      pointer-events: none;
-    }
-    .btn.primary:hover { background: var(--coral-dark); }
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 46px; padding: 0 20px; border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+  color: var(--text); font-weight: 600;
+  transition: transform 0.18s ease, background 0.18s ease;
+  cursor: pointer; font-family: inherit; font-size: inherit;
+}
+.btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.1); }
+.btn.primary {
+  background: var(--coral);
+  color: #fff; border-color: transparent;
+  box-shadow: 0 10px 28px rgba(233,69,96,0.35);
+  position: relative; overflow: hidden;
+}
+.btn.primary::before {
+  content: '';
+  position: absolute;
+  top: -18px; right: -18px;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+.btn.primary::after {
+  content: '';
+  position: absolute;
+  bottom: -14px; left: -10px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.13);
+  pointer-events: none;
+}
+.btn.primary:hover { background: var(--coral-dark); }
 
-    /* ── HERO ── */
-    .hero { padding: 78px 0 46px; }
-    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: stretch; }
-    .hero-copy, .hero-card {
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(22,33,62,0.7);
-      border-radius: 30px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-copy::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; right: -60px;
-      width: 220px; height: 220px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.09;
-      pointer-events: none;
-    }
-    .hero-card::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.12;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .hero-copy { padding: 42px; }
-    .hero-card { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+/* ── HERO ── */
+.hero { padding: 78px 0 46px; }
+.hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: stretch; }
+.hero-copy, .hero-card {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(22,33,62,0.7);
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.hero-copy::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; right: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: var(--coral);
+  opacity: 0.09;
+  pointer-events: none;
+}
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: var(--coral);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-copy { padding: 42px; }
+.hero-card { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
 
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 14px; border-radius: 999px;
-      border: 1px solid rgba(233,69,96,0.3);
-      background: rgba(233,69,96,0.1);
-      color: var(--coral);
-      font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 22px;
-    }
-    .hero h1 {
-      font-size: clamp(3rem,6vw,5.8rem);
-      line-height: 0.95; letter-spacing: -0.05em;
-      margin: 0 0 18px; max-width: 9ch;
-    }
-    .differentiator { margin: 0 0 14px; font-size: 1.08rem; font-weight: 600; color: var(--text); line-height: 1.5; max-width: 52ch; }
-    .hero p.lead { margin: 0; color: var(--soft); font-size: 1.05rem; line-height: 1.7; max-width: 58ch; }
-    .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
-    .micro { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; color: var(--muted); font-size: 0.92rem; }
-    .micro span {
-      padding: 9px 12px; border-radius: 999px;
-      background: rgba(233,69,96,0.08);
-      border: 1px solid rgba(233,69,96,0.18);
-    }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid rgba(233,69,96,0.3);
+  background: rgba(233,69,96,0.1);
+  color: var(--coral);
+  font-size: 0.84rem; letter-spacing: 0.02em; margin-bottom: 22px;
+}
+.hero h1 {
+  font-size: clamp(3rem,6vw,5.8rem);
+  line-height: 0.95; letter-spacing: -0.05em;
+  margin: 0 0 18px; max-width: 9ch;
+}
+.differentiator { margin: 0 0 14px; font-size: 1.08rem; font-weight: 600; color: var(--text); line-height: 1.5; max-width: 52ch; }
+.hero p.lead { margin: 0; color: var(--soft); font-size: 1.05rem; line-height: 1.7; max-width: 58ch; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+.micro { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; color: var(--muted); font-size: 0.92rem; }
+.micro span {
+  padding: 9px 12px; border-radius: 999px;
+  background: rgba(233,69,96,0.08);
+  border: 1px solid rgba(233,69,96,0.18);
+}
 
-    /* ── REPORT WINDOW ── */
-    .report-window {
-      flex: 1; border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(15,52,96,0.5);
-      padding: 18px; display: flex; flex-direction: column; gap: 10px;
-      position: relative; z-index: 1;
-    }
-    .window-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.84rem; }
-    .dots { display: flex; gap: 7px; }
-    .dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.18); display: block; }
-    .dots span:first-child { background: var(--coral); opacity: 0.7; }
-    .report-section {
-      border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(255,255,255,0.03);
-      border-radius: 16px; padding: 13px;
-    }
-    .report-label {
-      font-size: 0.72rem; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--coral);
-      margin-bottom: 7px; opacity: 0.85;
-    }
-    .report-title { font-weight: 700; margin-bottom: 7px; font-size: 0.95rem; }
-    .report-body { color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
-    .report-list { margin: 0; padding-left: 16px; color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
-    .best-next {
-      border: 1px solid rgba(233,69,96,0.2);
-      background: rgba(233,69,96,0.06);
-      border-radius: 16px; padding: 13px;
-    }
+/* ── REPORT WINDOW ── */
+.report-window {
+  flex: 1; border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(15,52,96,0.5);
+  padding: 18px; display: flex; flex-direction: column; gap: 10px;
+  position: relative; z-index: 1;
+}
+.window-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.84rem; }
+.dots { display: flex; gap: 7px; }
+.dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.18); display: block; }
+.dots span:first-child { background: var(--coral); opacity: 0.7; }
+.report-section {
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px; padding: 13px;
+}
+.report-label {
+  font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--coral);
+  margin-bottom: 7px; opacity: 0.85;
+}
+.report-title { font-weight: 700; margin-bottom: 7px; font-size: 0.95rem; }
+.report-body { color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
+.report-list { margin: 0; padding-left: 16px; color: var(--soft); line-height: 1.6; font-size: 0.9rem; }
+.best-next {
+  border: 1px solid rgba(233,69,96,0.2);
+  background: rgba(233,69,96,0.06);
+  border-radius: 16px; padding: 13px;
+}
 
-    /* ── SECTIONS ── */
-    .section { padding: 34px 0; }
-    .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
-    .section-head h2 { margin: 0 0 8px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; }
-    .section-head p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 58ch; }
+/* ── SECTIONS ── */
+.section { padding: 34px 0; }
+.section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
+.section-head h2 { margin: 0 0 8px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; }
+.section-head p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 58ch; }
 
-    /* ── CARDS ── */
-    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-    .card {
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--navy-mid);
-      box-shadow: var(--shadow);
-      padding: 24px;
-      position: relative; overflow: hidden;
-    }
-    .card::after {
-      content: '';
-      position: absolute;
-      bottom: -30px; right: -30px;
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.05;
-      pointer-events: none;
-    }
-    .card h3 { margin: 0 0 10px; font-size: 1.22rem; letter-spacing: -0.02em; }
-    .card p { margin: 0; color: var(--soft); line-height: 1.7; }
-    .step-no {
-      width: 40px; height: 40px; border-radius: 999px;
-      display: grid; place-items: center; margin-bottom: 16px;
-      background: rgba(233,69,96,0.12);
-      border: 1px solid rgba(233,69,96,0.25);
-      color: var(--coral); font-weight: 700;
-    }
+/* ── CARDS ── */
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.card {
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--navy-mid);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  position: relative; overflow: hidden;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; right: -30px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: var(--coral);
+  opacity: 0.05;
+  pointer-events: none;
+}
+.card h3 { margin: 0 0 10px; font-size: 1.22rem; letter-spacing: -0.02em; }
+.card p { margin: 0; color: var(--soft); line-height: 1.7; }
+.step-no {
+  width: 40px; height: 40px; border-radius: 999px;
+  display: grid; place-items: center; margin-bottom: 16px;
+  background: rgba(233,69,96,0.12);
+  border: 1px solid rgba(233,69,96,0.25);
+  color: var(--coral); font-weight: 700;
+}
 
-    /* ── PRICING ── */
-    .pricing-card { display: flex; flex-direction: column; gap: 18px; min-height: 100%; }
-    .pricing-card .tier { font-size: 1.1rem; font-weight: 700; }
-    .price { font-size: 2.35rem; letter-spacing: -0.05em; font-weight: 800; margin: 0; }
-    .price-sub { color: var(--muted); font-size: 0.95rem; margin-top: -10px; }
-    .feature-list { margin: 0; padding-left: 18px; color: var(--soft); line-height: 1.7; }
-    .pricing-card .btn { margin-top: auto; }
-    .highlight {
-      border-color: var(--coral) !important;
-      background: rgba(233,69,96,0.08) !important;
-    }
-    .highlight::after { opacity: 0.1; }
+/* ── PRICING ── */
+.pricing-card { display: flex; flex-direction: column; gap: 18px; min-height: 100%; }
+.pricing-card .tier { font-size: 1.1rem; font-weight: 700; }
+.price { font-size: 2.35rem; letter-spacing: -0.05em; font-weight: 800; margin: 0; }
+.price-sub { color: var(--muted); font-size: 0.95rem; margin-top: -10px; }
+.feature-list { margin: 0; padding-left: 18px; color: var(--soft); line-height: 1.7; }
+.pricing-card .btn { margin-top: auto; }
+.highlight {
+  border-color: var(--coral) !important;
+  background: rgba(233,69,96,0.08) !important;
+}
+.highlight::after { opacity: 0.1; }
 
-    /* ── ABOUT ── */
-    .about-card {
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--navy-mid);
-      box-shadow: var(--shadow);
-      padding: 36px;
-      position: relative; overflow: hidden;
-    }
-    .about-card::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.07;
-      pointer-events: none;
-    }
-    .about-card::after {
-      content: '';
-      position: absolute;
-      bottom: -40px; left: -40px;
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      background: var(--navy-deep);
-      opacity: 0.8;
-      pointer-events: none;
-    }
-    .about-card h2 { margin: 0 0 16px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; position: relative; z-index: 1; }
-    .about-card .belief {
-      font-size: clamp(1.1rem,2vw,1.45rem); line-height: 1.6;
-      color: var(--soft); margin: 0 0 20px; max-width: 72ch;
-      position: relative; z-index: 1;
-    }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 24px; position: relative; z-index: 1; }
-    .about-point h4 { margin: 0 0 6px; font-size: 1rem; font-weight: 700; color: var(--coral); }
-    .about-point p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
-    .philosophy-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 20px; color: var(--soft); font-size: 0.95rem;
-      border-bottom: 1px solid rgba(233,69,96,0.3);
-      padding-bottom: 2px;
-      transition: color 0.15s, border-color 0.15s;
-      position: relative; z-index: 1;
-    }
-    .philosophy-link:hover { color: var(--coral); border-color: var(--coral); }
+/* ── ABOUT ── */
+.about-card {
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--navy-mid);
+  box-shadow: var(--shadow);
+  padding: 36px;
+  position: relative; overflow: hidden;
+}
+.about-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: var(--coral);
+  opacity: 0.07;
+  pointer-events: none;
+}
+.about-card::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: var(--navy-deep);
+  opacity: 0.8;
+  pointer-events: none;
+}
+.about-card h2 { margin: 0 0 16px; font-size: clamp(1.9rem,3vw,3rem); letter-spacing: -0.04em; position: relative; z-index: 1; }
+.about-card .belief {
+  font-size: clamp(1.1rem,2vw,1.45rem); line-height: 1.6;
+  color: var(--soft); margin: 0 0 20px; max-width: 72ch;
+  position: relative; z-index: 1;
+}
+.about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 24px; position: relative; z-index: 1; }
+.about-point h4 { margin: 0 0 6px; font-size: 1rem; font-weight: 700; color: var(--coral); }
+.about-point p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
+.philosophy-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 20px; color: var(--soft); font-size: 0.95rem;
+  border-bottom: 1px solid rgba(233,69,96,0.3);
+  padding-bottom: 2px;
+  transition: color 0.15s, border-color 0.15s;
+  position: relative; z-index: 1;
+}
+.philosophy-link:hover { color: var(--coral); border-color: var(--coral); }
 
-    /* ── AUTH ── */
-    .auth-shell { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; align-items: start; }
-    .auth-card {
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--navy-mid);
-      box-shadow: var(--shadow);
-      padding: 32px;
-      position: relative; overflow: hidden;
-    }
-    .auth-card.main { border-color: rgba(233,69,96,0.3); }
-    .auth-card::after {
-      content: '';
-      position: absolute;
-      bottom: -40px; right: -40px;
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      background: var(--coral);
-      opacity: 0.09;
-      pointer-events: none;
-    }
-    .auth-card::before {
-      content: '';
-      position: absolute;
-      top: -40px; left: -40px;
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      background: var(--navy-deep);
-      opacity: 0.6;
-      pointer-events: none;
-    }
-    .magic-form { display: grid; gap: 14px; position: relative; z-index: 1; }
-    .magic-input-row { display: flex; gap: 10px; }
-    .magic-input-row input {
-      flex: 1;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px; padding: 14px 16px;
-      background: rgba(255,255,255,0.06);
-      color: var(--text); font-size: 1rem; font-family: inherit;
-      transition: border-color 0.15s;
-    }
-    .magic-input-row input:focus { outline: none; border-color: var(--coral); }
-    .magic-input-row input::placeholder { color: var(--muted); }
-    .trust-signals { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
-    .trust-pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 5px 11px; border-radius: 999px;
-      font-size: 0.78rem; color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-    }
-    .trust-pill::before { content: "\2713"; color: var(--coral); font-size: 0.75rem; }
+/* ── AUTH ── */
+.auth-shell { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; align-items: start; }
+.auth-card {
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--navy-mid);
+  box-shadow: var(--shadow);
+  padding: 32px;
+  position: relative; overflow: hidden;
+}
+.auth-card.main { border-color: rgba(233,69,96,0.3); }
+.auth-card::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; right: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: var(--coral);
+  opacity: 0.09;
+  pointer-events: none;
+}
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; left: -40px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: var(--navy-deep);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.magic-form { display: grid; gap: 14px; position: relative; z-index: 1; }
+.magic-input-row { display: flex; gap: 10px; }
+.magic-input-row input {
+  flex: 1;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px; padding: 14px 16px;
+  background: rgba(255,255,255,0.06);
+  color: var(--text); font-size: 1rem; font-family: inherit;
+  transition: border-color 0.15s;
+}
+.magic-input-row input:focus { outline: none; border-color: var(--coral); }
+.magic-input-row input::placeholder { color: var(--muted); }
+.trust-signals { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.trust-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 11px; border-radius: 999px;
+  font-size: 0.78rem; color: var(--muted);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.trust-pill::before { content: "\2713"; color: var(--coral); font-size: 0.75rem; }
 
-    /* ── NEWSLETTER (magic link lane) ── */
-    .magic-newsletter { position: relative; z-index: 1; }
-    .magic-newsletter label {
-      display: flex; align-items: flex-start; gap: 9px;
-      cursor: pointer; font-size: 0.76rem; color: var(--muted); line-height: 1.5;
-    }
-    .magic-newsletter input[type="checkbox"] {
-      appearance: none; -webkit-appearance: none;
-      width: 15px; height: 15px; min-width: 15px;
-      border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;
-      background: rgba(255,255,255,0.04); cursor: pointer;
-      margin-top: 1px; transition: background 0.15s, border-color 0.15s; position: relative;
-    }
-    .magic-newsletter input[type="checkbox"]:checked {
-      background: var(--coral); border-color: var(--coral);
-    }
-    .magic-newsletter input[type="checkbox"]:checked::after {
-      content: ''; position: absolute; left: 4px; top: 1px;
-      width: 5px; height: 9px; border: 2px solid #fff;
-      border-top: none; border-left: none; transform: rotate(45deg);
-    }
+/* ── NEWSLETTER (magic link lane) ── */
+.magic-newsletter { position: relative; z-index: 1; }
+.magic-newsletter label {
+  display: flex; align-items: flex-start; gap: 9px;
+  cursor: pointer; font-size: 0.76rem; color: var(--muted); line-height: 1.5;
+}
+.magic-newsletter input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 15px; height: 15px; min-width: 15px;
+  border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;
+  background: rgba(255,255,255,0.04); cursor: pointer;
+  margin-top: 1px; transition: background 0.15s, border-color 0.15s; position: relative;
+}
+.magic-newsletter input[type="checkbox"]:checked {
+  background: var(--coral); border-color: var(--coral);
+}
+.magic-newsletter input[type="checkbox"]:checked::after {
+  content: ''; position: absolute; left: 4px; top: 1px;
+  width: 5px; height: 9px; border: 2px solid #fff;
+  border-top: none; border-left: none; transform: rotate(45deg);
+}
 
-    .auth-status {
-      margin-top: 12px; padding: 13px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      color: var(--soft); line-height: 1.6; font-size: 0.9rem;
-      display: none; position: relative; z-index: 1;
-    }
-    .auth-status.visible { display: block; }
-    .auth-status.sent { border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.06); color: #7febb0; }
-    .auth-status.error { border-color: rgba(233,69,96,0.3); background: rgba(233,69,96,0.06); color: #f4a0af; }
-    .auth-userbox { display: grid; gap: 10px; position: relative; z-index: 1; }
-    .auth-userbox .row {
-      padding: 12px 14px; border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-    }
-    .auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
-    .auth-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .auth-lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-    .auth-lane { padding: 32px; position: relative; z-index: 1; }
-    .auth-lane-divider {
-      width: 1px; background: rgba(255,255,255,0.08);
-      margin: 24px 0; align-self: stretch;
-    }
-    .auth-lane-label {
-      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--coral); font-weight: 600; margin-bottom: 14px;
-    }
-    .auth-lane h4 { font-size: 1rem; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em; }
-    .auth-lane p.lane-sub { font-size: 0.85rem; color: var(--muted); margin: 0 0 18px; line-height: 1.6; }
-    .pwd-form { display: grid; gap: 10px; }
-    .pwd-form input {
-      border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
-      padding: 12px 14px; background: rgba(255,255,255,0.05);
-      color: var(--text); font-size: 0.92rem; font-family: inherit;
-      transition: border-color 0.15s; width: 100%;
-    }
-    .pwd-form input:focus { outline: none; border-color: var(--coral); }
-    .pwd-form input::placeholder { color: var(--muted); }
-    .pwd-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
-    .pwd-switch { font-size: 0.78rem; color: var(--muted); margin-top: 10px; }
-    .pwd-switch a { color: var(--coral); cursor: pointer; text-decoration: underline; }
-    .auth-status-pwd {
-      margin-top: 10px; padding: 10px 14px; border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
-      color: var(--soft); font-size: 0.85rem; line-height: 1.5;
-      display: none;
-    }
-    .auth-status-pwd.visible { display: block; }
-    .auth-status-pwd.sent { border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.06); color: #7febb0; }
-    .auth-status-pwd.error { border-color: rgba(233,69,96,0.3); background: rgba(233,69,96,0.06); color: #f4a0af; }
-    @media (max-width: 680px) {
-      .auth-lanes { grid-template-columns: 1fr; }
-      .auth-lane-divider { width: auto; height: 1px; margin: 0 24px; }
-      .auth-lane { padding: 24px; }
-    }
-    @media (max-width: 520px) {
-      .magic-input-row { flex-direction: column; }
-      .magic-input-row .btn { width: 100%; justify-content: center; }
-    }
+.auth-status {
+  margin-top: 12px; padding: 13px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: var(--soft); line-height: 1.6; font-size: 0.9rem;
+  display: none; position: relative; z-index: 1;
+}
+.auth-status.visible { display: block; }
+.auth-status.sent { border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.06); color: #7febb0; }
+.auth-status.error { border-color: rgba(233,69,96,0.3); background: rgba(233,69,96,0.06); color: #f4a0af; }
+.auth-userbox { display: grid; gap: 10px; position: relative; z-index: 1; }
+.auth-userbox .row {
+  padding: 12px 14px; border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+.auth-userbox .k { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.auth-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.auth-lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.auth-lane { padding: 32px; position: relative; z-index: 1; }
+.auth-lane-divider {
+  width: 1px; background: rgba(255,255,255,0.08);
+  margin: 24px 0; align-self: stretch;
+}
+.auth-lane-label {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--coral); font-weight: 600; margin-bottom: 14px;
+}
+.auth-lane h4 { font-size: 1rem; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em; }
+.auth-lane p.lane-sub { font-size: 0.85rem; color: var(--muted); margin: 0 0 18px; line-height: 1.6; }
+.pwd-form { display: grid; gap: 10px; }
+.pwd-form input {
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
+  padding: 12px 14px; background: rgba(255,255,255,0.05);
+  color: var(--text); font-size: 0.92rem; font-family: inherit;
+  transition: border-color 0.15s; width: 100%;
+}
+.pwd-form input:focus { outline: none; border-color: var(--coral); }
+.pwd-form input::placeholder { color: var(--muted); }
+.pwd-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.pwd-switch { font-size: 0.78rem; color: var(--muted); margin-top: 10px; }
+.pwd-switch a { color: var(--coral); cursor: pointer; text-decoration: underline; }
+.auth-status-pwd {
+  margin-top: 10px; padding: 10px 14px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+  color: var(--soft); font-size: 0.85rem; line-height: 1.5;
+  display: none;
+}
+.auth-status-pwd.visible { display: block; }
+.auth-status-pwd.sent { border-color: rgba(46,204,113,0.3); background: rgba(46,204,113,0.06); color: #7febb0; }
+.auth-status-pwd.error { border-color: rgba(233,69,96,0.3); background: rgba(233,69,96,0.06); color: #f4a0af; }
+@media (max-width: 680px) {
+  .auth-lanes { grid-template-columns: 1fr; }
+  .auth-lane-divider { width: auto; height: 1px; margin: 0 24px; }
+  .auth-lane { padding: 24px; }
+}
+@media (max-width: 520px) {
+  .magic-input-row { flex-direction: column; }
+  .magic-input-row .btn { width: 100%; justify-content: center; }
+}
 
-    /* ── FOOTER ── */
-    .footer { padding: 28px 0 60px; color: var(--muted); }
-    .footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
-    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
-    .footer-links a:hover { color: var(--text); }
+/* ── FOOTER ── */
+.footer { padding: 28px 0 60px; color: var(--muted); }
+.footer-shell { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
+.footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+.footer-links a:hover { color: var(--text); }
 
-    /* ── CONTACT MODAL ── */
-    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,10,20,0.75); backdrop-filter: blur(6px); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
-    .modal-backdrop.open { display: flex; }
-    .modal { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); padding: 36px; width: 100%; max-width: 480px; position: relative; overflow: hidden; }
-    .modal::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: var(--coral); opacity: 0.07; pointer-events: none; }
-    .modal-inner { position: relative; z-index: 1; }
-    .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--muted); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; line-height: 1; transition: background 0.15s, color 0.15s; z-index: 2; }
-    .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
-    .modal h2 { margin: 0 0 6px; font-size: 1.3rem; letter-spacing: -0.03em; }
-    .modal .modal-sub { margin: 0 0 24px; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
-    .modal .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-    .modal .field label { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
-    .modal .field input, .modal .field textarea { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 14px; color: var(--text); font-size: 0.92rem; font-family: inherit; transition: border-color 0.15s; resize: none; }
-    .modal .field input:focus, .modal .field textarea:focus { outline: none; border-color: var(--coral); }
-    .modal .field input::placeholder, .modal .field textarea::placeholder { color: var(--muted); }
-    .modal .modal-msg { display: none; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 14px; line-height: 1.5; }
-    .modal .modal-msg.err { display: block; background: rgba(233,69,96,0.1); border: 1px solid rgba(233,69,96,0.25); color: #f4a0af; }
-    .modal .submit-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+/* ── CONTACT MODAL ── */
+.modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(10,10,20,0.75); backdrop-filter: blur(6px); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+.modal-backdrop.open { display: flex; }
+.modal { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); padding: 36px; width: 100%; max-width: 480px; position: relative; overflow: hidden; }
+.modal::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: var(--coral); opacity: 0.07; pointer-events: none; }
+.modal-inner { position: relative; z-index: 1; }
+.modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--muted); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; line-height: 1; transition: background 0.15s, color 0.15s; z-index: 2; }
+.modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+.modal h2 { margin: 0 0 6px; font-size: 1.3rem; letter-spacing: -0.03em; }
+.modal .modal-sub { margin: 0 0 24px; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+.modal .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.modal .field label { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+.modal .field input, .modal .field textarea { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 14px; color: var(--text); font-size: 0.92rem; font-family: inherit; transition: border-color 0.15s; resize: none; }
+.modal .field input:focus, .modal .field textarea:focus { outline: none; border-color: var(--coral); }
+.modal .field input::placeholder, .modal .field textarea::placeholder { color: var(--muted); }
+.modal .modal-msg { display: none; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 14px; line-height: 1.5; }
+.modal .modal-msg.err { display: block; background: rgba(233,69,96,0.1); border: 1px solid rgba(233,69,96,0.25); color: #f4a0af; }
+.modal .submit-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
 
-    /* ── UTILS ── */
-    .hidden { display: none !important; }
+/* ── UTILS ── */
+.hidden { display: none !important; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1080px) {
-      .hero-grid { grid-template-columns: 1fr 1fr; }
-      .about-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 860px) {
-      .nav { flex-wrap: wrap; padding: 14px 0; }
-      .nav-links { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 14px 18px; padding-bottom: 4px; }
-      .hero-grid, .grid-3, .about-grid { grid-template-columns: 1fr; }
-      .hero-copy, .hero-card, .card { padding: 22px; }
-      .section-head { flex-direction: column; align-items: start; }
-      .auth-shell { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 520px) {
-      .hero h1 { font-size: 2.6rem; }
-      .hero-cta { flex-direction: column; }
-      .hero-cta .btn { width: 100%; justify-content: center; }
-      .micro { flex-direction: column; }
-      .nav-actions .btn:first-child { display: none; }
-      body::before { width: 260px; height: 260px; top: -80px; right: -80px; }
-    }
+/* ── RESPONSIVE ── */
+@media (max-width: 1080px) {
+  .hero-grid { grid-template-columns: 1fr 1fr; }
+  .about-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 860px) {
+  .nav { flex-wrap: wrap; padding: 14px 0; }
+  .nav-links { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 14px 18px; padding-bottom: 4px; }
+  .hero-grid, .grid-3, .about-grid { grid-template-columns: 1fr; }
+  .hero-copy, .hero-card, .card { padding: 22px; }
+  .section-head { flex-direction: column; align-items: start; }
+  .auth-shell { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .hero h1 { font-size: 2.6rem; }
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+  .micro { flex-direction: column; }
+  .nav-actions .btn:first-child { display: none; }
+  body::before { width: 260px; height: 260px; top: -80px; right: -80px; }
+}
+```
+
   </style>
 </head>
 <body>
@@ -570,197 +574,199 @@
       </div>
     </section>
 
-    <section id="product" class="section wrap">
-      <div class="section-head"><div><h2>Built to listen like a producer.</h2><p>Most music AI products chase generation. Fonna is about decision-making.</p></div></div>
-      <div class="grid-3">
-        <div class="card"><h3>Focused critique</h3><p>Fonna stays on arrangement, production, and mix — the parts of the record that shape the listening experience most directly.</p></div>
-        <div class="card"><h3>Clear next actions</h3><p>No padded language. No abstract theory. Every report is meant to help you move the track forward in the next session.</p></div>
-        <div class="card"><h3>Designed for works in progress</h3><p>Use it on demos, near-finishes, or release candidates. Fonna is for the stage where choices still matter.</p></div>
-      </div>
-    </section>
+```
+<section id="product" class="section wrap">
+  <div class="section-head"><div><h2>Built to listen like a producer.</h2><p>Most music AI products chase generation. Fonna is about decision-making.</p></div></div>
+  <div class="grid-3">
+    <div class="card"><h3>Focused critique</h3><p>Fonna stays on arrangement, production, and mix — the parts of the record that shape the listening experience most directly.</p></div>
+    <div class="card"><h3>Clear next actions</h3><p>No padded language. No abstract theory. Every report is meant to help you move the track forward in the next session.</p></div>
+    <div class="card"><h3>Designed for works in progress</h3><p>Use it on demos, near-finishes, or release candidates. Fonna is for the stage where choices still matter.</p></div>
+  </div>
+</section>
 
-    <section id="how" class="section wrap">
-      <div class="section-head"><div><h2>How it works</h2><p>Simple on the surface. Serious under the hood.</p></div></div>
-      <div class="grid-3">
-        <div class="card"><div class="step-no">1</div><h3>Upload your track</h3><p>Send Fonna the song you are working on and add a short note if you want to steer the feedback.</p></div>
-        <div class="card"><div class="step-no">2</div><h3>Fonna listens in producer passes</h3><p>It listens for momentum, section contrast, texture choices, vocal placement, low-end clarity, and mix hierarchy.</p></div>
-        <div class="card"><div class="step-no">3</div><h3>Get the report</h3><p>Receive a concise producer report with a snapshot, domain notes, best next move, and priority actions.</p></div>
-      </div>
-    </section>
+<section id="how" class="section wrap">
+  <div class="section-head"><div><h2>How it works</h2><p>Simple on the surface. Serious under the hood.</p></div></div>
+  <div class="grid-3">
+    <div class="card"><div class="step-no">1</div><h3>Upload your track</h3><p>Send Fonna the song you are working on and add a short note if you want to steer the feedback.</p></div>
+    <div class="card"><div class="step-no">2</div><h3>Fonna listens in producer passes</h3><p>It listens for momentum, section contrast, texture choices, vocal placement, low-end clarity, and mix hierarchy.</p></div>
+    <div class="card"><div class="step-no">3</div><h3>Get the report</h3><p>Receive a concise producer report with a snapshot, domain notes, best next move, and priority actions.</p></div>
+  </div>
+</section>
 
-    <section class="section wrap">
-      <div class="section-head"><div><h2>What makes it different</h2><p>Fonna is not trying to replace taste. It is trying to sharpen decisions.</p></div></div>
-      <div class="grid-3">
-        <div class="card"><h3>No generic praise</h3><p>The goal is not to flatter the track. The goal is to help you understand how the record is landing and what is getting in its way.</p></div>
-        <div class="card"><h3>No songwriting detours</h3><p>Fonna stays disciplined. It does not drift into lyric critique or vague genre commentary when the real issue is production or mix.</p></div>
-        <div class="card"><h3>A fresh listen, every time</h3><p>Every revision deserves honest ears. Upload after each major session and hear the track as it actually sounds- not as you remember it.</p></div>
-        <div class="card"><h3>A reference track in every report</h3><p>Every report includes a real released song chosen for what your mix needs to learn — not because your track sounds like it, but because it solves the same problem. It is the move a good producer makes in the room.</p></div>
-      </div>
-    </section>
+<section class="section wrap">
+  <div class="section-head"><div><h2>What makes it different</h2><p>Fonna is not trying to replace taste. It is trying to sharpen decisions.</p></div></div>
+  <div class="grid-3">
+    <div class="card"><h3>No generic praise</h3><p>The goal is not to flatter the track. The goal is to help you understand how the record is landing and what is getting in its way.</p></div>
+    <div class="card"><h3>No songwriting detours</h3><p>Fonna stays disciplined. It does not drift into lyric critique or vague genre commentary when the real issue is production or mix.</p></div>
+    <div class="card"><h3>A fresh listen, every time</h3><p>Every revision deserves honest ears. Upload after each major session and hear the track as it actually sounds- not as you remember it.</p></div>
+    <div class="card"><h3>A reference track in every report</h3><p>Every report includes a real released song chosen for what your mix needs to learn — not because your track sounds like it, but because it solves the same problem. It is the move a good producer makes in the room.</p></div>
+  </div>
+</section>
 
-    <section id="pricing" class="section wrap">
-      <div class="section-head"><div><h2>Pricing</h2><p>Simple credit-based access. One free analysis on signup.</p></div></div>
-      <div class="grid-3">
-        <div class="card pricing-card">
-          <div>
-            <div class="tier">Free</div>
-            <p class="price">$0</p>
-            <div class="price-sub">1 credit on signup</div>
+<section id="pricing" class="section wrap">
+  <div class="section-head"><div><h2>Pricing</h2><p>Simple credit-based access. One free analysis on signup.</p></div></div>
+  <div class="grid-3">
+    <div class="card pricing-card">
+      <div>
+        <div class="tier">Free</div>
+        <p class="price">$0</p>
+        <div class="price-sub">1 credit on signup</div>
+      </div>
+      <ul class="feature-list">
+        <li>Try the full Fonna experience</li>
+        <li>One complete producer report</li>
+        <li>Signup required</li>
+      </ul>
+      <a class="btn" href="#login">Start free</a>
+    </div>
+    <div class="card pricing-card highlight">
+      <div>
+        <div class="tier">Starter</div>
+        <p class="price">$9.99</p>
+        <div class="price-sub">10 credits</div>
+      </div>
+      <ul class="feature-list">
+        <li>10 full analyses</li>
+        <li>Useful for active revision weeks</li>
+        <li>Simple one-time purchase</li>
+      </ul>
+      <a class="btn primary" href="#login">Buy Starter</a>
+    </div>
+    <div class="card pricing-card">
+      <div>
+        <div class="tier">Creator</div>
+        <p class="price">$19.99</p>
+        <div class="price-sub">30 credits</div>
+      </div>
+      <ul class="feature-list">
+        <li>30 full analyses</li>
+        <li>Ideal for producers and serious artists</li>
+        <li>Best value at launch</li>
+      </ul>
+      <a class="btn" href="#login">Buy Creator</a>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section wrap">
+  <div class="about-card">
+    <h2>What we believe</h2>
+    <p class="belief">Better records usually come from better decisions, not more plugins, more layers, or more noise. Fonna exists at the intersection of music production and music education and is built for artists who want to hear their own work more clearly and make more intentional choices.</p>
+    <div class="about-grid">
+      <div class="about-point">
+        <h4>Helps you grow</h4>
+        <p>Every report is a chance to internalize a new way of hearing. Use it enough and the framework becomes your own.</p>
+      </div>
+      <div class="about-point">
+        <h4>Helps you refine</h4>
+        <p>Fonna is for the stage where the record is real enough to evaluate but still malleable enough to change.</p>
+      </div>
+      <div class="about-point">
+        <h4>Expands your perspective</h4>
+        <p>Outside ears break the loop. Fonna hears the track as it actually is, not as you remember it sounding.</p>
+      </div>
+    </div>
+    <a href="/philosophy.html" class="philosophy-link">Read the full philosophy →</a>
+  </div>
+</section>
+
+<section id="login" class="section wrap" style="scroll-margin-top: 90px;">
+  <div class="section-head">
+    <div>
+      <h2>Get into Fonna</h2>
+      <p>New here? Get a free analysis link. Already a member? Sign in directly with your email and password.</p>
+    </div>
+  </div>
+
+  <!-- Already logged in state -->
+  <div id="authLoggedIn" class="auth-card hidden" style="margin-bottom:0;">
+    <div class="auth-userbox">
+      <div class="row"><span class="k">Logged in as</span><strong id="userEmailText">—</strong></div>
+      <div class="auth-actions">
+        <a class="btn primary" href="/app.html">Go to app</a>
+        <button class="btn" id="logoutBtn" type="button">Log out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two-lane auth card -->
+  <div class="auth-card main" id="authLoggedOut">
+    <div class="auth-lanes">
+
+      <!-- LANE 1: New user / magic link -->
+      <div class="auth-lane">
+        <div class="auth-lane-label">New to Fonna</div>
+        <h4>Try it free</h4>
+        <p class="lane-sub">Enter your email and we'll send you a link straight to the app — 1 free analysis credit included, no password needed.</p>
+        <div class="magic-form">
+          <div class="magic-input-row">
+            <input id="authEmail" type="email" placeholder="Your email address" autocomplete="email" />
+            <button class="btn primary" id="magicBtn" type="button">Send link</button>
           </div>
-          <ul class="feature-list">
-            <li>Try the full Fonna experience</li>
-            <li>One complete producer report</li>
-            <li>Signup required</li>
-          </ul>
-          <a class="btn" href="#login">Start free</a>
+          <div class="trust-signals">
+            <span class="trust-pill">1 free credit on signup</span>
+            <span class="trust-pill">Audio deleted after analysis</span>
+            <span class="trust-pill">No commitment</span>
+          </div>
+          <div class="magic-newsletter">
+            <label>
+              <input type="checkbox" id="indexNewsletterCheck" />
+              <span>Occasionally notify me about Fonna updates and feedback requests</span>
+            </label>
+          </div>
         </div>
-        <div class="card pricing-card highlight">
-          <div>
-            <div class="tier">Starter</div>
-            <p class="price">$9.99</p>
-            <div class="price-sub">10 credits</div>
-          </div>
-          <ul class="feature-list">
-            <li>10 full analyses</li>
-            <li>Useful for active revision weeks</li>
-            <li>Simple one-time purchase</li>
-          </ul>
-          <a class="btn primary" href="#login">Buy Starter</a>
-        </div>
-        <div class="card pricing-card">
-          <div>
-            <div class="tier">Creator</div>
-            <p class="price">$19.99</p>
-            <div class="price-sub">30 credits</div>
-          </div>
-          <ul class="feature-list">
-            <li>30 full analyses</li>
-            <li>Ideal for producers and serious artists</li>
-            <li>Best value at launch</li>
-          </ul>
-          <a class="btn" href="#login">Buy Creator</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="section wrap">
-      <div class="about-card">
-        <h2>What we believe</h2>
-        <p class="belief">Better records usually come from better decisions, not more plugins, more layers, or more noise. Fonna exists at the intersection of music production and music education and is built for artists who want to hear their own work more clearly and make more intentional choices.</p>
-        <div class="about-grid">
-          <div class="about-point">
-            <h4>Helps you grow</h4>
-            <p>Every report is a chance to internalize a new way of hearing. Use it enough and the framework becomes your own.</p>
-          </div>
-          <div class="about-point">
-            <h4>Helps you refine</h4>
-            <p>Fonna is for the stage where the record is real enough to evaluate but still malleable enough to change.</p>
-          </div>
-          <div class="about-point">
-            <h4>Expands your perspective</h4>
-            <p>Outside ears break the loop. Fonna hears the track as it actually is, not as you remember it sounding.</p>
-          </div>
-        </div>
-        <a href="/philosophy.html" class="philosophy-link">Read the full philosophy →</a>
-      </div>
-    </section>
-
-    <section id="login" class="section wrap" style="scroll-margin-top: 90px;">
-      <div class="section-head">
-        <div>
-          <h2>Get into Fonna</h2>
-          <p>New here? Get a free analysis link. Already a member? Sign in directly with your email and password.</p>
-        </div>
+        <div id="authStatus" class="auth-status"></div>
       </div>
 
-      <!-- Already logged in state -->
-      <div id="authLoggedIn" class="auth-card hidden" style="margin-bottom:0;">
-        <div class="auth-userbox">
-          <div class="row"><span class="k">Logged in as</span><strong id="userEmailText">—</strong></div>
-          <div class="row"><span class="k">Credits</span><strong id="userCreditsText">—</strong></div>
-          <div class="auth-actions">
-            <a class="btn primary" href="/app.html">Go to app</a>
-            <button class="btn" id="logoutBtn" type="button">Log out</button>
-          </div>
-        </div>
-      </div>
+      <!-- Divider -->
+      <div class="auth-lane-divider"></div>
 
-      <!-- Two-lane auth card -->
-      <div class="auth-card main" id="authLoggedOut">
-        <div class="auth-lanes">
+      <!-- LANE 2: Returning member / password -->
+      <div class="auth-lane">
+        <div class="auth-lane-label">Already a member</div>
+        <h4>Sign in</h4>
+        <p class="lane-sub">Sign in with your email and password to access your credits and report history.</p>
 
-          <!-- LANE 1: New user / magic link -->
-          <div class="auth-lane">
-            <div class="auth-lane-label">New to Fonna</div>
-            <h4>Try it free</h4>
-            <p class="lane-sub">Enter your email and we'll send you a link straight to the app — 1 free analysis credit included, no password needed.</p>
-            <div class="magic-form">
-              <div class="magic-input-row">
-                <input id="authEmail" type="email" placeholder="Your email address" autocomplete="email" />
-                <button class="btn primary" id="magicBtn" type="button">Send link</button>
-              </div>
-              <div class="trust-signals">
-                <span class="trust-pill">1 free credit on signup</span>
-                <span class="trust-pill">Audio deleted after analysis</span>
-                <span class="trust-pill">No commitment</span>
-              </div>
-              <div class="magic-newsletter">
-                <label>
-                  <input type="checkbox" id="indexNewsletterCheck" />
-                  <span>Occasionally notify me about Fonna updates and feedback requests</span>
-                </label>
-              </div>
+        <!-- Sign in form (default) -->
+        <div id="pwdSignIn">
+          <div class="pwd-form">
+            <input id="pwdEmail" type="email" placeholder="Email address" autocomplete="email" />
+            <input id="pwdPassword" type="password" placeholder="Password" autocomplete="current-password" />
+            <div class="pwd-actions">
+              <button class="btn primary" id="signInBtn" type="button">Sign in</button>
             </div>
-            <div id="authStatus" class="auth-status"></div>
           </div>
-
-          <!-- Divider -->
-          <div class="auth-lane-divider"></div>
-
-          <!-- LANE 2: Returning member / password -->
-          <div class="auth-lane">
-            <div class="auth-lane-label">Already a member</div>
-            <h4>Sign in</h4>
-            <p class="lane-sub">Sign in with your email and password to access your credits and report history.</p>
-
-            <!-- Sign in form (default) -->
-            <div id="pwdSignIn">
-              <div class="pwd-form">
-                <input id="pwdEmail" type="email" placeholder="Email address" autocomplete="email" />
-                <input id="pwdPassword" type="password" placeholder="Password" autocomplete="current-password" />
-                <div class="pwd-actions">
-                  <button class="btn primary" id="signInBtn" type="button">Sign in</button>
-                </div>
-              </div>
-              <div class="pwd-switch">Don't have a password yet? <a id="showSignUpLink">Create a full account →</a> &nbsp;·&nbsp; <a id="forgotPasswordLink">Set / reset password →</a></div>
-            </div>
-
-            <!-- Create account form (shown on toggle) -->
-            <div id="pwdSignUp" style="display:none;">
-              <div class="pwd-form">
-                <input id="newEmail" type="email" placeholder="Email address" autocomplete="email" />
-                <input id="newPassword" type="password" placeholder="Choose a password" autocomplete="new-password" />
-                <input id="newPasswordConfirm" type="password" placeholder="Confirm password" autocomplete="new-password" />
-                <div class="pwd-actions">
-                  <button class="btn primary" id="createAccountBtn" type="button">Create account</button>
-                </div>
-              </div>
-              <div class="pwd-switch">Already have a password? <a id="showSignInLink">Sign in →</a></div>
-              <div id="resetHelper" style="display:none;margin-top:16px;padding:14px 16px;border-radius:12px;background:rgba(233,69,96,0.06);border:1px solid rgba(233,69,96,0.2);">
-                <p style="margin:0 0 10px;font-size:0.82rem;color:var(--soft);line-height:1.6;"><strong style="color:var(--text);">Set a password</strong> — enter your email and we'll send you a link to set a password for your existing account.</p>
-                <div style="display:flex;gap:8px;">
-                  <input id="resetHelperEmail" type="email" placeholder="Your email" style="flex:1;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:9px 12px;background:rgba(255,255,255,0.05);color:var(--text);font-size:0.88rem;font-family:inherit;" />
-                  <button id="sendResetBtn" class="btn primary sm" type="button">Send link</button>
-                </div>
-              </div>
-            </div>
-
-            <div id="authStatusPwd" class="auth-status-pwd"></div>
-          </div>
-
+          <div class="pwd-switch">Don't have a password yet? <a id="showSignUpLink">Create a full account →</a> &nbsp;·&nbsp; <a id="forgotPasswordLink">Set / reset password →</a></div>
         </div>
+
+        <!-- Create account form (shown on toggle) -->
+        <div id="pwdSignUp" style="display:none;">
+          <div class="pwd-form">
+            <input id="newEmail" type="email" placeholder="Email address" autocomplete="email" />
+            <input id="newPassword" type="password" placeholder="Choose a password" autocomplete="new-password" />
+            <input id="newPasswordConfirm" type="password" placeholder="Confirm password" autocomplete="new-password" />
+            <div class="pwd-actions">
+              <button class="btn primary" id="createAccountBtn" type="button">Create account</button>
+            </div>
+          </div>
+          <div class="pwd-switch">Already have a password? <a id="showSignInLink">Sign in →</a></div>
+          <div id="resetHelper" style="display:none;margin-top:16px;padding:14px 16px;border-radius:12px;background:rgba(233,69,96,0.06);border:1px solid rgba(233,69,96,0.2);">
+            <p style="margin:0 0 10px;font-size:0.82rem;color:var(--soft);line-height:1.6;"><strong style="color:var(--text);">Set a password</strong> — enter your email and we'll send you a link to set a password for your existing account.</p>
+            <div style="display:flex;gap:8px;">
+              <input id="resetHelperEmail" type="email" placeholder="Your email" style="flex:1;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:9px 12px;background:rgba(255,255,255,0.05);color:var(--text);font-size:0.88rem;font-family:inherit;" />
+              <button id="sendResetBtn" class="btn primary sm" type="button">Send link</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="authStatusPwd" class="auth-status-pwd"></div>
       </div>
-    </section>
+
+    </div>
+  </div>
+</section>
+```
+
   </main>
 
   <footer class="footer wrap">
@@ -776,6 +782,7 @@
   </footer>
 
   <!-- CONTACT MODAL -->
+
   <div class="modal-backdrop" id="contactBackdrop">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
@@ -830,18 +837,18 @@
     });
 
     // ── Password lane ─────────────────────────────────────────────────────
-    const signInBtn       = $("signInBtn");
-    const createAccountBtn= $("createAccountBtn");
-    const pwdEmail        = $("pwdEmail");
-    const pwdPassword     = $("pwdPassword");
-    const newEmail        = $("newEmail");
-    const newPassword     = $("newPassword");
+    const signInBtn          = $("signInBtn");
+    const createAccountBtn   = $("createAccountBtn");
+    const pwdEmail           = $("pwdEmail");
+    const pwdPassword        = $("pwdPassword");
+    const newEmail           = $("newEmail");
+    const newPassword        = $("newPassword");
     const newPasswordConfirm = $("newPasswordConfirm");
-    const authStatusPwd   = $("authStatusPwd");
-    const showSignUpLink  = $("showSignUpLink");
-    const showSignInLink  = $("showSignInLink");
-    const pwdSignIn       = $("pwdSignIn");
-    const pwdSignUp       = $("pwdSignUp");
+    const authStatusPwd      = $("authStatusPwd");
+    const showSignUpLink     = $("showSignUpLink");
+    const showSignInLink     = $("showSignInLink");
+    const pwdSignIn          = $("pwdSignIn");
+    const pwdSignUp          = $("pwdSignUp");
 
     function setPwdStatus(msg, type="") {
       authStatusPwd.textContent = msg;
@@ -871,7 +878,7 @@
     });
 
     signInBtn.addEventListener("click", async () => {
-      const email = pwdEmail.value.trim();
+      const email    = pwdEmail.value.trim();
       const password = pwdPassword.value;
       if (!email || !password) { setPwdStatus("Please enter your email and password.", "error"); return; }
       signInBtn.disabled = true;
@@ -952,14 +959,12 @@
     // ── Already logged in state ───────────────────────────────────────────
     const authLoggedOut = $("authLoggedOut");
     const authLoggedIn  = $("authLoggedIn");
-    const userEmailText  = $("userEmailText");
-    const userCreditsText= $("userCreditsText");
-    const logoutBtn      = $("logoutBtn");
+    const userEmailText = $("userEmailText");
+    const logoutBtn     = $("logoutBtn");
 
     async function loadProfile(user) {
-      const { data } = await supabase.from("users").select("email, credits").eq("id", user.id).single();
-      userEmailText.textContent  = data?.email || user.email || "Unknown";
-      userCreditsText.textContent = String(data?.credits ?? 0);
+      const { data } = await supabase.from("users").select("email").eq("id", user.id).single();
+      userEmailText.textContent = data?.email || user.email || "Unknown";
     }
 
     async function refreshAuthUI() {
@@ -1000,13 +1005,13 @@
 
     // ── Contact modal ─────────────────────────────────────────────────────
     const SUPABASE_ANON_KEY_FULL = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
-    const backdrop    = $("contactBackdrop");
-    const closeBtn    = $("modalClose");
-    const submitBtn   = $("contactSubmit");
-    const msgEl       = $("modalMsg");
-    const nameEl      = $("contactName");
-    const emailEl     = $("contactEmail");
-    const msgInput    = $("contactMessage");
+    const backdrop  = $("contactBackdrop");
+    const closeBtn  = $("modalClose");
+    const submitBtn = $("contactSubmit");
+    const msgEl     = $("modalMsg");
+    const nameEl    = $("contactName");
+    const emailEl   = $("contactEmail");
+    const msgInput  = $("contactMessage");
 
     function openModal()  { backdrop.classList.add("open"); nameEl.focus(); }
     function closeModal() {
@@ -1028,9 +1033,9 @@
       const email   = emailEl.value.trim();
       const message = msgInput.value.trim();
       msgEl.className = "modal-msg"; msgEl.textContent = "";
-      if (!name)                        { showErr("Please enter your name."); return; }
+      if (!name)                          { showErr("Please enter your name."); return; }
       if (!email || !email.includes("@")) { showErr("Please enter a valid email address."); return; }
-      if (!message)                     { showErr("Please enter a message."); return; }
+      if (!message)                       { showErr("Please enter a message."); return; }
       submitBtn.disabled = true; submitBtn.textContent = "Sending…";
       try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/contacts`, {
@@ -1057,6 +1062,8 @@
 
     function showErr(msg) { msgEl.className = "modal-msg err"; msgEl.textContent = msg; }
   </script>
+
   <script defer src="/_vercel/insights/script.js"></script>
+
 </body>
 </html>
