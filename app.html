@@ -161,7 +161,10 @@ a{color:inherit;text-decoration:none;}
 .fp-eyebrow{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;}
 .fp-title{font-size:1.05rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;}
 .fp-body{font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:16px;}
-.fp-counter{font-size:0.78rem;color:var(--muted);margin-top:10px;}
+.fp-counter{font-size:0.78rem;color:var(--muted);margin-top:12px;}
+.fp-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px;}
+.fp-skip-btn{font-size:0.82rem;min-height:38px;padding:0 14px;color:var(--muted);border-color:rgba(255,255,255,0.1);}
+.fp-skip-btn:hover{color:var(--soft);}
 .fp-counter strong{color:var(--coral);}
 /* FEEDBACK MODAL */
 .fb-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.8);backdrop-filter:blur(6px);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
@@ -222,6 +225,8 @@ a{color:inherit;text-decoration:none;}
 .pwd-gate-msg.ok{display:block;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
 .pwd-gate-skip{font-size:0.8rem;color:var(--muted);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-decoration:underline;text-underline-offset:3px;}
 .pwd-gate-skip:hover{color:var(--soft);}
+.stripe-trust{display:flex;align-items:flex-start;gap:8px;font-size:0.75rem;color:var(--muted);line-height:1.55;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);}
+.stripe-trust svg{flex-shrink:0;margin-top:1px;color:var(--muted);}
 /* GET MORE CREDITS section inside pwd gate */
 .pwd-gate-credits{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
 .pwd-gate-credits-title{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
@@ -353,7 +358,10 @@ a{color:inherit;text-decoration:none;}
       <div class="fp-eyebrow">You're one of the first</div>
       <div class="fp-title">Fonna is new. Your feedback shapes what it becomes.</div>
       <div class="fp-body">Share what you heard — takes about 60 seconds — and earn a free credit as a thank-you.</div>
-      <button class="btn primary" id="openFeedbackBtn" type="button">Share feedback</button>
+      <div class="fp-actions">
+        <button class="btn primary" id="openFeedbackBtn" type="button">Share feedback &amp; earn a credit</button>
+        <button class="btn ghost fp-skip-btn" id="skipToAccountBtn" type="button">No thanks — just create my account</button>
+      </div>
       <div class="fp-counter">Feedback credits earned: <strong id="feedbackCreditCount">0</strong> of 5</div>
     </div>
 
@@ -401,11 +409,11 @@ a{color:inherit;text-decoration:none;}
       </div>
     </div>
 
-    <!-- BUY CREDITS (returning users) -->
+    <!-- BUY CREDITS -->
     <div class="card" id="creditsCard" style="display:none;">
       <div class="card-inner">
-        <p class="card-title">Get more credits</p>
-        <p class="card-sub">Each analysis uses 1 credit. Credits never expire.</p>
+        <p class="card-title">Get more analyses</p>
+        <p class="card-sub">Each analysis uses 1 credit. Credits never expire and carry over between sessions.</p>
         <div class="msg" id="buyMsg"></div>
         <div class="credits-grid">
           <div class="pack" id="buyStarter">
@@ -419,6 +427,10 @@ a{color:inherit;text-decoration:none;}
             <div class="pack-price">$19.99</div>
             <div class="pack-credits">30 credits</div>
           </div>
+        </div>
+        <div class="stripe-trust">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Clicking a pack takes you to Stripe — a secure, trusted checkout used by millions of businesses. Your card details never touch Fonna&apos;s servers.
         </div>
       </div>
     </div>
@@ -653,7 +665,7 @@ async function boot() {
                 !s.user?.identities?.some(i => i.identity_data?.password_hash);
   await refreshCredits();
   await loadFeedbackCount();
-  creditsCard.style.display = "block";
+  if (!isMagicUser) creditsCard.style.display = "block";
   checkBanner();
 }
 
@@ -796,8 +808,8 @@ async function analyse() {
     if (feedbackCount < 5) {
       setTimeout(() => feedbackPrompt.classList.add("show"), 600);
     }
-    // Always show buy credits below report
-    creditsCard.style.display = "block";
+    // Show buy credits only for returning users — magic-link users go through pwd gate
+    if (!isMagicUser) creditsCard.style.display = "block";
 
   } catch (e) {
     stopProg();
@@ -1113,6 +1125,13 @@ $("pwdGateBtn").addEventListener("click", async () => {
       isMagicUser = false;
     }
 
+    // Record password_set_at in public.users for cohort tracking
+    await sb
+      .from("users")
+      .update({ password_set_at: new Date().toISOString() })
+      .eq("id", session.user.id)
+      .catch(() => {}); // non-fatal — RLS UPDATE policy required on users table
+
     // Refresh credits (survey credit already awarded by submit-feedback)
     await refreshCredits();
 
@@ -1139,6 +1158,11 @@ $("pwdGateBtn").addEventListener("click", async () => {
 
 $("pwdGateSkip").addEventListener("click", () => {
   pwdGate.classList.remove("show");
+});
+
+$("skipToAccountBtn").addEventListener("click", () => {
+  feedbackPrompt.classList.remove("show");
+  showPwdGate();
 });
 
 // ── FEEDBACK MODAL ────────────────────────────────────────────────────────
