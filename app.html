@@ -373,9 +373,16 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
-<!-- FEEDBACK PROMPT (hidden pill — kept for credit counter reference) -->
-<div style="display:none;" id="feedbackPrompt">
-  <strong id="feedbackCreditCount">0</strong>
+<!-- FEEDBACK PROMPT (survey pill) -->
+<div class="feedback-prompt" id="feedbackPrompt">
+  <div class="fp-eyebrow">You're one of the first</div>
+  <div class="fp-title">Fonna is new. Your feedback shapes what it becomes.</div>
+  <div class="fp-body">Share what you heard — takes about 60 seconds — and earn a free credit as a thank-you.</div>
+  <div class="fp-actions">
+    <button class="btn primary" id="openFeedbackBtn" type="button">Share feedback &amp; earn a credit</button>
+    <button class="btn ghost fp-skip-btn" id="skipToAccountBtn" type="button">No thanks — just create my account</button>
+  </div>
+  <div class="fp-counter">Feedback credits earned: <strong id="feedbackCreditCount">0</strong> of 5</div>
 </div>
 
 <!-- PASSWORD GATE (shown to magic-link users after survey completion) -->
@@ -839,9 +846,9 @@ async function analyse() {
     await refreshCredits();
     renderReport(rpt);
 
-    // Auto-open feedback modal after a short delay so user sees the report first
+    // Show feedback prompt if they haven't maxed it out
     if (feedbackCount < 5) {
-      setTimeout(() => openFeedbackModal(), 3000);
+      setTimeout(() => feedbackPrompt.classList.add("show"), 600);
     }
     // Show buy credits only for returning users — magic-link users go through pwd gate
     if (!isMagicUser) creditsCard.style.display = "block";
@@ -1195,7 +1202,10 @@ $("pwdGateSkip").addEventListener("click", () => {
   pwdGate.classList.remove("show");
 });
 
-// skipToAccountBtn removed — pill replaced by auto-open modal
+$("skipToAccountBtn").addEventListener("click", () => {
+  feedbackPrompt.classList.remove("show");
+  showPwdGate();
+});
 
 // ── FEEDBACK MODAL ────────────────────────────────────────────────────────
 function initScale(id) {
@@ -1264,7 +1274,7 @@ initYesNo("recommend");
 initChips("mostUseful");
 initChips("leastUseful");
 
-// openFeedbackBtn removed — modal now auto-opens after report render
+$("openFeedbackBtn").addEventListener("click", openFeedbackModal);
 $("fbClose").addEventListener("click", closeFeedbackModal);
 $("fbCancelBtn").addEventListener("click", closeFeedbackModal);
 fbBackdrop.addEventListener("click", e => { if (e.target === fbBackdrop) closeFeedbackModal(); });
