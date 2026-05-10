@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -245,6 +246,24 @@ a{color:inherit;text-decoration:none;}
 .pwd-gate-input{min-width:unset;width:100%;}
 }
 @media(max-width:480px){.rpt-header{flex-direction:column;}}
+/* ── CONTACT MODAL ── */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.75);backdrop-filter:blur(6px);z-index:300;align-items:center;justify-content:center;padding:20px;}
+.modal-backdrop.open{display:flex;}
+.modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.5);padding:36px;width:100%;max-width:480px;position:relative;overflow:hidden;}
+.modal::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;}
+.modal-inner{position:relative;z-index:1;}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;line-height:1;transition:background 0.15s,color 0.15s;z-index:2;}
+.modal-close:hover{background:rgba(255,255,255,0.1);color:var(--text);}
+.modal h2{margin:0 0 6px;font-size:1.3rem;letter-spacing:-0.03em;}
+.modal .modal-sub{margin:0 0 24px;color:var(--muted);font-size:0.9rem;line-height:1.6;}
+.modal .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.modal .field label{font-size:0.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
+.modal .field input,.modal .field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;resize:none;}
+.modal .field input:focus,.modal .field textarea:focus{outline:none;border-color:var(--coral);}
+.modal .field input::placeholder,.modal .field textarea::placeholder{color:var(--muted);}
+.modal .modal-msg{display:none;padding:10px 14px;border-radius:10px;font-size:0.85rem;margin-bottom:14px;line-height:1.5;}
+.modal .modal-msg.err{display:block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
+.modal .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;}
 </style>
 </head>
 <body>
@@ -278,201 +297,196 @@ a{color:inherit;text-decoration:none;}
 <main style="padding:36px 0 60px;">
   <div class="wrap">
 
-    <div class="msg ok" id="purchaseBanner"></div>
+```
+<div class="msg ok" id="purchaseBanner"></div>
 
-    <!-- TAB NAV -->
-    <div class="tab-nav" id="tabNav">
-      <button class="tab-btn active" id="tabAnalyse">Analyse</button>
-      <button class="tab-btn" id="tabReports">My Reports</button>
+<!-- TAB NAV -->
+<div class="tab-nav" id="tabNav">
+  <button class="tab-btn active" id="tabAnalyse">Analyse</button>
+  <button class="tab-btn" id="tabReports">My Reports</button>
+</div>
+
+<!-- TAB: ANALYSE -->
+<div class="tab-panel active" id="panelAnalyse">
+
+<!-- UPLOAD -->
+<div class="card" id="uploadCard">
+  <div class="card-inner">
+    <p class="card-title">Analyse a track</p>
+    <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
+    <div class="lbl">Audio file</div>
+    <div class="file-row">
+      <div class="file-input-display" id="fileDisplay">No file selected</div>
+      <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
     </div>
-
-    <!-- TAB: ANALYSE -->
-    <div class="tab-panel active" id="panelAnalyse">
-
-    <!-- UPLOAD -->
-    <div class="card" id="uploadCard">
-      <div class="card-inner">
-        <p class="card-title">Analyse a track</p>
-        <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
-        <div class="lbl">Audio file</div>
-        <div class="file-row">
-          <div class="file-input-display" id="fileDisplay">No file selected</div>
-          <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
-        </div>
-        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
-        <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
-        <div class="fields">
-          <div class="field">
-            <label for="trackTitle">Track title</label>
-            <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
-          </div>
-          <div class="field">
-            <label for="artistName">Artist name</label>
-            <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
-          </div>
-        </div>
-        <div class="msg" id="uploadMsg"></div>
-        <div class="submit-row">
-          <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
-          <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
-        </div>
+    <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
+    <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
+    <div class="fields">
+      <div class="field">
+        <label for="trackTitle">Track title</label>
+        <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
+      </div>
+      <div class="field">
+        <label for="artistName">Artist name</label>
+        <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
       </div>
     </div>
-
-    <!-- PROGRESS -->
-    <div class="card progress-card" id="progressCard">
-      <div class="card-inner" style="text-align:center;">
-        <div class="spinner"></div>
-        <div class="p-title">Listening to your track…</div>
-        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
-        <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
-      </div>
+    <div class="msg" id="uploadMsg"></div>
+    <div class="submit-row">
+      <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
+      <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
     </div>
+  </div>
+</div>
 
-    <!-- REPORT -->
-    <div class="card report-card" id="reportCard">
-      <div class="card-inner">
-        <div class="rpt-header">
-          <div>
-            <div class="lbl">Producer Report</div>
-            <div class="rpt-track" id="rTrack"></div>
-            <div class="rpt-meta" id="rMeta"></div>
-          </div>
-          <div><button class="btn sm ghost" id="newBtn">New analysis</button></div>
-        </div>
-        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="rSnapshot"></div></div>
-        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="rBestNext"></div></div>
-        <div class="lbl">Arrangement · Production · Mix</div>
-        <div class="domains" id="rDomains"></div>
-        <div class="lbl">Priority actions</div>
-        <div class="prio-items" id="rPrio"></div>
-        <div id="rTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="rTl"></div></div>
-        <div class="lbl">Listening reference</div>
-        <div class="ref-block" id="rRef"></div>
-        <div class="limitations" id="rLim"></div>
+<!-- PROGRESS -->
+<div class="card progress-card" id="progressCard">
+  <div class="card-inner" style="text-align:center;">
+    <div class="spinner"></div>
+    <div class="p-title">Listening to your track…</div>
+    <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
+    <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
+  </div>
+</div>
+
+<!-- REPORT -->
+<div class="card report-card" id="reportCard">
+  <div class="card-inner">
+    <div class="rpt-header">
+      <div>
+        <div class="lbl">Producer Report</div>
+        <div class="rpt-track" id="rTrack"></div>
+        <div class="rpt-meta" id="rMeta"></div>
       </div>
+      <div><button class="btn sm ghost" id="newBtn">New analysis</button></div>
     </div>
+    <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="rSnapshot"></div></div>
+    <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="rBestNext"></div></div>
+    <div class="lbl">Arrangement · Production · Mix</div>
+    <div class="domains" id="rDomains"></div>
+    <div class="lbl">Priority actions</div>
+    <div class="prio-items" id="rPrio"></div>
+    <div id="rTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="rTl"></div></div>
+    <div class="lbl">Listening reference</div>
+    <div class="ref-block" id="rRef"></div>
+    <div class="limitations" id="rLim"></div>
+  </div>
+</div>
 
-    <!-- FEEDBACK PROMPT (survey pill) -->
-    <div class="feedback-prompt" id="feedbackPrompt">
-      <div class="fp-eyebrow">You're one of the first</div>
-      <div class="fp-title">Fonna is new. Your feedback shapes what it becomes.</div>
-      <div class="fp-body">Share what you heard — takes about 60 seconds — and earn a free credit as a thank-you.</div>
-      <div class="fp-actions">
-        <button class="btn primary" id="openFeedbackBtn" type="button">Share feedback &amp; earn a credit</button>
-        <button class="btn ghost fp-skip-btn" id="skipToAccountBtn" type="button">No thanks — just create my account</button>
+<!-- FEEDBACK PROMPT (hidden pill — kept for credit counter reference) -->
+<div style="display:none;" id="feedbackPrompt">
+  <strong id="feedbackCreditCount">0</strong>
+</div>
+
+<!-- PASSWORD GATE (shown to magic-link users after survey completion) -->
+<div class="pwd-gate" id="pwdGate">
+  <div class="pwd-gate-inner">
+    <div class="pwd-gate-content">
+      <div class="pwd-gate-eyebrow">One more step</div>
+      <div class="pwd-gate-title">Secure your account to claim your credit.</div>
+      <div class="pwd-gate-body">Set a password and your bonus credit lands immediately. Your report is saved, your credits carry over, and you never need a magic link again.</div>
+      <div class="pwd-gate-benefits">
+        <div class="pwd-gate-benefit">Your report saved to your account</div>
+        <div class="pwd-gate-benefit">Credits never expire</div>
+        <div class="pwd-gate-benefit">Sign in directly anytime</div>
+        <div class="pwd-gate-benefit">No more waiting for a link</div>
       </div>
-      <div class="fp-counter">Feedback credits earned: <strong id="feedbackCreditCount">0</strong> of 5</div>
-    </div>
-
-    <!-- PASSWORD GATE (shown to magic-link users after survey completion) -->
-    <div class="pwd-gate" id="pwdGate">
-      <div class="pwd-gate-inner">
-        <div class="pwd-gate-content">
-          <div class="pwd-gate-eyebrow">One more step</div>
-          <div class="pwd-gate-title">Secure your account to claim your credit.</div>
-          <div class="pwd-gate-body">Set a password and your bonus credit lands immediately. Your report is saved, your credits carry over, and you never need a magic link again.</div>
-          <div class="pwd-gate-benefits">
-            <div class="pwd-gate-benefit">Your report saved to your account</div>
-            <div class="pwd-gate-benefit">Credits never expire</div>
-            <div class="pwd-gate-benefit">Sign in directly anytime</div>
-            <div class="pwd-gate-benefit">No more waiting for a link</div>
-          </div>
-          <div class="pwd-gate-msg" id="pwdGateMsg"></div>
-          <div class="pwd-gate-form">
-            <input type="password" class="pwd-gate-input" id="pwdGateInput" placeholder="Choose a password (min. 8 characters)" autocomplete="new-password" />
-            <button class="btn primary" id="pwdGateBtn" type="button">Set password &amp; claim credit</button>
-          </div>
-          <button class="pwd-gate-skip" id="pwdGateSkip">Skip for now</button>
-
-          <!-- Credits section — shown after password is set -->
-          <div class="pwd-gate-credits" id="pwdGateCreditsSection" style="display:none;">
-            <div class="pwd-gate-credits-title">Get more analyses</div>
-            <div class="pwd-gate-credits-sub">Each analysis uses 1 credit. Credits never expire. Your account is saved and ready.</div>
-            <div class="msg" id="pwdGateBuyMsg"></div>
-            <div class="credits-grid">
-              <div class="pack" id="pgBuyStarter">
-                <div class="pack-name">Starter</div>
-                <div class="pack-price">$9.99</div>
-                <div class="pack-credits">10 credits</div>
-              </div>
-              <div class="pack featured" id="pgBuyCreator">
-                <div class="pack-badge">Best value</div>
-                <div class="pack-name">Creator</div>
-                <div class="pack-price">$19.99</div>
-                <div class="pack-credits">30 credits</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
+      <div class="pwd-gate-msg" id="pwdGateMsg"></div>
+      <div class="pwd-gate-form">
+        <input type="password" class="pwd-gate-input" id="pwdGateInput" placeholder="Choose a password (min. 8 characters)" autocomplete="new-password" />
+        <button class="btn primary" id="pwdGateBtn" type="button">Set password &amp; claim credit</button>
       </div>
-    </div>
+      <button class="pwd-gate-skip" id="pwdGateSkip">Skip for now</button>
 
-    <!-- BUY CREDITS -->
-    <div class="card" id="creditsCard" style="display:none;">
-      <div class="card-inner">
-        <p class="card-title">Get more analyses</p>
-        <p class="card-sub">Each analysis uses 1 credit. Credits never expire and carry over between sessions.</p>
-        <div class="msg" id="buyMsg"></div>
+      <!-- Credits section — shown after password is set -->
+      <div class="pwd-gate-credits" id="pwdGateCreditsSection" style="display:none;">
+        <div class="pwd-gate-credits-title">Get more analyses</div>
+        <div class="pwd-gate-credits-sub">Each analysis uses 1 credit. Credits never expire. Your account is saved and ready.</div>
+        <div class="msg" id="pwdGateBuyMsg"></div>
         <div class="credits-grid">
-          <div class="pack" id="buyStarter">
+          <div class="pack" id="pgBuyStarter">
             <div class="pack-name">Starter</div>
             <div class="pack-price">$9.99</div>
             <div class="pack-credits">10 credits</div>
           </div>
-          <div class="pack featured" id="buyCreator">
+          <div class="pack featured" id="pgBuyCreator">
             <div class="pack-badge">Best value</div>
             <div class="pack-name">Creator</div>
             <div class="pack-price">$19.99</div>
             <div class="pack-credits">30 credits</div>
           </div>
         </div>
-        <div class="stripe-trust">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Clicking a pack takes you to Stripe — a secure, trusted checkout used by millions of businesses. Your card details never touch Fonna&apos;s servers.
-        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- BUY CREDITS -->
+<div class="card" id="creditsCard" style="display:none;">
+  <div class="card-inner">
+    <p class="card-title">Get more analyses</p>
+    <p class="card-sub">Each analysis uses 1 credit. Credits never expire and carry over between sessions.</p>
+    <div class="msg" id="buyMsg"></div>
+    <div class="credits-grid">
+      <div class="pack" id="buyStarter">
+        <div class="pack-name">Starter</div>
+        <div class="pack-price">$9.99</div>
+        <div class="pack-credits">10 credits</div>
+      </div>
+      <div class="pack featured" id="buyCreator">
+        <div class="pack-badge">Best value</div>
+        <div class="pack-name">Creator</div>
+        <div class="pack-price">$19.99</div>
+        <div class="pack-credits">30 credits</div>
       </div>
     </div>
+    <div class="stripe-trust">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Clicking a pack takes you to Stripe — a secure, trusted checkout used by millions of businesses. Your card details never touch Fonna&apos;s servers.
+    </div>
+  </div>
+</div>
 
-    </div><!-- /panelAnalyse -->
+</div><!-- /panelAnalyse -->
 
-    <!-- TAB: REPORTS -->
-    <div class="tab-panel" id="panelReports">
-      <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
-      <div id="reportsEmpty" class="reports-empty hidden">
-        <div class="icon">♪</div>
-        <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
-        <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
-      </div>
-      <div id="reportsList" class="report-list hidden"></div>
-      <div id="reportDetail" class="report-detail">
-        <div class="report-detail-back">
-          <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
-        </div>
-        <div class="card">
-          <div class="card-inner">
-            <div class="rpt-header">
-              <div>
-                <div class="lbl">Producer Report</div>
-                <div class="rpt-track" id="dTrack"></div>
-                <div class="rpt-meta" id="dMeta"></div>
-              </div>
-            </div>
-            <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
-            <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
-            <div class="lbl">Arrangement · Production · Mix</div>
-            <div class="domains" id="dDomains"></div>
-            <div class="lbl">Priority actions</div>
-            <div class="prio-items" id="dPrio"></div>
-            <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
-            <div class="lbl">Listening reference</div>
-            <div class="ref-block" id="dRef"></div>
-            <div class="limitations" id="dLim"></div>
+<!-- TAB: REPORTS -->
+<div class="tab-panel" id="panelReports">
+  <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
+  <div id="reportsEmpty" class="reports-empty hidden">
+    <div class="icon">♪</div>
+    <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
+    <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
+  </div>
+  <div id="reportsList" class="report-list hidden"></div>
+  <div id="reportDetail" class="report-detail">
+    <div class="report-detail-back">
+      <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
+    </div>
+    <div class="card">
+      <div class="card-inner">
+        <div class="rpt-header">
+          <div>
+            <div class="lbl">Producer Report</div>
+            <div class="rpt-track" id="dTrack"></div>
+            <div class="rpt-meta" id="dMeta"></div>
           </div>
         </div>
+        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
+        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
+        <div class="lbl">Arrangement · Production · Mix</div>
+        <div class="domains" id="dDomains"></div>
+        <div class="lbl">Priority actions</div>
+        <div class="prio-items" id="dPrio"></div>
+        <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
+        <div class="lbl">Listening reference</div>
+        <div class="ref-block" id="dRef"></div>
+        <div class="limitations" id="dLim"></div>
       </div>
-    </div><!-- /panelReports -->
+    </div>
+  </div>
+</div><!-- /panelReports -->
+```
 
   </div>
 </main>
@@ -485,13 +499,31 @@ a{color:inherit;text-decoration:none;}
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
         <a href="/faq.html">FAQ</a>
-        <a href="mailto:hello@fonna.ai">hello@fonna.ai</a>
+        <a href="#" data-contact>Contact</a>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- CONTACT MODAL -->
+
+<div class="modal-backdrop" id="contactBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <div class="modal-inner">
+      <h2 id="contactModalTitle">Get in touch</h2>
+      <p class="modal-sub">We read every message and reply as soon as we can.</p>
+      <div class="modal-msg" id="modalMsg"></div>
+      <div class="field"><label for="contactName">Name</label><input type="text" id="contactName" placeholder="Your name" maxlength="120" /></div>
+      <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" placeholder="you@example.com" maxlength="254" /></div>
+      <div class="field"><label for="contactMessage">Message</label><textarea id="contactMessage" rows="4" placeholder="What's on your mind?" maxlength="2000"></textarea></div>
+      <div class="submit-row"><button class="btn primary" id="contactSubmit">Send message</button></div>
+    </div>
+  </div>
+</div>
+
 <!-- FEEDBACK MODAL -->
+
 <div class="fb-backdrop" id="fbBackdrop">
   <div class="fb-modal">
     <button class="fb-close" id="fbClose" aria-label="Close">&times;</button>
@@ -502,105 +534,108 @@ a{color:inherit;text-decoration:none;}
       <div class="fb-tally">Feedback credits earned: <strong id="fbTallyCount">0</strong> of 5</div>
       <div class="fb-msg" id="fbMsg"></div>
 
-      <div class="fb-q">
-        <label>How accurate did the feedback feel?</label>
-        <div class="fb-scale" id="scaleAccuracy">
-          <button class="fb-scale-btn" data-val="1">1</button>
-          <button class="fb-scale-btn" data-val="2">2</button>
-          <button class="fb-scale-btn" data-val="3">3</button>
-          <button class="fb-scale-btn" data-val="4">4</button>
-          <button class="fb-scale-btn" data-val="5">5</button>
-        </div>
-        <div class="fb-scale-labels"><span>Not at all</span><span>Spot on</span></div>
-      </div>
-
-      <div class="fb-q">
-        <label>Was the report actionable?</label>
-        <div class="fb-scale" id="scaleActionable">
-          <button class="fb-scale-btn" data-val="1">1</button>
-          <button class="fb-scale-btn" data-val="2">2</button>
-          <button class="fb-scale-btn" data-val="3">3</button>
-          <button class="fb-scale-btn" data-val="4">4</button>
-          <button class="fb-scale-btn" data-val="5">5</button>
-        </div>
-        <div class="fb-scale-labels"><span>Not really</span><span>Absolutely</span></div>
-      </div>
-
-      <div class="fb-q">
-        <label>What stage was this track at?</label>
-        <select class="fb-select" id="trackStage">
-          <option value="">Select a stage…</option>
-          <option value="demo">Demo</option>
-          <option value="rough_mix">Rough mix</option>
-          <option value="near_finish">Near-finish</option>
-          <option value="pre_master">Pre-master</option>
-          <option value="mastered">Mastered track</option>
-        </select>
-      </div>
-
-      <div class="fb-q">
-        <label>What part of the report was most useful?</label>
-        <div class="fb-multiselect" id="mostUseful">
-          <button class="fb-chip" data-val="arrangement">Arrangement</button>
-          <button class="fb-chip" data-val="production">Production</button>
-          <button class="fb-chip" data-val="mix">Mix</button>
-          <button class="fb-chip" data-val="timestamps">Timestamped notes</button>
-          <button class="fb-chip" data-val="reference_track">Reference track</button>
-        </div>
-      </div>
-
-      <div class="fb-q">
-        <label>What part was least useful or most confusing?</label>
-        <div class="fb-multiselect" id="leastUseful">
-          <button class="fb-chip" data-val="arrangement">Arrangement</button>
-          <button class="fb-chip" data-val="production">Production</button>
-          <button class="fb-chip" data-val="mix">Mix</button>
-          <button class="fb-chip" data-val="timestamps">Timestamped notes</button>
-          <button class="fb-chip" data-val="reference_track">Reference track</button>
-        </div>
-      </div>
-
-      <div class="fb-q">
-        <label>Would you come back to Fonna?</label>
-        <div class="fb-yesno" id="comeBack">
-          <button class="fb-yn-btn" data-val="yes">Yes</button>
-          <button class="fb-yn-btn" data-val="maybe">Maybe</button>
-          <button class="fb-yn-btn" data-val="no">No</button>
-        </div>
-      </div>
-
-      <div class="fb-q">
-        <label>Would you recommend Fonna to others?</label>
-        <div class="fb-yesno" id="recommend">
-          <button class="fb-yn-btn" data-val="yes">Yes</button>
-          <button class="fb-yn-btn" data-val="maybe">Maybe</button>
-          <button class="fb-yn-btn" data-val="no">No</button>
-        </div>
-      </div>
-
-      <div class="fb-q">
-        <label>How did you find out about Fonna?</label>
-        <select class="fb-select" id="acquisitionSource">
-          <option value="">Select a source…</option>
-          <option value="friend_colleague">Friend or colleague</option>
-          <option value="instagram_facebook">Instagram or Facebook</option>
-          <option value="youtube_creator">YouTube creator</option>
-          <option value="reddit">Reddit</option>
-          <option value="search">Search</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div class="fb-q">
-        <label>Anything else you want us to know? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional)</span></label>
-        <textarea class="fb-textarea" id="otherComments" placeholder="Your thoughts…" maxlength="1000"></textarea>
-      </div>
-
-      <div class="fb-actions">
-        <button class="btn primary" id="fbSubmitBtn" type="button">Submit &amp; earn 1 credit</button>
-        <button class="btn ghost" id="fbCancelBtn" type="button">Maybe later</button>
-      </div>
+```
+  <div class="fb-q">
+    <label>How accurate did the feedback feel?</label>
+    <div class="fb-scale" id="scaleAccuracy">
+      <button class="fb-scale-btn" data-val="1">1</button>
+      <button class="fb-scale-btn" data-val="2">2</button>
+      <button class="fb-scale-btn" data-val="3">3</button>
+      <button class="fb-scale-btn" data-val="4">4</button>
+      <button class="fb-scale-btn" data-val="5">5</button>
     </div>
+    <div class="fb-scale-labels"><span>Not at all</span><span>Spot on</span></div>
+  </div>
+
+  <div class="fb-q">
+    <label>Was the report actionable?</label>
+    <div class="fb-scale" id="scaleActionable">
+      <button class="fb-scale-btn" data-val="1">1</button>
+      <button class="fb-scale-btn" data-val="2">2</button>
+      <button class="fb-scale-btn" data-val="3">3</button>
+      <button class="fb-scale-btn" data-val="4">4</button>
+      <button class="fb-scale-btn" data-val="5">5</button>
+    </div>
+    <div class="fb-scale-labels"><span>Not really</span><span>Absolutely</span></div>
+  </div>
+
+  <div class="fb-q">
+    <label>What stage was this track at?</label>
+    <select class="fb-select" id="trackStage">
+      <option value="">Select a stage…</option>
+      <option value="demo">Demo</option>
+      <option value="rough_mix">Rough mix</option>
+      <option value="near_finish">Near-finish</option>
+      <option value="pre_master">Pre-master</option>
+      <option value="mastered">Mastered track</option>
+    </select>
+  </div>
+
+  <div class="fb-q">
+    <label>What part of the report was most useful?</label>
+    <div class="fb-multiselect" id="mostUseful">
+      <button class="fb-chip" data-val="arrangement">Arrangement</button>
+      <button class="fb-chip" data-val="production">Production</button>
+      <button class="fb-chip" data-val="mix">Mix</button>
+      <button class="fb-chip" data-val="timestamps">Timestamped notes</button>
+      <button class="fb-chip" data-val="reference_track">Reference track</button>
+    </div>
+  </div>
+
+  <div class="fb-q">
+    <label>What part was least useful or most confusing?</label>
+    <div class="fb-multiselect" id="leastUseful">
+      <button class="fb-chip" data-val="arrangement">Arrangement</button>
+      <button class="fb-chip" data-val="production">Production</button>
+      <button class="fb-chip" data-val="mix">Mix</button>
+      <button class="fb-chip" data-val="timestamps">Timestamped notes</button>
+      <button class="fb-chip" data-val="reference_track">Reference track</button>
+    </div>
+  </div>
+
+  <div class="fb-q">
+    <label>Would you come back to Fonna?</label>
+    <div class="fb-yesno" id="comeBack">
+      <button class="fb-yn-btn" data-val="yes">Yes</button>
+      <button class="fb-yn-btn" data-val="maybe">Maybe</button>
+      <button class="fb-yn-btn" data-val="no">No</button>
+    </div>
+  </div>
+
+  <div class="fb-q">
+    <label>Would you recommend Fonna to others?</label>
+    <div class="fb-yesno" id="recommend">
+      <button class="fb-yn-btn" data-val="yes">Yes</button>
+      <button class="fb-yn-btn" data-val="maybe">Maybe</button>
+      <button class="fb-yn-btn" data-val="no">No</button>
+    </div>
+  </div>
+
+  <div class="fb-q">
+    <label>How did you find out about Fonna?</label>
+    <select class="fb-select" id="acquisitionSource">
+      <option value="">Select a source…</option>
+      <option value="friend_colleague">Friend or colleague</option>
+      <option value="instagram_facebook">Instagram or Facebook</option>
+      <option value="youtube_creator">YouTube creator</option>
+      <option value="reddit">Reddit</option>
+      <option value="search">Search</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+
+  <div class="fb-q">
+    <label>Anything else you want us to know? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional)</span></label>
+    <textarea class="fb-textarea" id="otherComments" placeholder="Your thoughts…" maxlength="1000"></textarea>
+  </div>
+
+  <div class="fb-actions">
+    <button class="btn primary" id="fbSubmitBtn" type="button">Submit &amp; earn 1 credit</button>
+    <button class="btn ghost" id="fbCancelBtn" type="button">Maybe later</button>
+  </div>
+</div>
+```
+
   </div>
 </div>
 
@@ -804,9 +839,9 @@ async function analyse() {
     await refreshCredits();
     renderReport(rpt);
 
-    // Show feedback prompt if they haven't maxed it out
+    // Auto-open feedback modal after a short delay so user sees the report first
     if (feedbackCount < 5) {
-      setTimeout(() => feedbackPrompt.classList.add("show"), 600);
+      setTimeout(() => openFeedbackModal(), 3000);
     }
     // Show buy credits only for returning users — magic-link users go through pwd gate
     if (!isMagicUser) creditsCard.style.display = "block";
@@ -1160,10 +1195,7 @@ $("pwdGateSkip").addEventListener("click", () => {
   pwdGate.classList.remove("show");
 });
 
-$("skipToAccountBtn").addEventListener("click", () => {
-  feedbackPrompt.classList.remove("show");
-  showPwdGate();
-});
+// skipToAccountBtn removed — pill replaced by auto-open modal
 
 // ── FEEDBACK MODAL ────────────────────────────────────────────────────────
 function initScale(id) {
@@ -1232,7 +1264,7 @@ initYesNo("recommend");
 initChips("mostUseful");
 initChips("leastUseful");
 
-$("openFeedbackBtn").addEventListener("click", openFeedbackModal);
+// openFeedbackBtn removed — modal now auto-opens after report render
 $("fbClose").addEventListener("click", closeFeedbackModal);
 $("fbCancelBtn").addEventListener("click", closeFeedbackModal);
 fbBackdrop.addEventListener("click", e => { if (e.target === fbBackdrop) closeFeedbackModal(); });
@@ -1331,6 +1363,65 @@ function esc(s) {
 function setMsg(el,type,txt) { el.className=`msg ${type} show`; el.textContent=txt; }
 function clearMsg(el)        { el.className="msg"; el.textContent=""; }
 
+// ── CONTACT MODAL ─────────────────────────────────────────────────────────
+const SUPABASE_ANON_KEY_FULL = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1a3F3eWFrY2hzYXFxdXVkcWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDcxOTcsImV4cCI6MjA4ODk4MzE5N30.BBrrou52a9XJBFEDOwk4ON7W2f1NhZGljXJSsrs4iKY";
+const contactBackdrop = $("contactBackdrop");
+const contactClose    = $("modalClose");
+const contactSubmit   = $("contactSubmit");
+const contactMsg      = $("modalMsg");
+const contactName     = $("contactName");
+const contactEmail    = $("contactEmail");
+const contactMessage  = $("contactMessage");
+
+function openContactModal()  { contactBackdrop.classList.add("open"); contactName.focus(); }
+function closeContactModal() {
+  contactBackdrop.classList.remove("open");
+  contactName.value = ""; contactEmail.value = ""; contactMessage.value = "";
+  contactMsg.className = "modal-msg"; contactMsg.textContent = "";
+  contactSubmit.disabled = false; contactSubmit.textContent = "Send message";
+}
+
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-contact]")) { e.preventDefault(); openContactModal(); }
+});
+contactClose.addEventListener("click", closeContactModal);
+contactBackdrop.addEventListener("click", e => { if (e.target === contactBackdrop) closeContactModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && contactBackdrop.classList.contains("open")) closeContactModal(); });
+
+contactSubmit.addEventListener("click", async () => {
+  const name    = contactName.value.trim();
+  const email   = contactEmail.value.trim();
+  const message = contactMessage.value.trim();
+  contactMsg.className = "modal-msg"; contactMsg.textContent = "";
+  if (!name)                          { contactMsg.className = "modal-msg err"; contactMsg.textContent = "Please enter your name."; return; }
+  if (!email || !email.includes("@")) { contactMsg.className = "modal-msg err"; contactMsg.textContent = "Please enter a valid email address."; return; }
+  if (!message)                       { contactMsg.className = "modal-msg err"; contactMsg.textContent = "Please enter a message."; return; }
+  contactSubmit.disabled = true; contactSubmit.textContent = "Sending…";
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/contacts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_ANON_KEY_FULL,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY_FULL}`,
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({ name, email, message })
+    });
+    if (res.ok || res.status === 201) { window.location.href = "/thankyou.html"; }
+    else {
+      const err = await res.json().catch(() => ({}));
+      contactMsg.className = "modal-msg err";
+      contactMsg.textContent = err?.message || "Something went wrong. Please try again.";
+      contactSubmit.disabled = false; contactSubmit.textContent = "Send message";
+    }
+  } catch {
+    contactMsg.className = "modal-msg err";
+    contactMsg.textContent = "Connection error — please check your network and try again.";
+    contactSubmit.disabled = false; contactSubmit.textContent = "Send message";
+  }
+});
+
 // ── GO ────────────────────────────────────────────────────────────────────
 $("tabAnalyse").addEventListener("click", () => switchTab("analyse"));
 $("tabReports").addEventListener("click", () => switchTab("reports"));
@@ -1339,5 +1430,6 @@ boot();
 </script>
 
 <script defer src="/_vercel/insights/script.js"></script>
+
 </body>
 </html>
