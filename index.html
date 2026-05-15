@@ -31,7 +31,6 @@
       overflow-x: hidden;
     }
 
-
 /* ── DECORATIVE CIRCLES ── */
 body::before {
   content: '';
@@ -485,11 +484,10 @@ a { color: inherit; text-decoration: none; }
   .hero-cta { flex-direction: column; }
   .hero-cta .btn { width: 100%; justify-content: center; }
   .micro { flex-direction: column; }
-  .nav-actions .btn:first-child { display: none; }
+  /* Both nav pills visible and compact at mobile widths */
+  .nav-actions .btn { padding: 0 14px; font-size: 0.88rem; min-height: 40px; }
   body::before { width: 260px; height: 260px; top: -80px; right: -80px; }
 }
-
-
   </style>
 </head>
 <body>
@@ -516,7 +514,7 @@ a { color: inherit; text-decoration: none; }
         <a href="#about">About</a>
       </nav>
       <div class="nav-actions">
-        <a class="btn" href="#login">Login</a>
+        <a class="btn" id="navLoginBtn" href="#login-password">Login</a>
         <a class="btn primary" href="#login">Try Fonna</a>
       </div>
     </div>
@@ -722,7 +720,8 @@ a { color: inherit; text-decoration: none; }
       <div class="auth-lane-divider"></div>
 
       <!-- LANE 2: Returning member / password -->
-      <div class="auth-lane">
+      <!-- id="login-password" is the scroll target for the nav Login pill -->
+      <div class="auth-lane" id="login-password" style="scroll-margin-top: 90px;">
         <div class="auth-lane-label">Already a member</div>
         <h4>Sign in</h4>
         <p class="lane-sub">Sign in with your email and password to access your credits and report history.</p>
@@ -782,7 +781,6 @@ a { color: inherit; text-decoration: none; }
   </footer>
 
   <!-- CONTACT MODAL -->
-
   <div class="modal-backdrop" id="contactBackdrop">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
@@ -805,6 +803,19 @@ a { color: inherit; text-decoration: none; }
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const $ = id => document.getElementById(id);
+
+    // ── Nav Login pill — scrolls to password lane, not magic link lane ────
+    document.getElementById("navLoginBtn").addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.getElementById("login-password");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => {
+          const emailField = document.getElementById("pwdEmail");
+          if (emailField) emailField.focus();
+        }, 600);
+      }
+    });
 
     // ── Magic link lane ───────────────────────────────────────────────────
     const magicBtn   = $("magicBtn");
@@ -993,7 +1004,9 @@ a { color: inherit; text-decoration: none; }
 
     refreshAuthUI();
 
+    // ── Smooth scroll for all other anchor links ──────────────────────────
     document.querySelectorAll('a[href^="#"]').forEach(link => {
+      if (link.id === "navLoginBtn") return; // has its own handler above
       link.addEventListener("click", function(e) {
         const target = document.getElementById(this.getAttribute("href").slice(1));
         if (target) {
