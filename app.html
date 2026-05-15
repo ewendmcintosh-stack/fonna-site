@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -123,7 +122,8 @@ a{color:inherit;text-decoration:none;}
 .reports-empty{text-align:center;padding:60px 20px;color:var(--muted);}
 .reports-empty .icon{font-size:2.5rem;margin-bottom:14px;opacity:0.4;}
 .report-list{display:grid;gap:12px;}
-.report-row{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color 0.15s,background 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.report-row-wrap{display:flex;align-items:center;gap:10px;}
+.report-row{flex:1;min-width:0;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color 0.15s,background 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .report-row:hover{border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
 .report-row-left{flex:1;min-width:0;}
 .report-title{font-size:0.97rem;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -243,8 +243,7 @@ a{color:inherit;text-decoration:none;}
 .modal .modal-msg.err{display:block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
 .modal .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;}
 /* ── SHARE ── */
-.report-row-actions{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.share-icon-btn{background:none;border:none;cursor:pointer;padding:6px;color:var(--muted);display:flex;align-items:center;justify-content:center;border-radius:8px;transition:color 0.15s,background 0.15s;}
+.share-icon-btn{background:none;border:none;cursor:pointer;width:36px;height:36px;padding:0;color:var(--muted);display:flex;align-items:center;justify-content:center;border-radius:10px;transition:color 0.15s,background 0.15s;flex-shrink:0;}
 .share-icon-btn:hover{color:var(--coral);background:rgba(233,69,96,0.08);}
 .share-icon-btn svg{display:block;}
 .report-share-btn{display:flex;align-items:center;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);}
@@ -322,185 +321,183 @@ a{color:inherit;text-decoration:none;}
 <main style="padding:36px 0 60px;">
   <div class="wrap">
 
+    <div class="msg ok" id="purchaseBanner"></div>
 
-<div class="msg ok" id="purchaseBanner"></div>
-
-<div class="tab-nav" id="tabNav">
-  <button class="tab-btn active" id="tabAnalyse">Analyse</button>
-  <button class="tab-btn" id="tabReports">My Reports</button>
-</div>
-
-<!-- TAB: ANALYSE -->
-<div class="tab-panel active" id="panelAnalyse">
-
-<div class="card" id="uploadCard">
-  <div class="card-inner">
-    <p class="card-title">Analyse a track</p>
-    <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
-    <div class="lbl">Audio file</div>
-    <div class="file-row">
-      <div class="file-input-display" id="fileDisplay">No file selected</div>
-      <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
+    <div class="tab-nav" id="tabNav">
+      <button class="tab-btn active" id="tabAnalyse">Analyse</button>
+      <button class="tab-btn" id="tabReports">My Reports</button>
     </div>
-    <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
-    <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
-    <div class="fields">
-      <div class="field">
-        <label for="trackTitle">Track title</label>
-        <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
-      </div>
-      <div class="field">
-        <label for="artistName">Artist name</label>
-        <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
-      </div>
-    </div>
-    <div class="msg" id="uploadMsg"></div>
-    <div class="submit-row">
-      <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
-      <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
-    </div>
-  </div>
-</div>
 
-<div class="card progress-card" id="progressCard">
-  <div class="card-inner" style="text-align:center;">
-    <div class="spinner"></div>
-    <div class="p-title">Listening to your track…</div>
-    <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
-    <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
-  </div>
-</div>
+    <!-- TAB: ANALYSE -->
+    <div class="tab-panel active" id="panelAnalyse">
 
-<div class="card report-card" id="reportCard">
-  <div class="card-inner">
-    <div class="rpt-header">
-      <div>
-        <div class="lbl">Producer Report</div>
-        <div class="rpt-track" id="rTrack"></div>
-        <div class="rpt-meta" id="rMeta"></div>
-      </div>
-      <div><button class="btn sm ghost" id="newBtn">New analysis</button></div>
-    </div>
-    <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="rSnapshot"></div></div>
-    <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="rBestNext"></div></div>
-    <div class="lbl">Arrangement · Production · Mix</div>
-    <div class="domains" id="rDomains"></div>
-    <div class="lbl">Priority actions</div>
-    <div class="prio-items" id="rPrio"></div>
-    <div id="rTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="rTl"></div></div>
-    <div class="lbl">Listening reference</div>
-    <div class="ref-block" id="rRef"></div>
-    <div class="limitations" id="rLim"></div>
-  </div>
-</div>
-
-<div class="feedback-prompt" id="feedbackPrompt">
-  <div class="fp-eyebrow">You're one of the first</div>
-  <div class="fp-title">Fonna is new. Your feedback shapes what it becomes.</div>
-  <div class="fp-body">Share what you heard — takes about 60 seconds — and earn a free credit as a thank-you.</div>
-  <div class="fp-actions">
-    <button class="btn primary" id="openFeedbackBtn" type="button">Share feedback &amp; earn a credit</button>
-    <button class="btn ghost fp-skip-btn" id="skipToAccountBtn" type="button">No thanks — just create my account</button>
-  </div>
-  <div class="fp-counter">Feedback credits earned: <strong id="feedbackCreditCount">0</strong> of 5</div>
-</div>
-
-<div class="pwd-gate" id="pwdGate">
-  <div class="pwd-gate-inner">
-    <div class="pwd-gate-content">
-      <div class="pwd-gate-eyebrow">One more step</div>
-      <div class="pwd-gate-title">Secure your account to claim your credit.</div>
-      <div class="pwd-gate-body">Set a password and your bonus credit lands immediately. Your report is saved, your credits carry over, and you never need a magic link again.</div>
-      <div class="pwd-gate-benefits">
-        <div class="pwd-gate-benefit">Your report saved to your account</div>
-        <div class="pwd-gate-benefit">Credits never expire</div>
-        <div class="pwd-gate-benefit">Sign in directly anytime</div>
-        <div class="pwd-gate-benefit">No more waiting for a link</div>
-      </div>
-      <div class="pwd-gate-msg" id="pwdGateMsg"></div>
-      <div class="pwd-gate-form">
-        <input type="password" class="pwd-gate-input" id="pwdGateInput" placeholder="Choose a password (min. 8 characters)" autocomplete="new-password" />
-        <button class="btn primary" id="pwdGateBtn" type="button">Set password &amp; claim credit</button>
-      </div>
-      <button class="pwd-gate-skip" id="pwdGateSkip">Skip for now</button>
-      <div class="pwd-gate-credits" id="pwdGateCreditsSection" style="display:none;">
-        <div class="pwd-gate-credits-title">Get more analyses</div>
-        <div class="pwd-gate-credits-sub">Each analysis uses 1 credit. Credits never expire. Your account is saved and ready.</div>
-        <div class="msg" id="pwdGateBuyMsg"></div>
-        <div class="credits-grid">
-          <div class="pack" id="pgBuyStarter"><div class="pack-name">Starter</div><div class="pack-price">$9.99</div><div class="pack-credits">10 credits</div></div>
-          <div class="pack featured" id="pgBuyCreator"><div class="pack-badge">Best value</div><div class="pack-name">Creator</div><div class="pack-price">$19.99</div><div class="pack-credits">30 credits</div></div>
+    <div class="card" id="uploadCard">
+      <div class="card-inner">
+        <p class="card-title">Analyse a track</p>
+        <p class="card-sub">Upload your mix and get focused producer feedback on arrangement, production, and mix.</p>
+        <div class="lbl">Audio file</div>
+        <div class="file-row">
+          <div class="file-input-display" id="fileDisplay">No file selected</div>
+          <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
+        </div>
+        <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
+        <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
+        <div class="fields">
+          <div class="field">
+            <label for="trackTitle">Track title</label>
+            <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="artistName">Artist name</label>
+            <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
+          </div>
+        </div>
+        <div class="msg" id="uploadMsg"></div>
+        <div class="submit-row">
+          <button class="btn primary" id="analyseBtn" disabled>Analyse track</button>
+          <span class="submit-note">Uses <strong>1 credit</strong> per analysis</span>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="card" id="creditsCard" style="display:none;">
-  <div class="card-inner">
-    <p class="card-title">Get more analyses</p>
-    <p class="card-sub">Each analysis uses 1 credit. Credits never expire and carry over between sessions.</p>
-    <div class="msg" id="buyMsg"></div>
-    <div class="credits-grid">
-      <div class="pack" id="buyStarter"><div class="pack-name">Starter</div><div class="pack-price">$9.99</div><div class="pack-credits">10 credits</div></div>
-      <div class="pack featured" id="buyCreator"><div class="pack-badge">Best value</div><div class="pack-name">Creator</div><div class="pack-price">$19.99</div><div class="pack-credits">30 credits</div></div>
+    <div class="card progress-card" id="progressCard">
+      <div class="card-inner" style="text-align:center;">
+        <div class="spinner"></div>
+        <div class="p-title">Listening to your track…</div>
+        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
+        <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
+      </div>
     </div>
-    <div class="stripe-trust">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Clicking a pack takes you to Stripe — a secure, trusted checkout used by millions of businesses. Your card details never touch Fonna&apos;s servers.
-    </div>
-  </div>
-</div>
 
-</div><!-- /panelAnalyse -->
-
-<!-- TAB: REPORTS -->
-<div class="tab-panel" id="panelReports">
-  <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
-  <div id="reportsEmpty" class="reports-empty hidden">
-    <div class="icon">♪</div>
-    <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
-    <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
-  </div>
-  <div id="reportsList" class="report-list hidden"></div>
-  <div id="reportDetail" class="report-detail">
-    <div class="report-detail-back">
-      <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
-    </div>
-    <div class="card">
+    <div class="card report-card" id="reportCard">
       <div class="card-inner">
         <div class="rpt-header">
           <div>
             <div class="lbl">Producer Report</div>
-            <div class="rpt-track" id="dTrack"></div>
-            <div class="rpt-meta" id="dMeta"></div>
+            <div class="rpt-track" id="rTrack"></div>
+            <div class="rpt-meta" id="rMeta"></div>
           </div>
+          <div><button class="btn sm ghost" id="newBtn">New analysis</button></div>
         </div>
-        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
-        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
+        <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="rSnapshot"></div></div>
+        <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="rBestNext"></div></div>
         <div class="lbl">Arrangement · Production · Mix</div>
-        <div class="domains" id="dDomains"></div>
+        <div class="domains" id="rDomains"></div>
         <div class="lbl">Priority actions</div>
-        <div class="prio-items" id="dPrio"></div>
-        <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
+        <div class="prio-items" id="rPrio"></div>
+        <div id="rTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="rTl"></div></div>
         <div class="lbl">Listening reference</div>
-        <div class="ref-block" id="dRef"></div>
-        <div class="limitations" id="dLim"></div>
-        <!-- Share button at bottom of detail -->
-        <div class="report-share-btn">
-          <button class="btn sm ghost" id="detailShareBtn" type="button">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-            </svg>
-            Share this report
-          </button>
+        <div class="ref-block" id="rRef"></div>
+        <div class="limitations" id="rLim"></div>
+      </div>
+    </div>
+
+    <div class="feedback-prompt" id="feedbackPrompt">
+      <div class="fp-eyebrow">You're one of the first</div>
+      <div class="fp-title">Fonna is new. Your feedback shapes what it becomes.</div>
+      <div class="fp-body">Share what you heard — takes about 60 seconds — and earn a free credit as a thank-you.</div>
+      <div class="fp-actions">
+        <button class="btn primary" id="openFeedbackBtn" type="button">Share feedback &amp; earn a credit</button>
+        <button class="btn ghost fp-skip-btn" id="skipToAccountBtn" type="button">No thanks — just create my account</button>
+      </div>
+      <div class="fp-counter">Feedback credits earned: <strong id="feedbackCreditCount">0</strong> of 5</div>
+    </div>
+
+    <div class="pwd-gate" id="pwdGate">
+      <div class="pwd-gate-inner">
+        <div class="pwd-gate-content">
+          <div class="pwd-gate-eyebrow">One more step</div>
+          <div class="pwd-gate-title">Secure your account to claim your credit.</div>
+          <div class="pwd-gate-body">Set a password and your bonus credit lands immediately. Your report is saved, your credits carry over, and you never need a magic link again.</div>
+          <div class="pwd-gate-benefits">
+            <div class="pwd-gate-benefit">Your report saved to your account</div>
+            <div class="pwd-gate-benefit">Credits never expire</div>
+            <div class="pwd-gate-benefit">Sign in directly anytime</div>
+            <div class="pwd-gate-benefit">No more waiting for a link</div>
+          </div>
+          <div class="pwd-gate-msg" id="pwdGateMsg"></div>
+          <div class="pwd-gate-form">
+            <input type="password" class="pwd-gate-input" id="pwdGateInput" placeholder="Choose a password (min. 8 characters)" autocomplete="new-password" />
+            <button class="btn primary" id="pwdGateBtn" type="button">Set password &amp; claim credit</button>
+          </div>
+          <button class="pwd-gate-skip" id="pwdGateSkip">Skip for now</button>
+          <div class="pwd-gate-credits" id="pwdGateCreditsSection" style="display:none;">
+            <div class="pwd-gate-credits-title">Get more analyses</div>
+            <div class="pwd-gate-credits-sub">Each analysis uses 1 credit. Credits never expire. Your account is saved and ready.</div>
+            <div class="msg" id="pwdGateBuyMsg"></div>
+            <div class="credits-grid">
+              <div class="pack" id="pgBuyStarter"><div class="pack-name">Starter</div><div class="pack-price">$9.99</div><div class="pack-credits">10 credits</div></div>
+              <div class="pack featured" id="pgBuyCreator"><div class="pack-badge">Best value</div><div class="pack-name">Creator</div><div class="pack-price">$19.99</div><div class="pack-credits">30 credits</div></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div><!-- /panelReports -->
 
+    <div class="card" id="creditsCard" style="display:none;">
+      <div class="card-inner">
+        <p class="card-title">Get more analyses</p>
+        <p class="card-sub">Each analysis uses 1 credit. Credits never expire and carry over between sessions.</p>
+        <div class="msg" id="buyMsg"></div>
+        <div class="credits-grid">
+          <div class="pack" id="buyStarter"><div class="pack-name">Starter</div><div class="pack-price">$9.99</div><div class="pack-credits">10 credits</div></div>
+          <div class="pack featured" id="buyCreator"><div class="pack-badge">Best value</div><div class="pack-name">Creator</div><div class="pack-price">$19.99</div><div class="pack-credits">30 credits</div></div>
+        </div>
+        <div class="stripe-trust">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Clicking a pack takes you to Stripe — a secure, trusted checkout used by millions of businesses. Your card details never touch Fonna&apos;s servers.
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /panelAnalyse -->
+
+    <!-- TAB: REPORTS -->
+    <div class="tab-panel" id="panelReports">
+      <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
+      <div id="reportsEmpty" class="reports-empty hidden">
+        <div class="icon">♪</div>
+        <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
+        <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
+      </div>
+      <div id="reportsList" class="report-list hidden"></div>
+      <div id="reportDetail" class="report-detail">
+        <div class="report-detail-back">
+          <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
+        </div>
+        <div class="card">
+          <div class="card-inner">
+            <div class="rpt-header">
+              <div>
+                <div class="lbl">Producer Report</div>
+                <div class="rpt-track" id="dTrack"></div>
+                <div class="rpt-meta" id="dMeta"></div>
+              </div>
+            </div>
+            <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
+            <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
+            <div class="lbl">Arrangement · Production · Mix</div>
+            <div class="domains" id="dDomains"></div>
+            <div class="lbl">Priority actions</div>
+            <div class="prio-items" id="dPrio"></div>
+            <div id="dTlWrap"><div class="lbl">Timestamped notes</div><div class="tl-items" id="dTl"></div></div>
+            <div class="lbl">Listening reference</div>
+            <div class="ref-block" id="dRef"></div>
+            <div class="limitations" id="dLim"></div>
+            <!-- Share button at bottom of detail -->
+            <div class="report-share-btn">
+              <button class="btn sm ghost" id="detailShareBtn" type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+                Share this report
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /panelReports -->
 
   </div>
 </main>
@@ -520,7 +517,6 @@ a{color:inherit;text-decoration:none;}
 </footer>
 
 <!-- CONTACT MODAL -->
-
 <div class="modal-backdrop" id="contactBackdrop">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
     <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
@@ -537,7 +533,6 @@ a{color:inherit;text-decoration:none;}
 </div>
 
 <!-- SHARE MODAL -->
-
 <div class="share-backdrop" id="shareBackdrop">
   <div class="share-modal">
     <button class="share-close" id="shareClose" aria-label="Close">&times;</button>
@@ -583,7 +578,6 @@ a{color:inherit;text-decoration:none;}
 </div>
 
 <!-- FEEDBACK MODAL -->
-
 <div class="fb-backdrop" id="fbBackdrop">
   <div class="fb-modal">
     <button class="fb-close" id="fbClose" aria-label="Close">&times;</button>
@@ -984,31 +978,31 @@ async function loadReports() {
     data.forEach(row => {
       const dur  = row.duration_seconds ? `${Math.floor(row.duration_seconds/60)}:${String(Math.floor(row.duration_seconds%60)).padStart(2,"0")}` : "";
       const date = row.created_at ? new Date(row.created_at).toLocaleDateString() : "";
-      const el   = document.createElement("div");
+      const wrap = document.createElement("div");
+      wrap.className = "report-row-wrap";
+
+      const el = document.createElement("div");
       el.className = "report-row";
       el.innerHTML = `
         <div class="report-row-left">
           <div class="report-title">${esc(row.track_title || "Untitled")}</div>
           <div class="report-meta">${[dur ? dur+" min" : "", date].filter(Boolean).join(" · ")}</div>
         </div>
-        <div class="report-row-actions">
-          <button class="share-icon-btn" title="Share report">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-            </svg>
-          </button>
-          <div class="report-arrow">›</div>
-        </div>`;
-      el.addEventListener("click", e => {
-        if (e.target.closest(".share-icon-btn")) return;
-        openReportDetail(row);
-      });
-      el.querySelector(".share-icon-btn").addEventListener("click", async e => {
-        e.stopPropagation();
-        await openShareFromList(row);
-      });
-      list.appendChild(el);
+        <div class="report-arrow">›</div>`;
+      el.addEventListener("click", () => openReportDetail(row));
+
+      const shareBtn = document.createElement("button");
+      shareBtn.className = "share-icon-btn";
+      shareBtn.title = "Share report";
+      shareBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>`;
+      shareBtn.addEventListener("click", async () => { await openShareFromList(row); });
+
+      wrap.appendChild(el);
+      wrap.appendChild(shareBtn);
+      list.appendChild(wrap);
     });
     list.classList.remove("hidden");
   } catch(e) {
@@ -1291,8 +1285,6 @@ boot();
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <script defer src="/_vercel/insights/script.js"></script>
-
 </body>
 </html>
