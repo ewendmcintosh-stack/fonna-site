@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Fonna — App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root {
 --navy:#1A1A2E; --navy-mid:#16213E; --navy-deep:#0F3460;
@@ -231,47 +232,65 @@ a{color:inherit;text-decoration:none;}
 .pwd-gate-credits{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
 .pwd-gate-credits-title{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
 .pwd-gate-credits-sub{font-size:0.84rem;color:var(--muted);margin-bottom:16px;line-height:1.5;}
-/* SHARE */
+/* SHARE ICON + DETAIL SHARE BTN */
 .share-icon-btn{background:none;border:none;cursor:pointer;width:36px;height:36px;padding:0;color:var(--muted);display:flex;align-items:center;justify-content:center;border-radius:10px;transition:color 0.15s,background 0.15s;flex-shrink:0;}
 .share-icon-btn:hover{color:var(--coral);background:rgba(233,69,96,0.08);}
 .share-icon-btn svg{display:block;}
 .report-share-btn{display:flex;align-items:center;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);}
+/* SHARE MODAL */
 .share-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.85);backdrop-filter:blur(8px);z-index:300;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
 .share-backdrop.open{display:flex;}
-.share-modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.55);padding:32px;width:100%;max-width:480px;position:relative;margin:auto;}
+.share-modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.55);padding:32px;width:100%;max-width:600px;position:relative;margin:auto;}
 .share-modal::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
 .share-modal-inner{position:relative;z-index:1;}
 .share-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;line-height:1;transition:background 0.15s,color 0.15s;z-index:2;}
 .share-close:hover{background:rgba(255,255,255,0.1);color:var(--text);}
 .share-eyebrow{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:6px;}
-.share-title{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:20px;}
-.share-card-wrap{width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;margin-bottom:16px;position:relative;}
-#shareCardPreview{width:100%;height:100%;font-family:ui-sans-serif,system-ui,sans-serif;background:var(--navy);position:relative;display:flex;flex-direction:column;padding:24px;overflow:hidden;}
-#shareCardPreview::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(233,69,96,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(233,69,96,0.05) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;}
-#shareCardPreview::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 15% 15%,rgba(233,69,96,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 55% at 85% 85%,rgba(15,52,96,0.6) 0%,transparent 60%);pointer-events:none;}
-.scp-inner{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;}
-.scp-logo{display:flex;align-items:center;gap:6px;}
-.scp-diamond{width:7px;height:7px;background:var(--coral);transform:rotate(45deg);}
-.scp-logotext{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--coral);font-weight:600;}
-.scp-track{margin-top:14px;}
-.scp-eyebrow{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.scp-name{font-size:18px;font-weight:700;color:var(--text);line-height:1.1;letter-spacing:-0.02em;}
-.scp-divider{width:28px;height:2px;background:var(--coral);margin:10px 0;flex-shrink:0;}
-.scp-snapshot{font-size:9px;color:var(--soft);line-height:1.55;font-style:italic;flex:1;}
-.scp-snapshot em{color:var(--coral);font-style:normal;}
-.scp-notes{margin-top:10px;display:flex;flex-direction:column;gap:5px;}
-.scp-note{display:flex;gap:7px;align-items:flex-start;}
-.scp-stamp{font-size:7px;color:var(--coral);font-family:monospace;flex-shrink:0;padding-top:1px;min-width:52px;}
-.scp-ntext{font-size:7px;color:var(--muted);line-height:1.4;}
-.scp-ref{margin-top:8px;padding:7px 10px;background:rgba(15,52,96,0.5);border:1px solid rgba(233,69,96,0.18);border-radius:6px;}
-.scp-ref-ey{font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
-.scp-ref-tr{font-size:8px;font-weight:700;color:var(--text);}
-.scp-footer{margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:flex-end;}
-.scp-slogan{font-size:7px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
-.scp-url{font-size:7px;letter-spacing:0.06em;color:var(--muted);}
+.share-title{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;}
 .share-ratio{display:flex;gap:8px;margin-bottom:16px;}
 .share-ratio-btn{flex:1;padding:8px 0;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:var(--muted);font-family:inherit;font-size:0.8rem;cursor:pointer;transition:all 0.15s;}
 .share-ratio-btn.active{background:rgba(233,69,96,0.12);border-color:rgba(233,69,96,0.4);color:var(--text);}
+/* Card scaler: display container */
+.card-scaler{position:relative;overflow:hidden;margin-bottom:16px;border-radius:12px;}
+.card-scaler.sq{width:100%;aspect-ratio:1;}
+.card-scaler.pt{width:56.25%;aspect-ratio:9/16;margin-left:auto;margin-right:auto;}
+/* The actual card renders at 1080px wide then scales down */
+#shareCard{position:absolute;top:0;left:0;transform-origin:top left;font-family:'Lato',ui-sans-serif,sans-serif;overflow:hidden;}
+#shareCard.sq{width:1080px;height:1080px;}
+#shareCard.pt{width:1080px;height:1920px;}
+.card-bg{width:100%;height:100%;background:var(--navy);position:relative;display:flex;flex-direction:column;padding:80px 80px 64px;}
+.card-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(233,69,96,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(233,69,96,0.05) 1px,transparent 1px);background-size:72px 72px;pointer-events:none;}
+.card-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 15% 15%,rgba(233,69,96,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 55% at 85% 85%,rgba(15,52,96,0.6) 0%,transparent 60%);pointer-events:none;}
+.card-content{position:relative;z-index:2;display:flex;flex-direction:column;height:100%;}
+.card-logo{display:flex;align-items:center;gap:10px;}
+.card-diamond{width:14px;height:14px;background:var(--coral);transform:rotate(45deg);flex-shrink:0;}
+.card-logo-text{font-family:'DM Mono',monospace;font-size:22px;letter-spacing:0.2em;text-transform:uppercase;color:var(--coral);}
+.card-track{margin-top:64px;}
+.card-track-eyebrow{font-family:'DM Mono',monospace;font-size:18px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.card-track-name{font-family:'DM Serif Display',serif;font-size:72px;font-weight:400;color:var(--text);line-height:1.05;letter-spacing:-0.01em;}
+.card-divider{width:80px;height:2px;background:var(--coral);margin:48px 0;flex-shrink:0;}
+.card-snapshot{font-family:'DM Serif Display',serif;font-style:italic;font-size:38px;line-height:1.35;color:var(--soft);flex:1;min-height:0;overflow:hidden;}
+.card-snapshot .highlight{color:var(--coral);font-style:normal;}
+.card-notes{margin-top:48px;display:flex;flex-direction:column;gap:20px;}
+.card-note{display:flex;gap:20px;align-items:flex-start;}
+.card-note-stamp{font-family:'DM Mono',monospace;font-size:18px;color:var(--coral);flex-shrink:0;padding-top:2px;min-width:90px;}
+.card-note-text{font-size:22px;color:var(--muted);line-height:1.45;font-weight:300;}
+.card-ref{margin-top:40px;padding:28px 32px;background:rgba(15,52,96,0.5);border:1px solid rgba(233,69,96,0.2);border-radius:12px;}
+.card-ref-eyebrow{font-family:'DM Mono',monospace;font-size:16px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.card-ref-track{font-family:'DM Serif Display',serif;font-size:30px;color:var(--text);}
+.card-footer{margin-top:auto;padding-top:64px;display:flex;align-items:flex-end;justify-content:space-between;}
+.card-slogan{font-family:'DM Mono',monospace;font-size:18px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+.card-url{font-family:'DM Mono',monospace;font-size:18px;color:var(--muted);letter-spacing:0.08em;}
+/* Portrait adjustments */
+#shareCard.pt .card-track-name{font-size:86px;}
+#shareCard.pt .card-snapshot{font-size:46px;flex:none;}
+#shareCard.pt .card-notes{margin-top:64px;gap:28px;}
+#shareCard.pt .card-note-text{font-size:28px;}
+#shareCard.pt .card-note-stamp{font-size:22px;min-width:110px;}
+#shareCard.pt .card-ref{margin-top:56px;padding:36px 40px;}
+#shareCard.pt .card-ref-track{font-size:38px;}
+#shareCard.pt .card-footer{padding-top:80px;}
+#shareCard.pt .card-slogan,.card-url{font-size:22px;}
 .share-copy-block{background:rgba(15,52,96,0.35);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px 16px;margin-bottom:16px;}
 .share-copy-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;}
 .share-copy-text{font-size:0.85rem;color:var(--soft);line-height:1.55;font-style:italic;}
@@ -588,24 +607,30 @@ a{color:inherit;text-decoration:none;}
         <button class="share-ratio-btn active" id="shareRatioSq">◻ Square (1:1)</button>
         <button class="share-ratio-btn" id="shareRatioPt">▯ Portrait (9:16)</button>
       </div>
-      <div class="share-card-wrap" id="shareCardWrap">
-        <div id="shareCardPreview">
-          <div class="scp-inner">
-            <div class="scp-logo"><div class="scp-diamond"></div><span class="scp-logotext">fonna</span></div>
-            <div class="scp-track">
-              <div class="scp-eyebrow">Producer report</div>
-              <div class="scp-name" id="scpName">—</div>
-            </div>
-            <div class="scp-divider"></div>
-            <div class="scp-snapshot" id="scpSnapshot">—</div>
-            <div class="scp-notes" id="scpNotes"></div>
-            <div class="scp-ref" id="scpRef" style="display:none;">
-              <div class="scp-ref-ey">Listen like this</div>
-              <div class="scp-ref-tr" id="scpRefTrack">—</div>
-            </div>
-            <div class="scp-footer">
-              <div class="scp-slogan">Build Better Records</div>
-              <div class="scp-url">fonna.ai</div>
+      <!-- Card scaler: scales the 1080px card down to fit the modal -->
+      <div class="card-scaler sq" id="shareCardScaler">
+        <div id="shareCard" class="sq">
+          <div class="card-bg">
+            <div class="card-content">
+              <div class="card-logo">
+                <div class="card-diamond"></div>
+                <span class="card-logo-text">fonna</span>
+              </div>
+              <div class="card-track">
+                <div class="card-track-eyebrow">Producer report</div>
+                <div class="card-track-name" id="scpName">—</div>
+              </div>
+              <div class="card-divider"></div>
+              <div class="card-snapshot" id="scpSnapshot">—</div>
+              <div class="card-notes" id="scpNotes"></div>
+              <div class="card-ref" id="scpRef" style="display:none;">
+                <div class="card-ref-eyebrow">Listen like this</div>
+                <div class="card-ref-track" id="scpRefTrack">—</div>
+              </div>
+              <div class="card-footer">
+                <div class="card-slogan">Build Better Records</div>
+                <div class="card-url">fonna.ai</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1193,42 +1218,67 @@ $("fbSubmitBtn").addEventListener("click", async () => {
 const shareBackdrop = $("shareBackdrop");
 let shareCurrentData = null, shareCurrentRatio = "sq";
 
+function applyShareScale() {
+  const card = $("shareCard");
+  const scaler = $("shareCardScaler");
+  const ratio = shareCurrentRatio;
+  // Card is always 1080px wide. Scale to fit scaler width.
+  const scalerW = scaler.offsetWidth;
+  const scale = scalerW / 1080;
+  card.style.transform = `scale(${scale})`;
+  // Update scaler height to match scaled card height
+  const cardH = ratio === "sq" ? 1080 : 1920;
+  scaler.style.height = (cardH * scale) + "px";
+}
+
 function setShareRatio(r) {
   shareCurrentRatio = r;
   $("shareRatioSq").classList.toggle("active", r === "sq");
   $("shareRatioPt").classList.toggle("active", r === "pt");
-  const wrap = $("shareCardWrap");
-  if (r === "pt") { wrap.style.cssText = "aspect-ratio:9/16;max-height:380px;width:auto;margin:0 auto 16px;border-radius:14px;overflow:hidden;position:relative;"; }
-  else            { wrap.style.cssText = "width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;margin-bottom:16px;position:relative;"; }
+  const scaler = $("shareCardScaler");
+  const card   = $("shareCard");
+  scaler.className = "card-scaler " + r;
+  card.className   = r;
+  // Portrait: shrink scaler to 56.25% width to maintain 9:16
+  if (r === "pt") {
+    scaler.style.width = "56.25%";
+    scaler.style.marginLeft = "auto";
+    scaler.style.marginRight = "auto";
+  } else {
+    scaler.style.width = "";
+    scaler.style.marginLeft = "";
+    scaler.style.marginRight = "";
+  }
+  setTimeout(applyShareScale, 0);
 }
 
-function smartTruncate(text, max) {
-  if (!text || text.length <= max) return text || "";
-  const cut = text.lastIndexOf(" ", max);
-  return text.slice(0, cut > 0 ? cut : max) + "…";
+function renderSnapshotHtml(text) {
+  const sentences = text.split(". ").filter(Boolean);
+  if (sentences.length >= 2) {
+    const last = sentences[sentences.length - 1].replace(/\.$/, "");
+    const rest = sentences.slice(0, -1).join(". ") + ". ";
+    return `${esc(rest)}<span class="highlight">${esc(last)}.</span>`;
+  }
+  return esc(text);
 }
 
 function populateShareCard(data) {
   $("shareModalTitle").textContent = data.title || "Your Report";
   $("scpName").textContent = smartTruncate(data.title || "Untitled", 48);
-  const snap = smartTruncate(data.snapshot || "", 160);
-  const sentences = snap.split(". ").filter(Boolean);
-  let snapHtml = esc(snap);
-  if (sentences.length >= 2) {
-    const last = sentences[sentences.length - 1].replace(/\.$/, "");
-    const rest = sentences.slice(0, -1).join(". ") + ". ";
-    snapHtml = `${esc(rest)}<em>${esc(last)}.</em>`;
-  }
-  $("scpSnapshot").innerHTML = snapHtml;
+  const maxSnap = shareCurrentRatio === "sq" ? 180 : 260;
+  $("scpSnapshot").innerHTML = renderSnapshotHtml(smartTruncate(data.snapshot || "", maxSnap));
   const notesEl = $("scpNotes"); notesEl.innerHTML = "";
   (data.timeline || []).slice(0, 2).forEach(m => {
-    const div = document.createElement("div"); div.className = "scp-note";
-    div.innerHTML = `<div class="scp-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div class="scp-ntext">${esc(smartTruncate(m.note, 80))}</div>`;
+    const div = document.createElement("div"); div.className = "card-note";
+    div.innerHTML = `<div class="card-note-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div class="card-note-text">${esc(smartTruncate(m.note, 90))}</div>`;
     notesEl.appendChild(div);
   });
   const refEl = $("scpRef");
-  if (data.ref?.title) { refEl.style.display = ""; $("scpRefTrack").textContent = `"${data.ref.title}" — ${data.ref.artist || ""}`; }
-  else { refEl.style.display = "none"; }
+  if (data.ref?.title) {
+    refEl.style.display = "";
+    $("scpRefTrack").textContent = `"${data.ref.title}" — ${data.ref.artist || ""}`;
+  } else { refEl.style.display = "none"; }
+  setTimeout(applyShareScale, 0);
 }
 
 function extractShareData(d) {
@@ -1244,8 +1294,8 @@ async function openShareFromList(row) {
   const { data, error } = await sb.from("reports").select("*").eq("id", row.id).single();
   if (error || !data) return;
   shareCurrentData = extractShareData(data);
-  populateShareCard(shareCurrentData);
   setShareRatio("sq");
+  populateShareCard(shareCurrentData);
   shareBackdrop.classList.add("open");
 }
 
@@ -1255,21 +1305,23 @@ $("shareClose").addEventListener("click", closeShareModal);
 shareBackdrop.addEventListener("click", e => { if (e.target === shareBackdrop) closeShareModal(); });
 $("shareRatioSq").addEventListener("click", () => setShareRatio("sq"));
 $("shareRatioPt").addEventListener("click", () => setShareRatio("pt"));
+window.addEventListener("resize", () => { if (shareBackdrop.classList.contains("open")) applyShareScale(); });
 
 $("detailShareBtn").addEventListener("click", () => {
   if (!_lastFlatData) return;
   shareCurrentData = extractShareData(_lastFlatData);
-  populateShareCard(shareCurrentData);
   setShareRatio("sq");
+  populateShareCard(shareCurrentData);
   shareBackdrop.classList.add("open");
 });
 
 $("shareDownloadBtn").addEventListener("click", async () => {
   const status = $("shareDlStatus"); status.textContent = "Rendering…";
-  const card = $("shareCardPreview"), ratio = shareCurrentRatio;
+  const card = $("shareCard"), ratio = shareCurrentRatio;
   const outW = 1080, outH = ratio === "sq" ? 1080 : 1920;
-  const origW = card.style.width, origH = card.style.height;
-  card.style.width = outW + "px"; card.style.height = outH + "px";
+  // Temporarily un-scale for capture
+  const origTransform = card.style.transform;
+  card.style.transform = "scale(1)";
   try {
     const canvas = await html2canvas(card, { scale:1, useCORS:true, backgroundColor:null, width:outW, height:outH, logging:false });
     const link = document.createElement("a");
@@ -1277,7 +1329,7 @@ $("shareDownloadBtn").addEventListener("click", async () => {
     link.download = `fonna-${fname}-${ratio}.png`; link.href = canvas.toDataURL("image/png"); link.click();
     status.textContent = "✓ Downloaded"; setTimeout(() => { status.textContent = ""; }, 3000);
   } catch(e) { status.textContent = "Render error — try again"; console.error(e); }
-  card.style.width = origW; card.style.height = origH;
+  card.style.transform = origTransform;
 });
 
 // ── CONTACT MODAL ─────────────────────────────────────────────────────────
@@ -1311,6 +1363,7 @@ contactSubmit.addEventListener("click", async () => {
 });
 
 // ── HELPERS ───────────────────────────────────────────────────────────────
+function smartTruncate(text, max) { if (!text || text.length <= max) return text || ""; const cut = text.lastIndexOf(" ", max); return text.slice(0, cut > 0 ? cut : max) + "…"; }
 function sec(label, arr) { if (!arr?.length) return ""; return `<div class="domain-sub">${label}</div><ul class="dlist">${arr.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`; }
 function ts(s) { const t = Math.max(0,Math.floor(Number(s)||0)); return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`; }
 function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
