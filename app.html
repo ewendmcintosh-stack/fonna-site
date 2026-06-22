@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Fonna — App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root {
 --navy:#1A1A2E; --navy-mid:#16213E; --navy-deep:#0F3460;
@@ -14,17 +15,11 @@
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{
-margin:0;
-font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-color:var(--text);background:var(--navy);min-height:100vh;
-position:relative;overflow-x:hidden;
-}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--text);background:var(--navy);min-height:100vh;position:relative;overflow-x:hidden;}
 body::before{content:'';position:fixed;top:-120px;right:-120px;width:480px;height:480px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;z-index:0;}
 body::after{content:'';position:fixed;bottom:10%;left:-100px;width:340px;height:340px;border-radius:50%;background:var(--navy-deep);opacity:0.6;pointer-events:none;z-index:0;}
 a{color:inherit;text-decoration:none;}
 .wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto;position:relative;z-index:1;}
-/* NAV */
 .nav-shell{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(26,26,46,0.88);border-bottom:1px solid rgba(255,255,255,0.07);}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px;}
 .brand{display:flex;align-items:center;gap:12px;font-size:1.05rem;font-weight:700;}
@@ -34,7 +29,6 @@ a{color:inherit;text-decoration:none;}
 .credit-pill.show{display:inline-flex;}
 .credit-pill strong{color:var(--coral);font-weight:700;}
 .user-pill{font-size:0.82rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-weight:600;font-size:0.9rem;transition:transform 0.15s,background 0.15s;cursor:pointer;font-family:inherit;}
 .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.1);}
 .btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
@@ -45,25 +39,20 @@ a{color:inherit;text-decoration:none;}
 .btn.sm{min-height:36px;padding:0 14px;font-size:0.84rem;}
 .btn.ghost{background:transparent;border-color:rgba(255,255,255,0.15);color:var(--muted);}
 .btn.ghost:hover{background:rgba(255,255,255,0.06);color:var(--text);}
-/* CARDS */
 .card{border-radius:24px;border:1px solid rgba(255,255,255,0.08);background:var(--navy-mid);box-shadow:var(--shadow);padding:32px 36px;margin-bottom:22px;position:relative;overflow:hidden;}
 .card::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:var(--coral);opacity:0.06;pointer-events:none;}
 .card::after{content:'';position:absolute;bottom:-30px;left:-30px;width:130px;height:130px;border-radius:50%;background:var(--navy-deep);opacity:0.7;pointer-events:none;}
 .card-inner{position:relative;z-index:1;}
 .card-title{font-size:1.2rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 6px;}
 .card-sub{font-size:0.9rem;color:var(--muted);margin:0 0 24px;line-height:1.6;}
-/* SECTION LABEL */
 .lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--coral);font-weight:600;margin-bottom:8px;opacity:0.9;}
-/* FILE INPUT ROW */
 .file-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
 .file-input-display{flex:1;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:11px 14px;background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.9rem;font-family:inherit;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .file-input-display.chosen{color:var(--text);border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
 #fileInput{display:none;}
 .file-formats{font-size:0.75rem;color:var(--muted);opacity:0.6;margin-bottom:20px;}
-/* FIELDS */
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
 .field{display:flex;flex-direction:column;gap:6px;}
-.field.full{grid-column:1/-1;}
 .field label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
 .field input,.field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;resize:none;}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--coral);}
@@ -71,13 +60,11 @@ a{color:inherit;text-decoration:none;}
 .submit-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
 .submit-note{font-size:0.8rem;color:var(--muted);}
 .submit-note strong{color:var(--coral);}
-/* STATUS */
 .msg{display:none;padding:13px 18px;border-radius:14px;font-size:0.88rem;line-height:1.55;margin-bottom:18px;}
 .msg.show{display:block;}
 .msg.err{background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
 .msg.ok{background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
 .msg.info{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--soft);}
-/* PROGRESS */
 .progress-card{display:none;text-align:center;}
 .progress-card.show{display:block;}
 .spinner{width:46px;height:46px;border-radius:50%;border:3px solid rgba(233,69,96,0.2);border-top-color:var(--coral);animation:spin 0.85s linear infinite;margin:0 auto 16px;}
@@ -86,7 +73,6 @@ a{color:inherit;text-decoration:none;}
 .p-sub{font-size:0.88rem;color:var(--muted);line-height:1.6;}
 .p-bar-wrap{background:rgba(255,255,255,0.06);border-radius:999px;height:3px;margin-top:20px;overflow:hidden;}
 .p-bar{height:100%;background:var(--coral);border-radius:999px;width:5%;transition:width 0.6s ease;}
-/* REPORT */
 .report-card{display:none;}
 .report-card.show{display:block;}
 .rpt-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
@@ -118,7 +104,7 @@ a{color:inherit;text-decoration:none;}
 .ref-track{font-size:0.97rem;font-weight:700;margin-bottom:3px;}
 .ref-why{font-size:0.85rem;color:var(--soft);line-height:1.6;}
 .limitations{font-size:0.78rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;}
-/* BUY */
+.share-report-btn{margin-top:18px;width:100%;}
 .credits-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
 .pack{border-radius:18px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);padding:20px;cursor:pointer;transition:border-color 0.15s,background 0.15s;position:relative;overflow:hidden;}
 .pack:hover{border-color:var(--coral);background:rgba(233,69,96,0.06);}
@@ -128,33 +114,33 @@ a{color:inherit;text-decoration:none;}
 .pack-name{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
 .pack-price{font-size:1.7rem;font-weight:800;letter-spacing:-0.04em;}
 .pack-credits{font-size:0.82rem;color:var(--muted);margin-top:2px;}
-/* TABS */
 .tab-nav{display:flex;gap:6px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:0;}
 .tab-btn{background:none;border:none;color:var(--muted);font-family:inherit;font-size:0.92rem;font-weight:600;padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.15s,border-color 0.15s;border-radius:8px 8px 0 0;}
 .tab-btn:hover{color:var(--text);}
 .tab-btn.active{color:var(--coral);border-bottom-color:var(--coral);}
 .tab-panel{display:none;}
 .tab-panel.active{display:block;}
-/* REPORTS TAB */
 .reports-empty{text-align:center;padding:60px 20px;color:var(--muted);}
 .reports-empty .icon{font-size:2.5rem;margin-bottom:14px;opacity:0.4;}
 .report-list{display:grid;gap:12px;}
-.report-row{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color 0.15s,background 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+/* Report row — pill + share icon outside */
+.report-row-wrap{display:flex;align-items:center;gap:10px;}
+.report-row{flex:1;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color 0.15s,background 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;}
 .report-row:hover{border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
 .report-row-left{flex:1;min-width:0;}
 .report-title{font-size:0.97rem;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .report-meta{font-size:0.78rem;color:var(--muted);}
 .report-arrow{color:var(--muted);font-size:1.2rem;flex-shrink:0;}
+.share-icon-btn{width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);cursor:pointer;transition:border-color 0.15s,color 0.15s,background 0.15s;}
+.share-icon-btn:hover{border-color:rgba(233,69,96,0.4);color:var(--coral);background:rgba(233,69,96,0.08);}
 .report-detail{display:none;margin-top:16px;}
 .report-detail.show{display:block;}
 .report-detail-back{margin-bottom:18px;}
-/* FOOTER */
 .footer{padding:24px 0 48px;color:var(--muted);}
 .footer-shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;}
 .footer-links{display:flex;gap:18px;flex-wrap:wrap;}
 .footer-links a:hover{color:var(--text);}
 .hidden{display:none!important;}
-/* FEEDBACK PROMPT */
 .feedback-prompt{background:linear-gradient(135deg,rgba(15,52,96,0.6),rgba(26,26,46,0.8));border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px 28px;margin-top:20px;display:none;position:relative;overflow:hidden;}
 .feedback-prompt::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:var(--coral);opacity:0.08;pointer-events:none;}
 .feedback-prompt.show{display:block;}
@@ -166,7 +152,6 @@ a{color:inherit;text-decoration:none;}
 .fp-skip-btn{font-size:0.82rem;min-height:38px;padding:0 14px;color:var(--muted);border-color:rgba(255,255,255,0.1);}
 .fp-skip-btn:hover{color:var(--soft);}
 .fp-counter strong{color:var(--coral);}
-/* FEEDBACK MODAL */
 .fb-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.8);backdrop-filter:blur(6px);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
 .fb-backdrop.open{display:flex;}
 .fb-modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.5);padding:36px;width:100%;max-width:520px;position:relative;overflow:hidden;margin:auto;}
@@ -204,7 +189,6 @@ a{color:inherit;text-decoration:none;}
 .fb-msg.err{display:block;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.25);color:#f4a0af;}
 .fb-msg.ok{display:block;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);color:#7febb0;}
 .fb-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;}
-/* PASSWORD GATE (post-survey, magic-link users only) */
 .pwd-gate{display:none;margin-top:20px;}
 .pwd-gate.show{display:block;}
 .pwd-gate-inner{background:linear-gradient(135deg,rgba(233,69,96,0.08),rgba(15,52,96,0.5));border:1px solid rgba(233,69,96,0.25);border-radius:20px;padding:28px 32px;position:relative;overflow:hidden;}
@@ -215,7 +199,7 @@ a{color:inherit;text-decoration:none;}
 .pwd-gate-body{font-size:0.9rem;color:var(--soft);line-height:1.7;margin-bottom:20px;}
 .pwd-gate-benefits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
 .pwd-gate-benefit{display:flex;align-items:flex-start;gap:8px;font-size:0.84rem;color:var(--soft);line-height:1.5;}
-.pwd-gate-benefit::before{content:"✓";color:var(--coral);font-size:0.8rem;flex-shrink:0;margin-top:1px;}
+.pwd-gate-benefit::before{content:"checkmark";color:var(--coral);font-size:0.8rem;flex-shrink:0;margin-top:1px;}
 .pwd-gate-form{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px;}
 .pwd-gate-input{flex:1;min-width:200px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:12px 16px;color:var(--text);font-size:0.92rem;font-family:inherit;transition:border-color 0.15s;outline:none;}
 .pwd-gate-input:focus{border-color:var(--coral);}
@@ -227,10 +211,43 @@ a{color:inherit;text-decoration:none;}
 .pwd-gate-skip:hover{color:var(--soft);}
 .stripe-trust{display:flex;align-items:flex-start;gap:8px;font-size:0.75rem;color:var(--muted);line-height:1.55;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);}
 .stripe-trust svg{flex-shrink:0;margin-top:1px;color:var(--muted);}
-/* GET MORE CREDITS section inside pwd gate */
 .pwd-gate-credits{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
 .pwd-gate-credits-title{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
 .pwd-gate-credits-sub{font-size:0.84rem;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+/* SHARE MODAL */
+.share-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.85);backdrop-filter:blur(8px);z-index:300;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
+.share-backdrop.open{display:flex;}
+.share-modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.6);padding:32px;width:100%;max-width:560px;position:relative;margin:auto;}
+.share-modal::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:var(--coral);opacity:0.07;pointer-events:none;}
+.share-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;line-height:1;transition:background 0.15s,color 0.15s;z-index:2;}
+.share-close:hover{background:rgba(255,255,255,0.1);color:var(--text);}
+.share-modal-inner{position:relative;z-index:1;}
+.share-modal h3{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;margin:0 0 4px;}
+.share-modal-sub{font-size:0.85rem;color:var(--muted);margin:0 0 20px;line-height:1.5;}
+.share-ratio-toggle{display:flex;gap:8px;margin-bottom:18px;}
+.ratio-btn{flex:1;padding:8px 0;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:center;}
+.ratio-btn.active{background:rgba(233,69,96,0.15);border-color:rgba(233,69,96,0.5);color:var(--coral);}
+.card-scaler{width:100%;overflow:hidden;border-radius:16px;margin-bottom:18px;background:var(--navy);}
+#shareCard{width:1080px;transform-origin:top left;background:linear-gradient(135deg,#1A1A2E 0%,#16213E 50%,#0F3460 100%);padding:80px;font-family:'Lato',sans-serif;position:relative;overflow:hidden;color:#f4f4f2;}
+#shareCard::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:#E94560;opacity:0.08;pointer-events:none;}
+#shareCard::after{content:'';position:absolute;bottom:-80px;left:-80px;width:360px;height:360px;border-radius:50%;background:#0F3460;opacity:0.6;pointer-events:none;}
+.sc-inner{position:relative;z-index:1;}
+.sc-logo{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;color:#E94560;margin-bottom:48px;letter-spacing:-0.02em;}
+.sc-track{font-family:'DM Serif Display',serif;font-size:52px;line-height:1.05;letter-spacing:-0.04em;margin-bottom:12px;color:#f4f4f2;}
+.sc-meta{font-family:'DM Mono',monospace;font-size:16px;color:#a4a4a0;margin-bottom:48px;letter-spacing:0.04em;}
+.sc-divider{width:60px;height:3px;background:#E94560;border-radius:999px;margin-bottom:36px;}
+.sc-snapshot-label{font-family:'DM Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:0.12em;color:#E94560;margin-bottom:14px;}
+.sc-snapshot{font-size:22px;line-height:1.6;color:#d8d8d2;font-style:italic;margin-bottom:48px;}
+.sc-best-label{font-family:'DM Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:0.12em;color:#a4a4a0;margin-bottom:12px;}
+.sc-best{font-size:20px;font-weight:700;color:#f4f4f2;line-height:1.5;margin-bottom:48px;}
+.sc-footer{display:flex;align-items:center;justify-content:space-between;}
+.sc-footer-brand{font-family:'DM Serif Display',serif;font-size:22px;color:#E94560;}
+.sc-footer-url{font-family:'DM Mono',monospace;font-size:14px;color:#a4a4a0;letter-spacing:0.04em;}
+.share-caption-wrap{margin-bottom:18px;}
+.share-caption-label{font-size:0.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;}
+.share-caption{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px 14px;font-size:0.84rem;color:var(--soft);line-height:1.6;font-family:inherit;user-select:all;cursor:text;}
+.share-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.share-status{font-size:0.82rem;color:var(--coral);}
 @media(max-width:720px){
 .nav{flex-wrap:wrap;padding:12px 0;}
 .domains{grid-template-columns:1fr;}
@@ -277,10 +294,7 @@ a{color:inherit;text-decoration:none;}
 
 <main style="padding:36px 0 60px;">
   <div class="wrap">
-
     <div class="msg ok" id="purchaseBanner"></div>
-
-    <!-- TAB NAV -->
     <div class="tab-nav" id="tabNav">
       <button class="tab-btn active" id="tabAnalyse">Analyse</button>
       <button class="tab-btn" id="tabReports">My Reports</button>
@@ -288,8 +302,6 @@ a{color:inherit;text-decoration:none;}
 
     <!-- TAB: ANALYSE -->
     <div class="tab-panel active" id="panelAnalyse">
-
-    <!-- UPLOAD -->
     <div class="card" id="uploadCard">
       <div class="card-inner">
         <p class="card-title">Analyse a track</p>
@@ -300,16 +312,10 @@ a{color:inherit;text-decoration:none;}
           <button class="btn primary" id="chooseFileBtn" type="button">Choose file</button>
         </div>
         <input type="file" id="fileInput" accept=".wav,.mp3,.m4a,.aac,.flac,.aiff,.aif,audio/*" />
-        <div class="file-formats">WAV · MP3 · M4A · AAC · FLAC · AIFF &nbsp;·&nbsp; Max 60 MB · Max 6 min</div>
+        <div class="file-formats">WAV &middot; MP3 &middot; M4A &middot; AAC &middot; FLAC &middot; AIFF &nbsp;&middot;&nbsp; Max 60 MB &middot; Max 6 min</div>
         <div class="fields">
-          <div class="field">
-            <label for="trackTitle">Track title</label>
-            <input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" />
-          </div>
-          <div class="field">
-            <label for="artistName">Artist name</label>
-            <input id="artistName" type="text" placeholder="Your name" maxlength="120" />
-          </div>
+          <div class="field"><label for="trackTitle">Track title</label><input id="trackTitle" type="text" placeholder="Untitled" maxlength="120" /></div>
+          <div class="field"><label for="artistName">Artist name</label><input id="artistName" type="text" placeholder="Your name" maxlength="120" /></div>
         </div>
         <div class="msg" id="uploadMsg"></div>
         <div class="submit-row">
@@ -319,17 +325,15 @@ a{color:inherit;text-decoration:none;}
       </div>
     </div>
 
-    <!-- PROGRESS -->
     <div class="card progress-card" id="progressCard">
       <div class="card-inner" style="text-align:center;">
         <div class="spinner"></div>
-        <div class="p-title">Listening to your track…</div>
-        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.</div>
+        <div class="p-title">Listening to your track&hellip;</div>
+        <div class="p-sub" id="progressMsg">Fonna is analysing arrangement, production, and mix.<br>This usually takes 2&ndash;5 minutes. Keep this tab open.</div>
         <div class="p-bar-wrap"><div class="p-bar" id="progressBar"></div></div>
       </div>
     </div>
 
-    <!-- REPORT -->
     <div class="card report-card" id="reportCard">
       <div class="card-inner">
         <div class="rpt-header">
@@ -342,7 +346,7 @@ a{color:inherit;text-decoration:none;}
         </div>
         <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="rSnapshot"></div></div>
         <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="rBestNext"></div></div>
-        <div class="lbl">Arrangement · Production · Mix</div>
+        <div class="lbl">Arrangement &middot; Production &middot; Mix</div>
         <div class="domains" id="rDomains"></div>
         <div class="lbl">Priority actions</div>
         <div class="prio-items" id="rPrio"></div>
@@ -350,22 +354,24 @@ a{color:inherit;text-decoration:none;}
         <div class="lbl">Listening reference</div>
         <div class="ref-block" id="rRef"></div>
         <div class="limitations" id="rLim"></div>
+        <button class="btn ghost share-report-btn" id="liveShareBtn" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share this report
+        </button>
       </div>
     </div>
 
-    <!-- FEEDBACK PROMPT (survey pill) -->
     <div class="feedback-prompt" id="feedbackPrompt">
       <div class="fp-eyebrow">You're one of the first</div>
       <div class="fp-title">Fonna is new. Your feedback shapes what it becomes.</div>
-      <div class="fp-body">Share what you heard — takes about 60 seconds — and earn a free credit as a thank-you.</div>
+      <div class="fp-body">Share what you heard &mdash; takes about 60 seconds &mdash; and earn a free credit as a thank-you.</div>
       <div class="fp-actions">
         <button class="btn primary" id="openFeedbackBtn" type="button">Share feedback &amp; earn a credit</button>
-        <button class="btn ghost fp-skip-btn" id="skipToAccountBtn" type="button">No thanks — just create my account</button>
+        <button class="btn ghost fp-skip-btn" id="skipToAccountBtn" type="button">No thanks &mdash; just create my account</button>
       </div>
       <div class="fp-counter">Feedback credits earned: <strong id="feedbackCreditCount">0</strong> of 5</div>
     </div>
 
-    <!-- PASSWORD GATE (shown to magic-link users after survey completion) -->
     <div class="pwd-gate" id="pwdGate">
       <div class="pwd-gate-inner">
         <div class="pwd-gate-content">
@@ -384,71 +390,48 @@ a{color:inherit;text-decoration:none;}
             <button class="btn primary" id="pwdGateBtn" type="button">Set password &amp; claim credit</button>
           </div>
           <button class="pwd-gate-skip" id="pwdGateSkip">Skip for now</button>
-
-          <!-- Credits section — shown after password is set -->
           <div class="pwd-gate-credits" id="pwdGateCreditsSection" style="display:none;">
             <div class="pwd-gate-credits-title">Get more analyses</div>
             <div class="pwd-gate-credits-sub">Each analysis uses 1 credit. Credits never expire. Your account is saved and ready.</div>
             <div class="msg" id="pwdGateBuyMsg"></div>
             <div class="credits-grid">
-              <div class="pack" id="pgBuyStarter">
-                <div class="pack-name">Starter</div>
-                <div class="pack-price">$9.99</div>
-                <div class="pack-credits">10 credits</div>
-              </div>
-              <div class="pack featured" id="pgBuyCreator">
-                <div class="pack-badge">Best value</div>
-                <div class="pack-name">Creator</div>
-                <div class="pack-price">$19.99</div>
-                <div class="pack-credits">30 credits</div>
-              </div>
+              <div class="pack" id="pgBuyStarter"><div class="pack-name">Starter</div><div class="pack-price">$9.99</div><div class="pack-credits">10 credits</div></div>
+              <div class="pack featured" id="pgBuyCreator"><div class="pack-badge">Best value</div><div class="pack-name">Creator</div><div class="pack-price">$19.99</div><div class="pack-credits">30 credits</div></div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- BUY CREDITS -->
     <div class="card" id="creditsCard" style="display:none;">
       <div class="card-inner">
         <p class="card-title">Get more analyses</p>
         <p class="card-sub">Each analysis uses 1 credit. Credits never expire and carry over between sessions.</p>
         <div class="msg" id="buyMsg"></div>
         <div class="credits-grid">
-          <div class="pack" id="buyStarter">
-            <div class="pack-name">Starter</div>
-            <div class="pack-price">$9.99</div>
-            <div class="pack-credits">10 credits</div>
-          </div>
-          <div class="pack featured" id="buyCreator">
-            <div class="pack-badge">Best value</div>
-            <div class="pack-name">Creator</div>
-            <div class="pack-price">$19.99</div>
-            <div class="pack-credits">30 credits</div>
-          </div>
+          <div class="pack" id="buyStarter"><div class="pack-name">Starter</div><div class="pack-price">$9.99</div><div class="pack-credits">10 credits</div></div>
+          <div class="pack featured" id="buyCreator"><div class="pack-badge">Best value</div><div class="pack-name">Creator</div><div class="pack-price">$19.99</div><div class="pack-credits">30 credits</div></div>
         </div>
         <div class="stripe-trust">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Clicking a pack takes you to Stripe — a secure, trusted checkout used by millions of businesses. Your card details never touch Fonna&apos;s servers.
+          Clicking a pack takes you to Stripe &mdash; a secure, trusted checkout used by millions of businesses. Your card details never touch Fonna&apos;s servers.
         </div>
       </div>
     </div>
-
     </div><!-- /panelAnalyse -->
 
     <!-- TAB: REPORTS -->
     <div class="tab-panel" id="panelReports">
-      <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports…</div>
+      <div id="reportsLoading" style="text-align:center;padding:48px 0;color:var(--muted);">Loading your reports&hellip;</div>
       <div id="reportsEmpty" class="reports-empty hidden">
-        <div class="icon">♪</div>
+        <div class="icon">&#9836;</div>
         <p style="font-size:1rem;font-weight:600;color:var(--soft);margin:0 0 6px;">No reports yet</p>
         <p style="font-size:0.88rem;margin:0;">Your completed analyses will appear here.</p>
       </div>
       <div id="reportsList" class="report-list hidden"></div>
       <div id="reportDetail" class="report-detail">
         <div class="report-detail-back">
-          <button class="btn sm ghost" id="backToListBtn">← Back to reports</button>
+          <button class="btn sm ghost" id="backToListBtn">&larr; Back to reports</button>
         </div>
         <div class="card">
           <div class="card-inner">
@@ -461,7 +444,7 @@ a{color:inherit;text-decoration:none;}
             </div>
             <div class="snapshot"><div class="lbl">Snapshot</div><div class="snapshot-text" id="dSnapshot"></div></div>
             <div class="best-next"><div class="lbl">Best next move</div><div class="best-next-text" id="dBestNext"></div></div>
-            <div class="lbl">Arrangement · Production · Mix</div>
+            <div class="lbl">Arrangement &middot; Production &middot; Mix</div>
             <div class="domains" id="dDomains"></div>
             <div class="lbl">Priority actions</div>
             <div class="prio-items" id="dPrio"></div>
@@ -469,18 +452,21 @@ a{color:inherit;text-decoration:none;}
             <div class="lbl">Listening reference</div>
             <div class="ref-block" id="dRef"></div>
             <div class="limitations" id="dLim"></div>
+            <button class="btn ghost share-report-btn" id="detailShareBtn" type="button">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              Share this report
+            </button>
           </div>
         </div>
       </div>
     </div><!-- /panelReports -->
-
   </div>
 </main>
 
 <footer class="footer">
   <div class="wrap">
     <div class="footer-shell">
-      <span>© 2026 Fonna</span>
+      <span>&copy; 2026 Fonna</span>
       <div class="footer-links">
         <a href="/philosophy.html">Philosophy</a>
         <a href="/terms.html">Terms of Use</a>
@@ -501,101 +487,15 @@ a{color:inherit;text-decoration:none;}
       <p class="fb-sub">Fonna is new. Your honest take shapes what it becomes.</p>
       <div class="fb-tally">Feedback credits earned: <strong id="fbTallyCount">0</strong> of 5</div>
       <div class="fb-msg" id="fbMsg"></div>
-
-      <div class="fb-q">
-        <label>How accurate did the feedback feel?</label>
-        <div class="fb-scale" id="scaleAccuracy">
-          <button class="fb-scale-btn" data-val="1">1</button>
-          <button class="fb-scale-btn" data-val="2">2</button>
-          <button class="fb-scale-btn" data-val="3">3</button>
-          <button class="fb-scale-btn" data-val="4">4</button>
-          <button class="fb-scale-btn" data-val="5">5</button>
-        </div>
-        <div class="fb-scale-labels"><span>Not at all</span><span>Spot on</span></div>
-      </div>
-
-      <div class="fb-q">
-        <label>Was the report actionable?</label>
-        <div class="fb-scale" id="scaleActionable">
-          <button class="fb-scale-btn" data-val="1">1</button>
-          <button class="fb-scale-btn" data-val="2">2</button>
-          <button class="fb-scale-btn" data-val="3">3</button>
-          <button class="fb-scale-btn" data-val="4">4</button>
-          <button class="fb-scale-btn" data-val="5">5</button>
-        </div>
-        <div class="fb-scale-labels"><span>Not really</span><span>Absolutely</span></div>
-      </div>
-
-      <div class="fb-q">
-        <label>What stage was this track at?</label>
-        <select class="fb-select" id="trackStage">
-          <option value="">Select a stage…</option>
-          <option value="demo">Demo</option>
-          <option value="rough_mix">Rough mix</option>
-          <option value="near_finish">Near-finish</option>
-          <option value="pre_master">Pre-master</option>
-          <option value="mastered">Mastered track</option>
-        </select>
-      </div>
-
-      <div class="fb-q">
-        <label>What part of the report was most useful?</label>
-        <div class="fb-multiselect" id="mostUseful">
-          <button class="fb-chip" data-val="arrangement">Arrangement</button>
-          <button class="fb-chip" data-val="production">Production</button>
-          <button class="fb-chip" data-val="mix">Mix</button>
-          <button class="fb-chip" data-val="timestamps">Timestamped notes</button>
-          <button class="fb-chip" data-val="reference_track">Reference track</button>
-        </div>
-      </div>
-
-      <div class="fb-q">
-        <label>What part was least useful or most confusing?</label>
-        <div class="fb-multiselect" id="leastUseful">
-          <button class="fb-chip" data-val="arrangement">Arrangement</button>
-          <button class="fb-chip" data-val="production">Production</button>
-          <button class="fb-chip" data-val="mix">Mix</button>
-          <button class="fb-chip" data-val="timestamps">Timestamped notes</button>
-          <button class="fb-chip" data-val="reference_track">Reference track</button>
-        </div>
-      </div>
-
-      <div class="fb-q">
-        <label>Would you come back to Fonna?</label>
-        <div class="fb-yesno" id="comeBack">
-          <button class="fb-yn-btn" data-val="yes">Yes</button>
-          <button class="fb-yn-btn" data-val="maybe">Maybe</button>
-          <button class="fb-yn-btn" data-val="no">No</button>
-        </div>
-      </div>
-
-      <div class="fb-q">
-        <label>Would you recommend Fonna to others?</label>
-        <div class="fb-yesno" id="recommend">
-          <button class="fb-yn-btn" data-val="yes">Yes</button>
-          <button class="fb-yn-btn" data-val="maybe">Maybe</button>
-          <button class="fb-yn-btn" data-val="no">No</button>
-        </div>
-      </div>
-
-      <div class="fb-q">
-        <label>How did you find out about Fonna?</label>
-        <select class="fb-select" id="acquisitionSource">
-          <option value="">Select a source…</option>
-          <option value="friend_colleague">Friend or colleague</option>
-          <option value="instagram_facebook">Instagram or Facebook</option>
-          <option value="youtube_creator">YouTube creator</option>
-          <option value="reddit">Reddit</option>
-          <option value="search">Search</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div class="fb-q">
-        <label>Anything else you want us to know? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional)</span></label>
-        <textarea class="fb-textarea" id="otherComments" placeholder="Your thoughts…" maxlength="1000"></textarea>
-      </div>
-
+      <div class="fb-q"><label>How accurate did the feedback feel?</label><div class="fb-scale" id="scaleAccuracy"><button class="fb-scale-btn" data-val="1">1</button><button class="fb-scale-btn" data-val="2">2</button><button class="fb-scale-btn" data-val="3">3</button><button class="fb-scale-btn" data-val="4">4</button><button class="fb-scale-btn" data-val="5">5</button></div><div class="fb-scale-labels"><span>Not at all</span><span>Spot on</span></div></div>
+      <div class="fb-q"><label>Was the report actionable?</label><div class="fb-scale" id="scaleActionable"><button class="fb-scale-btn" data-val="1">1</button><button class="fb-scale-btn" data-val="2">2</button><button class="fb-scale-btn" data-val="3">3</button><button class="fb-scale-btn" data-val="4">4</button><button class="fb-scale-btn" data-val="5">5</button></div><div class="fb-scale-labels"><span>Not really</span><span>Absolutely</span></div></div>
+      <div class="fb-q"><label>What stage was this track at?</label><select class="fb-select" id="trackStage"><option value="">Select a stage&hellip;</option><option value="demo">Demo</option><option value="rough_mix">Rough mix</option><option value="near_finish">Near-finish</option><option value="pre_master">Pre-master</option><option value="mastered">Mastered track</option></select></div>
+      <div class="fb-q"><label>What part of the report was most useful?</label><div class="fb-multiselect" id="mostUseful"><button class="fb-chip" data-val="arrangement">Arrangement</button><button class="fb-chip" data-val="production">Production</button><button class="fb-chip" data-val="mix">Mix</button><button class="fb-chip" data-val="timestamps">Timestamped notes</button><button class="fb-chip" data-val="reference_track">Reference track</button></div></div>
+      <div class="fb-q"><label>What part was least useful or most confusing?</label><div class="fb-multiselect" id="leastUseful"><button class="fb-chip" data-val="arrangement">Arrangement</button><button class="fb-chip" data-val="production">Production</button><button class="fb-chip" data-val="mix">Mix</button><button class="fb-chip" data-val="timestamps">Timestamped notes</button><button class="fb-chip" data-val="reference_track">Reference track</button></div></div>
+      <div class="fb-q"><label>Would you come back to Fonna?</label><div class="fb-yesno" id="comeBack"><button class="fb-yn-btn" data-val="yes">Yes</button><button class="fb-yn-btn" data-val="maybe">Maybe</button><button class="fb-yn-btn" data-val="no">No</button></div></div>
+      <div class="fb-q"><label>Would you recommend Fonna to others?</label><div class="fb-yesno" id="recommend"><button class="fb-yn-btn" data-val="yes">Yes</button><button class="fb-yn-btn" data-val="maybe">Maybe</button><button class="fb-yn-btn" data-val="no">No</button></div></div>
+      <div class="fb-q"><label>How did you find out about Fonna?</label><select class="fb-select" id="acquisitionSource"><option value="">Select a source&hellip;</option><option value="friend_colleague">Friend or colleague</option><option value="instagram_facebook">Instagram or Facebook</option><option value="youtube_creator">YouTube creator</option><option value="reddit">Reddit</option><option value="search">Search</option><option value="other">Other</option></select></div>
+      <div class="fb-q"><label>Anything else you want us to know? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:0.72rem;">(optional)</span></label><textarea class="fb-textarea" id="otherComments" placeholder="Your thoughts&hellip;" maxlength="1000"></textarea></div>
       <div class="fb-actions">
         <button class="btn primary" id="fbSubmitBtn" type="button">Submit &amp; earn 1 credit</button>
         <button class="btn ghost" id="fbCancelBtn" type="button">Maybe later</button>
@@ -604,13 +504,52 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
+<!-- SHARE MODAL -->
+<div class="share-backdrop" id="shareBackdrop">
+  <div class="share-modal">
+    <button class="share-close" id="shareClose" aria-label="Close">&times;</button>
+    <div class="share-modal-inner">
+      <h3>Share this report</h3>
+      <p class="share-modal-sub">Download a card to share on Instagram, TikTok, or anywhere else.</p>
+      <div class="share-ratio-toggle">
+        <button class="ratio-btn active" data-ratio="square">Square (1:1)</button>
+        <button class="ratio-btn" data-ratio="portrait">Portrait (4:5)</button>
+      </div>
+      <div class="card-scaler" id="cardScaler">
+        <div id="shareCard">
+          <div class="sc-inner">
+            <div class="sc-logo">fonna</div>
+            <div class="sc-track" id="scTrack">Track title</div>
+            <div class="sc-meta" id="scMeta"></div>
+            <div class="sc-divider"></div>
+            <div class="sc-snapshot-label">Producer snapshot</div>
+            <div class="sc-snapshot" id="scSnapshot"></div>
+            <div class="sc-best-label">Best next move</div>
+            <div class="sc-best" id="scBest"></div>
+            <div class="sc-footer">
+              <div class="sc-footer-brand">fonna.ai</div>
+              <div class="sc-footer-url">AI producer feedback</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="share-caption-wrap">
+        <div class="share-caption-label">Suggested caption</div>
+        <div class="share-caption" id="shareCaption"></div>
+      </div>
+      <div class="share-actions">
+        <button class="btn primary" id="shareDownloadBtn" type="button">Download PNG</button>
+        <span class="share-status" id="shareStatus"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
-
-const SUPABASE_URL     = "https://kukqwyakchsaqquudqiu.supabase.co";
-const SUPABASE_ANON_KEY= "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
-const API_BASE         = "https://listener-service-1esi.onrender.com";
-
+const SUPABASE_URL      = "https://kukqwyakchsaqquudqiu.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_gR8b6vPDUVMgXB1pRpkrBQ_cMuenAz2";
+const API_BASE          = "https://listener-service-1esi.onrender.com";
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const $  = id => document.getElementById(id);
 
@@ -638,6 +577,7 @@ const backToListBtn = $("backToListBtn");
 const feedbackPrompt= $("feedbackPrompt");
 const fbBackdrop    = $("fbBackdrop");
 const pwdGate       = $("pwdGate");
+const shareBackdrop = $("shareBackdrop");
 
 let session         = null;
 let file            = null;
@@ -645,8 +585,9 @@ let progTmr         = null;
 let isMagicUser     = false;
 let currentReportId = null;
 let feedbackCount   = 0;
+let shareCurrentData= null;
+let shareRatio      = "square";
 
-// ── TABS ──────────────────────────────────────────────────────────────────
 function switchTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -655,7 +596,6 @@ function switchTab(tab) {
   if (tab === 'reports') loadReports();
 }
 
-// ── BOOT ──────────────────────────────────────────────────────────────────
 async function boot() {
   const { data: { session: s } } = await sb.auth.getSession();
   if (!s) { window.location.href = "/#login"; return; }
@@ -680,33 +620,22 @@ async function refreshCredits() {
       const c = Number(d.user.credits);
       navCreditN.textContent = c;
       navCredits.classList.add("show");
-      if (c < 1) {
-        setMsg(uploadMsg, "err", "You have no credits remaining. Purchase a pack below to continue.");
-        analyseBtn.disabled = true;
-      } else {
-        analyseBtn.disabled = false;
-        clearMsg(uploadMsg);
-      }
+      if (c < 1) { setMsg(uploadMsg, "err", "You have no credits remaining. Purchase a pack below to continue."); analyseBtn.disabled = true; }
+      else { analyseBtn.disabled = false; clearMsg(uploadMsg); }
     }
   } catch {}
 }
 
 async function loadFeedbackCount() {
   try {
-    const { count } = await sb
-      .from("feedback")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", session.user.id)
-      .eq("credit_awarded", true);
+    const { count } = await sb.from("feedback").select("id", { count: "exact", head: true }).eq("user_id", session.user.id).eq("credit_awarded", true);
     feedbackCount = count || 0;
     $("feedbackCreditCount").textContent = feedbackCount;
     $("fbTallyCount").textContent = feedbackCount;
   } catch {}
 }
 
-function ah() {
-  return { "Authorization": `Bearer ${session.access_token}`, "Content-Type": "application/json" };
-}
+function ah() { return { "Authorization": `Bearer ${session.access_token}`, "Content-Type": "application/json" }; }
 
 function checkBanner() {
   const p = new URLSearchParams(location.search);
@@ -723,13 +652,8 @@ function checkBanner() {
   }
 }
 
-// ── AUTH ──────────────────────────────────────────────────────────────────
-logoutBtn.addEventListener("click", async () => {
-  await sb.auth.signOut();
-  window.location.href = "/";
-});
+logoutBtn.addEventListener("click", async () => { await sb.auth.signOut(); window.location.href = "/"; });
 
-// ── FILE ──────────────────────────────────────────────────────────────────
 $("chooseFileBtn").addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", () => { if (fileInput.files[0]) pick(fileInput.files[0]); });
 
@@ -751,11 +675,8 @@ function clearFile() {
   analyseBtn.disabled = true;
 }
 
-function fmtBytes(b) {
-  return b < 1048576 ? (b/1024).toFixed(1)+" KB" : (b/1048576).toFixed(1)+" MB";
-}
+function fmtBytes(b) { return b < 1048576 ? (b/1024).toFixed(1)+" KB" : (b/1048576).toFixed(1)+" MB"; }
 
-// ── ANALYSE ───────────────────────────────────────────────────────────────
 analyseBtn.addEventListener("click", analyse);
 
 async function analyse() {
@@ -763,33 +684,22 @@ async function analyse() {
   const { data: { session: s } } = await sb.auth.getSession();
   if (!s) { window.location.href = "/#login"; return; }
   session = s;
-
   const title  = trackTitle.value.trim() || file.name.replace(/\.[^/.]+$/,"");
   const artist = artistName.value.trim() || "Unknown";
-
   uploadCard.style.display = "none";
   progressCard.classList.add("show");
   reportCard.classList.remove("show");
   feedbackPrompt.classList.remove("show");
   pwdGate.classList.remove("show");
   startProg();
-
   try {
     const buf = await file.arrayBuffer();
     const res = await fetch(`${API_BASE}/critique-upload`, {
       method: "POST",
-      headers: {
-        "Authorization": `Bearer ${session.access_token}`,
-        "Content-Type":  file.type || "application/octet-stream",
-        "X-Filename":    file.name,
-        "X-Track-Title": title,
-        "X-Artist-Name": artist,
-      },
+      headers: { "Authorization": `Bearer ${session.access_token}`, "Content-Type": file.type || "application/octet-stream", "X-Filename": file.name, "X-Track-Title": title, "X-Artist-Name": artist },
       body: buf,
     });
-
     stopProg();
-
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       let msg = err?.error?.message || `Server error (${res.status})`;
@@ -801,19 +711,13 @@ async function analyse() {
       if (res.status === 401) setTimeout(() => { window.location.href = "/#login"; }, 2000);
       return;
     }
-
     const rpt = await res.json();
     currentReportId = rpt.report_id || rpt.meta?.request_id || null;
+    shareCurrentData = { track_title: [rpt.input?.title, rpt.input?.artist].filter(Boolean).join(" — ") || rpt.track_title || "Untitled", snapshot: rpt.snapshot || "", best_next_move: rpt.best_next_move || "", created_at: rpt.created_at || new Date().toISOString() };
     await refreshCredits();
     renderReport(rpt);
-
-    // Show feedback prompt if they haven't maxed it out
-    if (feedbackCount < 5) {
-      setTimeout(() => feedbackPrompt.classList.add("show"), 600);
-    }
-    // Show buy credits only for returning users — magic-link users go through pwd gate
+    if (feedbackCount < 5) setTimeout(() => feedbackPrompt.classList.add("show"), 600);
     if (!isMagicUser) creditsCard.style.display = "block";
-
   } catch (e) {
     stopProg();
     uploadCard.style.display = "block";
@@ -822,219 +726,125 @@ async function analyse() {
   }
 }
 
-// ── PROGRESS ──────────────────────────────────────────────────────────────
-const progMsgs = [
-  "Analysing arrangement…",
-  "Checking production choices…",
-  "Reviewing the mix…",
-  "Pulling the report together…",
-];
-
+const progMsgs = ["Analysing arrangement…","Checking production choices…","Reviewing the mix…","Pulling the report together…"];
 function startProg() {
   let pct = 5, mi = 0;
   pBar.style.width = "5%";
   pMsg.innerHTML = "Fonna is analysing arrangement, production, and mix.<br>This usually takes 2–5 minutes. Keep this tab open.";
-  progTmr = setInterval(() => {
-    pct = Math.min(pct + Math.random()*5 + 1, 88);
-    pBar.style.width = pct + "%";
-    if (mi < progMsgs.length) { pMsg.textContent = progMsgs[mi++]; }
-  }, 7000);
+  progTmr = setInterval(() => { pct = Math.min(pct + Math.random()*5 + 1, 88); pBar.style.width = pct + "%"; if (mi < progMsgs.length) { pMsg.textContent = progMsgs[mi++]; } }, 7000);
 }
+function stopProg() { clearInterval(progTmr); pBar.style.width = "100%"; }
 
-function stopProg() {
-  clearInterval(progTmr);
-  pBar.style.width = "100%";
-}
-
-// ── RENDER REPORT (live analysis) ─────────────────────────────────────────
 function renderReport(r) {
   progressCard.classList.remove("show");
   reportCard.classList.add("show");
-  renderReportInto(r, {
-    track:"rTrack", meta:"rMeta", snapshot:"rSnapshot", bestNext:"rBestNext",
-    domains:"rDomains", prio:"rPrio", tlWrap:"rTlWrap", tl:"rTl", ref:"rRef", lim:"rLim"
-  });
+  renderReportInto(r, { track:"rTrack", meta:"rMeta", snapshot:"rSnapshot", bestNext:"rBestNext", domains:"rDomains", prio:"rPrio", tlWrap:"rTlWrap", tl:"rTl", ref:"rRef", lim:"rLim" });
   reportCard.scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
-// ── RENDER FLAT REPORT (from Supabase flat columns) ───────────────────────
 function renderFlatReport(d) {
-  const ids = {
-    track:"dTrack", meta:"dMeta", snapshot:"dSnapshot", bestNext:"dBestNext",
-    domains:"dDomains", prio:"dPrio", tlWrap:"dTlWrap", tl:"dTl",
-    ref:"dRef", lim:"dLim"
-  };
+  const ids = { track:"dTrack", meta:"dMeta", snapshot:"dSnapshot", bestNext:"dBestNext", domains:"dDomains", prio:"dPrio", tlWrap:"dTlWrap", tl:"dTl", ref:"dRef", lim:"dLim" };
   $(ids.track).textContent = d.track_title || "Untitled";
-  const dur = d.duration_seconds
-    ? `${Math.floor(d.duration_seconds/60)}:${String(Math.floor(d.duration_seconds%60)).padStart(2,"0")}`
-    : "";
+  const dur = d.duration_seconds ? `${Math.floor(d.duration_seconds/60)}:${String(Math.floor(d.duration_seconds%60)).padStart(2,"0")}` : "";
   const dateStr = d.created_at ? new Date(d.created_at).toLocaleDateString() : "";
   $(ids.meta).textContent = [dur ? dur+" min" : "", dateStr].filter(Boolean).join(" · ");
   $(ids.snapshot).textContent = d.snapshot || "";
   $(ids.bestNext).textContent = d.best_next_move || "";
-
   const dEl = $(ids.domains); dEl.innerHTML = "";
   for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
-    const works = d[key + "_what_works"];
-    const holds = d[key + "_what_holds_it_back"];
-    const recs  = d[key + "_recommendations"];
+    const works = d[key + "_what_works"], holds = d[key + "_what_holds_it_back"], recs = d[key + "_recommendations"];
     if (!works && !holds && !recs) continue;
     const el = document.createElement("div"); el.className = "domain";
-    const parseArr = v => {
-      if (!v) return [];
-      if (Array.isArray(v)) return v;
-      try { return JSON.parse(v); } catch { return [v]; }
-    };
-    el.innerHTML = `<div class="domain-name">${label}</div>`
-      + sec("What's working", parseArr(works))
-      + sec("What's holding it back", parseArr(holds))
-      + sec("Recommendations", parseArr(recs));
+    const parseArr = v => { if (!v) return []; if (Array.isArray(v)) return v; try { return JSON.parse(v); } catch { return [v]; } };
+    el.innerHTML = `<div class="domain-name">${label}</div>` + sec("What's working", parseArr(works)) + sec("What's holding it back", parseArr(holds)) + sec("Recommendations", parseArr(recs));
     dEl.appendChild(el);
   }
-
   const pEl = $(ids.prio); pEl.innerHTML = "";
-  const parseJSON = v => {
-    if (!v) return [];
-    if (Array.isArray(v)) return v;
-    try { return JSON.parse(v); } catch { return []; }
-  };
+  const parseJSON = v => { if (!v) return []; if (Array.isArray(v)) return v; try { return JSON.parse(v); } catch { return []; } };
   parseJSON(d.priority_actions).forEach((a, i) => {
     const row = document.createElement("div"); row.className = "prio-row";
     const action = typeof a === "string" ? a : (a.action || JSON.stringify(a));
     row.innerHTML = `<div class="p-badge">P${i+1}</div><div class="p-text">${esc(action)}</div>`;
     pEl.appendChild(row);
   });
-
   const tl = parseJSON(d.timeline_moments);
   const tlW = $(ids.tlWrap); const tlEl = $(ids.tl); tlEl.innerHTML = "";
-  if (tl.length) {
-    tlW.style.display = "block";
-    tl.forEach(m => {
-      const row = document.createElement("div"); row.className = "tl-row";
-      row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain||"")}</div><div class="tl-note">${esc(m.note||"")}</div></div>`;
-      tlEl.appendChild(row);
-    });
-  } else { tlW.style.display = "none"; }
-
+  if (tl.length) { tlW.style.display = "block"; tl.forEach(m => { const row = document.createElement("div"); row.className = "tl-row"; row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain||"")}</div><div class="tl-note">${esc(m.note||"")}</div></div>`; tlEl.appendChild(row); }); } else { tlW.style.display = "none"; }
   const refRaw = d.listening_reference;
-  const ref = Array.isArray(refRaw) ? refRaw[0]
-    : (refRaw && typeof refRaw === "object") ? refRaw
-    : (() => { try { const p = JSON.parse(refRaw); return Array.isArray(p) ? p[0] : p; } catch { return null; } })();
+  const ref = Array.isArray(refRaw) ? refRaw[0] : (refRaw && typeof refRaw === "object") ? refRaw : (() => { try { const p = JSON.parse(refRaw); return Array.isArray(p) ? p[0] : p; } catch { return null; } })();
   const rRef = $(ids.ref);
-  if (ref?.title) {
-    rRef.style.display = "";
-    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist||"")}</div></div><div class="ref-why">${esc(ref.why||"")}</div>`;
-  } else { rRef.style.display = "none"; }
-
+  if (ref?.title) { rRef.style.display = ""; rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist||"")}</div></div><div class="ref-why">${esc(ref.why||"")}</div>`; } else { rRef.style.display = "none"; }
   $(ids.lim).textContent = d.limitations || "";
   $("reportDetail").scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
-// ── RENDER REPORT (shared renderer for live analyses) ─────────────────────
 function renderReportInto(r, ids) {
   $(ids.track).textContent = [r.input?.title, r.input?.artist].filter(Boolean).join(" — ") || r.track_title || "Untitled";
-  const dur = r.input?.duration_seconds
-    ? `${Math.floor(r.input.duration_seconds/60)}:${String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0")}`
-    : "";
+  const dur = r.input?.duration_seconds ? `${Math.floor(r.input.duration_seconds/60)}:${String(Math.floor(r.input.duration_seconds%60)).padStart(2,"0")}` : "";
   const dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString() : "";
   $(ids.meta).textContent = [dur ? dur+" min" : "", dateStr].filter(Boolean).join(" · ");
   $(ids.snapshot).textContent = r.snapshot || "";
   $(ids.bestNext).textContent = r.best_next_move || "";
-
   const dEl = $(ids.domains); dEl.innerHTML = "";
   for (const [key, label] of [["arrangement","Arrangement"],["production","Production"],["mix","Mix"]]) {
     const d = r.domains?.[key]; if (!d) continue;
     const el = document.createElement("div"); el.className = "domain";
-    el.innerHTML = `<div class="domain-name">${label}</div>`
-      + sec("What's working", d.what_works)
-      + sec("What's holding it back", d.what_holds_it_back)
-      + sec("Recommendations", d.recommendations);
+    el.innerHTML = `<div class="domain-name">${label}</div>` + sec("What's working", d.what_works) + sec("What's holding it back", d.what_holds_it_back) + sec("Recommendations", d.recommendations);
     dEl.appendChild(el);
   }
-
   const pEl = $(ids.prio); pEl.innerHTML = "";
-  (r.priority_actions||[]).forEach((a,i) => {
-    const row = document.createElement("div"); row.className = "prio-row";
-    row.innerHTML = `<div class="p-badge">P${i+1}</div><div class="p-text">${esc(a.action)}</div>`;
-    pEl.appendChild(row);
-  });
-
+  (r.priority_actions||[]).forEach((a,i) => { const row = document.createElement("div"); row.className = "prio-row"; row.innerHTML = `<div class="p-badge">P${i+1}</div><div class="p-text">${esc(a.action)}</div>`; pEl.appendChild(row); });
   const tl = r.timeline_moments||[];
   const tlW = $(ids.tlWrap); const tlEl = $(ids.tl); tlEl.innerHTML = "";
-  if (tl.length) {
-    tlW.style.display = "block";
-    tl.forEach(m => {
-      const row = document.createElement("div"); row.className = "tl-row";
-      row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain||"")}</div><div class="tl-note">${esc(m.note||"")}</div></div>`;
-      tlEl.appendChild(row);
-    });
-  } else { tlW.style.display = "none"; }
-
+  if (tl.length) { tlW.style.display = "block"; tl.forEach(m => { const row = document.createElement("div"); row.className = "tl-row"; row.innerHTML = `<div class="tl-stamp">${ts(m.t_start)}–${ts(m.t_end)}</div><div><div class="tl-domain">${esc(m.domain||"")}</div><div class="tl-note">${esc(m.note||"")}</div></div>`; tlEl.appendChild(row); }); } else { tlW.style.display = "none"; }
   const ref = r.listening_reference; const rRef = $(ids.ref);
-  if (ref?.title) {
-    rRef.style.display = "";
-    rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist||"")}</div></div><div class="ref-why">${esc(ref.why||"")}</div>`;
-  } else { rRef.style.display = "none"; }
-
+  if (ref?.title) { rRef.style.display = ""; rRef.innerHTML = `<div><div class="lbl">Reference track</div><div class="ref-track">&ldquo;${esc(ref.title)}&rdquo; &mdash; ${esc(ref.artist||"")}</div></div><div class="ref-why">${esc(ref.why||"")}</div>`; } else { rRef.style.display = "none"; }
   $(ids.lim).textContent = r.limitations || "";
 }
 
-// ── NEW ANALYSIS ──────────────────────────────────────────────────────────
 newBtn.addEventListener("click", () => {
-  reportCard.classList.remove("show");
-  feedbackPrompt.classList.remove("show");
-  pwdGate.classList.remove("show");
-  uploadCard.style.display = "block";
-  clearFile(); clearMsg(uploadMsg);
+  reportCard.classList.remove("show"); feedbackPrompt.classList.remove("show"); pwdGate.classList.remove("show");
+  uploadCard.style.display = "block"; clearFile(); clearMsg(uploadMsg);
   trackTitle.value = ""; artistName.value = "";
   window.scrollTo({ top:0, behavior:"smooth" });
 });
 
-// ── LOAD REPORTS (tab) ────────────────────────────────────────────────────
 async function loadReports() {
   if (!session) return;
   $("reportsLoading").style.display = "block";
   $("reportsEmpty").classList.add("hidden");
   $("reportsList").classList.add("hidden");
   $("reportDetail").classList.remove("show");
-
   try {
-    const { data, error } = await sb
-      .from("reports")
-      .select("id, created_at, track_title, duration_seconds")
-      .eq("user_id", session.user.id)
-      .order("created_at", { ascending: false })
-      .limit(50);
-
+    const { data, error } = await sb.from("reports").select("id, created_at, track_title, duration_seconds").eq("user_id", session.user.id).order("created_at", { ascending: false }).limit(50);
     $("reportsLoading").style.display = "none";
-    if (error || !data?.length) {
-      $("reportsEmpty").classList.remove("hidden");
-      return;
-    }
-
+    if (error || !data?.length) { $("reportsEmpty").classList.remove("hidden"); return; }
     const list = $("reportsList");
     list.innerHTML = "";
     data.forEach(row => {
-      const dur  = row.duration_seconds
-        ? `${Math.floor(row.duration_seconds/60)}:${String(Math.floor(row.duration_seconds%60)).padStart(2,"0")}`
-        : "";
+      const dur  = row.duration_seconds ? `${Math.floor(row.duration_seconds/60)}:${String(Math.floor(row.duration_seconds%60)).padStart(2,"0")}` : "";
       const date = row.created_at ? new Date(row.created_at).toLocaleDateString() : "";
-      const el   = document.createElement("div");
-      el.className = "report-row";
-      el.innerHTML = `
-        <div class="report-row-left">
-          <div class="report-title">${esc(row.track_title || "Untitled")}</div>
-          <div class="report-meta">${[dur ? dur+" min" : "", date].filter(Boolean).join(" · ")}</div>
-        </div>
-        <div class="report-arrow">›</div>`;
-      el.addEventListener("click", () => openReportDetail(row));
-      list.appendChild(el);
+      const wrap = document.createElement("div");
+      wrap.className = "report-row-wrap";
+      const pill = document.createElement("div");
+      pill.className = "report-row";
+      pill.innerHTML = `<div class="report-row-left"><div class="report-title">${esc(row.track_title || "Untitled")}</div><div class="report-meta">${[dur ? dur+" min" : "", date].filter(Boolean).join(" · ")}</div></div><div class="report-arrow">›</div>`;
+      pill.addEventListener("click", () => openReportDetail(row));
+      const shareBtn = document.createElement("button");
+      shareBtn.className = "share-icon-btn";
+      shareBtn.title = "Share report";
+      shareBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`;
+      shareBtn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        const { data: full } = await sb.from("reports").select("*").eq("id", row.id).single();
+        if (full) openShareModal(full);
+      });
+      wrap.appendChild(pill);
+      wrap.appendChild(shareBtn);
+      list.appendChild(wrap);
     });
     list.classList.remove("hidden");
-  } catch(e) {
-    $("reportsLoading").style.display = "none";
-    $("reportsEmpty").classList.remove("hidden");
-  }
+  } catch(e) { $("reportsLoading").style.display = "none"; $("reportsEmpty").classList.remove("hidden"); }
 }
 
 async function openReportDetail(row) {
@@ -1044,38 +854,96 @@ async function openReportDetail(row) {
   detail.classList.add("show");
   $("dTrack").textContent = row.track_title || "Loading…";
   $("dMeta").textContent  = "";
-
-  const { data, error } = await sb
-    .from("reports")
-    .select("*")
-    .eq("id", row.id)
-    .single();
-
-  if (error || !data) {
-    $("dSnapshot").textContent = "Could not load report — " + (error?.message || "unknown error");
-    detail.scrollIntoView({ behavior:"smooth", block:"start" });
-    return;
-  }
-
+  const { data, error } = await sb.from("reports").select("*").eq("id", row.id).single();
+  if (error || !data) { $("dSnapshot").textContent = "Could not load report — " + (error?.message || "unknown error"); detail.scrollIntoView({ behavior:"smooth", block:"start" }); return; }
+  shareCurrentData = data;
   renderFlatReport(data);
   detail.scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
-function closeReportDetail() {
-  $("reportDetail").classList.remove("show");
-  $("reportsList").classList.remove("hidden");
-}
-
+function closeReportDetail() { $("reportDetail").classList.remove("show"); $("reportsList").classList.remove("hidden"); }
 backToListBtn.addEventListener("click", closeReportDetail);
 
-// ── BUY CREDITS ───────────────────────────────────────────────────────────
+// SHARE MODAL
+function applyShareRatio(ratio) {
+  shareRatio = ratio;
+  const card = $("shareCard");
+  const scaler = $("cardScaler");
+  const cardH = ratio === "portrait" ? 1350 : 1080;
+  card.style.height = cardH + "px";
+  const containerW = scaler.offsetWidth || 480;
+  const scale = containerW / 1080;
+  card.style.transform = `scale(${scale})`;
+  scaler.style.height = (cardH * scale) + "px";
+}
+
+function populateShareCard(d) {
+  $("scTrack").textContent = d.track_title || "Untitled";
+  const dateStr = d.created_at ? new Date(d.created_at).toLocaleDateString("en-CA", { year:"numeric", month:"long", day:"numeric" }) : "";
+  $("scMeta").textContent = dateStr;
+  const snap = (d.snapshot || "").slice(0, 280) + ((d.snapshot||"").length > 280 ? "…" : "");
+  $("scSnapshot").textContent = snap;
+  const best = (d.best_next_move || "").slice(0, 160) + ((d.best_next_move||"").length > 160 ? "…" : "");
+  $("scBest").textContent = best;
+  $("shareCaption").textContent = `Just got producer feedback on "${d.track_title || "my track"}" from Fonna — AI that actually listens like a producer. Try it free at fonna.ai 🎛️`;
+}
+
+function openShareModal(d) {
+  shareCurrentData = d;
+  populateShareCard(d);
+  shareBackdrop.classList.add("open");
+  setTimeout(() => applyShareRatio(shareRatio), 50);
+  $("shareStatus").textContent = "";
+}
+
+function closeShareModal() { shareBackdrop.classList.remove("open"); }
+$("shareClose").addEventListener("click", closeShareModal);
+shareBackdrop.addEventListener("click", e => { if (e.target === shareBackdrop) closeShareModal(); });
+
+document.querySelectorAll(".ratio-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".ratio-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    applyShareRatio(btn.dataset.ratio);
+  });
+});
+
+$("liveShareBtn").addEventListener("click", () => { if (shareCurrentData) openShareModal(shareCurrentData); });
+$("detailShareBtn").addEventListener("click", () => { if (shareCurrentData) openShareModal(shareCurrentData); });
+
+$("shareDownloadBtn").addEventListener("click", async () => {
+  const status = $("shareStatus");
+  status.textContent = "Rendering…";
+  const card   = $("shareCard");
+  const scaler = $("cardScaler");
+  const outW   = 1080;
+  const outH   = shareRatio === "portrait" ? 1350 : 1080;
+  const origTransform = card.style.transform;
+  const origHeight    = card.style.height;
+  const origScalerH   = scaler.style.height;
+  card.style.transform = "none";
+  card.style.width  = outW + "px";
+  card.style.height = outH + "px";
+  try {
+    const canvas = await html2canvas(card, { scale:1, useCORS:true, backgroundColor:null, width:outW, height:outH, logging:false });
+    const link = document.createElement("a");
+    const fname = (shareCurrentData?.track_title || "fonna-report").replace(/[^a-z0-9]/gi,"-").toLowerCase();
+    link.download = `fonna-${fname}-${shareRatio}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+    status.textContent = "✓ Downloaded";
+    setTimeout(() => { status.textContent = ""; }, 3000);
+  } catch(e) { status.textContent = "Render error — try again"; console.error(e); }
+  card.style.transform = origTransform;
+  card.style.height    = origHeight;
+  scaler.style.height  = origScalerH;
+});
+
 async function buy(pack, msgEl) {
   const m = msgEl || buyMsg;
   clearMsg(m); setMsg(m, "info", "Redirecting to checkout…");
   try {
-    const r = await fetch(`${API_BASE}/create-checkout-session`, {
-      method:"POST", headers:ah(), body:JSON.stringify({ pack }),
-    });
+    const r = await fetch(`${API_BASE}/create-checkout-session`, { method:"POST", headers:ah(), body:JSON.stringify({ pack }) });
     const d = await r.json();
     if (d?.url) { window.location.href = d.url; }
     else { setMsg(m, "err", d?.error?.message || "Could not start checkout."); }
@@ -1087,260 +955,99 @@ buyCreator.addEventListener("click", () => buy("creator", buyMsg));
 $("pgBuyStarter").addEventListener("click", () => buy("starter", $("pwdGateBuyMsg")));
 $("pgBuyCreator").addEventListener("click", () => buy("creator", $("pwdGateBuyMsg")));
 
-// ── PASSWORD GATE ─────────────────────────────────────────────────────────
-function showPwdGate() {
-  pwdGate.classList.add("show");
-  pwdGate.scrollIntoView({ behavior:"smooth", block:"start" });
-}
+function showPwdGate() { pwdGate.classList.add("show"); pwdGate.scrollIntoView({ behavior:"smooth", block:"start" }); }
 
 $("pwdGateBtn").addEventListener("click", async () => {
-  const msgEl  = $("pwdGateMsg");
-  const input  = $("pwdGateInput");
-  const btn    = $("pwdGateBtn");
-  const pwd    = input.value.trim();
-
+  const msgEl = $("pwdGateMsg"), input = $("pwdGateInput"), btn = $("pwdGateBtn"), pwd = input.value.trim();
   msgEl.className = "pwd-gate-msg"; msgEl.textContent = "";
-
-  if (pwd.length < 8) {
-    msgEl.className = "pwd-gate-msg err";
-    msgEl.textContent = "Password must be at least 8 characters.";
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = "Setting password…";
-
+  if (pwd.length < 8) { msgEl.className = "pwd-gate-msg err"; msgEl.textContent = "Password must be at least 8 characters."; return; }
+  btn.disabled = true; btn.textContent = "Setting password…";
   try {
     const { error } = await sb.auth.updateUser({ password: pwd });
-
-    if (error) {
-      msgEl.className = "pwd-gate-msg err";
-      msgEl.textContent = error.message || "Could not set password — please try again.";
-      btn.disabled = false;
-      btn.textContent = "Set password & claim credit";
-      return;
-    }
-
-    // Password set — refresh session state
+    if (error) { msgEl.className = "pwd-gate-msg err"; msgEl.textContent = error.message || "Could not set password — please try again."; btn.disabled = false; btn.textContent = "Set password & claim credit"; return; }
     const { data: { session: s } } = await sb.auth.getSession();
-    if (s) {
-      session = s;
-      isMagicUser = false;
-    }
-
-    // Record password_set_at in public.users for cohort tracking
-    await sb
-      .from("users")
-      .update({ password_set_at: new Date().toISOString() })
-      .eq("id", session.user.id)
-      .catch(() => {}); // non-fatal — RLS UPDATE policy required on users table
-
-    // Refresh credits (survey credit already awarded by submit-feedback)
+    if (s) { session = s; isMagicUser = false; }
+    await sb.from("users").update({ password_set_at: new Date().toISOString() }).eq("id", session.user.id).catch(() => {});
     await refreshCredits();
-
-    // Show confirmation, hide form, show buy section
     msgEl.className = "pwd-gate-msg ok";
     msgEl.textContent = "Password set — your account is secured and your credit is ready.";
-    input.style.display = "none";
-    btn.style.display = "none";
-    $("pwdGateSkip").style.display = "none";
+    input.style.display = "none"; btn.style.display = "none"; $("pwdGateSkip").style.display = "none";
     $("pwdGateCreditsSection").style.display = "block";
-
-    // Banner confirmation
     purchaseBnr.textContent = "Account secured — 1 bonus credit added. You're all set.";
     purchaseBnr.classList.add("show");
     window.scrollTo({ top:0, behavior:"smooth" });
-
-  } catch {
-    msgEl.className = "pwd-gate-msg err";
-    msgEl.textContent = "Connection error — please try again.";
-    btn.disabled = false;
-    btn.textContent = "Set password & claim credit";
-  }
+  } catch { msgEl.className = "pwd-gate-msg err"; msgEl.textContent = "Connection error — please try again."; btn.disabled = false; btn.textContent = "Set password & claim credit"; }
 });
 
-$("pwdGateSkip").addEventListener("click", () => {
-  pwdGate.classList.remove("show");
-});
+$("pwdGateSkip").addEventListener("click", () => { pwdGate.classList.remove("show"); });
+$("skipToAccountBtn").addEventListener("click", () => { feedbackPrompt.classList.remove("show"); showPwdGate(); });
 
-$("skipToAccountBtn").addEventListener("click", () => {
-  feedbackPrompt.classList.remove("show");
-  showPwdGate();
-});
-
-// ── FEEDBACK MODAL ────────────────────────────────────────────────────────
-function initScale(id) {
-  $(id).querySelectorAll(".fb-scale-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      $(id).querySelectorAll(".fb-scale-btn").forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
-    });
-  });
-}
-
-function initYesNo(id) {
-  $(id).querySelectorAll(".fb-yn-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      $(id).querySelectorAll(".fb-yn-btn").forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
-    });
-  });
-}
-
-function initChips(id) {
-  $(id).querySelectorAll(".fb-chip").forEach(chip => {
-    chip.addEventListener("click", () => chip.classList.toggle("selected"));
-  });
-}
-
-function getScale(id) {
-  const sel = $(id).querySelector(".fb-scale-btn.selected");
-  return sel ? Number(sel.dataset.val) : null;
-}
-
-function getYesNo(id) {
-  const sel = $(id).querySelector(".fb-yn-btn.selected");
-  return sel ? sel.dataset.val : null;
-}
-
-function getChips(id) {
-  return Array.from($(id).querySelectorAll(".fb-chip.selected")).map(c => c.dataset.val);
-}
-
+function initScale(id) { $(id).querySelectorAll(".fb-scale-btn").forEach(btn => { btn.addEventListener("click", () => { $(id).querySelectorAll(".fb-scale-btn").forEach(b => b.classList.remove("selected")); btn.classList.add("selected"); }); }); }
+function initYesNo(id) { $(id).querySelectorAll(".fb-yn-btn").forEach(btn => { btn.addEventListener("click", () => { $(id).querySelectorAll(".fb-yn-btn").forEach(b => b.classList.remove("selected")); btn.classList.add("selected"); }); }); }
+function initChips(id) { $(id).querySelectorAll(".fb-chip").forEach(chip => { chip.addEventListener("click", () => chip.classList.toggle("selected")); }); }
+function getScale(id) { const sel = $(id).querySelector(".fb-scale-btn.selected"); return sel ? Number(sel.dataset.val) : null; }
+function getYesNo(id) { const sel = $(id).querySelector(".fb-yn-btn.selected"); return sel ? sel.dataset.val : null; }
+function getChips(id) { return Array.from($(id).querySelectorAll(".fb-chip.selected")).map(c => c.dataset.val); }
 function resetFeedbackModal() {
-  ["scaleAccuracy","scaleActionable"].forEach(id =>
-    $(id).querySelectorAll(".fb-scale-btn").forEach(b => b.classList.remove("selected"))
-  );
-  ["comeBack","recommend"].forEach(id =>
-    $(id).querySelectorAll(".fb-yn-btn").forEach(b => b.classList.remove("selected"))
-  );
-  ["mostUseful","leastUseful"].forEach(id =>
-    $(id).querySelectorAll(".fb-chip").forEach(c => c.classList.remove("selected"))
-  );
-  $("trackStage").value = "";
-  $("acquisitionSource").value = "";
-  $("otherComments").value = "";
+  ["scaleAccuracy","scaleActionable"].forEach(id => $(id).querySelectorAll(".fb-scale-btn").forEach(b => b.classList.remove("selected")));
+  ["comeBack","recommend"].forEach(id => $(id).querySelectorAll(".fb-yn-btn").forEach(b => b.classList.remove("selected")));
+  ["mostUseful","leastUseful"].forEach(id => $(id).querySelectorAll(".fb-chip").forEach(c => c.classList.remove("selected")));
+  $("trackStage").value = ""; $("acquisitionSource").value = ""; $("otherComments").value = "";
   const msg = $("fbMsg"); msg.className = "fb-msg"; msg.textContent = "";
-  $("fbSubmitBtn").disabled = false;
-  $("fbSubmitBtn").textContent = "Submit & earn 1 credit";
+  $("fbSubmitBtn").disabled = false; $("fbSubmitBtn").textContent = "Submit & earn 1 credit";
 }
-
 function openFeedbackModal() { resetFeedbackModal(); fbBackdrop.classList.add("open"); }
 function closeFeedbackModal() { fbBackdrop.classList.remove("open"); }
 
-initScale("scaleAccuracy");
-initScale("scaleActionable");
-initYesNo("comeBack");
-initYesNo("recommend");
-initChips("mostUseful");
-initChips("leastUseful");
+initScale("scaleAccuracy"); initScale("scaleActionable");
+initYesNo("comeBack"); initYesNo("recommend");
+initChips("mostUseful"); initChips("leastUseful");
 
 $("openFeedbackBtn").addEventListener("click", openFeedbackModal);
 $("fbClose").addEventListener("click", closeFeedbackModal);
 $("fbCancelBtn").addEventListener("click", closeFeedbackModal);
 fbBackdrop.addEventListener("click", e => { if (e.target === fbBackdrop) closeFeedbackModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeFeedbackModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeFeedbackModal(); closeShareModal(); } });
 
 $("fbSubmitBtn").addEventListener("click", async () => {
-  const fbMsg = $("fbMsg");
-  fbMsg.className = "fb-msg"; fbMsg.textContent = "";
-
-  const accuracy           = getScale("scaleAccuracy");
-  const actionable         = getScale("scaleActionable");
-  const track_stage        = $("trackStage").value || null;
-  const most_useful        = getChips("mostUseful");
-  const least_useful       = getChips("leastUseful");
-  const come_back          = getYesNo("comeBack");
-  const recommend          = getYesNo("recommend");
-  const acquisition_source = $("acquisitionSource").value || null;
-  const other_comments     = $("otherComments").value.trim() || null;
-
+  const fbMsg = $("fbMsg"); fbMsg.className = "fb-msg"; fbMsg.textContent = "";
+  const accuracy = getScale("scaleAccuracy"), actionable = getScale("scaleActionable");
+  const track_stage = $("trackStage").value || null, most_useful = getChips("mostUseful"), least_useful = getChips("leastUseful");
+  const come_back = getYesNo("comeBack"), recommend = getYesNo("recommend");
+  const acquisition_source = $("acquisitionSource").value || null, other_comments = $("otherComments").value.trim() || null;
   function showFbErr(msg) { fbMsg.className = "fb-msg err"; fbMsg.textContent = msg; }
-
   if (!accuracy)           { showFbErr("Please rate how accurate the feedback felt."); return; }
   if (!actionable)         { showFbErr("Please rate how actionable the report was."); return; }
   if (!track_stage)        { showFbErr("Please select the stage of your track."); return; }
   if (!come_back)          { showFbErr("Please answer whether you'd come back to Fonna."); return; }
   if (!recommend)          { showFbErr("Please answer whether you'd recommend Fonna."); return; }
   if (!acquisition_source) { showFbErr("Please let us know how you found out about Fonna."); return; }
-
-  $("fbSubmitBtn").disabled = true;
-  $("fbSubmitBtn").textContent = "Submitting…";
-
+  $("fbSubmitBtn").disabled = true; $("fbSubmitBtn").textContent = "Submitting…";
   try {
-    const r = await fetch(`${API_BASE}/submit-feedback`, {
-      method: "POST",
-      headers: ah(),
-      body: JSON.stringify({
-        report_id: currentReportId,
-        accuracy, actionable, track_stage,
-        most_useful, least_useful,
-        come_back, recommend,
-        acquisition_source, other_comments,
-      }),
-    });
-
+    const r = await fetch(`${API_BASE}/submit-feedback`, { method:"POST", headers:ah(), body:JSON.stringify({ report_id:currentReportId, accuracy, actionable, track_stage, most_useful, least_useful, come_back, recommend, acquisition_source, other_comments }) });
     const d = await r.json();
-
-    if (!r.ok) {
-      showFbErr(d?.error?.message || "Something went wrong — please try again.");
-      $("fbSubmitBtn").disabled = false;
-      $("fbSubmitBtn").textContent = "Submit & earn 1 credit";
-      return;
-    }
-
+    if (!r.ok) { showFbErr(d?.error?.message || "Something went wrong — please try again."); $("fbSubmitBtn").disabled = false; $("fbSubmitBtn").textContent = "Submit & earn 1 credit"; return; }
     feedbackCount = d.feedback_count ?? feedbackCount + 1;
-    $("feedbackCreditCount").textContent = feedbackCount;
-    $("fbTallyCount").textContent = feedbackCount;
-
-    fbMsg.className = "fb-msg ok";
-    fbMsg.textContent = "Thanks — credit added.";
-    $("fbSubmitBtn").textContent = "Done";
-
+    $("feedbackCreditCount").textContent = feedbackCount; $("fbTallyCount").textContent = feedbackCount;
+    fbMsg.className = "fb-msg ok"; fbMsg.textContent = "Thanks — credit added."; $("fbSubmitBtn").textContent = "Done";
     await refreshCredits();
     if (feedbackCount >= 5) feedbackPrompt.classList.remove("show");
-
-    // Close modal then show password gate if magic-link user
-    setTimeout(() => {
-      closeFeedbackModal();
-      feedbackPrompt.classList.remove("show");
-      if (isMagicUser) {
-        showPwdGate();
-      }
-    }, 1400);
-
-  } catch {
-    showFbErr("Connection error — please check your network and try again.");
-    $("fbSubmitBtn").disabled = false;
-    $("fbSubmitBtn").textContent = "Submit & earn 1 credit";
-  }
+    setTimeout(() => { closeFeedbackModal(); feedbackPrompt.classList.remove("show"); if (isMagicUser) showPwdGate(); }, 1400);
+  } catch { showFbErr("Connection error — please check your network and try again."); $("fbSubmitBtn").disabled = false; $("fbSubmitBtn").textContent = "Submit & earn 1 credit"; }
 });
 
-// ── HELPERS ───────────────────────────────────────────────────────────────
-function sec(label, arr) {
-  if (!arr?.length) return "";
-  return `<div class="domain-sub">${label}</div><ul class="dlist">${arr.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
-}
-
-function ts(s) {
-  const t = Math.max(0,Math.floor(Number(s)||0));
-  return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`;
-}
-
-function esc(s) {
-  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-}
-
+function sec(label, arr) { if (!arr?.length) return ""; return `<div class="domain-sub">${label}</div><ul class="dlist">${arr.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`; }
+function ts(s) { const t = Math.max(0,Math.floor(Number(s)||0)); return `${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`; }
+function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 function setMsg(el,type,txt) { el.className=`msg ${type} show`; el.textContent=txt; }
 function clearMsg(el)        { el.className="msg"; el.textContent=""; }
 
-// ── GO ────────────────────────────────────────────────────────────────────
 $("tabAnalyse").addEventListener("click", () => switchTab("analyse"));
 $("tabReports").addEventListener("click", () => switchTab("reports"));
-
 boot();
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
