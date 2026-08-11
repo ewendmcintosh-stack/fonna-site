@@ -125,7 +125,6 @@ a{color:inherit;text-decoration:none;}
 .reports-empty{text-align:center;padding:60px 20px;color:var(--muted);}
 .reports-empty .icon{font-size:2.5rem;margin-bottom:14px;opacity:0.4;}
 .report-list{display:grid;gap:12px;}
-/* Report row — pill + share icon outside */
 .report-row-wrap{display:flex;align-items:center;gap:10px;}
 .report-row{flex:1;background:var(--navy-mid);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px 22px;cursor:pointer;transition:border-color 0.15s,background 0.15s;display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;}
 .report-row:hover{border-color:rgba(233,69,96,0.3);background:rgba(233,69,96,0.04);}
@@ -216,7 +215,6 @@ a{color:inherit;text-decoration:none;}
 .pwd-gate-credits{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
 .pwd-gate-credits-title{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
 .pwd-gate-credits-sub{font-size:0.84rem;color:var(--muted);margin-bottom:16px;line-height:1.5;}
-/* SHARE MODAL */
 .share-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.85);backdrop-filter:blur(8px);z-index:300;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
 .share-backdrop.open{display:flex;}
 .share-modal{background:var(--navy-mid);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,0.6);padding:28px;width:100%;max-width:520px;position:relative;margin:auto;}
@@ -229,7 +227,6 @@ a{color:inherit;text-decoration:none;}
 .share-ratio-toggle{display:flex;gap:8px;margin-bottom:16px;}
 .ratio-btn{flex:1;padding:8px 0;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:center;}
 .ratio-btn.active{background:rgba(233,69,96,0.15);border-color:rgba(233,69,96,0.5);color:var(--coral);}
-/* Preview card — rendered natively at display size, cloned at 1080px for download */
 .share-card-preview{width:100%;border-radius:16px;margin-bottom:16px;background:linear-gradient(135deg,#1A1A2E 0%,#16213E 55%,#0F3460 100%);padding:28px;position:relative;overflow:hidden;color:#f4f4f2;font-family:'Lato',sans-serif;}
 .share-card-preview::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:#E94560;opacity:0.08;pointer-events:none;}
 .share-card-preview::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:#0F3460;opacity:0.6;pointer-events:none;}
@@ -246,7 +243,6 @@ a{color:inherit;text-decoration:none;}
 .scp-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.08);padding-top:12px;}
 .scp-footer-brand{font-family:'DM Serif Display',serif;font-size:0.9rem;color:#E94560;}
 .scp-footer-url{font-family:'DM Mono',monospace;font-size:0.6rem;color:#a4a4a0;letter-spacing:0.04em;}
-/* Hidden 1080px card used only for PNG export */
 #shareCard{position:absolute;left:-9999px;top:0;width:1080px;background:linear-gradient(135deg,#1A1A2E 0%,#16213E 55%,#0F3460 100%);padding:90px;font-family:'Lato',sans-serif;color:#f4f4f2;overflow:hidden;}
 #shareCard::before{content:'';position:absolute;top:-120px;right:-120px;width:560px;height:560px;border-radius:50%;background:#E94560;opacity:0.08;pointer-events:none;}
 #shareCard::after{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;border-radius:50%;background:#0F3460;opacity:0.6;pointer-events:none;}
@@ -307,6 +303,7 @@ a{color:inherit;text-decoration:none;}
     <div class="nav-right">
       <span class="user-pill" id="navEmail"></span>
       <span class="credit-pill" id="navCredits"><strong id="navCreditCount">—</strong> credits</span>
+      <button class="btn sm ghost" id="acctNavBtn">Account</button>
       <button class="btn sm ghost" id="logoutBtn">Log out</button>
     </div>
   </div>
@@ -503,6 +500,26 @@ a{color:inherit;text-decoration:none;}
   </div>
 </footer>
 
+<!-- ACCOUNT SETTINGS MODAL -->
+<div class="fb-backdrop" id="acctBackdrop">
+  <div class="fb-modal" style="max-width:440px;">
+    <button class="fb-close" id="acctClose" aria-label="Close">&times;</button>
+    <div class="fb-inner">
+      <div class="fb-eyebrow">Account</div>
+      <h2 class="fb-title" id="acctTitle">Account settings</h2>
+      <p class="fb-sub" id="acctSub">Signed in as <strong id="acctEmail"></strong><span id="acctSubExtra"></span></p>
+      <div class="pwd-gate-msg" id="acctMsg" style="margin-top:14px;"></div>
+      <div id="acctPwdSection" style="margin-top:6px;">
+        <div class="lbl" id="acctPwdLabel" style="margin-bottom:8px;">Set a password</div>
+        <div class="pwd-gate-form" style="margin-bottom:0;">
+          <input type="password" class="pwd-gate-input" id="acctPwdInput" placeholder="New password (min. 8 characters)" autocomplete="new-password" />
+          <button class="btn primary" id="acctPwdBtn" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- FEEDBACK MODAL -->
 <div class="fb-backdrop" id="fbBackdrop">
   <div class="fb-modal">
@@ -541,7 +558,6 @@ a{color:inherit;text-decoration:none;}
         <button class="ratio-btn active" data-ratio="square">Square (1:1)</button>
         <button class="ratio-btn" data-ratio="portrait">Portrait (4:5)</button>
       </div>
-      <!-- Readable preview card — what the user sees -->
       <div class="share-card-preview" id="shareCardPreview">
         <div class="scp-inner">
           <div class="scp-header">
@@ -560,7 +576,6 @@ a{color:inherit;text-decoration:none;}
           </div>
         </div>
       </div>
-      <!-- Hidden 1080px card used only for PNG export -->
       <div id="shareCard">
         <div class="sc-inner">
           <div class="sc-header">
@@ -599,6 +614,19 @@ const API_BASE          = "https://listener-service-1esi.onrender.com";
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const $  = id => document.getElementById(id);
 
+let isRecoveryFlow = false;
+
+// Fires when someone lands here via a Supabase "reset/set password" email link.
+// Must be registered before boot() runs so we don't miss the event.
+sb.auth.onAuthStateChange((event, s) => {
+  if (event === "PASSWORD_RECOVERY") {
+    isRecoveryFlow = true;
+    if (s) session = s;
+    history.replaceState({}, "", "/app.html");
+    openRecoveryModal();
+  }
+});
+
 const navEmail      = $("navEmail");
 const navCredits    = $("navCredits");
 const navCreditN    = $("navCreditCount");
@@ -624,6 +652,7 @@ const feedbackPrompt= $("feedbackPrompt");
 const fbBackdrop    = $("fbBackdrop");
 const pwdGate       = $("pwdGate");
 const shareBackdrop = $("shareBackdrop");
+const acctBackdrop  = $("acctBackdrop");
 
 let session         = null;
 let file            = null;
@@ -672,7 +701,6 @@ async function refreshCredits() {
   } catch {}
 }
 
-// Show/hide the persistent feedback links based on remaining feedback credits
 function updateFeedbackLinks() {
   const show = feedbackCount < 5 ? "" : "none";
   const live = $("liveFeedbackLink");
@@ -929,12 +957,10 @@ function populateShareCard(d) {
   const dateStr = d.created_at ? new Date(d.created_at).toLocaleDateString("en-CA", { year:"numeric", month:"long", day:"numeric" }) : "";
   const snap    = d.snapshot || "";
   const best    = d.best_next_move || "";
-  // Visible preview
   $("scpTrack").textContent    = title;
   $("scpDate").textContent     = dateStr;
   $("scpSnapshot").textContent = snap;
   $("scpBest").textContent     = best;
-  // Hidden export card
   $("scTrack").textContent    = title;
   $("scDate").textContent     = dateStr;
   $("scSnapshot").textContent = snap;
@@ -964,10 +990,121 @@ document.querySelectorAll(".ratio-btn").forEach(btn => {
   });
 });
 
+// ── ACCOUNT SETTINGS MODAL ──────────────────────────────────────────────────
+function refreshAcctModalCopy() {
+  $("acctEmail").textContent = session?.user?.email || "";
+  if (isMagicUser) {
+    $("acctPwdLabel").textContent = "Set a password";
+    $("acctPwdInput").placeholder = "New password (min. 8 characters)";
+    $("acctPwdBtn").textContent = "Set password";
+    $("acctSubExtra").textContent = ". You're currently signed in via magic link — set a password below so you can log in directly next time.";
+  } else {
+    $("acctPwdLabel").textContent = "Change password";
+    $("acctPwdInput").placeholder = "New password (min. 8 characters)";
+    $("acctPwdBtn").textContent = "Update password";
+    $("acctSubExtra").textContent = "";
+  }
+}
+
+function openRecoveryModal() {
+  const msgEl = $("acctMsg");
+  msgEl.className = "pwd-gate-msg"; msgEl.textContent = "";
+  $("acctPwdInput").value = "";
+  $("acctPwdInput").style.display = "";
+  $("acctPwdBtn").style.display = "";
+  $("acctTitle").textContent = "Set your new password";
+  $("acctPwdLabel").textContent = "New password";
+  $("acctPwdInput").placeholder = "New password (min. 8 characters)";
+  $("acctPwdBtn").textContent = "Set password";
+  $("acctEmail").textContent = session?.user?.email || "";
+  $("acctSubExtra").textContent = " — choose a new password to finish resetting your account.";
+  acctBackdrop.classList.add("open");
+}
+
+function openAcctModal() {
+  const msgEl = $("acctMsg");
+  msgEl.className = "pwd-gate-msg"; msgEl.textContent = "";
+  $("acctPwdInput").value = "";
+  $("acctPwdInput").style.display = "";
+  $("acctPwdBtn").style.display = "";
+  refreshAcctModalCopy();
+  acctBackdrop.classList.add("open");
+}
+function closeAcctModal() { acctBackdrop.classList.remove("open"); }
+
+$("acctNavBtn").addEventListener("click", openAcctModal);
+$("acctClose").addEventListener("click", closeAcctModal);
+acctBackdrop.addEventListener("click", e => { if (e.target === acctBackdrop) closeAcctModal(); });
+
+$("acctPwdBtn").addEventListener("click", async () => {
+  const msgEl = $("acctMsg");
+  const input = $("acctPwdInput");
+  const btn   = $("acctPwdBtn");
+  const pwd   = input.value.trim();
+
+  msgEl.className = "pwd-gate-msg"; msgEl.textContent = "";
+
+  if (pwd.length < 8) {
+    msgEl.className = "pwd-gate-msg err";
+    msgEl.textContent = "Password must be at least 8 characters.";
+    return;
+  }
+
+  const wasMagicUser  = isMagicUser;
+  const wasRecoveryFlow = isRecoveryFlow;
+  btn.disabled = true;
+  btn.textContent = "Saving…";
+
+  try {
+    const { error } = await sb.auth.updateUser({ password: pwd });
+
+    if (error) {
+      msgEl.className = "pwd-gate-msg err";
+      msgEl.textContent = error.message || "Could not update password — please try again.";
+      btn.disabled = false;
+      if (!wasRecoveryFlow) refreshAcctModalCopy();
+      return;
+    }
+
+    const { data: { session: s } } = await sb.auth.getSession();
+    if (s) session = s;
+    isMagicUser = false;
+    isRecoveryFlow = false;
+
+    if (wasMagicUser || wasRecoveryFlow) {
+      await sb
+        .from("users")
+        .update({ password_set_at: new Date().toISOString() })
+        .eq("id", session.user.id)
+        .catch(() => {});
+      creditsCard.style.display = "block";
+    }
+
+    msgEl.className = "pwd-gate-msg ok";
+    msgEl.textContent = wasRecoveryFlow
+      ? "Password set — you're signed in and ready to go."
+      : (wasMagicUser
+          ? "Password set. You can now log in directly with your email and password anytime."
+          : "Password updated.");
+    input.value = "";
+    btn.disabled = false;
+    if (wasRecoveryFlow) {
+      $("acctTitle").textContent = "Account settings";
+      setTimeout(() => { refreshAcctModalCopy(); }, 200);
+    } else {
+      refreshAcctModalCopy();
+    }
+  } catch (e) {
+    msgEl.className = "pwd-gate-msg err";
+    msgEl.textContent = "Something went wrong — please try again.";
+    btn.disabled = false;
+    if (!wasRecoveryFlow) refreshAcctModalCopy();
+  }
+});
+
 $("liveShareBtn").addEventListener("click", () => { if (shareCurrentData) openShareModal(shareCurrentData); });
 $("detailShareBtn").addEventListener("click", () => { if (shareCurrentData) openShareModal(shareCurrentData); });
 
-// Persistent feedback links
 $("liveFeedbackLink").addEventListener("click", openFeedbackModal);
 $("detailFeedbackLink").addEventListener("click", openFeedbackModal);
 
@@ -993,7 +1130,6 @@ $("shareDownloadBtn").addEventListener("click", async () => {
     status.textContent = "✓ Downloaded";
     setTimeout(() => { status.textContent = ""; }, 3000);
   } catch(e) { status.textContent = "Render error — try again"; console.error(e); }
-  // Move card back off screen
   card.style.position = "absolute";
   card.style.left     = "-9999px";
   card.style.top      = "0";
@@ -1067,7 +1203,7 @@ $("openFeedbackBtn").addEventListener("click", openFeedbackModal);
 $("fbClose").addEventListener("click", closeFeedbackModal);
 $("fbCancelBtn").addEventListener("click", closeFeedbackModal);
 fbBackdrop.addEventListener("click", e => { if (e.target === fbBackdrop) closeFeedbackModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeFeedbackModal(); closeShareModal(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeFeedbackModal(); closeShareModal(); closeAcctModal(); } });
 
 $("fbSubmitBtn").addEventListener("click", async () => {
   const fbMsg = $("fbMsg"); fbMsg.className = "fb-msg"; fbMsg.textContent = "";
