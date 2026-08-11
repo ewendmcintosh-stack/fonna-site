@@ -378,6 +378,9 @@ a{color:inherit;text-decoration:none;}
         <button class="btn ghost feedback-link-btn" id="liveFeedbackLink" type="button" style="display:none;">
           Share feedback &amp; earn a credit &rarr;
         </button>
+        <button class="btn primary share-report-btn" id="liveAnotherBtn" type="button">
+          Analyse another track
+        </button>
       </div>
     </div>
 
@@ -893,6 +896,8 @@ newBtn.addEventListener("click", () => {
   trackTitle.value = ""; artistName.value = "";
   window.scrollTo({ top:0, behavior:"smooth" });
 });
+
+$("liveAnotherBtn").addEventListener("click", () => newBtn.click());
 
 async function loadReports() {
   if (!session) return;
