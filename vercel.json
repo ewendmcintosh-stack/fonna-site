@@ -1,4 +1,15 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/app", "destination": "/", "permanent": false },
+    { "source": "/start", "destination": "/", "permanent": false },
+    { "source": "/philosophy", "destination": "/", "permanent": false },
+    { "source": "/faq", "destination": "/", "permanent": false },
+    { "source": "/terms", "destination": "/", "permanent": false },
+    { "source": "/test", "destination": "/", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
